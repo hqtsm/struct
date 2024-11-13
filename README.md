@@ -1,0 +1,3 @@
+# HQTSM: Struct
+
+Binary structures

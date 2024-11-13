@@ -1,0 +1,211 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        config:
+          - deno-version: 2.0.6
+          - deno-version: 2.0.0
+          - deno-version: 1.46.3
+
+    name: Deno ${{ matrix.config.deno-version }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: ${{ matrix.config.deno-version }}
+
+      - name: Legacy
+        if: startsWith(matrix.config.deno-version, '1.')
+        run: rm deno.lock
+
+      - name: Test
+        run: deno task test
+
+      - name: Coverage
+        run: deno coverage
+
+  check:
+    name: Check
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.0.6
+
+      - name: Docs
+        run: deno task docs
+
+      - name: Artifact docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: docs
+
+      - name: Linted
+        run: deno task linted
+
+      - name: Formatted
+        run: deno task formatted
+
+      - name: Publishable
+        run: deno task publishable
+
+  npm-dev:
+    name: NPM dev
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.0.6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.11.0
+
+      - name: Build NPM
+        run: deno task npm dev
+
+      - name: Artifact NPM
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-dev
+          path: |
+            npm
+            !npm/node_modules
+
+  npm-prod:
+    name: NPM prod
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.0.6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.11.0
+
+      - name: Build NPM
+        run: deno task npm prod
+
+      - name: Artifact NPM
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-prod
+          path: |
+            npm
+            !npm/node_modules
+
+      - name: Check Publish
+        working-directory: npm
+        run: npm publish --dry-run
+
+  node:
+    strategy:
+      matrix:
+        node-version:
+          - 23.1.0
+          - 22.11.0
+          - 20.9.0
+          - 18.12.0
+
+    name: Node ${{ matrix.node-version }}
+
+    needs: npm-dev
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Artifact NPM
+        uses: actions/download-artifact@v4
+        with:
+          name: npm-dev
+          path: npm
+
+      - name: Install
+        working-directory: npm
+        run: npm ci
+
+      - name: Test
+        working-directory: npm
+        run: npm run test
+
+  bun:
+    strategy:
+      matrix:
+        bun-version:
+          - 1.1.34
+          - 1.0.0
+
+    name: Bun ${{ matrix.bun-version }}
+
+    needs: npm-dev
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ matrix.bun-version }}
+
+      - name: Artifact NPM
+        uses: actions/download-artifact@v4
+        with:
+          name: npm-dev
+          path: npm
+
+      - name: Install
+        working-directory: npm
+        run: bun install
+
+      - name: Test
+        working-directory: npm
+        run: bun run test

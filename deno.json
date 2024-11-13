@@ -1,0 +1,77 @@
+{
+	"name": "@hqtsm/struct",
+	"version": "0.0.0",
+	"license": "MIT",
+	"exports": {
+		".": "./mod.ts"
+	},
+	"imports": {
+		"@deno/dnt": "jsr:@deno/dnt@^0.41.3",
+		"@std/assert": "jsr:@std/assert@^1.0.7"
+	},
+	"fmt": {
+		"useTabs": true,
+		"lineWidth": 80,
+		"indentWidth": 4,
+		"semiColons": true,
+		"singleQuote": true,
+		"proseWrap": "preserve"
+	},
+	"lint": {
+		"rules": {
+			"exclude": [
+				"no-boolean-literal-for-arguments"
+			],
+			"include": [
+				"camelcase",
+				"default-param-last",
+				"eqeqeq",
+				"explicit-function-return-type",
+				"explicit-module-boundary-types",
+				"guard-for-in",
+				"no-await-in-loop",
+				"no-boolean-literal-for-arguments",
+				"no-console",
+				"no-const-assign",
+				"no-eval",
+				"no-external-import",
+				"no-implicit-declare-namespace-export",
+				"no-non-null-asserted-optional-chain",
+				"no-self-compare",
+				"no-sparse-arrays",
+				"no-sync-fn-in-async-fn",
+				"no-throw-literal",
+				"no-top-level-await",
+				"no-undef",
+				"prefer-ascii",
+				"triple-slash-reference",
+				"verbatim-module-syntax"
+			]
+		}
+	},
+	"exclude": [
+		".*",
+		"coverage",
+		"docs",
+		"vendor",
+		"npm"
+	],
+	"publish": {
+		"exclude": [
+			"deno.lock",
+			"**/*.test.ts",
+			"scripts"
+		]
+	},
+	"tasks": {
+		"test": "deno test --doc --parallel --shuffle --trace-leaks --coverage --clean",
+		"docs": "deno doc --html mod.ts",
+		"lint": "deno lint --fix",
+		"linted": "deno lint",
+		"format": "deno fmt",
+		"formatted": "deno fmt --check",
+		"publishable": "deno publish --allow-dirty --dry-run",
+		"version": "deno run --allow-read --allow-write ./scripts/version.ts",
+		"npm": "deno run --allow-env --allow-net --allow-read --allow-write --allow-run ./scripts/npm.ts"
+	}
+}

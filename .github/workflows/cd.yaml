@@ -1,0 +1,69 @@
+name: CD
+
+on:
+  push:
+    branches-ignore:
+      - '**'
+    tags:
+      - 'v**'
+
+jobs:
+  jsr:
+    name: JSR
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.0.6
+
+      - name: Version
+        run: deno task version "${GITHUB_REF#refs/tags/v}"
+
+      - name: Publish
+        run: deno publish --allow-dirty
+
+  npm:
+    name: NPM
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.0.6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.11.0
+          registry-url: https://registry.npmjs.org/
+
+      - name: Version
+        run: deno task version "${GITHUB_REF#refs/tags/v}"
+
+      - name: Build NPM prod
+        run: deno task npm prod
+
+      - name: Publish
+        working-directory: npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
