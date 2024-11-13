@@ -9,7 +9,7 @@
 export function getInt24(
 	dataView: DataView,
 	offset: number,
-	littleEndian: boolean,
+	littleEndian = false,
 ): number {
 	return (getUint24(dataView, offset, littleEndian) << 8) >> 8;
 }
@@ -25,7 +25,7 @@ export function getInt24(
 export function getUint24(
 	dataView: DataView,
 	offset: number,
-	littleEndian: boolean,
+	littleEndian = false,
 ): number {
 	const c = dataView.getUint8(offset + 2);
 	const b = dataView.getUint8(offset + 1);
@@ -45,7 +45,7 @@ export function setInt24(
 	dataView: DataView,
 	offset: number,
 	value: number,
-	littleEndian: boolean,
+	littleEndian = false,
 ): void {
 	setUint24(dataView, offset, value, littleEndian);
 }
@@ -62,7 +62,7 @@ export function setUint24(
 	dataView: DataView,
 	offset: number,
 	value: number,
-	littleEndian: boolean,
+	littleEndian = false,
 ): void {
 	let c;
 	let b;
