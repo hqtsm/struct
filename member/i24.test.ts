@@ -38,6 +38,8 @@ Deno.test('memberI24', () => {
 
 		assertEquals(test.alpha, 0x7fffff);
 		assertEquals(test.beta, -2);
+		assertEquals(test.gamma, -3);
+		assertEquals(test.delta, -4);
 		assertEquals(getInt24(view, 0, false), 0x7fffff);
 		assertEquals(getInt24(view, 3, false), -2);
 		assertEquals(getInt24(view, 6, true), -3);
@@ -52,6 +54,8 @@ Deno.test('memberI24', () => {
 
 		assertEquals(test.alpha, 0x7fffff);
 		assertEquals(test.beta, -2);
+		assertEquals(test.gamma, -3);
+		assertEquals(test.delta, -4);
 		assertEquals(getInt24(view, 0, true), 0x7fffff);
 		assertEquals(getInt24(view, 3, true), -2);
 		assertEquals(getInt24(view, 6, true), -3);
@@ -74,8 +78,8 @@ Deno.test('memberU24', () => {
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += memberU24(this, o, 'alpha');
 			o += memberU24(this, o, 'beta');
-			o += memberI24(this, o, 'gamma', true);
-			o += memberI24(this, o, 'delta', false);
+			o += memberU24(this, o, 'gamma', true);
+			o += memberU24(this, o, 'delta', false);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -93,6 +97,8 @@ Deno.test('memberU24', () => {
 
 		assertEquals(test.alpha, 0x7fffff);
 		assertEquals(test.beta, 0xfffffe);
+		assertEquals(test.gamma, 0xfffffd);
+		assertEquals(test.delta, 0xfffffc);
 		assertEquals(getUint24(view, 0, false), 0x7fffff);
 		assertEquals(getUint24(view, 3, false), 0xfffffe);
 		assertEquals(getUint24(view, 6, true), 0xfffffd);
@@ -107,6 +113,8 @@ Deno.test('memberU24', () => {
 
 		assertEquals(test.alpha, 0x7fffff);
 		assertEquals(test.beta, 0xfffffe);
+		assertEquals(test.gamma, 0xfffffd);
+		assertEquals(test.delta, 0xfffffc);
 		assertEquals(getUint24(view, 0, true), 0x7fffff);
 		assertEquals(getUint24(view, 3, true), 0xfffffe);
 		assertEquals(getUint24(view, 6, true), 0xfffffd);

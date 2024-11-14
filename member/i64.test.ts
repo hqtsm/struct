@@ -37,6 +37,8 @@ Deno.test('memberI64', () => {
 
 		assertEquals(test.alpha, 0x7fffffffffffffffn);
 		assertEquals(test.beta, -2n);
+		assertEquals(test.gamma, -3n);
+		assertEquals(test.delta, -4n);
 		assertEquals(view.getBigInt64(0, false), 0x7fffffffffffffffn);
 		assertEquals(view.getBigInt64(8, false), -2n);
 		assertEquals(view.getBigInt64(16, true), -3n);
@@ -51,6 +53,8 @@ Deno.test('memberI64', () => {
 
 		assertEquals(test.alpha, 0x7fffffffffffffffn);
 		assertEquals(test.beta, -2n);
+		assertEquals(test.gamma, -3n);
+		assertEquals(test.delta, -4n);
 		assertEquals(view.getBigInt64(0, true), 0x7fffffffffffffffn);
 		assertEquals(view.getBigInt64(8, true), -2n);
 		assertEquals(view.getBigInt64(16, true), -3n);
@@ -73,8 +77,8 @@ Deno.test('memberU64', () => {
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += memberU64(this, o, 'alpha');
 			o += memberU64(this, o, 'beta');
-			o += memberI64(this, o, 'gamma', true);
-			o += memberI64(this, o, 'delta', false);
+			o += memberU64(this, o, 'gamma', true);
+			o += memberU64(this, o, 'delta', false);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -92,6 +96,8 @@ Deno.test('memberU64', () => {
 
 		assertEquals(test.alpha, 0x7fffffffffffffffn);
 		assertEquals(test.beta, 0xfffffffffffffffen);
+		assertEquals(test.gamma, 0xfffffffffffffffdn);
+		assertEquals(test.delta, 0xfffffffffffffffcn);
 		assertEquals(view.getBigUint64(0, false), 0x7fffffffffffffffn);
 		assertEquals(view.getBigUint64(8, false), 0xfffffffffffffffen);
 		assertEquals(view.getBigUint64(16, true), 0xfffffffffffffffdn);
@@ -106,6 +112,8 @@ Deno.test('memberU64', () => {
 
 		assertEquals(test.alpha, 0x7fffffffffffffffn);
 		assertEquals(test.beta, 0xfffffffffffffffen);
+		assertEquals(test.gamma, 0xfffffffffffffffdn);
+		assertEquals(test.delta, 0xfffffffffffffffcn);
 		assertEquals(view.getBigUint64(0, true), 0x7fffffffffffffffn);
 		assertEquals(view.getBigUint64(8, true), 0xfffffffffffffffen);
 		assertEquals(view.getBigUint64(16, true), 0xfffffffffffffffdn);

@@ -37,6 +37,8 @@ Deno.test('memberI32', () => {
 
 		assertEquals(test.alpha, 0x7fffffff);
 		assertEquals(test.beta, -2);
+		assertEquals(test.gamma, -3);
+		assertEquals(test.delta, -4);
 		assertEquals(view.getInt32(0, false), 0x7fffffff);
 		assertEquals(view.getInt32(4, false), -2);
 		assertEquals(view.getInt32(8, true), -3);
@@ -51,6 +53,8 @@ Deno.test('memberI32', () => {
 
 		assertEquals(test.alpha, 0x7fffffff);
 		assertEquals(test.beta, -2);
+		assertEquals(test.gamma, -3);
+		assertEquals(test.delta, -4);
 		assertEquals(view.getInt32(0, true), 0x7fffffff);
 		assertEquals(view.getInt32(4, true), -2);
 		assertEquals(view.getInt32(8, true), -3);
@@ -73,8 +77,8 @@ Deno.test('memberU32', () => {
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += memberU32(this, o, 'alpha');
 			o += memberU32(this, o, 'beta');
-			o += memberI32(this, o, 'gamma', true);
-			o += memberI32(this, o, 'delta', false);
+			o += memberU32(this, o, 'gamma', true);
+			o += memberU32(this, o, 'delta', false);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -92,6 +96,8 @@ Deno.test('memberU32', () => {
 
 		assertEquals(test.alpha, 0x7fffffff);
 		assertEquals(test.beta, 0xfffffffe);
+		assertEquals(test.gamma, 0xfffffffd);
+		assertEquals(test.delta, 0xfffffffc);
 		assertEquals(view.getUint32(0, false), 0x7fffffff);
 		assertEquals(view.getUint32(4, false), 0xfffffffe);
 		assertEquals(view.getUint32(8, true), 0xfffffffd);
@@ -106,6 +112,8 @@ Deno.test('memberU32', () => {
 
 		assertEquals(test.alpha, 0x7fffffff);
 		assertEquals(test.beta, 0xfffffffe);
+		assertEquals(test.gamma, 0xfffffffd);
+		assertEquals(test.delta, 0xfffffffc);
 		assertEquals(view.getUint32(0, true), 0x7fffffff);
 		assertEquals(view.getUint32(4, true), 0xfffffffe);
 		assertEquals(view.getUint32(8, true), 0xfffffffd);
