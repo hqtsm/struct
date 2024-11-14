@@ -36,23 +36,3 @@ export type ReadonlyKeyofType<T, U> = {
  * Array buffer type, excluding similar incompatible types like typed arrays.
  */
 export type ArrayBufferReal = ArrayBufferLike & { BYTES_PER_ELEMENT?: never };
-
-/**
- * Buffer view.
- */
-export interface BufferView {
-	/**
-	 * Array buffer.
-	 */
-	readonly buffer: ArrayBufferLike;
-
-	/**
-	 * Byte length.
-	 */
-	readonly byteLength: number;
-
-	/**
-	 * Byte offset.
-	 */
-	readonly byteOffset: number;
-}

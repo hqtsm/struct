@@ -1,10 +1,10 @@
 import { LITTLE_ENDIAN } from './const.ts';
-import type { ArrayBufferReal, BufferView } from './type.ts';
+import type { ArrayBufferReal } from './type.ts';
 
 /**
  * Binary structure buffer view.
  */
-export class Struct implements BufferView {
+export class Struct implements ArrayBufferView {
 	declare public readonly ['constructor']: typeof Struct;
 
 	/**
