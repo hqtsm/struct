@@ -4,33 +4,27 @@ import type { Struct } from '../struct.ts';
 /**
  * Member struct.
  *
+ * @param StructM Member struct.
  * @param StructT Struct constructor.
  * @param offset Byte offset.
- * @param field Field name.
- * @param Type Struct type.
+ * @param member Member name.
  * @returns Byte length.
  */
-export function memberStruct<
-	T extends typeof Struct,
-	U extends ReadonlyKeyofType<T, typeof Struct>,
->(
+export function memberStruct<M extends typeof Struct, T extends typeof Struct>(
+	StructM: M,
 	StructT: T,
 	offset: number,
-	field: ReadonlyKeyofType<
-		T['prototype'],
-		T[U] extends typeof Struct ? T[U]['prototype'] : never
-	>,
-	Type: U,
+	member: ReadonlyKeyofType<T['prototype'], M['prototype']>,
+	littleEndian: boolean | null = null,
 ): number {
-	const StructC = StructT[Type] as typeof Struct;
-	Object.defineProperty(StructT.prototype, field, {
-		get(this: T['prototype']): T['prototype'] {
-			return new StructC(
+	Object.defineProperty(StructT.prototype, member, {
+		get(this: T['prototype']): M['prototype'] {
+			return new StructM(
 				this.buffer,
 				this.byteOffset + offset,
-				this.littleEndian,
+				littleEndian ?? this.littleEndian,
 			);
 		},
 	});
-	return StructC.BYTE_LENGTH;
+	return StructM.BYTE_LENGTH;
 }
