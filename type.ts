@@ -44,7 +44,7 @@ export interface BufferView {
 	/**
 	 * Array buffer.
 	 */
-	readonly buffer: ArrayBuffer;
+	readonly buffer: ArrayBufferLike;
 
 	/**
 	 * Byte length.
