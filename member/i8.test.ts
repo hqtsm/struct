@@ -22,12 +22,12 @@ Deno.test('memberI8', () => {
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
-	test.alpha = 1;
+	test.alpha = 0x7f;
 	test.beta = -1;
 
-	assertEquals(test.alpha, 1);
+	assertEquals(test.alpha, 0x7f);
 	assertEquals(test.beta, -1);
-	assertEquals(data, new Uint8Array([1, 0xff]));
+	assertEquals(data, new Uint8Array([0x7f, 0xff]));
 });
 
 Deno.test('memberU8', () => {
@@ -49,12 +49,12 @@ Deno.test('memberU8', () => {
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
-	test.alpha = 1;
+	test.alpha = 0x7f;
 	test.beta = 0xff;
 
-	assertEquals(test.alpha, 1);
+	assertEquals(test.alpha, 0x7f);
 	assertEquals(test.beta, 0xff);
-	assertEquals(data, new Uint8Array([1, 0xff]));
+	assertEquals(data, new Uint8Array([0x7f, 0xff]));
 });
 
 Deno.test('memberI8A', () => {
