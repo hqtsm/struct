@@ -5,3 +5,4 @@ export * from './i16.ts';
 export * from './i24.ts';
 export * from './i32.ts';
 export * from './i64.ts';
+export * from './struct.ts';
