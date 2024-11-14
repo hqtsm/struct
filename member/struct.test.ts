@@ -20,7 +20,7 @@ Deno.test('memberStruct', () => {
 	}
 
 	class TestParent extends Struct {
-		declare public readonly ['constructor']: typeof TestChild;
+		declare public readonly ['constructor']: typeof TestParent;
 
 		declare public readonly alpha: TestChild;
 
