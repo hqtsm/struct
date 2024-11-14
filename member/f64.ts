@@ -31,5 +31,5 @@ export function memberF64<T extends typeof Struct>(
 			);
 		},
 	});
-	return 4;
+	return 8;
 }
