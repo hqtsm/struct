@@ -1,4 +1,4 @@
-import type { KeyofType } from '../type.ts';
+import type { KeyofExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
 
 /**
@@ -13,7 +13,7 @@ import type { Struct } from '../struct.ts';
 export function memberI32<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: KeyofType<T['prototype'], number>,
+	member: KeyofExtends<T['prototype'], number>,
 	littleEndian: boolean | null = null,
 ): number {
 	Object.defineProperty(StructT.prototype, member, {
@@ -46,7 +46,7 @@ export function memberI32<T extends typeof Struct>(
 export function memberU32<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: KeyofType<T['prototype'], number>,
+	member: KeyofExtends<T['prototype'], number>,
 	littleEndian: boolean | null = null,
 ): number {
 	Object.defineProperty(StructT.prototype, member, {

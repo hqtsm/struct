@@ -1,4 +1,4 @@
-import type { KeyofType, ReadonlyKeyofType } from '../type.ts';
+import type { KeyofExtends, ReadonlyKeyofExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
 
 /**
@@ -12,7 +12,7 @@ import type { Struct } from '../struct.ts';
 export function memberI8<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: KeyofType<T['prototype'], number>,
+	member: KeyofExtends<T['prototype'], number>,
 ): number {
 	Object.defineProperty(StructT.prototype, member, {
 		get(this: T['prototype']): number {
@@ -36,7 +36,7 @@ export function memberI8<T extends typeof Struct>(
 export function memberU8<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: KeyofType<T['prototype'], number>,
+	member: KeyofExtends<T['prototype'], number>,
 ): number {
 	Object.defineProperty(StructT.prototype, member, {
 		get(this: T['prototype']): number {
@@ -61,7 +61,7 @@ export function memberU8<T extends typeof Struct>(
 export function memberI8A<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: ReadonlyKeyofType<T['prototype'], Int8Array>,
+	member: ReadonlyKeyofExtends<T['prototype'], Int8Array>,
 	count: number,
 ): number {
 	Object.defineProperty(StructT.prototype, member, {
@@ -84,7 +84,7 @@ export function memberI8A<T extends typeof Struct>(
 export function memberU8A<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: ReadonlyKeyofType<T['prototype'], Uint8Array>,
+	member: ReadonlyKeyofExtends<T['prototype'], Uint8Array>,
 	count: number,
 ): number {
 	Object.defineProperty(StructT.prototype, member, {

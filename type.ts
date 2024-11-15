@@ -19,17 +19,17 @@ export type ReadonlyKeyof<T> = NonNullable<
 >;
 
 /**
- * Keys for a given value type.
+ * Keys of a type that another type extends.
  */
-export type KeyofType<T, U> = {
-	[K in keyof T]: T[K] extends U ? K : never;
+export type KeyofExtends<T, E> = {
+	[K in keyof T]: E extends T[K] ? K : never;
 }[keyof T];
 
 /**
- * Readonly keys for a given value type.
+ * Readonly keys of a type that another type extends.
  */
-export type ReadonlyKeyofType<T, U> = {
-	[K in ReadonlyKeyof<T>]: T[K] extends U ? K : never;
+export type ReadonlyKeyofExtends<T, E> = {
+	[K in ReadonlyKeyof<T>]: E extends T[K] ? K : never;
 }[ReadonlyKeyof<T>];
 
 /**
