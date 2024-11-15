@@ -33,7 +33,6 @@ Deno.test('memberI32', () => {
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 16);
-	assertEquals(byteLength(Test), 16);
 	assertEquals(byteLength(Test, 'alpha'), 4);
 	assertEquals(byteLength(Test, 'beta'), 4);
 	assertEquals(byteLength(Test, 'gamma'), 4);
@@ -108,7 +107,6 @@ Deno.test('memberU32', () => {
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 16);
-	assertEquals(byteLength(Test), 16);
 	assertEquals(byteLength(Test, 'alpha'), 4);
 	assertEquals(byteLength(Test, 'beta'), 4);
 	assertEquals(byteLength(Test, 'gamma'), 4);

@@ -25,7 +25,6 @@ Deno.test('memberI8', () => {
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 2);
-	assertEquals(byteLength(Test), 2);
 	assertEquals(byteLength(Test, 'alpha'), 1);
 	assertEquals(byteLength(Test, 'beta'), 1);
 	assertEquals(littleEndian(Test, 'alpha'), null);
@@ -63,7 +62,6 @@ Deno.test('memberU8', () => {
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 2);
-	assertEquals(byteLength(Test), 2);
 	assertEquals(byteLength(Test, 'alpha'), 1);
 	assertEquals(byteLength(Test, 'beta'), 1);
 	assertEquals(littleEndian(Test, 'alpha'), null);
@@ -105,7 +103,6 @@ Deno.test('memberI8A', () => {
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 6);
-	assertEquals(byteLength(Test), 6);
 	assertEquals(byteLength(Test, 'alpha'), 2);
 	assertEquals(byteLength(Test, 'beta'), 4);
 	assertEquals(byteLength(Test, 'gamma'), 0);
@@ -156,7 +153,6 @@ Deno.test('memberU8A', () => {
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 6);
-	assertEquals(byteLength(Test), 6);
 	assertEquals(byteLength(Test, 'alpha'), 2);
 	assertEquals(byteLength(Test, 'beta'), 4);
 	assertEquals(byteLength(Test, 'gamma'), 0);

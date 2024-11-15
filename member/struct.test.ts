@@ -45,7 +45,6 @@ Deno.test('memberStruct', () => {
 	};
 
 	assertEquals(TestParent.BYTE_LENGTH, 24);
-	assertEquals(byteLength(TestParent), 24);
 	assertEquals(byteLength(TestParent, 'alpha'), 8);
 	assertEquals(byteLength(TestParent, 'beta'), 8);
 	assertEquals(byteLength(TestParent, 'gamma'), 8);

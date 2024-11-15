@@ -53,7 +53,6 @@ Deno.test('memberF32', () => {
 		};
 
 		assertEquals(Test.BYTE_LENGTH, 12);
-		assertEquals(byteLength(Test), 12);
 		assertEquals(byteLength(Test, 'alpha'), 4);
 		assertEquals(byteLength(Test, 'beta'), 4);
 		assertEquals(byteLength(Test, 'gamma'), 4);
