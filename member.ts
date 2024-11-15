@@ -2,12 +2,14 @@ import type { Member } from './type.ts';
 import type { Struct } from './struct.ts';
 
 /**
- * Member metadata.
+ * Set member info.
  *
  * @param StructT Struct constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param byteLength Byte length.
+ * @param littleEndian Little endian, big endian, or default.
+ * @param Type Member type.
  * @returns Byte length.
  */
 export function member<T extends typeof Struct>(
