@@ -16,10 +16,10 @@ Deno.test('memberI32', () => {
 		declare public delta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI32(this, o, 'alpha');
-			o += memberI32(this, o, 'beta');
-			o += memberI32(this, o, 'gamma', true);
-			o += memberI32(this, o, 'delta', false);
+			o += memberI32(this, 'alpha', o);
+			o += memberI32(this, 'beta', o);
+			o += memberI32(this, 'gamma', o, true);
+			o += memberI32(this, 'delta', o, false);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -75,10 +75,10 @@ Deno.test('memberU32', () => {
 		declare public delta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU32(this, o, 'alpha');
-			o += memberU32(this, o, 'beta');
-			o += memberU32(this, o, 'gamma', true);
-			o += memberU32(this, o, 'delta', false);
+			o += memberU32(this, 'alpha', o);
+			o += memberU32(this, 'beta', o);
+			o += memberU32(this, 'gamma', o, true);
+			o += memberU32(this, 'delta', o, false);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

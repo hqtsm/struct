@@ -5,15 +5,15 @@ import type { Struct } from '../struct.ts';
  * Member int16.
  *
  * @param StructT Struct constructor.
- * @param offset Byte offset.
  * @param name Member name.
+ * @param offset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
 export function memberI16<T extends typeof Struct>(
 	StructT: T,
-	offset: number,
 	name: KeyofExtends<T['prototype'], number>,
+	offset: number,
 	littleEndian: boolean | null = null,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
@@ -38,15 +38,15 @@ export function memberI16<T extends typeof Struct>(
  * Member uint16.
  *
  * @param StructT Struct constructor.
- * @param offset Byte offset.
  * @param name Member name.
- * @param le Little endian, big endian, or default.
+ * @param offset Byte offset.
+ * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
 export function memberU16<T extends typeof Struct>(
 	StructT: T,
-	offset: number,
 	name: KeyofExtends<T['prototype'], number>,
+	offset: number,
 	littleEndian: boolean | null = null,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {

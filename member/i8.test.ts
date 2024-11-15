@@ -12,8 +12,8 @@ Deno.test('memberI8', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI8(this, o, 'alpha');
-			o += memberI8(this, o, 'beta');
+			o += memberI8(this, 'alpha', o);
+			o += memberI8(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -39,8 +39,8 @@ Deno.test('memberU8', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU8(this, o, 'alpha');
-			o += memberU8(this, o, 'beta');
+			o += memberU8(this, 'alpha', o);
+			o += memberU8(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -68,9 +68,9 @@ Deno.test('memberI8A', () => {
 		declare public readonly gamma: Int8Array;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI8A(2, this, o, 'alpha');
-			o += memberI8A(4, this, o, 'beta');
-			o += memberI8A(0, this, o, 'gamma');
+			o += memberI8A(2, this, 'alpha', o);
+			o += memberI8A(4, this, 'beta', o);
+			o += memberI8A(0, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -101,9 +101,9 @@ Deno.test('memberU8A', () => {
 		declare public readonly gamma: Uint8Array;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU8A(2, this, o, 'alpha');
-			o += memberU8A(4, this, o, 'beta');
-			o += memberU8A(0, this, o, 'gamma');
+			o += memberU8A(2, this, 'alpha', o);
+			o += memberU8A(4, this, 'beta', o);
+			o += memberU8A(0, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

@@ -38,9 +38,9 @@ Deno.test('memberF32', () => {
 			declare public gamma: number;
 
 			public static override readonly BYTE_LENGTH: number = ((o) => {
-				o += memberF32(this, o, 'alpha', true);
-				o += memberF32(this, o, 'beta', false);
-				o += memberF32(this, o, 'gamma');
+				o += memberF32(this, 'alpha', o, true);
+				o += memberF32(this, 'beta', o, false);
+				o += memberF32(this, 'gamma', o);
 				return o;
 			})(super.BYTE_LENGTH);
 		}

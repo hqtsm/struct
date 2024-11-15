@@ -6,15 +6,16 @@ import type { Struct } from '../struct.ts';
  *
  * @param StructM Member struct.
  * @param StructT Struct constructor.
- * @param offset Byte offset.
  * @param name Member name.
+ * @param offset Byte offset.
+ * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
 export function memberStruct<M extends typeof Struct, T extends typeof Struct>(
 	StructM: M,
 	StructT: T,
-	offset: number,
 	name: ReadonlyKeyofExtends<T['prototype'], M['prototype']>,
+	offset: number,
 	littleEndian: boolean | null = null,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {

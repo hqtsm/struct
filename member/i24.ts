@@ -6,15 +6,15 @@ import { getInt24, getUint24, setInt24, setUint24 } from '../util.ts';
  * Member int24.
  *
  * @param StructT Struct constructor.
- * @param offset Byte offset.
  * @param name Member name.
+ * @param offset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
 export function memberI24<T extends typeof Struct>(
 	StructT: T,
-	offset: number,
 	name: KeyofExtends<T['prototype'], number>,
+	offset: number,
 	littleEndian: boolean | null = null,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
@@ -41,15 +41,15 @@ export function memberI24<T extends typeof Struct>(
  * Member uint24.
  *
  * @param StructT Struct constructor.
- * @param offset Byte offset.
  * @param name Member name.
+ * @param offset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
 export function memberU24<T extends typeof Struct>(
 	StructT: T,
-	offset: number,
 	name: KeyofExtends<T['prototype'], number>,
+	offset: number,
 	littleEndian: boolean | null = null,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {

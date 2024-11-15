@@ -13,8 +13,8 @@ Deno.test('memberStruct', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU32(this, o, 'alpha');
-			o += memberU32(this, o, 'beta');
+			o += memberU32(this, 'alpha', o);
+			o += memberU32(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -29,9 +29,9 @@ Deno.test('memberStruct', () => {
 		declare public readonly gamma: TestChild;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberStruct(TestChild, this, o, 'alpha', true);
-			o += memberStruct(TestChild, this, o, 'beta', false);
-			o += memberStruct(TestChild, this, o, 'gamma');
+			o += memberStruct(TestChild, this, 'alpha', o, true);
+			o += memberStruct(TestChild, this, 'beta', o, false);
+			o += memberStruct(TestChild, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

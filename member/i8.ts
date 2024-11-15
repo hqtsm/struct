@@ -5,14 +5,14 @@ import type { Struct } from '../struct.ts';
  * Member int8.
  *
  * @param StructT Struct constructor.
- * @param offset Byte offset.
  * @param name Member name.
+ * @param offset Byte offset.
  * @returns Byte length.
  */
 export function memberI8<T extends typeof Struct>(
 	StructT: T,
-	offset: number,
 	name: KeyofExtends<T['prototype'], number>,
+	offset: number,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): number {
@@ -29,14 +29,14 @@ export function memberI8<T extends typeof Struct>(
  * Member uint8.
  *
  * @param StructT Struct constructor.
- * @param offset Byte offset.
  * @param name Member name.
+ * @param offset Byte offset.
  * @returns Byte length.
  */
 export function memberU8<T extends typeof Struct>(
 	StructT: T,
-	offset: number,
 	name: KeyofExtends<T['prototype'], number>,
+	offset: number,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): number {
@@ -54,15 +54,15 @@ export function memberU8<T extends typeof Struct>(
  *
  * @param count Array length.
  * @param StructT Struct constructor.
- * @param offset Byte offset.
  * @param name Member name.
+ * @param offset Byte offset.
  * @returns Byte length.
  */
 export function memberI8A<T extends typeof Struct>(
 	count: number,
 	StructT: T,
-	offset: number,
 	name: ReadonlyKeyofExtends<T['prototype'], Int8Array>,
+	offset: number,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): Int8Array {
@@ -77,15 +77,15 @@ export function memberI8A<T extends typeof Struct>(
  *
  * @param count Array length.
  * @param StructT Struct constructor.
- * @param offset Byte offset.
  * @param name Member name.
+ * @param offset Byte offset.
  * @returns Byte length.
  */
 export function memberU8A<T extends typeof Struct>(
 	count: number,
 	StructT: T,
-	offset: number,
 	name: ReadonlyKeyofExtends<T['prototype'], Uint8Array>,
+	offset: number,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): Uint8Array {
