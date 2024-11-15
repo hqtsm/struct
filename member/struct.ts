@@ -1,5 +1,6 @@
 import type { ReadonlyKeyofExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
+import { member } from '../member.ts';
 
 /**
  * Member struct.
@@ -7,7 +8,7 @@ import type { Struct } from '../struct.ts';
  * @param StructM Member struct.
  * @param StructT Struct constructor.
  * @param name Member name.
- * @param offset Byte offset.
+ * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
@@ -15,17 +16,17 @@ export function memberStruct<M extends typeof Struct, T extends typeof Struct>(
 	StructM: M,
 	StructT: T,
 	name: ReadonlyKeyofExtends<T['prototype'], M['prototype']>,
-	offset: number,
+	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): M['prototype'] {
 			return new StructM(
 				this.buffer,
-				this.byteOffset + offset,
+				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 	});
-	return StructM.BYTE_LENGTH;
+	return member(StructM, name, byteOffset, StructM.BYTE_LENGTH, littleEndian);
 }

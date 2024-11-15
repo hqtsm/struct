@@ -36,3 +36,23 @@ export type ReadonlyKeyofExtends<T, E> = {
  * Array buffer type, excluding similar incompatible types like typed arrays.
  */
 export type ArrayBufferReal = ArrayBufferLike & { BYTES_PER_ELEMENT?: never };
+
+/**
+ * Member info.
+ */
+export type Member = {
+	/**
+	 * Byte offset.
+	 */
+	byteOffset: number;
+
+	/**
+	 * Byte length.
+	 */
+	byteLength: number;
+
+	/**
+	 * Little endian, big endian, or default.
+	 */
+	littleEndian: boolean | null;
+};

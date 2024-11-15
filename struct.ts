@@ -1,5 +1,5 @@
 import { LITTLE_ENDIAN } from './const.ts';
-import type { ArrayBufferReal } from './type.ts';
+import type { ArrayBufferReal, Member } from './type.ts';
 
 /**
  * Binary structure buffer view.
@@ -77,4 +77,11 @@ export class Struct implements ArrayBufferView {
 	 * Size of new instance.
 	 */
 	public static readonly BYTE_LENGTH: number = 0;
+
+	/**
+	 * Member info.
+	 */
+	public static readonly MEMBERS: Readonly<
+		{ [member: PropertyKey]: Readonly<Member> }
+	> = {};
 }

@@ -1,28 +1,29 @@
 import type { KeyofExtends, ReadonlyKeyofExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
+import { member } from '../member.ts';
 
 /**
  * Member int8.
  *
  * @param StructT Struct constructor.
  * @param name Member name.
- * @param offset Byte offset.
+ * @param byteOffset Byte offset.
  * @returns Byte length.
  */
 export function memberI8<T extends typeof Struct>(
 	StructT: T,
 	name: KeyofExtends<T['prototype'], number>,
-	offset: number,
+	byteOffset: number,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): number {
-			return this.dataView.getInt8(offset);
+			return this.dataView.getInt8(byteOffset);
 		},
 		set(this: T['prototype'], value: number): void {
-			this.dataView.setInt8(offset, value);
+			this.dataView.setInt8(byteOffset, value);
 		},
 	});
-	return 1;
+	return member(StructT, name, byteOffset, 1, null);
 }
 
 /**
@@ -30,23 +31,23 @@ export function memberI8<T extends typeof Struct>(
  *
  * @param StructT Struct constructor.
  * @param name Member name.
- * @param offset Byte offset.
+ * @param byteOffset Byte offset.
  * @returns Byte length.
  */
 export function memberU8<T extends typeof Struct>(
 	StructT: T,
 	name: KeyofExtends<T['prototype'], number>,
-	offset: number,
+	byteOffset: number,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): number {
-			return this.dataView.getUint8(offset);
+			return this.dataView.getUint8(byteOffset);
 		},
 		set(this: T['prototype'], value: number): void {
-			this.dataView.setUint8(offset, value);
+			this.dataView.setUint8(byteOffset, value);
 		},
 	});
-	return 1;
+	return member(StructT, name, byteOffset, 1, null);
 }
 
 /**
@@ -55,21 +56,25 @@ export function memberU8<T extends typeof Struct>(
  * @param count Array length.
  * @param StructT Struct constructor.
  * @param name Member name.
- * @param offset Byte offset.
+ * @param byteOffset Byte offset.
  * @returns Byte length.
  */
 export function memberI8A<T extends typeof Struct>(
 	count: number,
 	StructT: T,
 	name: ReadonlyKeyofExtends<T['prototype'], Int8Array>,
-	offset: number,
+	byteOffset: number,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): Int8Array {
-			return new Int8Array(this.buffer, this.byteOffset + offset, count);
+			return new Int8Array(
+				this.buffer,
+				this.byteOffset + byteOffset,
+				count,
+			);
 		},
 	});
-	return count;
+	return member(StructT, name, byteOffset, count, null);
 }
 
 /**
@@ -78,19 +83,23 @@ export function memberI8A<T extends typeof Struct>(
  * @param count Array length.
  * @param StructT Struct constructor.
  * @param name Member name.
- * @param offset Byte offset.
+ * @param byteOffset Byte offset.
  * @returns Byte length.
  */
 export function memberU8A<T extends typeof Struct>(
 	count: number,
 	StructT: T,
 	name: ReadonlyKeyofExtends<T['prototype'], Uint8Array>,
-	offset: number,
+	byteOffset: number,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): Uint8Array {
-			return new Uint8Array(this.buffer, this.byteOffset + offset, count);
+			return new Uint8Array(
+				this.buffer,
+				this.byteOffset + byteOffset,
+				count,
+			);
 		},
 	});
-	return count;
+	return member(StructT, name, byteOffset, count, null);
 }
