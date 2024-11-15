@@ -3,6 +3,7 @@ import { assertEquals } from '@std/assert';
 import { Struct } from '../struct.ts';
 import { memberU32 } from './i32.ts';
 import { memberStruct } from './struct.ts';
+import { byteLength, byteOffset, littleEndian } from '../macro.ts';
 
 Deno.test('memberStruct', () => {
 	class TestChild extends Struct {
@@ -36,7 +37,21 @@ Deno.test('memberStruct', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const offBeta = byteOffset(TestChild, 'beta');
+	const off = {
+		alpha: byteOffset(TestParent, 'alpha'),
+		beta: byteOffset(TestParent, 'beta'),
+		gamma: byteOffset(TestParent, 'gamma'),
+	};
+
 	assertEquals(TestParent.BYTE_LENGTH, 24);
+	assertEquals(byteLength(TestParent), 24);
+	assertEquals(byteLength(TestParent, 'alpha'), 8);
+	assertEquals(byteLength(TestParent, 'beta'), 8);
+	assertEquals(byteLength(TestParent, 'gamma'), 8);
+	assertEquals(littleEndian(TestParent, 'alpha'), true);
+	assertEquals(littleEndian(TestParent, 'beta'), false);
+	assertEquals(littleEndian(TestParent, 'gamma'), null);
 
 	const data = new Uint8Array(TestParent.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -52,9 +67,9 @@ Deno.test('memberStruct', () => {
 		assertEquals(test.alpha.beta, 0x12345678);
 		assertEquals(test.beta.beta, 0x23456789);
 		assertEquals(test.gamma.beta, 0x34567890);
-		assertEquals(view.getUint32(4, true), 0x12345678);
-		assertEquals(view.getUint32(12, false), 0x23456789);
-		assertEquals(view.getUint32(20, true), 0x34567890);
+		assertEquals(view.getUint32(off.alpha + offBeta, true), 0x12345678);
+		assertEquals(view.getUint32(off.beta + offBeta, false), 0x23456789);
+		assertEquals(view.getUint32(off.gamma + offBeta, true), 0x34567890);
 	}
 	{
 		const test = new TestParent(data.buffer, 0, false);
@@ -68,8 +83,8 @@ Deno.test('memberStruct', () => {
 		assertEquals(test.alpha.beta, 0x12345678);
 		assertEquals(test.beta.beta, 0x23456789);
 		assertEquals(test.gamma.beta, 0x34567890);
-		assertEquals(view.getUint32(4, true), 0x12345678);
-		assertEquals(view.getUint32(12, false), 0x23456789);
-		assertEquals(view.getUint32(20, false), 0x34567890);
+		assertEquals(view.getUint32(off.alpha + offBeta, true), 0x12345678);
+		assertEquals(view.getUint32(off.beta + offBeta, false), 0x23456789);
+		assertEquals(view.getUint32(off.gamma + offBeta, false), 0x34567890);
 	}
 });

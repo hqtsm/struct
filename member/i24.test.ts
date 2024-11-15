@@ -3,6 +3,7 @@ import { assertEquals } from '@std/assert';
 import { Struct } from '../struct.ts';
 import { memberI24, memberU24 } from './i24.ts';
 import { getInt24, getUint24 } from '../dataview.ts';
+import { byteLength, byteOffset, littleEndian } from '../macro.ts';
 
 Deno.test('memberI24', () => {
 	class Test extends Struct {
@@ -25,7 +26,23 @@ Deno.test('memberI24', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+		gamma: byteOffset(Test, 'gamma'),
+		delta: byteOffset(Test, 'delta'),
+	};
+
 	assertEquals(Test.BYTE_LENGTH, 12);
+	assertEquals(byteLength(Test), 12);
+	assertEquals(byteLength(Test, 'alpha'), 3);
+	assertEquals(byteLength(Test, 'beta'), 3);
+	assertEquals(byteLength(Test, 'gamma'), 3);
+	assertEquals(byteLength(Test, 'delta'), 3);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(littleEndian(Test, 'gamma'), true);
+	assertEquals(littleEndian(Test, 'delta'), false);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -40,10 +57,10 @@ Deno.test('memberI24', () => {
 		assertEquals(test.beta, -2);
 		assertEquals(test.gamma, -3);
 		assertEquals(test.delta, -4);
-		assertEquals(getInt24(view, 0, false), 0x7fffff);
-		assertEquals(getInt24(view, 3, false), -2);
-		assertEquals(getInt24(view, 6, true), -3);
-		assertEquals(getInt24(view, 9, false), -4);
+		assertEquals(getInt24(view, off.alpha, false), 0x7fffff);
+		assertEquals(getInt24(view, off.beta, false), -2);
+		assertEquals(getInt24(view, off.gamma, true), -3);
+		assertEquals(getInt24(view, off.delta, false), -4);
 	}
 	{
 		const test = new Test(data.buffer, 0, true);
@@ -56,10 +73,10 @@ Deno.test('memberI24', () => {
 		assertEquals(test.beta, -2);
 		assertEquals(test.gamma, -3);
 		assertEquals(test.delta, -4);
-		assertEquals(getInt24(view, 0, true), 0x7fffff);
-		assertEquals(getInt24(view, 3, true), -2);
-		assertEquals(getInt24(view, 6, true), -3);
-		assertEquals(getInt24(view, 9, false), -4);
+		assertEquals(getInt24(view, off.alpha, true), 0x7fffff);
+		assertEquals(getInt24(view, off.beta, true), -2);
+		assertEquals(getInt24(view, off.gamma, true), -3);
+		assertEquals(getInt24(view, off.delta, false), -4);
 	}
 });
 
@@ -84,7 +101,23 @@ Deno.test('memberU24', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+		gamma: byteOffset(Test, 'gamma'),
+		delta: byteOffset(Test, 'delta'),
+	};
+
 	assertEquals(Test.BYTE_LENGTH, 12);
+	assertEquals(byteLength(Test), 12);
+	assertEquals(byteLength(Test, 'alpha'), 3);
+	assertEquals(byteLength(Test, 'beta'), 3);
+	assertEquals(byteLength(Test, 'gamma'), 3);
+	assertEquals(byteLength(Test, 'delta'), 3);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(littleEndian(Test, 'gamma'), true);
+	assertEquals(littleEndian(Test, 'delta'), false);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -99,10 +132,10 @@ Deno.test('memberU24', () => {
 		assertEquals(test.beta, 0xfffffe);
 		assertEquals(test.gamma, 0xfffffd);
 		assertEquals(test.delta, 0xfffffc);
-		assertEquals(getUint24(view, 0, false), 0x7fffff);
-		assertEquals(getUint24(view, 3, false), 0xfffffe);
-		assertEquals(getUint24(view, 6, true), 0xfffffd);
-		assertEquals(getUint24(view, 9, false), 0xfffffc);
+		assertEquals(getUint24(view, off.alpha, false), 0x7fffff);
+		assertEquals(getUint24(view, off.beta, false), 0xfffffe);
+		assertEquals(getUint24(view, off.gamma, true), 0xfffffd);
+		assertEquals(getUint24(view, off.delta, false), 0xfffffc);
 	}
 	{
 		const test = new Test(data.buffer, 0, true);
@@ -115,9 +148,9 @@ Deno.test('memberU24', () => {
 		assertEquals(test.beta, 0xfffffe);
 		assertEquals(test.gamma, 0xfffffd);
 		assertEquals(test.delta, 0xfffffc);
-		assertEquals(getUint24(view, 0, true), 0x7fffff);
-		assertEquals(getUint24(view, 3, true), 0xfffffe);
-		assertEquals(getUint24(view, 6, true), 0xfffffd);
-		assertEquals(getUint24(view, 9, false), 0xfffffc);
+		assertEquals(getUint24(view, off.alpha, true), 0x7fffff);
+		assertEquals(getUint24(view, off.beta, true), 0xfffffe);
+		assertEquals(getUint24(view, off.gamma, true), 0xfffffd);
+		assertEquals(getUint24(view, off.delta, false), 0xfffffc);
 	}
 });

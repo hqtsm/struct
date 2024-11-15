@@ -2,6 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { memberI16, memberU16 } from './i16.ts';
+import { byteLength, byteOffset, littleEndian } from '../macro.ts';
 
 Deno.test('memberI16', () => {
 	class Test extends Struct {
@@ -24,7 +25,23 @@ Deno.test('memberI16', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+		gamma: byteOffset(Test, 'gamma'),
+		delta: byteOffset(Test, 'delta'),
+	};
+
 	assertEquals(Test.BYTE_LENGTH, 8);
+	assertEquals(byteLength(Test), 8);
+	assertEquals(byteLength(Test, 'alpha'), 2);
+	assertEquals(byteLength(Test, 'beta'), 2);
+	assertEquals(byteLength(Test, 'gamma'), 2);
+	assertEquals(byteLength(Test, 'delta'), 2);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(littleEndian(Test, 'gamma'), true);
+	assertEquals(littleEndian(Test, 'delta'), false);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -39,10 +56,10 @@ Deno.test('memberI16', () => {
 		assertEquals(test.beta, -2);
 		assertEquals(test.gamma, -3);
 		assertEquals(test.delta, -4);
-		assertEquals(view.getInt16(0, false), 0x7fff);
-		assertEquals(view.getInt16(2, false), -2);
-		assertEquals(view.getInt16(4, true), -3);
-		assertEquals(view.getInt16(6, false), -4);
+		assertEquals(view.getInt16(off.alpha, false), 0x7fff);
+		assertEquals(view.getInt16(off.beta, false), -2);
+		assertEquals(view.getInt16(off.gamma, true), -3);
+		assertEquals(view.getInt16(off.delta, false), -4);
 	}
 	{
 		const test = new Test(data.buffer, 0, true);
@@ -55,10 +72,10 @@ Deno.test('memberI16', () => {
 		assertEquals(test.beta, -2);
 		assertEquals(test.gamma, -3);
 		assertEquals(test.delta, -4);
-		assertEquals(view.getInt16(0, true), 0x7fff);
-		assertEquals(view.getInt16(2, true), -2);
-		assertEquals(view.getInt16(4, true), -3);
-		assertEquals(view.getInt16(6, false), -4);
+		assertEquals(view.getInt16(off.alpha, true), 0x7fff);
+		assertEquals(view.getInt16(off.beta, true), -2);
+		assertEquals(view.getInt16(off.gamma, true), -3);
+		assertEquals(view.getInt16(off.delta, false), -4);
 	}
 });
 
@@ -83,7 +100,23 @@ Deno.test('memberU16', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+		gamma: byteOffset(Test, 'gamma'),
+		delta: byteOffset(Test, 'delta'),
+	};
+
 	assertEquals(Test.BYTE_LENGTH, 8);
+	assertEquals(byteLength(Test), 8);
+	assertEquals(byteLength(Test, 'alpha'), 2);
+	assertEquals(byteLength(Test, 'beta'), 2);
+	assertEquals(byteLength(Test, 'gamma'), 2);
+	assertEquals(byteLength(Test, 'delta'), 2);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(littleEndian(Test, 'gamma'), true);
+	assertEquals(littleEndian(Test, 'delta'), false);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -98,10 +131,10 @@ Deno.test('memberU16', () => {
 		assertEquals(test.beta, 0xfffe);
 		assertEquals(test.gamma, 0xfffd);
 		assertEquals(test.delta, 0xfffc);
-		assertEquals(view.getUint16(0, false), 0x7fff);
-		assertEquals(view.getUint16(2, false), 0xfffe);
-		assertEquals(view.getUint16(4, true), 0xfffd);
-		assertEquals(view.getUint16(6, false), 0xfffc);
+		assertEquals(view.getUint16(off.alpha, false), 0x7fff);
+		assertEquals(view.getUint16(off.beta, false), 0xfffe);
+		assertEquals(view.getUint16(off.gamma, true), 0xfffd);
+		assertEquals(view.getUint16(off.delta, false), 0xfffc);
 	}
 	{
 		const test = new Test(data.buffer, 0, true);
@@ -114,9 +147,9 @@ Deno.test('memberU16', () => {
 		assertEquals(test.beta, 0xfffe);
 		assertEquals(test.gamma, 0xfffd);
 		assertEquals(test.delta, 0xfffc);
-		assertEquals(view.getUint16(0, true), 0x7fff);
-		assertEquals(view.getUint16(2, true), 0xfffe);
-		assertEquals(view.getUint16(4, true), 0xfffd);
-		assertEquals(view.getUint16(6, false), 0xfffc);
+		assertEquals(view.getUint16(off.alpha, true), 0x7fff);
+		assertEquals(view.getUint16(off.beta, true), 0xfffe);
+		assertEquals(view.getUint16(off.gamma, true), 0xfffd);
+		assertEquals(view.getUint16(off.delta, false), 0xfffc);
 	}
 });

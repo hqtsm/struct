@@ -28,5 +28,5 @@ export function memberStruct<M extends typeof Struct, T extends typeof Struct>(
 			);
 		},
 	});
-	return member(StructM, name, byteOffset, StructM.BYTE_LENGTH, littleEndian);
+	return member(StructT, name, byteOffset, StructM.BYTE_LENGTH, littleEndian);
 }

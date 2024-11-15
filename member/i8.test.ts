@@ -2,6 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { memberI8, memberI8A, memberU8, memberU8A } from './i8.ts';
+import { byteLength, byteOffset, littleEndian } from '../macro.ts';
 
 Deno.test('memberI8', () => {
 	class Test extends Struct {
@@ -18,7 +19,17 @@ Deno.test('memberI8', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+	};
+
 	assertEquals(Test.BYTE_LENGTH, 2);
+	assertEquals(byteLength(Test), 2);
+	assertEquals(byteLength(Test, 'alpha'), 1);
+	assertEquals(byteLength(Test, 'beta'), 1);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -27,7 +38,8 @@ Deno.test('memberI8', () => {
 
 	assertEquals(test.alpha, 0x7f);
 	assertEquals(test.beta, -1);
-	assertEquals(data, new Uint8Array([0x7f, 0xff]));
+	assertEquals(data[off.alpha], 0x7f);
+	assertEquals(data[off.beta], 0xff);
 });
 
 Deno.test('memberU8', () => {
@@ -45,7 +57,17 @@ Deno.test('memberU8', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+	};
+
 	assertEquals(Test.BYTE_LENGTH, 2);
+	assertEquals(byteLength(Test), 2);
+	assertEquals(byteLength(Test, 'alpha'), 1);
+	assertEquals(byteLength(Test, 'beta'), 1);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -54,7 +76,8 @@ Deno.test('memberU8', () => {
 
 	assertEquals(test.alpha, 0x7f);
 	assertEquals(test.beta, 0xff);
-	assertEquals(data, new Uint8Array([0x7f, 0xff]));
+	assertEquals(data[off.alpha], 0x7f);
+	assertEquals(data[off.beta], 0xff);
 });
 
 Deno.test('memberI8A', () => {
@@ -75,7 +98,20 @@ Deno.test('memberI8A', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+		gamma: byteOffset(Test, 'gamma'),
+	};
+
 	assertEquals(Test.BYTE_LENGTH, 6);
+	assertEquals(byteLength(Test), 6);
+	assertEquals(byteLength(Test, 'alpha'), 2);
+	assertEquals(byteLength(Test, 'beta'), 4);
+	assertEquals(byteLength(Test, 'gamma'), 0);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(littleEndian(Test, 'gamma'), null);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -87,7 +123,12 @@ Deno.test('memberI8A', () => {
 	test.beta[3] = -3;
 
 	assertEquals(test.gamma.length, 0);
-	assertEquals(data, new Uint8Array([1, 0xff, 2, 0xfe, 3, 0xfd]));
+	assertEquals(data[off.alpha], 1);
+	assertEquals(data[off.alpha + 1], 0xff);
+	assertEquals(data[off.beta], 2);
+	assertEquals(data[off.beta + 1], 0xfe);
+	assertEquals(data[off.beta + 2], 3);
+	assertEquals(data[off.beta + 3], 0xfd);
 });
 
 Deno.test('memberU8A', () => {
@@ -108,7 +149,20 @@ Deno.test('memberU8A', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+		gamma: byteOffset(Test, 'gamma'),
+	};
+
 	assertEquals(Test.BYTE_LENGTH, 6);
+	assertEquals(byteLength(Test), 6);
+	assertEquals(byteLength(Test, 'alpha'), 2);
+	assertEquals(byteLength(Test, 'beta'), 4);
+	assertEquals(byteLength(Test, 'gamma'), 0);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(littleEndian(Test, 'gamma'), null);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -120,5 +174,10 @@ Deno.test('memberU8A', () => {
 	test.beta[3] = 0xfd;
 
 	assertEquals(test.gamma.length, 0);
-	assertEquals(data, new Uint8Array([1, 0xff, 2, 0xfe, 3, 0xfd]));
+	assertEquals(data[off.alpha], 1);
+	assertEquals(data[off.alpha + 1], 0xff);
+	assertEquals(data[off.beta], 2);
+	assertEquals(data[off.beta + 1], 0xfe);
+	assertEquals(data[off.beta + 2], 3);
+	assertEquals(data[off.beta + 3], 0xfd);
 });

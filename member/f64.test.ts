@@ -2,6 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { memberF64 } from './f64.ts';
+import { byteLength, byteOffset, littleEndian } from '../macro.ts';
 
 Deno.test('memberF64', () => {
 	for (
@@ -41,7 +42,20 @@ Deno.test('memberF64', () => {
 			})(super.BYTE_LENGTH);
 		}
 
+		const off = {
+			alpha: byteOffset(Test, 'alpha'),
+			beta: byteOffset(Test, 'beta'),
+			gamma: byteOffset(Test, 'gamma'),
+		};
+
 		assertEquals(Test.BYTE_LENGTH, 24);
+		assertEquals(byteLength(Test), 24);
+		assertEquals(byteLength(Test, 'alpha'), 8);
+		assertEquals(byteLength(Test, 'beta'), 8);
+		assertEquals(byteLength(Test, 'gamma'), 8);
+		assertEquals(littleEndian(Test, 'alpha'), true);
+		assertEquals(littleEndian(Test, 'beta'), false);
+		assertEquals(littleEndian(Test, 'gamma'), null);
 
 		const data = new Uint8Array(Test.BYTE_LENGTH);
 		const view = new DataView(data.buffer);
@@ -54,9 +68,9 @@ Deno.test('memberF64', () => {
 			assertEquals(test.alpha, f64);
 			assertEquals(test.beta, f64);
 			assertEquals(test.gamma, f64);
-			assertEquals(view.getFloat64(0, true), f64);
-			assertEquals(view.getFloat64(8, false), f64);
-			assertEquals(view.getFloat64(16, false), f64);
+			assertEquals(view.getFloat64(off.alpha, true), f64);
+			assertEquals(view.getFloat64(off.beta, false), f64);
+			assertEquals(view.getFloat64(off.gamma, false), f64);
 		}
 		{
 			const test = new Test(data.buffer, 0, true);
@@ -67,9 +81,9 @@ Deno.test('memberF64', () => {
 			assertEquals(test.alpha, f64);
 			assertEquals(test.beta, f64);
 			assertEquals(test.gamma, f64);
-			assertEquals(view.getFloat64(0, true), f64);
-			assertEquals(view.getFloat64(8, false), f64);
-			assertEquals(view.getFloat64(16, true), f64);
+			assertEquals(view.getFloat64(off.alpha, true), f64);
+			assertEquals(view.getFloat64(off.beta, false), f64);
+			assertEquals(view.getFloat64(off.gamma, true), f64);
 		}
 	}
 });

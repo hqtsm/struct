@@ -2,6 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { memberI64, memberU64 } from './i64.ts';
+import { byteLength, byteOffset, littleEndian } from '../macro.ts';
 
 Deno.test('memberI64', () => {
 	class Test extends Struct {
@@ -24,7 +25,23 @@ Deno.test('memberI64', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+		gamma: byteOffset(Test, 'gamma'),
+		delta: byteOffset(Test, 'delta'),
+	};
+
 	assertEquals(Test.BYTE_LENGTH, 32);
+	assertEquals(byteLength(Test), 32);
+	assertEquals(byteLength(Test, 'alpha'), 8);
+	assertEquals(byteLength(Test, 'beta'), 8);
+	assertEquals(byteLength(Test, 'gamma'), 8);
+	assertEquals(byteLength(Test, 'delta'), 8);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(littleEndian(Test, 'gamma'), true);
+	assertEquals(littleEndian(Test, 'delta'), false);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -39,10 +56,10 @@ Deno.test('memberI64', () => {
 		assertEquals(test.beta, -2n);
 		assertEquals(test.gamma, -3n);
 		assertEquals(test.delta, -4n);
-		assertEquals(view.getBigInt64(0, false), 0x7fffffffffffffffn);
-		assertEquals(view.getBigInt64(8, false), -2n);
-		assertEquals(view.getBigInt64(16, true), -3n);
-		assertEquals(view.getBigInt64(24, false), -4n);
+		assertEquals(view.getBigInt64(off.alpha, false), 0x7fffffffffffffffn);
+		assertEquals(view.getBigInt64(off.beta, false), -2n);
+		assertEquals(view.getBigInt64(off.gamma, true), -3n);
+		assertEquals(view.getBigInt64(off.delta, false), -4n);
 	}
 	{
 		const test = new Test(data.buffer, 0, true);
@@ -55,10 +72,10 @@ Deno.test('memberI64', () => {
 		assertEquals(test.beta, -2n);
 		assertEquals(test.gamma, -3n);
 		assertEquals(test.delta, -4n);
-		assertEquals(view.getBigInt64(0, true), 0x7fffffffffffffffn);
-		assertEquals(view.getBigInt64(8, true), -2n);
-		assertEquals(view.getBigInt64(16, true), -3n);
-		assertEquals(view.getBigInt64(24, false), -4n);
+		assertEquals(view.getBigInt64(off.alpha, true), 0x7fffffffffffffffn);
+		assertEquals(view.getBigInt64(off.beta, true), -2n);
+		assertEquals(view.getBigInt64(off.gamma, true), -3n);
+		assertEquals(view.getBigInt64(off.delta, false), -4n);
 	}
 });
 
@@ -83,7 +100,23 @@ Deno.test('memberU64', () => {
 		})(super.BYTE_LENGTH);
 	}
 
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+		gamma: byteOffset(Test, 'gamma'),
+		delta: byteOffset(Test, 'delta'),
+	};
+
 	assertEquals(Test.BYTE_LENGTH, 32);
+	assertEquals(byteLength(Test), 32);
+	assertEquals(byteLength(Test, 'alpha'), 8);
+	assertEquals(byteLength(Test, 'beta'), 8);
+	assertEquals(byteLength(Test, 'gamma'), 8);
+	assertEquals(byteLength(Test, 'delta'), 8);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(littleEndian(Test, 'gamma'), true);
+	assertEquals(littleEndian(Test, 'delta'), false);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -98,10 +131,10 @@ Deno.test('memberU64', () => {
 		assertEquals(test.beta, 0xfffffffffffffffen);
 		assertEquals(test.gamma, 0xfffffffffffffffdn);
 		assertEquals(test.delta, 0xfffffffffffffffcn);
-		assertEquals(view.getBigUint64(0, false), 0x7fffffffffffffffn);
-		assertEquals(view.getBigUint64(8, false), 0xfffffffffffffffen);
-		assertEquals(view.getBigUint64(16, true), 0xfffffffffffffffdn);
-		assertEquals(view.getBigUint64(24, false), 0xfffffffffffffffcn);
+		assertEquals(view.getBigUint64(off.alpha, false), 0x7fffffffffffffffn);
+		assertEquals(view.getBigUint64(off.beta, false), 0xfffffffffffffffen);
+		assertEquals(view.getBigUint64(off.gamma, true), 0xfffffffffffffffdn);
+		assertEquals(view.getBigUint64(off.delta, false), 0xfffffffffffffffcn);
 	}
 	{
 		const test = new Test(data.buffer, 0, true);
@@ -114,9 +147,9 @@ Deno.test('memberU64', () => {
 		assertEquals(test.beta, 0xfffffffffffffffen);
 		assertEquals(test.gamma, 0xfffffffffffffffdn);
 		assertEquals(test.delta, 0xfffffffffffffffcn);
-		assertEquals(view.getBigUint64(0, true), 0x7fffffffffffffffn);
-		assertEquals(view.getBigUint64(8, true), 0xfffffffffffffffen);
-		assertEquals(view.getBigUint64(16, true), 0xfffffffffffffffdn);
-		assertEquals(view.getBigUint64(24, false), 0xfffffffffffffffcn);
+		assertEquals(view.getBigUint64(off.alpha, true), 0x7fffffffffffffffn);
+		assertEquals(view.getBigUint64(off.beta, true), 0xfffffffffffffffen);
+		assertEquals(view.getBigUint64(off.gamma, true), 0xfffffffffffffffdn);
+		assertEquals(view.getBigUint64(off.delta, false), 0xfffffffffffffffcn);
 	}
 });

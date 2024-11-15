@@ -2,6 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { memberF32 } from './f32.ts';
+import { byteLength, byteOffset, littleEndian } from '../macro.ts';
 
 Deno.test('memberF32', () => {
 	const v = new DataView(new ArrayBuffer(4));
@@ -45,7 +46,20 @@ Deno.test('memberF32', () => {
 			})(super.BYTE_LENGTH);
 		}
 
+		const off = {
+			alpha: byteOffset(Test, 'alpha'),
+			beta: byteOffset(Test, 'beta'),
+			gamma: byteOffset(Test, 'gamma'),
+		};
+
 		assertEquals(Test.BYTE_LENGTH, 12);
+		assertEquals(byteLength(Test), 12);
+		assertEquals(byteLength(Test, 'alpha'), 4);
+		assertEquals(byteLength(Test, 'beta'), 4);
+		assertEquals(byteLength(Test, 'gamma'), 4);
+		assertEquals(littleEndian(Test, 'alpha'), true);
+		assertEquals(littleEndian(Test, 'beta'), false);
+		assertEquals(littleEndian(Test, 'gamma'), null);
 
 		const data = new Uint8Array(Test.BYTE_LENGTH);
 		const view = new DataView(data.buffer);
@@ -58,9 +72,9 @@ Deno.test('memberF32', () => {
 			assertEquals(test.alpha, f32);
 			assertEquals(test.beta, f32);
 			assertEquals(test.gamma, f32);
-			assertEquals(view.getFloat32(0, true), f32);
-			assertEquals(view.getFloat32(4, false), f32);
-			assertEquals(view.getFloat32(8, false), f32);
+			assertEquals(view.getFloat32(off.alpha, true), f32);
+			assertEquals(view.getFloat32(off.beta, false), f32);
+			assertEquals(view.getFloat32(off.gamma, false), f32);
 		}
 		{
 			const test = new Test(data.buffer, 0, true);
@@ -71,9 +85,9 @@ Deno.test('memberF32', () => {
 			assertEquals(test.alpha, f32);
 			assertEquals(test.beta, f32);
 			assertEquals(test.gamma, f32);
-			assertEquals(view.getFloat32(0, true), f32);
-			assertEquals(view.getFloat32(4, false), f32);
-			assertEquals(view.getFloat32(8, true), f32);
+			assertEquals(view.getFloat32(off.alpha, true), f32);
+			assertEquals(view.getFloat32(off.beta, false), f32);
+			assertEquals(view.getFloat32(off.gamma, true), f32);
 		}
 	}
 });
