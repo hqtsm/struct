@@ -15,7 +15,10 @@ import { member } from '../member.ts';
 export function memberStruct<M extends typeof Struct, T extends typeof Struct>(
 	StructM: M,
 	StructT: T,
-	name: ReadonlyKeyofExtends<T['prototype'], M['prototype']>,
+	name: Exclude<
+		ReadonlyKeyofExtends<T['prototype'], M['prototype']>,
+		keyof Struct
+	>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {

@@ -12,7 +12,7 @@ import type { Struct } from './struct.ts';
  */
 export function member<T extends typeof Struct>(
 	StructT: T,
-	name: keyof T['prototype'],
+	name: Exclude<keyof T['prototype'], keyof Struct>,
 	byteOffset: number,
 	byteLength: number,
 	littleEndian: boolean | null,

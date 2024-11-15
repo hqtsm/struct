@@ -13,7 +13,7 @@ import { member } from '../member.ts';
  */
 export function memberI32<T extends typeof Struct>(
 	StructT: T,
-	name: KeyofExtends<T['prototype'], number>,
+	name: Exclude<KeyofExtends<T['prototype'], number>, keyof Struct>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -46,7 +46,7 @@ export function memberI32<T extends typeof Struct>(
  */
 export function memberU32<T extends typeof Struct>(
 	StructT: T,
-	name: KeyofExtends<T['prototype'], number>,
+	name: Exclude<KeyofExtends<T['prototype'], number>, keyof Struct>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
