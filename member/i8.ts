@@ -52,17 +52,17 @@ export function memberU8<T extends typeof Struct>(
 /**
  * Member int8 array.
  *
+ * @param count Array length.
  * @param StructT Struct constructor.
  * @param offset Byte offset.
  * @param name Member name.
- * @param count Array length.
  * @returns Byte length.
  */
 export function memberI8A<T extends typeof Struct>(
+	count: number,
 	StructT: T,
 	offset: number,
 	name: ReadonlyKeyofExtends<T['prototype'], Int8Array>,
-	count: number,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): Int8Array {
@@ -75,17 +75,17 @@ export function memberI8A<T extends typeof Struct>(
 /**
  * Member uint8 array.
  *
+ * @param count Array length.
  * @param StructT Struct constructor.
  * @param offset Byte offset.
  * @param name Member name.
- * @param count Array length.
  * @returns Byte length.
  */
 export function memberU8A<T extends typeof Struct>(
+	count: number,
 	StructT: T,
 	offset: number,
 	name: ReadonlyKeyofExtends<T['prototype'], Uint8Array>,
-	count: number,
 ): number {
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): Uint8Array {

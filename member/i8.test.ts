@@ -68,9 +68,9 @@ Deno.test('memberI8A', () => {
 		declare public readonly gamma: Int8Array;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI8A(this, o, 'alpha', 2);
-			o += memberI8A(this, o, 'beta', 4);
-			o += memberI8A(this, o, 'gamma', 0);
+			o += memberI8A(2, this, o, 'alpha');
+			o += memberI8A(4, this, o, 'beta');
+			o += memberI8A(0, this, o, 'gamma');
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -101,9 +101,9 @@ Deno.test('memberU8A', () => {
 		declare public readonly gamma: Uint8Array;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU8A(this, o, 'alpha', 2);
-			o += memberU8A(this, o, 'beta', 4);
-			o += memberU8A(this, o, 'gamma', 0);
+			o += memberU8A(2, this, o, 'alpha');
+			o += memberU8A(4, this, o, 'beta');
+			o += memberU8A(0, this, o, 'gamma');
 			return o;
 		})(super.BYTE_LENGTH);
 	}
