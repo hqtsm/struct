@@ -15,19 +15,17 @@ export function byteOffset<T extends typeof Struct>(
 }
 
 /**
- * Get byte length of member, or full struct.
+ * Get byte length of member.
  *
  * @param StructT Struct constructor.
- * @param name Member name, else the whole struct.
+ * @param name Member name.
  * @returns Byte length.
  */
 export function byteLength<T extends typeof Struct>(
 	StructT: T,
-	name: keyof T['prototype'] | null = null,
+	name: keyof T['prototype'],
 ): number {
-	return name === null
-		? StructT.BYTE_LENGTH
-		: StructT.MEMBERS[name].byteLength;
+	return StructT.MEMBERS[name].byteLength;
 }
 
 /**
