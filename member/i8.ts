@@ -68,13 +68,19 @@ export function memberI8A<T extends typeof Struct>(
 	>,
 	byteOffset: number,
 ): number {
+	const m = new WeakMap<T['prototype'], Int8Array>();
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): Int8Array {
-			return new Int8Array(
-				this.buffer,
-				this.byteOffset + byteOffset,
-				count,
-			);
+			let r = m.get(this);
+			if (!r) {
+				r = new Int8Array(
+					this.buffer,
+					this.byteOffset + byteOffset,
+					count,
+				);
+				m.set(this, r);
+			}
+			return r;
 		},
 	});
 	return member(StructT, name, byteOffset, count, null);
@@ -98,13 +104,19 @@ export function memberU8A<T extends typeof Struct>(
 	>,
 	byteOffset: number,
 ): number {
+	const m = new WeakMap<T['prototype'], Uint8Array>();
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): Uint8Array {
-			return new Uint8Array(
-				this.buffer,
-				this.byteOffset + byteOffset,
-				count,
-			);
+			let r = m.get(this);
+			if (!r) {
+				r = new Uint8Array(
+					this.buffer,
+					this.byteOffset + byteOffset,
+					count,
+				);
+				m.set(this, r);
+			}
+			return r;
 		},
 	});
 	return member(StructT, name, byteOffset, count, null);

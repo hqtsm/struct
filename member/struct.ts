@@ -22,13 +22,19 @@ export function memberStruct<M extends typeof Struct, T extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
+	const m = new WeakMap<T['prototype'], M['prototype']>();
 	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): M['prototype'] {
-			return new StructM(
-				this.buffer,
-				this.byteOffset + byteOffset,
-				littleEndian ?? this.littleEndian,
-			);
+			let r = m.get(this);
+			if (!r) {
+				r = new StructM(
+					this.buffer,
+					this.byteOffset + byteOffset,
+					littleEndian ?? this.littleEndian,
+				);
+				m.set(this, r);
+			}
+			return r;
 		},
 	});
 	return member(StructT, name, byteOffset, StructM.BYTE_LENGTH, littleEndian);
