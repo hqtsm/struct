@@ -7,17 +7,17 @@ import type { Struct } from '../struct.ts';
  * @param StructM Member struct.
  * @param StructT Struct constructor.
  * @param offset Byte offset.
- * @param member Member name.
+ * @param name Member name.
  * @returns Byte length.
  */
 export function memberStruct<M extends typeof Struct, T extends typeof Struct>(
 	StructM: M,
 	StructT: T,
 	offset: number,
-	member: ReadonlyKeyofExtends<T['prototype'], M['prototype']>,
+	name: ReadonlyKeyofExtends<T['prototype'], M['prototype']>,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructT.prototype, member, {
+	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): M['prototype'] {
 			return new StructM(
 				this.buffer,

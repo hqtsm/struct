@@ -6,17 +6,17 @@ import type { Struct } from '../struct.ts';
  *
  * @param StructT Struct constructor.
  * @param offset Byte offset.
- * @param member Member name.
+ * @param name Member name.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
 export function memberF64<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: KeyofExtends<T['prototype'], number>,
+	name: KeyofExtends<T['prototype'], number>,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructT.prototype, member, {
+	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): number {
 			return this.dataView.getFloat64(
 				offset,

@@ -39,17 +39,17 @@ export function memberI64<T extends typeof Struct>(
  *
  * @param StructT Struct constructor.
  * @param offset Byte offset.
- * @param member Member name.
+ * @param name Member name.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
 export function memberU64<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: KeyofExtends<T['prototype'], bigint>,
+	name: KeyofExtends<T['prototype'], bigint>,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructT.prototype, member, {
+	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): bigint {
 			return this.dataView.getBigUint64(
 				offset,

@@ -6,15 +6,15 @@ import type { Struct } from '../struct.ts';
  *
  * @param StructT Struct constructor.
  * @param offset Byte offset.
- * @param member Member name.
+ * @param name Member name.
  * @returns Byte length.
  */
 export function memberI8<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: KeyofExtends<T['prototype'], number>,
+	name: KeyofExtends<T['prototype'], number>,
 ): number {
-	Object.defineProperty(StructT.prototype, member, {
+	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): number {
 			return this.dataView.getInt8(offset);
 		},
@@ -30,15 +30,15 @@ export function memberI8<T extends typeof Struct>(
  *
  * @param StructT Struct constructor.
  * @param offset Byte offset.
- * @param member Member name.
+ * @param name Member name.
  * @returns Byte length.
  */
 export function memberU8<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: KeyofExtends<T['prototype'], number>,
+	name: KeyofExtends<T['prototype'], number>,
 ): number {
-	Object.defineProperty(StructT.prototype, member, {
+	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): number {
 			return this.dataView.getUint8(offset);
 		},
@@ -54,17 +54,17 @@ export function memberU8<T extends typeof Struct>(
  *
  * @param StructT Struct constructor.
  * @param offset Byte offset.
- * @param member Member name.
+ * @param name Member name.
  * @param count Array length.
  * @returns Byte length.
  */
 export function memberI8A<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: ReadonlyKeyofExtends<T['prototype'], Int8Array>,
+	name: ReadonlyKeyofExtends<T['prototype'], Int8Array>,
 	count: number,
 ): number {
-	Object.defineProperty(StructT.prototype, member, {
+	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): Int8Array {
 			return new Int8Array(this.buffer, this.byteOffset + offset, count);
 		},
@@ -77,17 +77,17 @@ export function memberI8A<T extends typeof Struct>(
  *
  * @param StructT Struct constructor.
  * @param offset Byte offset.
- * @param member Member name.
+ * @param name Member name.
  * @param count Array length.
  * @returns Byte length.
  */
 export function memberU8A<T extends typeof Struct>(
 	StructT: T,
 	offset: number,
-	member: ReadonlyKeyofExtends<T['prototype'], Uint8Array>,
+	name: ReadonlyKeyofExtends<T['prototype'], Uint8Array>,
 	count: number,
 ): number {
-	Object.defineProperty(StructT.prototype, member, {
+	Object.defineProperty(StructT.prototype, name, {
 		get(this: T['prototype']): Uint8Array {
 			return new Uint8Array(this.buffer, this.byteOffset + offset, count);
 		},
