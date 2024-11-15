@@ -2,7 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { memberI24, memberU24 } from './i24.ts';
-import { getInt24, getUint24 } from '../util.ts';
+import { getInt24, getUint24 } from '../dataview.ts';
 
 Deno.test('memberI24', () => {
 	class Test extends Struct {
