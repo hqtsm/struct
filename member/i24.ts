@@ -35,7 +35,7 @@ export function memberI24<T extends typeof Struct>(
 			);
 		},
 	});
-	return member(StructT, name, byteOffset, 3, littleEndian);
+	return member(StructT, name, byteOffset, 3, littleEndian, 'i24');
 }
 
 /**
@@ -70,5 +70,5 @@ export function memberU24<T extends typeof Struct>(
 			);
 		},
 	});
-	return member(StructT, name, byteOffset, 3, littleEndian);
+	return member(StructT, name, byteOffset, 3, littleEndian, 'u24');
 }

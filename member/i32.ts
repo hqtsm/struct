@@ -32,7 +32,7 @@ export function memberI32<T extends typeof Struct>(
 			);
 		},
 	});
-	return member(StructT, name, byteOffset, 4, littleEndian);
+	return member(StructT, name, byteOffset, 4, littleEndian, 'i32');
 }
 
 /**
@@ -65,5 +65,5 @@ export function memberU32<T extends typeof Struct>(
 			);
 		},
 	});
-	return member(StructT, name, byteOffset, 4, littleEndian);
+	return member(StructT, name, byteOffset, 4, littleEndian, 'u32');
 }

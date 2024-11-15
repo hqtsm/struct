@@ -32,5 +32,5 @@ export function memberF64<T extends typeof Struct>(
 			);
 		},
 	});
-	return member(StructT, name, byteOffset, 8, littleEndian);
+	return member(StructT, name, byteOffset, 8, littleEndian, 'f64');
 }

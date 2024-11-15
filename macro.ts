@@ -41,3 +41,17 @@ export function littleEndian<T extends typeof Struct>(
 ): boolean | null {
 	return StructT.MEMBERS[name].littleEndian;
 }
+
+/**
+ * Get type of member.
+ *
+ * @param StructT Struct constructor.
+ * @param name Member name.
+ * @returns Type.
+ */
+export function getType<T extends typeof Struct>(
+	StructT: T,
+	name: keyof T['prototype'],
+): string | typeof Struct {
+	return StructT.MEMBERS[name].Type;
+}

@@ -3,7 +3,7 @@ import { assertEquals, assertStrictEquals } from '@std/assert';
 import { Struct } from '../struct.ts';
 import { memberU32 } from './i32.ts';
 import { memberStruct } from './struct.ts';
-import { byteLength, byteOffset, littleEndian } from '../macro.ts';
+import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 
 Deno.test('memberStruct', () => {
 	class TestChild extends Struct {
@@ -51,6 +51,9 @@ Deno.test('memberStruct', () => {
 	assertEquals(littleEndian(TestParent, 'alpha'), true);
 	assertEquals(littleEndian(TestParent, 'beta'), false);
 	assertEquals(littleEndian(TestParent, 'gamma'), null);
+	assertEquals(getType(TestParent, 'alpha'), TestChild);
+	assertEquals(getType(TestParent, 'beta'), TestChild);
+	assertEquals(getType(TestParent, 'gamma'), TestChild);
 
 	const data = new Uint8Array(TestParent.BYTE_LENGTH);
 	const view = new DataView(data.buffer);

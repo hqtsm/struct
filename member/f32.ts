@@ -32,5 +32,5 @@ export function memberF32<T extends typeof Struct>(
 			);
 		},
 	});
-	return member(StructT, name, byteOffset, 4, littleEndian);
+	return member(StructT, name, byteOffset, 4, littleEndian, 'f32');
 }

@@ -2,7 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { memberF64 } from './f64.ts';
-import { byteLength, byteOffset, littleEndian } from '../macro.ts';
+import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 
 Deno.test('memberF64', () => {
 	for (
@@ -55,6 +55,9 @@ Deno.test('memberF64', () => {
 		assertEquals(littleEndian(Test, 'alpha'), true);
 		assertEquals(littleEndian(Test, 'beta'), false);
 		assertEquals(littleEndian(Test, 'gamma'), null);
+		assertEquals(getType(Test, 'alpha'), 'f64');
+		assertEquals(getType(Test, 'beta'), 'f64');
+		assertEquals(getType(Test, 'gamma'), 'f64');
 
 		const data = new Uint8Array(Test.BYTE_LENGTH);
 		const view = new DataView(data.buffer);

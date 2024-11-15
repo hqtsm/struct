@@ -2,7 +2,7 @@ import { assertEquals, assertStrictEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { memberI8, memberI8A, memberU8, memberU8A } from './i8.ts';
-import { byteLength, byteOffset, littleEndian } from '../macro.ts';
+import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 
 Deno.test('memberI8', () => {
 	class Test extends Struct {
@@ -29,6 +29,8 @@ Deno.test('memberI8', () => {
 	assertEquals(byteLength(Test, 'beta'), 1);
 	assertEquals(littleEndian(Test, 'alpha'), null);
 	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(getType(Test, 'alpha'), 'i8');
+	assertEquals(getType(Test, 'beta'), 'i8');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -66,6 +68,8 @@ Deno.test('memberU8', () => {
 	assertEquals(byteLength(Test, 'beta'), 1);
 	assertEquals(littleEndian(Test, 'alpha'), null);
 	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(getType(Test, 'alpha'), 'u8');
+	assertEquals(getType(Test, 'beta'), 'u8');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -109,6 +113,9 @@ Deno.test('memberI8A', () => {
 	assertEquals(littleEndian(Test, 'alpha'), null);
 	assertEquals(littleEndian(Test, 'beta'), null);
 	assertEquals(littleEndian(Test, 'gamma'), null);
+	assertEquals(getType(Test, 'alpha'), 'i8a');
+	assertEquals(getType(Test, 'beta'), 'i8a');
+	assertEquals(getType(Test, 'gamma'), 'i8a');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -161,6 +168,9 @@ Deno.test('memberU8A', () => {
 	assertEquals(littleEndian(Test, 'alpha'), null);
 	assertEquals(littleEndian(Test, 'beta'), null);
 	assertEquals(littleEndian(Test, 'gamma'), null);
+	assertEquals(getType(Test, 'alpha'), 'u8a');
+	assertEquals(getType(Test, 'beta'), 'u8a');
+	assertEquals(getType(Test, 'gamma'), 'u8a');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);

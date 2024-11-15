@@ -1,3 +1,5 @@
+import type { Struct } from './struct.ts';
+
 /**
  * If A equals B then C else D.
  */
@@ -55,4 +57,9 @@ export type Member = {
 	 * Little endian, big endian, or default.
 	 */
 	littleEndian: boolean | null;
+
+	/**
+	 * Type of member.
+	 */
+	Type: string | typeof Struct;
 };

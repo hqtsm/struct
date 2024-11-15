@@ -23,7 +23,7 @@ export function memberI8<T extends typeof Struct>(
 			this.dataView.setInt8(byteOffset, value);
 		},
 	});
-	return member(StructT, name, byteOffset, 1, null);
+	return member(StructT, name, byteOffset, 1, null, 'i8');
 }
 
 /**
@@ -47,7 +47,7 @@ export function memberU8<T extends typeof Struct>(
 			this.dataView.setUint8(byteOffset, value);
 		},
 	});
-	return member(StructT, name, byteOffset, 1, null);
+	return member(StructT, name, byteOffset, 1, null, 'u8');
 }
 
 /**
@@ -83,7 +83,7 @@ export function memberI8A<T extends typeof Struct>(
 			return r;
 		},
 	});
-	return member(StructT, name, byteOffset, count, null);
+	return member(StructT, name, byteOffset, count, null, 'i8a');
 }
 
 /**
@@ -119,5 +119,5 @@ export function memberU8A<T extends typeof Struct>(
 			return r;
 		},
 	});
-	return member(StructT, name, byteOffset, count, null);
+	return member(StructT, name, byteOffset, count, null, 'u8a');
 }

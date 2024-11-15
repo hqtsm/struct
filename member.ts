@@ -16,11 +16,12 @@ export function member<T extends typeof Struct>(
 	byteOffset: number,
 	byteLength: number,
 	littleEndian: boolean | null,
+	Type: string | typeof Struct,
 ): number {
 	const o: { [p: PropertyKey]: Member } = Object.hasOwn(StructT, 'MEMBERS')
 		? StructT.MEMBERS
 		: (StructT as { MEMBERS: T['MEMBERS'] }).MEMBERS = Object
 			.create(StructT.MEMBERS);
-	o[name] = { byteOffset, byteLength, littleEndian };
+	o[name] = { byteOffset, byteLength, littleEndian, Type };
 	return byteLength;
 }
