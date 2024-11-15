@@ -29,7 +29,7 @@ export function byteLength<T extends typeof Struct>(
 }
 
 /**
- * Get little endian value of member.
+ * Get little endian flag of member.
  *
  * @param StructT Struct constructor.
  * @param name Member name.
