@@ -9,7 +9,7 @@ import type { Struct } from './struct.ts';
  */
 export function byteOffset<T extends typeof Struct>(
 	StructT: T,
-	name: keyof T['prototype'],
+	name: Exclude<keyof T['prototype'], keyof Struct>,
 ): number {
 	return StructT.MEMBERS[name].byteOffset;
 }
@@ -23,7 +23,7 @@ export function byteOffset<T extends typeof Struct>(
  */
 export function byteLength<T extends typeof Struct>(
 	StructT: T,
-	name: keyof T['prototype'],
+	name: Exclude<keyof T['prototype'], keyof Struct>,
 ): number {
 	return StructT.MEMBERS[name].byteLength;
 }
@@ -37,7 +37,7 @@ export function byteLength<T extends typeof Struct>(
  */
 export function littleEndian<T extends typeof Struct>(
 	StructT: T,
-	name: keyof T['prototype'],
+	name: Exclude<keyof T['prototype'], keyof Struct>,
 ): boolean | null {
 	return StructT.MEMBERS[name].littleEndian;
 }
@@ -51,7 +51,7 @@ export function littleEndian<T extends typeof Struct>(
  */
 export function getType<T extends typeof Struct>(
 	StructT: T,
-	name: keyof T['prototype'],
+	name: Exclude<keyof T['prototype'], keyof Struct>,
 ): string | typeof Struct {
 	return StructT.MEMBERS[name].Type;
 }
