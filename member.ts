@@ -17,7 +17,7 @@ export function member<T extends typeof Struct>(
 	byteLength: number,
 	littleEndian: boolean | null,
 ): number {
-	const o: { [p: PropertyKey]: Member } = Object.hasOwn(StructT, name)
+	const o: { [p: PropertyKey]: Member } = Object.hasOwn(StructT, 'MEMBERS')
 		? StructT.MEMBERS
 		: (StructT as { MEMBERS: T['MEMBERS'] }).MEMBERS = Object
 			.create(StructT.MEMBERS);
