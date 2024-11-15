@@ -10,7 +10,7 @@ export class Struct implements ArrayBufferView {
 	/**
 	 * Data view of buffer.
 	 */
-	readonly #data: DataView;
+	readonly #dataView: DataView;
 
 	/**
 	 * Little endian, or not.
@@ -29,7 +29,7 @@ export class Struct implements ArrayBufferView {
 		byteOffset = 0,
 		littleEndian: boolean | null = null,
 	) {
-		this.#data = new DataView(buffer, byteOffset);
+		this.#dataView = new DataView(buffer, byteOffset);
 		this.#littleEndian = littleEndian ?? LITTLE_ENDIAN;
 	}
 
@@ -37,7 +37,7 @@ export class Struct implements ArrayBufferView {
 	 * @inheritdoc
 	 */
 	public get buffer(): ArrayBuffer {
-		return this.#data.buffer;
+		return this.#dataView.buffer;
 	}
 
 	/**
@@ -51,7 +51,7 @@ export class Struct implements ArrayBufferView {
 	 * @inheritdoc
 	 */
 	public get byteOffset(): number {
-		return this.#data.byteOffset;
+		return this.#dataView.byteOffset;
 	}
 
 	/**
@@ -60,7 +60,7 @@ export class Struct implements ArrayBufferView {
 	 * @returns Data view of buffer.
 	 */
 	public get dataView(): DataView {
-		return this.#data;
+		return this.#dataView;
 	}
 
 	/**
