@@ -1,4 +1,4 @@
-import { assertEquals } from '@std/assert';
+import { assertEquals, assertStrictEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { memberI8, memberI8A, memberU8, memberU8A } from './i8.ts';
@@ -126,6 +126,8 @@ Deno.test('memberI8A', () => {
 	assertEquals(data[off.beta + 1], 0xfe);
 	assertEquals(data[off.beta + 2], 3);
 	assertEquals(data[off.beta + 3], 0xfd);
+
+	assertStrictEquals(test.alpha, test.alpha);
 });
 
 Deno.test('memberU8A', () => {
@@ -176,4 +178,6 @@ Deno.test('memberU8A', () => {
 	assertEquals(data[off.beta + 1], 0xfe);
 	assertEquals(data[off.beta + 2], 3);
 	assertEquals(data[off.beta + 3], 0xfd);
+
+	assertStrictEquals(test.alpha, test.alpha);
 });

@@ -1,4 +1,4 @@
-import { assertEquals } from '@std/assert';
+import { assertEquals, assertStrictEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { memberU32 } from './i32.ts';
@@ -69,6 +69,8 @@ Deno.test('memberStruct', () => {
 		assertEquals(view.getUint32(off.alpha + offBeta, true), 0x12345678);
 		assertEquals(view.getUint32(off.beta + offBeta, false), 0x23456789);
 		assertEquals(view.getUint32(off.gamma + offBeta, true), 0x34567890);
+
+		assertStrictEquals(test.alpha, test.alpha);
 	}
 	{
 		const test = new TestParent(data.buffer, 0, false);
@@ -85,5 +87,7 @@ Deno.test('memberStruct', () => {
 		assertEquals(view.getUint32(off.alpha + offBeta, true), 0x12345678);
 		assertEquals(view.getUint32(off.beta + offBeta, false), 0x23456789);
 		assertEquals(view.getUint32(off.gamma + offBeta, false), 0x34567890);
+
+		assertStrictEquals(test.alpha, test.alpha);
 	}
 });
