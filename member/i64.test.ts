@@ -1,8 +1,8 @@
 import { assertEquals } from '@std/assert';
 
+import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 import { memberI64, memberU64 } from './i64.ts';
-import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 
 Deno.test('memberI64', () => {
 	class Test extends Struct {

@@ -1,6 +1,6 @@
 import type { KeyofExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
-import { getInt24, getUint24, setInt24, setUint24 } from '../dataview.ts';
+import { getInt24, getUint24, setInt24, setUint24 } from '../dataview/i24.ts';
 import { member } from '../member.ts';
 
 /**

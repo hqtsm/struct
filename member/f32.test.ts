@@ -1,8 +1,8 @@
 import { assertEquals } from '@std/assert';
 
+import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 import { memberF32 } from './f32.ts';
-import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 
 Deno.test('memberF32', () => {
 	const v = new DataView(new ArrayBuffer(4));

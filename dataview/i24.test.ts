@@ -1,6 +1,6 @@
 import { assertEquals, assertThrows } from '@std/assert';
 
-import { getInt24, getUint24, setInt24, setUint24 } from './dataview.ts';
+import { getInt24, getUint24, setInt24, setUint24 } from './i24.ts';
 
 Deno.test('getInt24 unsigned', () => {
 	const data = new Uint8Array([0x12, 0x34, 0x56]);
