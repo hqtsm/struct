@@ -1,6 +1,6 @@
 import { assertEquals } from '@std/assert';
+import { getInt24, getUint24 } from '@hqtsm/dataview';
 
-import { getInt24, getUint24 } from '../dataview/i24.ts';
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 import { memberI24, memberU24 } from './i24.ts';
