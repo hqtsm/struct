@@ -24,18 +24,19 @@ const keywords = readme.map((s) => s.match(/^\!\[(.*)\]\((.*)\)$/))
 	.map((m) => m![1]);
 
 const replace = new Map<string, string>();
-for (const [k, v] of Object.entries(denoJson.imports)) {
-	const m = v.match(/^(jsr:(@.*))@([^@]*)$/);
+for (const [ik, iv] of Object.entries(denoJson.imports)) {
+	const m = iv.match(/^(jsr:(@.*))@([^@]*)$/);
 	if (m) {
-		const o = mappings[m[1]];
+		const [, jname, name, version] = m;
+		const o = mappings[jname];
 		if (o) {
-			const url = `https://jsr.io/${m[2]}`;
-			delete mappings[m[1]];
+			const url = `https://jsr.io/${name}`;
+			delete mappings[jname];
 			mappings[url] = {
-				version: m[3],
+				version,
 				...(typeof o === 'string' ? { name: o } : o),
 			};
-			replace.set(k, url);
+			replace.set(ik, url);
 		}
 	}
 }
