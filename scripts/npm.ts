@@ -44,6 +44,8 @@ for (const [ik, iv] of Object.entries(denoJson.imports)) {
 }
 if (replace.size) {
 	const reg = /\.m?[tj]sx?$/i;
+	const dec = new TextDecoder();
+	const enc = new TextEncoder();
 	const desc = Object.getOwnPropertyDescriptor(Deno, 'readFile')!;
 	const value = desc.value!;
 	desc.value = async function readFile(
@@ -52,8 +54,8 @@ if (replace.size) {
 	): Promise<Uint8Array> {
 		let r = await value.apply(this, arguments);
 		if (reg.test(typeof path === 'string' ? path : path.pathname)) {
-			r = new TextEncoder().encode(
-				new TextDecoder().decode(r).replace(
+			r = enc.encode(
+				dec.decode(r).replace(
 					/(['"])([^'"]+)(['"])/g,
 					(_0, q1, s, q2) => `${q1}${replace.get(s) ?? s}${q2}`,
 				),
