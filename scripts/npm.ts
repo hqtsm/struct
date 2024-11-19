@@ -12,8 +12,7 @@ if (Deno.args.length !== 1 || !/^(dev|prod)$/.test(Deno.args[0])) {
 const [env] = Deno.args;
 
 const mappings: BuildOptions['mappings'] = {
-	'jsr:@hqtsm/dataview/f16': '@hqtsm/dataview',
-	'jsr:@hqtsm/dataview/i24': '@hqtsm/dataview',
+	'jsr:@hqtsm/dataview': '@hqtsm/dataview',
 };
 
 const GITHUB_REPOSITORY = Deno.env.get('GITHUB_REPOSITORY');
@@ -39,6 +38,7 @@ for (const [ik, iv] of Object.entries(denoJson.imports)) {
 			delete mappings[k];
 			mappings[url] = {
 				version,
+				...(sub ? { subPath: sub.substring(1) } : {}),
 				...(typeof o === 'string' ? { name: o } : o),
 			};
 			replace.set(`${ik}${sub}`, url);
