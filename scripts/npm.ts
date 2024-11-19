@@ -12,7 +12,7 @@ if (Deno.args.length !== 1 || !/^(dev|prod)$/.test(Deno.args[0])) {
 const [env] = Deno.args;
 
 const mappings: BuildOptions['mappings'] = {
-	'jsr:@hqtsm/dataview': '@hqtsm/dataview',
+	'jsr:@hqtsm/dataview/i24': '@hqtsm/dataview',
 };
 
 const GITHUB_REPOSITORY = Deno.env.get('GITHUB_REPOSITORY');
@@ -24,19 +24,21 @@ const keywords = readme.map((s) => s.match(/^\!\[(.*)\]\((.*)\)$/))
 	.map((m) => m![1]);
 
 const replace = new Map<string, string>();
+const jsrs = Object.keys(mappings).filter((s) => s.startsWith('jsr:'));
 for (const [ik, iv] of Object.entries(denoJson.imports)) {
 	const m = iv.match(/^(jsr:(@.*))@([^@]*)$/);
 	if (m) {
-		const [, jname, name, version] = m;
-		const o = mappings[jname];
-		if (o) {
-			const url = `https://jsr.io/${name}`;
-			delete mappings[jname];
+		const [, j, name, version] = m;
+		for (const k of jsrs.filter((s) => s === j || s.startsWith(`${j}/`))) {
+			const sub = k.substring(j.length);
+			const url = `https://jsr.io/${name}${sub}`;
+			const o = mappings[k];
+			delete mappings[k];
 			mappings[url] = {
 				version,
 				...(typeof o === 'string' ? { name: o } : o),
 			};
-			replace.set(ik, url);
+			replace.set(`${ik}${sub}`, url);
 		}
 	}
 }
