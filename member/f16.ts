@@ -1,4 +1,4 @@
-import { getFloat16, setFloat16 } from '@hqtsm/dataview';
+import { getFloat16, setFloat16 } from '@hqtsm/dataview/f16';
 
 import type { KeyofExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
