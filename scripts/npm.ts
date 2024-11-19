@@ -12,6 +12,7 @@ if (Deno.args.length !== 1 || !/^(dev|prod)$/.test(Deno.args[0])) {
 const [env] = Deno.args;
 
 const mappings: BuildOptions['mappings'] = {
+	'jsr:@hqtsm/dataview/f16': '@hqtsm/dataview',
 	'jsr:@hqtsm/dataview/i24': '@hqtsm/dataview',
 };
 
