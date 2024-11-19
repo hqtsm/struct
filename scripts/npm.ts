@@ -23,10 +23,12 @@ const keywords = readme.map((s) => s.match(/^\!\[(.*)\]\((.*)\)$/))
 	.filter((m) => m && m[2].startsWith('https://img.shields.io/badge/'))
 	.map((m) => m![1]);
 
+// Monkey patch for broken JSR mappings.
 const replace = new Map<string, string>();
 const jsrs = Object.keys(mappings).filter((s) => s.startsWith('jsr:'));
+const jsrm = /^(jsr:(@.*))@([^@]*)$/;
 for (const [ik, iv] of Object.entries(denoJson.imports)) {
-	const m = iv.match(/^(jsr:(@.*))@([^@]*)$/);
+	const m = iv.match(jsrm);
 	if (m) {
 		const [, j, name, version] = m;
 		for (const k of jsrs.filter((s) => s === j || s.startsWith(`${j}/`))) {
