@@ -1,5 +1,5 @@
 import { assertEquals } from '@std/assert';
-import { getFloat16, setFloat16 } from '@hqtsm/dataview/f16';
+import { getFloat16, setFloat16 } from '@hqtsm/dataview';
 
 import type { ArrayBufferReal } from '../type.ts';
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
