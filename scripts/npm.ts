@@ -23,7 +23,7 @@ const keywords = readme.map((s) => s.match(/^\!\[(.*)\]\((.*)\)$/))
 	.filter((m) => m && m[2].startsWith('https://img.shields.io/badge/'))
 	.map((m) => m![1]);
 
-// Monkey patch for broken JSR mappings.
+// Monkey patch for broken JSR mappings, also add version info.
 const replace = new Map<string, string>();
 const jsrs = Object.keys(mappings).filter((s) => s.startsWith('jsr:'));
 const jsrm = /^(jsr:(@.*))@([^@]*)$/;
