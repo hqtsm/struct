@@ -5,6 +5,40 @@ import { Struct } from '../struct.ts';
 import { memberF32 } from './f32.ts';
 
 Deno.test('memberF32', () => {
+	class Test extends Struct {
+		declare public readonly ['constructor']: typeof Test;
+
+		declare public alpha: number;
+
+		declare public beta: number;
+
+		declare public gamma: number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += memberF32(this, 'alpha', o, true);
+			o += memberF32(this, 'beta', o, false);
+			o += memberF32(this, 'gamma', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+		gamma: byteOffset(Test, 'gamma'),
+	};
+
+	assertEquals(Test.BYTE_LENGTH, 12);
+	assertEquals(byteLength(Test, 'alpha'), 4);
+	assertEquals(byteLength(Test, 'beta'), 4);
+	assertEquals(byteLength(Test, 'gamma'), 4);
+	assertEquals(littleEndian(Test, 'alpha'), true);
+	assertEquals(littleEndian(Test, 'beta'), false);
+	assertEquals(littleEndian(Test, 'gamma'), null);
+	assertEquals(getType(Test, 'alpha'), 'f32');
+	assertEquals(getType(Test, 'beta'), 'f32');
+	assertEquals(getType(Test, 'gamma'), 'f32');
+
 	const v = new DataView(new ArrayBuffer(4));
 	for (
 		const f64 of [
@@ -28,41 +62,6 @@ Deno.test('memberF32', () => {
 	) {
 		v.setFloat32(0, f64, true);
 		const f32 = v.getFloat32(0, true);
-
-		class Test extends Struct {
-			declare public readonly ['constructor']: typeof Test;
-
-			declare public alpha: number;
-
-			declare public beta: number;
-
-			declare public gamma: number;
-
-			public static override readonly BYTE_LENGTH: number = ((o) => {
-				o += memberF32(this, 'alpha', o, true);
-				o += memberF32(this, 'beta', o, false);
-				o += memberF32(this, 'gamma', o);
-				return o;
-			})(super.BYTE_LENGTH);
-		}
-
-		const off = {
-			alpha: byteOffset(Test, 'alpha'),
-			beta: byteOffset(Test, 'beta'),
-			gamma: byteOffset(Test, 'gamma'),
-		};
-
-		assertEquals(Test.BYTE_LENGTH, 12);
-		assertEquals(byteLength(Test, 'alpha'), 4);
-		assertEquals(byteLength(Test, 'beta'), 4);
-		assertEquals(byteLength(Test, 'gamma'), 4);
-		assertEquals(littleEndian(Test, 'alpha'), true);
-		assertEquals(littleEndian(Test, 'beta'), false);
-		assertEquals(littleEndian(Test, 'gamma'), null);
-		assertEquals(getType(Test, 'alpha'), 'f32');
-		assertEquals(getType(Test, 'beta'), 'f32');
-		assertEquals(getType(Test, 'gamma'), 'f32');
-
 		const data = new Uint8Array(Test.BYTE_LENGTH);
 		const view = new DataView(data.buffer);
 		{

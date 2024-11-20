@@ -5,6 +5,40 @@ import { Struct } from '../struct.ts';
 import { memberF64 } from './f64.ts';
 
 Deno.test('memberF64', () => {
+	class Test extends Struct {
+		declare public readonly ['constructor']: typeof Test;
+
+		declare public alpha: number;
+
+		declare public beta: number;
+
+		declare public gamma: number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += memberF64(this, 'alpha', o, true);
+			o += memberF64(this, 'beta', o, false);
+			o += memberF64(this, 'gamma', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		beta: byteOffset(Test, 'beta'),
+		gamma: byteOffset(Test, 'gamma'),
+	};
+
+	assertEquals(Test.BYTE_LENGTH, 24);
+	assertEquals(byteLength(Test, 'alpha'), 8);
+	assertEquals(byteLength(Test, 'beta'), 8);
+	assertEquals(byteLength(Test, 'gamma'), 8);
+	assertEquals(littleEndian(Test, 'alpha'), true);
+	assertEquals(littleEndian(Test, 'beta'), false);
+	assertEquals(littleEndian(Test, 'gamma'), null);
+	assertEquals(getType(Test, 'alpha'), 'f64');
+	assertEquals(getType(Test, 'beta'), 'f64');
+	assertEquals(getType(Test, 'gamma'), 'f64');
+
 	for (
 		const f64 of [
 			0,
@@ -25,40 +59,6 @@ Deno.test('memberF64', () => {
 			NaN,
 		]
 	) {
-		class Test extends Struct {
-			declare public readonly ['constructor']: typeof Test;
-
-			declare public alpha: number;
-
-			declare public beta: number;
-
-			declare public gamma: number;
-
-			public static override readonly BYTE_LENGTH: number = ((o) => {
-				o += memberF64(this, 'alpha', o, true);
-				o += memberF64(this, 'beta', o, false);
-				o += memberF64(this, 'gamma', o);
-				return o;
-			})(super.BYTE_LENGTH);
-		}
-
-		const off = {
-			alpha: byteOffset(Test, 'alpha'),
-			beta: byteOffset(Test, 'beta'),
-			gamma: byteOffset(Test, 'gamma'),
-		};
-
-		assertEquals(Test.BYTE_LENGTH, 24);
-		assertEquals(byteLength(Test, 'alpha'), 8);
-		assertEquals(byteLength(Test, 'beta'), 8);
-		assertEquals(byteLength(Test, 'gamma'), 8);
-		assertEquals(littleEndian(Test, 'alpha'), true);
-		assertEquals(littleEndian(Test, 'beta'), false);
-		assertEquals(littleEndian(Test, 'gamma'), null);
-		assertEquals(getType(Test, 'alpha'), 'f64');
-		assertEquals(getType(Test, 'beta'), 'f64');
-		assertEquals(getType(Test, 'gamma'), 'f64');
-
 		const data = new Uint8Array(Test.BYTE_LENGTH);
 		const view = new DataView(data.buffer);
 		{
