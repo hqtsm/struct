@@ -22,8 +22,8 @@
 	},
 	"imports": {
 		"@deno/dnt": "jsr:@deno/dnt@^0.41.3",
-		"@hqtsm/dataview": "jsr:@hqtsm/dataview@^1.0.1",
-		"@std/assert": "jsr:@std/assert@^1.0.7"
+		"@hqtsm/dataview": "jsr:@hqtsm/dataview@^1.0.2",
+		"@std/assert": "jsr:@std/assert@^1.0.8"
 	},
 	"fmt": {
 		"useTabs": true,
