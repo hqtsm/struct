@@ -74,6 +74,8 @@ Deno.test('protected properties', () => {
 
 		declare protected alpha: number;
 
+		declare public unrelated: number;
+
 		public getAlpha(): number {
 			return this.alpha;
 		}
@@ -93,6 +95,8 @@ Deno.test('private properties', () => {
 		declare public readonly ['constructor']: typeof Test;
 
 		declare private alpha: number;
+
+		declare public unrelated: number;
 
 		public getAlpha(): number {
 			return this.alpha;
