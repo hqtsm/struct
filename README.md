@@ -116,6 +116,49 @@ varFloat.value = 3.1415;
 console.assert(data.join(', ') === '15, 0, 0, 0, 86, 14, 73, 64');
 ```
 
+## Child Structures
+
+Defining a child structure is easy.
+
+```ts
+import { memberStruct, memberU32, memberU8A, Struct } from '@hqtsm/struct';
+
+class Child extends Struct {
+	declare public readonly ['constructor']: typeof Child;
+
+	declare public alpha: number;
+
+	declare public beta: number;
+
+	public static override readonly BYTE_LENGTH: number = ((o) => {
+		o += memberU32(this, 'alpha', o, false);
+		o += memberU32(this, 'beta', o, false);
+		return o;
+	})(super.BYTE_LENGTH);
+}
+
+class Parent extends Struct {
+	declare public readonly ['constructor']: typeof Parent;
+
+	declare public readonly array: Uint8Array;
+
+	declare public readonly child: Child;
+
+	public static override readonly BYTE_LENGTH: number = ((o) => {
+		o += memberU8A(4, this, 'array', o);
+		o += memberStruct(Child, this, 'child', o);
+		return o;
+	})(super.BYTE_LENGTH);
+}
+
+const data = new Uint8Array(Parent.BYTE_LENGTH);
+const stru = new Parent(data.buffer);
+stru.array.fill(4);
+stru.child.alpha = 65;
+stru.child.beta = 66;
+console.assert(data.join(', ') === '4, 4, 4, 4, 0, 0, 0, 65, 0, 0, 0, 66');
+```
+
 ## Private / Protected
 
 Members can be made `private` or `protected` but type checking must be relaxed.
