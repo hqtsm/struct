@@ -107,3 +107,33 @@ Deno.test('private properties', () => {
 	const test = new Test(new Uint8Array([42]).buffer);
 	assertEquals(test.getAlpha(), 42);
 });
+
+Deno.test('extends', () => {
+	class Type extends Struct {
+		declare public readonly ['constructor']: typeof Type;
+
+		declare public type: number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += memberI8(this, 'type', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	class Type8 extends Type {
+		declare public readonly ['constructor']: typeof Type8;
+
+		declare public value: number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += memberI8(this, 'value', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	const data = new Uint8Array(Type8.BYTE_LENGTH);
+	const varFloat = new Type8(data.buffer, 0, true);
+	varFloat.type = 8;
+	varFloat.value = 123;
+	assertEquals(data, new Uint8Array([8, 123]));
+});
