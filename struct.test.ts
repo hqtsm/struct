@@ -43,9 +43,13 @@ Deno.test('dataView', () => {
 		assertStrictEquals(test.dataView, test.dataView);
 	}
 	assertEquals(new Struct(data, 16).dataView.byteOffset, 16);
+	assertEquals(new Struct(data, 16).dataView.byteLength, 16);
 	assertEquals(new Struct(data, 4).dataView.byteOffset, 4);
+	assertEquals(new Struct(data, 4).dataView.byteLength, 28);
 	assertEquals(new Struct(data, 3.14).dataView.byteOffset, 3);
+	assertEquals(new Struct(data, 3.14).dataView.byteLength, 29);
 	assertEquals(new Struct(data, 32).dataView.byteOffset, 32);
+	assertEquals(new Struct(data, 32).dataView.byteLength, 0);
 	{
 		const test = new Struct(data, 16);
 		test.dataView.setUint8(0, 42);
