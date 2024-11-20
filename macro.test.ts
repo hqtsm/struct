@@ -4,8 +4,9 @@ import {
 	assertNotStrictEquals,
 } from '@std/assert';
 
-import { endianSwap } from './macro.ts';
+import { assignStruct, assignView, endianSwap } from './macro.ts';
 import { Struct } from './struct.ts';
+import { memberU8 } from './member/i8.ts';
 
 Deno.test('endianSwap', () => {
 	class Test extends Struct {
@@ -46,4 +47,59 @@ Deno.test('endianSwap', () => {
 	assertNotStrictEquals(beSwap, be);
 	assertNotStrictEquals(beSwapLe, be);
 	assertNotStrictEquals(beSwapBe, be);
+});
+
+Deno.test('assignView', () => {
+	const src = new Uint8Array([0xff, 0xfe, 0xfd, 0xfc]);
+	const dst = new Int8Array(src.length);
+	assignView(dst, src);
+	assertEquals(dst, new Int8Array([-1, -2, -3, -4]));
+});
+
+Deno.test('assignStruct', () => {
+	class Test extends Struct {
+		declare public readonly ['constructor']: typeof Test;
+
+		declare public alpha: number;
+
+		declare public beta: number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += memberU8(this, 'alpha', o);
+			o += memberU8(this, 'beta', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	class TestExt extends Test {
+		declare public readonly ['constructor']: typeof TestExt;
+
+		declare public gamma: number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += memberU8(this, 'gamma', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	{
+		const src = new Test(new ArrayBuffer(Test.BYTE_LENGTH));
+		src.alpha = 65;
+		src.beta = 66;
+		const dst = new Test(new ArrayBuffer(Test.BYTE_LENGTH));
+		assignStruct(dst, src);
+		assertEquals(dst.alpha, 65);
+		assertEquals(dst.beta, 66);
+	}
+
+	{
+		const src = new TestExt(new ArrayBuffer(TestExt.BYTE_LENGTH));
+		src.alpha = 65;
+		src.beta = 66;
+		src.gamma = 71;
+		const dst = new Test(new ArrayBuffer(Test.BYTE_LENGTH));
+		assignStruct(dst, src);
+		assertEquals(dst.alpha, 65);
+		assertEquals(dst.beta, 66);
+	}
 });

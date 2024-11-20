@@ -73,3 +73,29 @@ export function endianSwap<S extends Struct>(
 		littleEndian ?? !struct.littleEndian,
 	) as S;
 }
+
+/**
+ * Assign ArrayBuffer data from one view to another.
+ *
+ * @param dst Destination memory.
+ * @param src Source memory of equal or greater size.
+ */
+export function assignView(dst: ArrayBufferView, src: ArrayBufferView): void {
+	const { byteLength } = dst;
+	new Uint8Array(dst.buffer, dst.byteOffset, byteLength).set(
+		new Uint8Array(src.buffer, src.byteOffset, byteLength),
+	);
+}
+
+/**
+ * Assign ArrayBuffer data from one struct to another.
+ *
+ * @param dst Destination struct.
+ * @param src Source struct, must extend destination type.
+ */
+export function assignStruct<D extends Struct, S extends D>(
+	dst: D,
+	src: S,
+): void {
+	assignView(dst, src);
+}
