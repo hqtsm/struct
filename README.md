@@ -7,8 +7,9 @@ Binary structures
 - Pure TypeScript, run anywhere
 - Strong static type checking
 - Tree shaking friendly design
-- Support for little-endian, big-endian, and dynamic endian values
-- ArrayBufferView compatible public interface
+- Public interface compatible with `ArrayBufferView`, like native binary types
+- Support for little-endian, big-endian, and dynamic endian structures
+- Support for inheritance, access modifiers, and child structures
 
 # Usage
 
