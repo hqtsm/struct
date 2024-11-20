@@ -7,7 +7,8 @@ Binary structures
 - Pure TypeScript, run anywhere
 - Strong static type checking
 - Tree shaking friendly design
-- Support for little-endian, big-endian, and dynamic endian values.
+- Support for little-endian, big-endian, and dynamic endian values
+- ArrayBufferView compatible public interface
 
 # Usage
 
