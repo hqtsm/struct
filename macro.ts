@@ -1,24 +1,6 @@
 import type { Struct } from './struct.ts';
 
 /**
- * Swap endian of struct.
- *
- * @param struct Struct to swap the endian of.
- * @param littleEndian Little endian, big endian, or default to swap.
- * @returns New struct of the same type and memory, different endian.
- */
-export function endianSwap<S extends Struct>(
-	struct: S,
-	littleEndian: boolean | null = null,
-): S {
-	return new struct.constructor(
-		struct.buffer,
-		struct.byteOffset,
-		littleEndian ?? !struct.littleEndian,
-	) as S;
-}
-
-/**
  * Get byte offset of member.
  *
  * @param StructC Struct constructor.
@@ -72,4 +54,22 @@ export function getType<C extends typeof Struct>(
 	name: Exclude<keyof C['prototype'], keyof Struct>,
 ): string | typeof Struct {
 	return StructC.MEMBERS[name].Type;
+}
+
+/**
+ * Swap endian of struct.
+ *
+ * @param struct Struct to swap the endian of.
+ * @param littleEndian Little endian, big endian, or default to swap.
+ * @returns New struct of the same type and memory, different endian.
+ */
+export function endianSwap<S extends Struct>(
+	struct: S,
+	littleEndian: boolean | null = null,
+): S {
+	return new struct.constructor(
+		struct.buffer,
+		struct.byteOffset,
+		littleEndian ?? !struct.littleEndian,
+	) as S;
 }
