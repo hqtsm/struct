@@ -70,6 +70,7 @@ Deno.test('memberF32', () => {
 			test.beta = f32;
 			test.gamma = f32;
 
+			assertEquals(test.byteLength, Test.BYTE_LENGTH);
 			assertEquals(test.alpha, f32);
 			assertEquals(test.beta, f32);
 			assertEquals(test.gamma, f32);
@@ -83,6 +84,7 @@ Deno.test('memberF32', () => {
 			test.beta = f32;
 			test.gamma = f32;
 
+			assertEquals(test.byteLength, Test.BYTE_LENGTH);
 			assertEquals(test.alpha, f32);
 			assertEquals(test.beta, f32);
 			assertEquals(test.gamma, f32);

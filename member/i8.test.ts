@@ -37,6 +37,7 @@ Deno.test('memberI8', () => {
 	test.alpha = 0x7f;
 	test.beta = -1;
 
+	assertEquals(test.byteLength, Test.BYTE_LENGTH);
 	assertEquals(test.alpha, 0x7f);
 	assertEquals(test.beta, -1);
 	assertEquals(data[off.alpha], 0x7f);
@@ -76,6 +77,7 @@ Deno.test('memberU8', () => {
 	test.alpha = 0x7f;
 	test.beta = 0xff;
 
+	assertEquals(test.byteLength, Test.BYTE_LENGTH);
 	assertEquals(test.alpha, 0x7f);
 	assertEquals(test.beta, 0xff);
 	assertEquals(data[off.alpha], 0x7f);

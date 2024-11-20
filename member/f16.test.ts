@@ -122,6 +122,7 @@ Deno.test('memberF16', () => {
 			test.beta = f16;
 			test.gamma = f16;
 
+			assertEquals(test.byteLength, Test.BYTE_LENGTH);
 			assertEquals(test.alpha, f16);
 			assertEquals(test.beta, f16);
 			assertEquals(test.gamma, f16);
@@ -135,6 +136,7 @@ Deno.test('memberF16', () => {
 			test.beta = f16;
 			test.gamma = f16;
 
+			assertEquals(test.byteLength, Test.BYTE_LENGTH);
 			assertEquals(test.alpha, f16);
 			assertEquals(test.beta, f16);
 			assertEquals(test.gamma, f16);

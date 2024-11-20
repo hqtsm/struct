@@ -55,6 +55,7 @@ Deno.test('memberI16', () => {
 		test.gamma = -3;
 		test.delta = -4;
 
+		assertEquals(test.byteLength, Test.BYTE_LENGTH);
 		assertEquals(test.alpha, 0x7fff);
 		assertEquals(test.beta, -2);
 		assertEquals(test.gamma, -3);
@@ -71,6 +72,7 @@ Deno.test('memberI16', () => {
 		test.gamma = -3;
 		test.delta = -4;
 
+		assertEquals(test.byteLength, Test.BYTE_LENGTH);
 		assertEquals(test.alpha, 0x7fff);
 		assertEquals(test.beta, -2);
 		assertEquals(test.gamma, -3);
@@ -133,6 +135,7 @@ Deno.test('memberU16', () => {
 		test.gamma = 0xfffd;
 		test.delta = 0xfffc;
 
+		assertEquals(test.byteLength, Test.BYTE_LENGTH);
 		assertEquals(test.alpha, 0x7fff);
 		assertEquals(test.beta, 0xfffe);
 		assertEquals(test.gamma, 0xfffd);
@@ -149,6 +152,7 @@ Deno.test('memberU16', () => {
 		test.gamma = 0xfffd;
 		test.delta = 0xfffc;
 
+		assertEquals(test.byteLength, Test.BYTE_LENGTH);
 		assertEquals(test.alpha, 0x7fff);
 		assertEquals(test.beta, 0xfffe);
 		assertEquals(test.gamma, 0xfffd);

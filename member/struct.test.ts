@@ -63,6 +63,7 @@ Deno.test('memberStruct', () => {
 		test.beta.beta = 0x23456789;
 		test.gamma.beta = 0x34567890;
 
+		assertEquals(test.byteLength, TestParent.BYTE_LENGTH);
 		assertEquals(test.alpha.littleEndian, true);
 		assertEquals(test.beta.littleEndian, false);
 		assertEquals(test.gamma.littleEndian, true);
@@ -81,6 +82,7 @@ Deno.test('memberStruct', () => {
 		test.beta.beta = 0x23456789;
 		test.gamma.beta = 0x34567890;
 
+		assertEquals(test.byteLength, TestParent.BYTE_LENGTH);
 		assertEquals(test.alpha.littleEndian, true);
 		assertEquals(test.beta.littleEndian, false);
 		assertEquals(test.gamma.littleEndian, false);

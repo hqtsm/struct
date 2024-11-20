@@ -55,6 +55,7 @@ Deno.test('memberI64', () => {
 		test.gamma = -3n;
 		test.delta = -4n;
 
+		assertEquals(test.byteLength, Test.BYTE_LENGTH);
 		assertEquals(test.alpha, 0x7fffffffffffffffn);
 		assertEquals(test.beta, -2n);
 		assertEquals(test.gamma, -3n);
@@ -71,6 +72,7 @@ Deno.test('memberI64', () => {
 		test.gamma = -3n;
 		test.delta = -4n;
 
+		assertEquals(test.byteLength, Test.BYTE_LENGTH);
 		assertEquals(test.alpha, 0x7fffffffffffffffn);
 		assertEquals(test.beta, -2n);
 		assertEquals(test.gamma, -3n);
@@ -133,6 +135,7 @@ Deno.test('memberU64', () => {
 		test.gamma = 0xfffffffffffffffdn;
 		test.delta = 0xfffffffffffffffcn;
 
+		assertEquals(test.byteLength, Test.BYTE_LENGTH);
 		assertEquals(test.alpha, 0x7fffffffffffffffn);
 		assertEquals(test.beta, 0xfffffffffffffffen);
 		assertEquals(test.gamma, 0xfffffffffffffffdn);
@@ -149,6 +152,7 @@ Deno.test('memberU64', () => {
 		test.gamma = 0xfffffffffffffffdn;
 		test.delta = 0xfffffffffffffffcn;
 
+		assertEquals(test.byteLength, Test.BYTE_LENGTH);
 		assertEquals(test.alpha, 0x7fffffffffffffffn);
 		assertEquals(test.beta, 0xfffffffffffffffen);
 		assertEquals(test.gamma, 0xfffffffffffffffdn);
