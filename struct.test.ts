@@ -1,12 +1,8 @@
-import {
-	assert,
-	assertEquals,
-	assertStrictEquals,
-	assertThrows,
-} from '@std/assert';
+import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 
 import { Struct } from './struct.ts';
 import { LITTLE_ENDIAN } from './const.ts';
+import { memberI8 } from './mod.ts';
 
 Deno.test('buffer', () => {
 	const buffer = new ArrayBuffer(0);
@@ -61,7 +57,42 @@ Deno.test('BYTE_LENGTH', () => {
 	assertEquals(Struct.BYTE_LENGTH, 0);
 });
 
-Deno.test('MEMBERS', () => {
-	assertEquals(Object.keys(Struct.MEMBERS).length, 0);
-	assert(Object.hasOwn(Struct, 'MEMBERS'));
+Deno.test('protected properties', () => {
+	class Test extends Struct {
+		declare public readonly ['constructor']: typeof Test;
+
+		declare protected alpha: number;
+
+		public getAlpha(): number {
+			return this.alpha;
+		}
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += memberI8(this, 'alpha' as never, o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	const test = new Test(new Uint8Array([42]).buffer);
+	assertEquals(test.getAlpha(), 42);
+});
+
+Deno.test('private properties', () => {
+	class Test extends Struct {
+		declare public readonly ['constructor']: typeof Test;
+
+		declare private alpha: number;
+
+		public getAlpha(): number {
+			return this.alpha;
+		}
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += memberI8(this, 'alpha' as never, o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	const test = new Test(new Uint8Array([42]).buffer);
+	assertEquals(test.getAlpha(), 42);
 });
