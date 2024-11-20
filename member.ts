@@ -4,7 +4,7 @@ import type { Struct } from './struct.ts';
 /**
  * Set member info.
  *
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param byteLength Byte length.
@@ -12,18 +12,18 @@ import type { Struct } from './struct.ts';
  * @param Type Member type.
  * @returns Byte length.
  */
-export function member<T extends typeof Struct>(
-	StructT: T,
-	name: Members<T>,
+export function member<C extends typeof Struct>(
+	StructC: C,
+	name: Members<C>,
 	byteOffset: number,
 	byteLength: number,
 	littleEndian: boolean | null,
 	Type: string | typeof Struct,
 ): number {
-	const o: { [p: PropertyKey]: Member } = Object.hasOwn(StructT, 'MEMBERS')
-		? StructT.MEMBERS
-		: (StructT as { MEMBERS: T['MEMBERS'] }).MEMBERS = Object
-			.create(StructT.MEMBERS);
+	const o: { [p: PropertyKey]: Member } = Object.hasOwn(StructC, 'MEMBERS')
+		? StructC.MEMBERS
+		: (StructC as { MEMBERS: C['MEMBERS'] }).MEMBERS = Object
+			.create(StructC.MEMBERS);
 	o[name] = { byteOffset, byteLength, littleEndian, Type };
 	return byteLength;
 }

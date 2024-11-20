@@ -7,20 +7,20 @@ import { member } from '../member.ts';
 /**
  * Member float16.
  *
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function memberF16<T extends typeof Struct>(
-	StructT: T,
-	name: MembersExtends<T, number>,
+export function memberF16<C extends typeof Struct>(
+	StructC: C,
+	name: MembersExtends<C, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructT.prototype, name, {
-		get(this: T['prototype']): number {
+	Object.defineProperty(StructC.prototype, name, {
+		get(this: C['prototype']): number {
 			const { dataView } = this as unknown as {
 				dataView: DataView & {
 					getFloat16?: (
@@ -34,7 +34,7 @@ export function memberF16<T extends typeof Struct>(
 				? dataView.getFloat16(byteOffset, le)
 				: getFloat16(dataView, byteOffset, le);
 		},
-		set(this: T['prototype'], value: number): void {
+		set(this: C['prototype'], value: number): void {
 			const { dataView } = this as unknown as {
 				dataView: DataView & {
 					setFloat16?: (
@@ -56,5 +56,5 @@ export function memberF16<T extends typeof Struct>(
 			}
 		},
 	});
-	return member(StructT, name, byteOffset, 2, littleEndian, 'f16');
+	return member(StructC, name, byteOffset, 2, littleEndian, 'f16');
 }

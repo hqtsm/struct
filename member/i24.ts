@@ -7,27 +7,27 @@ import { member } from '../member.ts';
 /**
  * Member int24.
  *
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function memberI24<T extends typeof Struct>(
-	StructT: T,
-	name: MembersExtends<T, number>,
+export function memberI24<C extends typeof Struct>(
+	StructC: C,
+	name: MembersExtends<C, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructT.prototype, name, {
-		get(this: T['prototype']): number {
+	Object.defineProperty(StructC.prototype, name, {
+		get(this: C['prototype']): number {
 			return getInt24(
 				this.dataView,
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(this: T['prototype'], value: number): void {
+		set(this: C['prototype'], value: number): void {
 			setInt24(
 				this.dataView,
 				byteOffset,
@@ -36,33 +36,33 @@ export function memberI24<T extends typeof Struct>(
 			);
 		},
 	});
-	return member(StructT, name, byteOffset, 3, littleEndian, 'i24');
+	return member(StructC, name, byteOffset, 3, littleEndian, 'i24');
 }
 
 /**
  * Member uint24.
  *
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function memberU24<T extends typeof Struct>(
-	StructT: T,
-	name: MembersExtends<T, number>,
+export function memberU24<C extends typeof Struct>(
+	StructC: C,
+	name: MembersExtends<C, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructT.prototype, name, {
-		get(this: T['prototype']): number {
+	Object.defineProperty(StructC.prototype, name, {
+		get(this: C['prototype']): number {
 			return getUint24(
 				this.dataView,
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(this: T['prototype'], value: number): void {
+		set(this: C['prototype'], value: number): void {
 			setUint24(
 				this.dataView,
 				byteOffset,
@@ -71,5 +71,5 @@ export function memberU24<T extends typeof Struct>(
 			);
 		},
 	});
-	return member(StructT, name, byteOffset, 3, littleEndian, 'u24');
+	return member(StructC, name, byteOffset, 3, littleEndian, 'u24');
 }

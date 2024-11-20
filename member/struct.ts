@@ -6,22 +6,22 @@ import { member } from '../member.ts';
  * Member struct.
  *
  * @param StructM Member struct.
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function memberStruct<M extends typeof Struct, T extends typeof Struct>(
+export function memberStruct<M extends typeof Struct, C extends typeof Struct>(
 	StructM: M,
-	StructT: T,
-	name: ReadonlyMembersExtends<T, M['prototype']>,
+	StructC: C,
+	name: ReadonlyMembersExtends<C, M['prototype']>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<T['prototype'], M['prototype']>();
-	Object.defineProperty(StructT.prototype, name, {
-		get(this: T['prototype']): M['prototype'] {
+	const m = new WeakMap<C['prototype'], M['prototype']>();
+	Object.defineProperty(StructC.prototype, name, {
+		get(this: C['prototype']): M['prototype'] {
 			let r = m.get(this);
 			if (!r) {
 				r = new StructM(
@@ -35,7 +35,7 @@ export function memberStruct<M extends typeof Struct, T extends typeof Struct>(
 		},
 	});
 	return member(
-		StructT,
+		StructC,
 		name,
 		byteOffset,
 		StructM.BYTE_LENGTH,

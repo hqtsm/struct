@@ -6,20 +6,20 @@ import { member } from '../member.ts';
  * Member int8 array.
  *
  * @param count Array length.
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberI8A<T extends typeof Struct>(
+export function memberI8A<C extends typeof Struct>(
 	count: number,
-	StructT: T,
-	name: ReadonlyMembersExtends<T, Int8Array>,
+	StructC: C,
+	name: ReadonlyMembersExtends<C, Int8Array>,
 	byteOffset: number,
 ): number {
-	const m = new WeakMap<T['prototype'], Int8Array>();
-	Object.defineProperty(StructT.prototype, name, {
-		get(this: T['prototype']): Int8Array {
+	const m = new WeakMap<C['prototype'], Int8Array>();
+	Object.defineProperty(StructC.prototype, name, {
+		get(this: C['prototype']): Int8Array {
 			let r = m.get(this);
 			if (!r) {
 				r = new Int8Array(
@@ -32,27 +32,27 @@ export function memberI8A<T extends typeof Struct>(
 			return r;
 		},
 	});
-	return member(StructT, name, byteOffset, count, null, 'i8a');
+	return member(StructC, name, byteOffset, count, null, 'i8a');
 }
 
 /**
  * Member uint8 array.
  *
  * @param count Array length.
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberU8A<T extends typeof Struct>(
+export function memberU8A<C extends typeof Struct>(
 	count: number,
-	StructT: T,
-	name: ReadonlyMembersExtends<T, Uint8Array>,
+	StructC: C,
+	name: ReadonlyMembersExtends<C, Uint8Array>,
 	byteOffset: number,
 ): number {
-	const m = new WeakMap<T['prototype'], Uint8Array>();
-	Object.defineProperty(StructT.prototype, name, {
-		get(this: T['prototype']): Uint8Array {
+	const m = new WeakMap<C['prototype'], Uint8Array>();
+	Object.defineProperty(StructC.prototype, name, {
+		get(this: C['prototype']): Uint8Array {
 			let r = m.get(this);
 			if (!r) {
 				r = new Uint8Array(
@@ -65,5 +65,5 @@ export function memberU8A<T extends typeof Struct>(
 			return r;
 		},
 	});
-	return member(StructT, name, byteOffset, count, null, 'u8a');
+	return member(StructC, name, byteOffset, count, null, 'u8a');
 }

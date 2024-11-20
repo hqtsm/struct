@@ -7,69 +7,69 @@ import type { Struct } from './struct.ts';
  * @param littleEndian Little endian, big endian, or default to swap.
  * @returns New struct of the same type and memory, different endian.
  */
-export function endianSwap<T extends Struct>(
-	struct: T,
+export function endianSwap<S extends Struct>(
+	struct: S,
 	littleEndian: boolean | null = null,
-): T {
+): S {
 	return new struct.constructor(
 		struct.buffer,
 		struct.byteOffset,
 		littleEndian ?? !struct.littleEndian,
-	) as T;
+	) as S;
 }
 
 /**
  * Get byte offset of member.
  *
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @returns Byte offset.
  */
-export function byteOffset<T extends typeof Struct>(
-	StructT: T,
-	name: Exclude<keyof T['prototype'], keyof Struct>,
+export function byteOffset<C extends typeof Struct>(
+	StructC: C,
+	name: Exclude<keyof C['prototype'], keyof Struct>,
 ): number {
-	return StructT.MEMBERS[name].byteOffset;
+	return StructC.MEMBERS[name].byteOffset;
 }
 
 /**
  * Get byte length of member.
  *
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @returns Byte length.
  */
-export function byteLength<T extends typeof Struct>(
-	StructT: T,
-	name: Exclude<keyof T['prototype'], keyof Struct>,
+export function byteLength<C extends typeof Struct>(
+	StructC: C,
+	name: Exclude<keyof C['prototype'], keyof Struct>,
 ): number {
-	return StructT.MEMBERS[name].byteLength;
+	return StructC.MEMBERS[name].byteLength;
 }
 
 /**
  * Get little endian flag of member.
  *
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @returns Little endian, big endian, or default.
  */
-export function littleEndian<T extends typeof Struct>(
-	StructT: T,
-	name: Exclude<keyof T['prototype'], keyof Struct>,
+export function littleEndian<C extends typeof Struct>(
+	StructC: C,
+	name: Exclude<keyof C['prototype'], keyof Struct>,
 ): boolean | null {
-	return StructT.MEMBERS[name].littleEndian;
+	return StructC.MEMBERS[name].littleEndian;
 }
 
 /**
  * Get type of member.
  *
- * @param StructT Struct constructor.
+ * @param StructC Struct constructor.
  * @param name Member name.
  * @returns Type.
  */
-export function getType<T extends typeof Struct>(
-	StructT: T,
-	name: Exclude<keyof T['prototype'], keyof Struct>,
+export function getType<C extends typeof Struct>(
+	StructC: C,
+	name: Exclude<keyof C['prototype'], keyof Struct>,
 ): string | typeof Struct {
-	return StructT.MEMBERS[name].Type;
+	return StructC.MEMBERS[name].Type;
 }
