@@ -3,7 +3,22 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"exports": {
-		".": "./mod.ts"
+		".": "./mod.ts",
+		"./const": "./const.ts",
+		"./macro": "./macro.ts",
+		"./member": "./member/mod.ts",
+		"./member/f16": "./member/f16.ts",
+		"./member/f32": "./member/f32.ts",
+		"./member/f64": "./member/f64.ts",
+		"./member/i8": "./member/i8.ts",
+		"./member/i8a": "./member/i8a.ts",
+		"./member/i16": "./member/i16.ts",
+		"./member/i24": "./member/i24.ts",
+		"./member/i32": "./member/i32.ts",
+		"./member/i64": "./member/i64.ts",
+		"./member/struct": "./member/struct.ts",
+		"./struct": "./struct.ts",
+		"./type": "./type.ts"
 	},
 	"imports": {
 		"@deno/dnt": "jsr:@deno/dnt@^0.41.3",
