@@ -77,3 +77,39 @@ exampleBE.alpha = 0xABCD;
 exampleBE.beta = 0xBCDE;
 console.assert(data.join(', ') === '171, 205, 188, 222');
 ```
+
+## Extending
+
+Structures can be extended with new child members.
+
+```ts
+import { memberF32, memberU32, Struct } from '@hqtsm/struct';
+
+export class Variable extends Struct {
+	declare public readonly ['constructor']: typeof Variable;
+
+	declare public type: number;
+
+	public static override readonly BYTE_LENGTH: number = ((o) => {
+		o += memberU32(this, 'type', o);
+		return o;
+	})(super.BYTE_LENGTH);
+}
+
+export class VariableFloat extends Variable {
+	declare public readonly ['constructor']: typeof VariableFloat;
+
+	declare public value: number;
+
+	public static override readonly BYTE_LENGTH: number = ((o) => {
+		o += memberF32(this, 'value', o);
+		return o;
+	})(super.BYTE_LENGTH);
+}
+
+const data = new Uint8Array(VariableFloat.BYTE_LENGTH);
+const varFloat = new VariableFloat(data.buffer, 0, true);
+varFloat.type = 0xF;
+varFloat.value = 3.1415;
+console.assert(data.join(', ') === '15, 0, 0, 0, 86, 14, 73, 64');
+```
