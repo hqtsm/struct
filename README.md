@@ -18,7 +18,7 @@ Binary structures
 Endianness can be defined for each individual member.
 
 ```ts
-import { memberU16, memberU8, Struct } from '@hqtsm/struct';
+import { memberI8, memberU16, Struct } from '@hqtsm/struct';
 
 export class Example extends Struct {
 	declare public readonly ['constructor']: typeof Example;
@@ -32,7 +32,7 @@ export class Example extends Struct {
 	public static override readonly BYTE_LENGTH: number = ((o) => {
 		o += memberU16(this, 'alpha', o, true);
 		o += memberU16(this, 'beta', o, false);
-		o += memberU8(this, 'gamma', o);
+		o += memberI8(this, 'gamma', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -42,8 +42,8 @@ const data = new Uint8Array(Example.BYTE_LENGTH);
 const example = new Example(data.buffer);
 example.alpha = 0xABCD;
 example.beta = 0xBCDE;
-example.gamma = 123;
-console.assert(data.join(', ') === '205, 171, 188, 222, 123');
+example.gamma = -123;
+console.assert(data.join(', ') === '205, 171, 188, 222, 133');
 ```
 
 ## Dynamic Endianness
