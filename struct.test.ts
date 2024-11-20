@@ -21,12 +21,19 @@ Deno.test('byteLength', () => {
 });
 
 Deno.test('byteOffset', () => {
+	class Test extends Struct {
+		declare public readonly ['constructor']: typeof Test;
+
+		public static override readonly BYTE_LENGTH: number = 8;
+	}
+
 	const data = new ArrayBuffer(32);
-	assertEquals(new Struct(data, 4).byteOffset, 4);
-	assertEquals(new Struct(data, 3.14).byteOffset, 3);
-	assertEquals(new Struct(data, 32).byteOffset, 32);
-	assertThrows(() => new Struct(data, -1), RangeError);
-	assertThrows(() => new Struct(data, 33), RangeError);
+	assertEquals(new Test(data, 4).byteOffset, 4);
+	assertEquals(new Test(data, 3.14).byteOffset, 3);
+	assertEquals(new Test(data, 3.99).byteOffset, 3);
+	assertEquals(new Test(data, 32).byteOffset, 32);
+	assertThrows(() => new Test(data, -1), RangeError);
+	assertThrows(() => new Test(data, 33), RangeError);
 });
 
 Deno.test('dataView', () => {
