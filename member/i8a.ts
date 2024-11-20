@@ -1,4 +1,4 @@
-import type { ReadonlyKeyofExtends } from '../type.ts';
+import type { ReadonlyMembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
 import { member } from '../member.ts';
 
@@ -14,10 +14,7 @@ import { member } from '../member.ts';
 export function memberI8A<T extends typeof Struct>(
 	count: number,
 	StructT: T,
-	name: Exclude<
-		ReadonlyKeyofExtends<T['prototype'], Int8Array>,
-		keyof Struct
-	>,
+	name: ReadonlyMembersExtends<T, Int8Array>,
 	byteOffset: number,
 ): number {
 	const m = new WeakMap<T['prototype'], Int8Array>();
@@ -50,10 +47,7 @@ export function memberI8A<T extends typeof Struct>(
 export function memberU8A<T extends typeof Struct>(
 	count: number,
 	StructT: T,
-	name: Exclude<
-		ReadonlyKeyofExtends<T['prototype'], Uint8Array>,
-		keyof Struct
-	>,
+	name: ReadonlyMembersExtends<T, Uint8Array>,
 	byteOffset: number,
 ): number {
 	const m = new WeakMap<T['prototype'], Uint8Array>();

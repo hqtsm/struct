@@ -1,4 +1,4 @@
-import type { Member } from './type.ts';
+import type { Member, Members } from './type.ts';
 import type { Struct } from './struct.ts';
 
 /**
@@ -14,7 +14,7 @@ import type { Struct } from './struct.ts';
  */
 export function member<T extends typeof Struct>(
 	StructT: T,
-	name: Exclude<keyof T['prototype'], keyof Struct>,
+	name: Members<T>,
 	byteOffset: number,
 	byteLength: number,
 	littleEndian: boolean | null,

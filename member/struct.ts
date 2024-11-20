@@ -1,4 +1,4 @@
-import type { ReadonlyKeyofExtends } from '../type.ts';
+import type { ReadonlyMembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
 import { member } from '../member.ts';
 
@@ -15,10 +15,7 @@ import { member } from '../member.ts';
 export function memberStruct<M extends typeof Struct, T extends typeof Struct>(
 	StructM: M,
 	StructT: T,
-	name: Exclude<
-		ReadonlyKeyofExtends<T['prototype'], M['prototype']>,
-		keyof Struct
-	>,
+	name: ReadonlyMembersExtends<T, M['prototype']>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {

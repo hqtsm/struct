@@ -1,4 +1,4 @@
-import type { KeyofExtends } from '../type.ts';
+import type { MembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
 import { member } from '../member.ts';
 
@@ -13,7 +13,7 @@ import { member } from '../member.ts';
  */
 export function memberI16<T extends typeof Struct>(
 	StructT: T,
-	name: Exclude<KeyofExtends<T['prototype'], number>, keyof Struct>,
+	name: MembersExtends<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -46,7 +46,7 @@ export function memberI16<T extends typeof Struct>(
  */
 export function memberU16<T extends typeof Struct>(
 	StructT: T,
-	name: Exclude<KeyofExtends<T['prototype'], number>, keyof Struct>,
+	name: MembersExtends<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
