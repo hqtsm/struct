@@ -1,6 +1,24 @@
 import type { Struct } from './struct.ts';
 
 /**
+ * Swap endian of struct.
+ *
+ * @param struct Struct to swap the endian of.
+ * @param littleEndian Little endian, big endian, or default to swap.
+ * @returns New struct of the same type and memory, different endian.
+ */
+export function endianSwap<T extends Struct>(
+	struct: T,
+	littleEndian: boolean | null = null,
+): T {
+	return new struct.constructor(
+		struct.buffer,
+		struct.byteOffset,
+		littleEndian ?? !struct.littleEndian,
+	) as T;
+}
+
+/**
  * Get byte offset of member.
  *
  * @param StructT Struct constructor.
