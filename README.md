@@ -79,7 +79,7 @@ exampleBE.beta = 0xBCDE;
 console.assert(data.join(', ') === '171, 205, 188, 222');
 ```
 
-## Extending
+## Extending / Inheritance
 
 Structures can be extended with new child members.
 
@@ -113,4 +113,46 @@ const varFloat = new VariableFloat(data.buffer, 0, true);
 varFloat.type = 0xF;
 varFloat.value = 3.1415;
 console.assert(data.join(', ') === '15, 0, 0, 0, 86, 14, 73, 64');
+```
+
+## Private / Protected
+
+Members can be made `private` or `protected` but type checking must be relaxed.
+
+Casting the name to `never` or `any` will pass the type checker.
+
+```ts
+import { memberU8, Struct } from '@hqtsm/struct';
+
+export class Example extends Struct {
+	declare public readonly ['constructor']: typeof Example;
+
+	declare private alpha: number;
+
+	declare protected beta: number;
+
+	declare public gamma: number;
+
+	public setAlpha(value: number): void {
+		this.alpha = value;
+	}
+
+	public setBeta(value: number): void {
+		this.beta = value;
+	}
+
+	public static override readonly BYTE_LENGTH: number = ((o) => {
+		o += memberU8(this, 'alpha' as never, o);
+		o += memberU8(this, 'beta' as never, o);
+		o += memberU8(this, 'gamma', o);
+		return o;
+	})(super.BYTE_LENGTH);
+}
+
+const data = new Uint8Array(Example.BYTE_LENGTH);
+const example = new Example(data.buffer);
+example.setAlpha(65);
+example.setBeta(66);
+example.gamma = 71;
+console.assert(data.join(', ') === '65, 66, 71');
 ```
