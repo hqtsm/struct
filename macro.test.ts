@@ -2,6 +2,7 @@ import {
 	assertEquals,
 	assertInstanceOf,
 	assertNotStrictEquals,
+	assertThrows,
 } from '@std/assert';
 
 import { assignStruct, assignView, endianSwap } from './macro.ts';
@@ -54,6 +55,7 @@ Deno.test('assignView', () => {
 	const dst = new Int8Array(src.length);
 	assignView(dst, src);
 	assertEquals(dst, new Int8Array([-1, -2, -3, -4]));
+	assertThrows(() => assignView(dst, src.slice(1)), RangeError);
 });
 
 Deno.test('assignStruct', () => {
