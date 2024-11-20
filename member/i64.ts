@@ -13,7 +13,7 @@ import { member } from '../member.ts';
  */
 export function memberI64<T extends typeof Struct>(
 	StructT: T,
-	name: MembersExtends<T, number>,
+	name: MembersExtends<T, bigint>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -46,7 +46,7 @@ export function memberI64<T extends typeof Struct>(
  */
 export function memberU64<T extends typeof Struct>(
 	StructT: T,
-	name: MembersExtends<T, number>,
+	name: MembersExtends<T, bigint>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
