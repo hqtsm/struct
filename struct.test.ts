@@ -2,7 +2,7 @@ import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 
 import { Struct } from './struct.ts';
 import { LITTLE_ENDIAN } from './const.ts';
-import { memberI8 } from './mod.ts';
+import { memberI8 } from './member/i8.ts';
 
 Deno.test('buffer', () => {
 	const buffer = new ArrayBuffer(0);
