@@ -20,7 +20,7 @@ Endianness can be defined for each individual member.
 ```ts
 import { memberI8, memberU16, Struct } from '@hqtsm/struct';
 
-export class Example extends Struct {
+class Example extends Struct {
 	declare public readonly ['constructor']: typeof Example;
 
 	declare public alpha: number;
@@ -53,7 +53,7 @@ Using the endian passed into the constructor, or host endianness.
 ```ts
 import { memberU16, Struct } from '@hqtsm/struct';
 
-export class Example extends Struct {
+class Example extends Struct {
 	declare public readonly ['constructor']: typeof Example;
 
 	declare public alpha: number;
@@ -87,7 +87,7 @@ Structures can be extended with new child members.
 ```ts
 import { memberF32, memberU32, Struct } from '@hqtsm/struct';
 
-export class Variable extends Struct {
+class Variable extends Struct {
 	declare public readonly ['constructor']: typeof Variable;
 
 	declare public type: number;
@@ -98,7 +98,7 @@ export class Variable extends Struct {
 	})(super.BYTE_LENGTH);
 }
 
-export class VariableFloat extends Variable {
+class VariableFloat extends Variable {
 	declare public readonly ['constructor']: typeof VariableFloat;
 
 	declare public value: number;
@@ -125,7 +125,7 @@ Casting the name to `never` or `any` will pass the type checker.
 ```ts
 import { memberU8, Struct } from '@hqtsm/struct';
 
-export class Example extends Struct {
+class Example extends Struct {
 	declare public readonly ['constructor']: typeof Example;
 
 	declare private alpha: number;
