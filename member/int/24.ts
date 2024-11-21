@@ -1,4 +1,9 @@
-import { getInt24, getUint24, setInt24, setUint24 } from '@hqtsm/dataview/i24';
+import {
+	getInt24,
+	getUint24,
+	setInt24,
+	setUint24,
+} from '@hqtsm/dataview/int/24';
 
 import type { MembersExtends } from '../../type.ts';
 import type { Struct } from '../../struct.ts';

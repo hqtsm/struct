@@ -12,8 +12,8 @@ if (Deno.args.length !== 1 || !/^(dev|prod)$/.test(Deno.args[0])) {
 const [env] = Deno.args;
 
 const mappings: BuildOptions['mappings'] = {
-	'jsr:@hqtsm/dataview/f16': '@hqtsm/dataview',
-	'jsr:@hqtsm/dataview/i24': '@hqtsm/dataview',
+	'jsr:@hqtsm/dataview/float/16': '@hqtsm/dataview',
+	'jsr:@hqtsm/dataview/int/24': '@hqtsm/dataview',
 };
 
 const GITHUB_REPOSITORY = Deno.env.get('GITHUB_REPOSITORY');
