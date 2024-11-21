@@ -4,7 +4,7 @@
     "jsr:@david/code-block-writer@^13.0.2": "13.0.3",
     "jsr:@deno/cache-dir@~0.10.3": "0.10.3",
     "jsr:@deno/dnt@~0.41.3": "0.41.3",
-    "jsr:@hqtsm/dataview@^1.0.2": "1.0.2",
+    "jsr:@hqtsm/dataview@^1.0.4": "1.0.4",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@0.226": "0.226.0",
     "jsr:@std/assert@^1.0.8": "1.0.8",
@@ -48,8 +48,8 @@
         "jsr:@ts-morph/bootstrap"
       ]
     },
-    "@hqtsm/dataview@1.0.2": {
-      "integrity": "c5e7e97d496471bfee940befb0279f5bf5ade06c89dba3ec022d611419d3d35e"
+    "@hqtsm/dataview@1.0.4": {
+      "integrity": "dd645a12df2f47dc03526792c619376c3ca5e64030cf9265737ca5e45f9a415f"
     },
     "@std/assert@0.223.0": {
       "integrity": "eb8d6d879d76e1cc431205bd346ed4d88dc051c6366365b1af47034b0670be24"
@@ -132,7 +132,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@deno/dnt@~0.41.3",
-      "jsr:@hqtsm/dataview@^1.0.2",
+      "jsr:@hqtsm/dataview@^1.0.4",
       "jsr:@std/assert@^1.0.8"
     ]
   }
