@@ -1,6 +1,7 @@
-import type { ReadonlyMembersExtends } from '../type.ts';
+import type { MembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
 import { member } from '../member.ts';
+import { assignStruct } from '../macro.ts';
 
 /**
  * Member struct.
@@ -15,7 +16,7 @@ import { member } from '../member.ts';
 export function memberStruct<M extends typeof Struct, C extends typeof Struct>(
 	StructM: M,
 	StructC: C,
-	name: ReadonlyMembersExtends<C, M['prototype']>,
+	name: MembersExtends<C, M['prototype']>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -38,6 +39,9 @@ export function memberStruct<M extends typeof Struct, C extends typeof Struct>(
 				m.set(this, r);
 			}
 			return r;
+		},
+		function (value: M['prototype']): void {
+			assignStruct(this[name] as M['prototype'], value);
 		},
 	);
 }

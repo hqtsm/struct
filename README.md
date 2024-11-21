@@ -140,9 +140,9 @@ class Child extends Struct {
 class Parent extends Struct {
 	declare public readonly ['constructor']: typeof Parent;
 
-	declare public readonly array: Uint8Array;
+	declare public array: Uint8Array;
 
-	declare public readonly child: Child;
+	declare public child: Child;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
 		o += memberU8A(4, this, 'array', o);

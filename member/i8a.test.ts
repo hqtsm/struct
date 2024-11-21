@@ -1,4 +1,8 @@
-import { assertEquals, assertStrictEquals } from '@std/assert';
+import {
+	assertEquals,
+	assertNotStrictEquals,
+	assertStrictEquals,
+} from '@std/assert';
 
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
@@ -8,11 +12,11 @@ Deno.test('memberI8A', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
-		declare public readonly alpha: Int8Array;
+		declare public alpha: Int8Array;
 
-		declare public readonly beta: Int8Array;
+		declare public beta: Int8Array;
 
-		declare public readonly gamma: Int8Array;
+		declare public gamma: Int8Array;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += memberI8A(2, this, 'alpha', o);
@@ -58,17 +62,22 @@ Deno.test('memberI8A', () => {
 	assertEquals(data[off.beta + 3], 0xfd);
 
 	assertStrictEquals(test.alpha, test.alpha);
+
+	const source = new Int8Array([4, -4]);
+	test.alpha = source;
+	assertEquals(test.alpha, source);
+	assertNotStrictEquals(test.alpha, source);
 });
 
 Deno.test('memberU8A', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
-		declare public readonly alpha: Uint8Array;
+		declare public alpha: Uint8Array;
 
-		declare public readonly beta: Uint8Array;
+		declare public beta: Uint8Array;
 
-		declare public readonly gamma: Uint8Array;
+		declare public gamma: Uint8Array;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += memberU8A(2, this, 'alpha', o);
@@ -114,4 +123,9 @@ Deno.test('memberU8A', () => {
 	assertEquals(data[off.beta + 3], 0xfd);
 
 	assertStrictEquals(test.alpha, test.alpha);
+
+	const source = new Uint8Array([4, 252]);
+	test.alpha = source;
+	assertEquals(test.alpha, source);
+	assertNotStrictEquals(test.alpha, source);
 });

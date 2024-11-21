@@ -1,4 +1,8 @@
-import { assertEquals, assertStrictEquals } from '@std/assert';
+import {
+	assertEquals,
+	assertNotStrictEquals,
+	assertStrictEquals,
+} from '@std/assert';
 
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
@@ -23,11 +27,11 @@ Deno.test('memberStruct', () => {
 	class TestParent extends Struct {
 		declare public readonly ['constructor']: typeof TestParent;
 
-		declare public readonly alpha: TestChild;
+		declare alpha: TestChild;
 
-		declare public readonly beta: TestChild;
+		declare beta: TestChild;
 
-		declare public readonly gamma: TestChild;
+		declare gamma: TestChild;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += memberStruct(TestChild, this, 'alpha', o, true);
@@ -75,6 +79,7 @@ Deno.test('memberStruct', () => {
 		assertEquals(view.getUint32(off.gamma + offBeta, true), 0x34567890);
 
 		assertStrictEquals(test.alpha, test.alpha);
+		data.fill(0);
 	}
 	{
 		const test = new TestParent(data.buffer, 0, false);
@@ -94,5 +99,22 @@ Deno.test('memberStruct', () => {
 		assertEquals(view.getUint32(off.gamma + offBeta, false), 0x34567890);
 
 		assertStrictEquals(test.alpha, test.alpha);
+		data.fill(0);
+	}
+
+	{
+		const test = new TestParent(data.buffer, 0, true);
+		test.alpha.alpha = 0xa1a2a3a4;
+		test.alpha.beta = 0xb1b2b3b4;
+		test.gamma = test.alpha;
+
+		assertEquals(test.alpha.alpha, 0xa1a2a3a4);
+		assertEquals(test.alpha.beta, 0xb1b2b3b4);
+		assertEquals(test.gamma.alpha, 0xa1a2a3a4);
+		assertEquals(test.gamma.beta, 0xb1b2b3b4);
+
+		assertNotStrictEquals(test.alpha, test.beta);
+		assertNotStrictEquals(test.alpha, test.gamma);
+		data.fill(0);
 	}
 });

@@ -1,6 +1,7 @@
-import type { ReadonlyMembersExtends } from '../type.ts';
+import type { MembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
 import { member } from '../member.ts';
+import { assignView } from '../macro.ts';
 
 /**
  * Member int8 array.
@@ -14,7 +15,7 @@ import { member } from '../member.ts';
 export function memberI8A<C extends typeof Struct>(
 	count: number,
 	StructC: C,
-	name: ReadonlyMembersExtends<C, Int8Array>,
+	name: MembersExtends<C, Int8Array>,
 	byteOffset: number,
 ): number {
 	const m = new WeakMap<C['prototype'], Int8Array>();
@@ -37,6 +38,9 @@ export function memberI8A<C extends typeof Struct>(
 			}
 			return r;
 		},
+		function (value: Int8Array): void {
+			assignView(this[name] as Int8Array, value);
+		},
 	);
 }
 
@@ -52,7 +56,7 @@ export function memberI8A<C extends typeof Struct>(
 export function memberU8A<C extends typeof Struct>(
 	count: number,
 	StructC: C,
-	name: ReadonlyMembersExtends<C, Uint8Array>,
+	name: MembersExtends<C, Uint8Array>,
 	byteOffset: number,
 ): number {
 	const m = new WeakMap<C['prototype'], Uint8Array>();
@@ -74,6 +78,9 @@ export function memberU8A<C extends typeof Struct>(
 				m.set(this, r);
 			}
 			return r;
+		},
+		function (value: Uint8Array): void {
+			assignView(this[name] as Uint8Array, value);
 		},
 	);
 }
