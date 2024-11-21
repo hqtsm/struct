@@ -22,7 +22,7 @@ export function member<C extends typeof Struct, T>(
 	littleEndian: boolean | null,
 	Type: string | typeof Struct,
 	get: (this: C['prototype']) => T,
-	set?: (this: C['prototype'], value: T) => void,
+	set: (this: C['prototype'], value: T) => void,
 ): number {
 	Object.defineProperty(StructC.prototype, name, { get, set });
 	const o: { [p: PropertyKey]: Member } = Object.hasOwn(StructC, 'MEMBERS')
