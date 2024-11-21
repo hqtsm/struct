@@ -2,7 +2,7 @@ import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 
 import { Struct } from './struct.ts';
 import { LITTLE_ENDIAN } from './const.ts';
-import { memberI8 } from './member/i8.ts';
+import { int8 } from './member/i8.ts';
 
 Deno.test('buffer', () => {
 	const buffer = new ArrayBuffer(0);
@@ -81,7 +81,7 @@ Deno.test('protected properties', () => {
 		}
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI8(this, 'alpha' as never, o);
+			o += int8(this, 'alpha' as never, o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -103,7 +103,7 @@ Deno.test('private properties', () => {
 		}
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI8(this, 'alpha' as never, o);
+			o += int8(this, 'alpha' as never, o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -119,7 +119,7 @@ Deno.test('extends', () => {
 		declare public type: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI8(this, 'type', o);
+			o += int8(this, 'type', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -130,7 +130,7 @@ Deno.test('extends', () => {
 		declare public value: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI8(this, 'value', o);
+			o += int8(this, 'value', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

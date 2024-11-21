@@ -3,9 +3,9 @@ import { assertEquals } from '@std/assert';
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
-import { memberI8, memberU8 } from './i8.ts';
+import { int8, uint8 } from './i8.ts';
 
-Deno.test('memberI8', () => {
+Deno.test('int8', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -14,8 +14,8 @@ Deno.test('memberI8', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI8(this, 'alpha', o);
-			o += memberI8(this, 'beta', o);
+			o += int8(this, 'alpha', o);
+			o += int8(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -45,7 +45,7 @@ Deno.test('memberI8', () => {
 	assertEquals(data[off.beta], 0xff);
 });
 
-Deno.test('memberU8', () => {
+Deno.test('uint8', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -54,8 +54,8 @@ Deno.test('memberU8', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU8(this, 'alpha', o);
-			o += memberU8(this, 'beta', o);
+			o += uint8(this, 'alpha', o);
+			o += uint8(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

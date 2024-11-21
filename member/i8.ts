@@ -10,7 +10,7 @@ import { memberValue } from '../value.ts';
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberI8<C extends typeof Struct>(
+export function int8<C extends typeof Struct>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
@@ -39,7 +39,7 @@ export function memberI8<C extends typeof Struct>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberU8<C extends typeof Struct>(
+export function uint8<C extends typeof Struct>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,

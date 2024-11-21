@@ -7,7 +7,7 @@ import {
 
 import { assignStruct, assignView, endianSwap } from './macro.ts';
 import { Struct } from './struct.ts';
-import { memberU8 } from './member/i8.ts';
+import { uint8 } from './member/i8.ts';
 
 Deno.test('endianSwap', () => {
 	class Test extends Struct {
@@ -67,8 +67,8 @@ Deno.test('assignStruct', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU8(this, 'alpha', o);
-			o += memberU8(this, 'beta', o);
+			o += uint8(this, 'alpha', o);
+			o += uint8(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -79,7 +79,7 @@ Deno.test('assignStruct', () => {
 		declare public gamma: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU8(this, 'gamma', o);
+			o += uint8(this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

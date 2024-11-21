@@ -3,9 +3,9 @@ import { assertEquals } from '@std/assert';
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
-import { memberF32 } from './f32.ts';
+import { float32 } from './f32.ts';
 
-Deno.test('memberF32', () => {
+Deno.test('float32', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -16,9 +16,9 @@ Deno.test('memberF32', () => {
 		declare public gamma: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberF32(this, 'alpha', o, true);
-			o += memberF32(this, 'beta', o, false);
-			o += memberF32(this, 'gamma', o);
+			o += float32(this, 'alpha', o, true);
+			o += float32(this, 'beta', o, false);
+			o += float32(this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

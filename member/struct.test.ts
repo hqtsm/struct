@@ -7,7 +7,7 @@ import {
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
-import { memberU32 } from './i32.ts';
+import { uint32 } from './i32.ts';
 import { memberStruct } from './struct.ts';
 
 Deno.test('memberStruct', () => {
@@ -19,8 +19,8 @@ Deno.test('memberStruct', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU32(this, 'alpha', o);
-			o += memberU32(this, 'beta', o);
+			o += uint32(this, 'alpha', o);
+			o += uint32(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

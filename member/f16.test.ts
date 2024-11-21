@@ -5,9 +5,9 @@ import type { ArrayBufferReal } from '../type.ts';
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
-import { memberF16 } from './f16.ts';
+import { float16 } from './f16.ts';
 
-Deno.test('memberF16', () => {
+Deno.test('float16', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -18,9 +18,9 @@ Deno.test('memberF16', () => {
 		declare public gamma: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberF16(this, 'alpha', o, true);
-			o += memberF16(this, 'beta', o, false);
-			o += memberF16(this, 'gamma', o);
+			o += float16(this, 'alpha', o, true);
+			o += float16(this, 'beta', o, false);
+			o += float16(this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

@@ -3,9 +3,9 @@ import { assertEquals } from '@std/assert';
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
-import { memberI16, memberU16 } from './i16.ts';
+import { int16, uint16 } from './i16.ts';
 
-Deno.test('memberI16', () => {
+Deno.test('int16', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -18,10 +18,10 @@ Deno.test('memberI16', () => {
 		declare public delta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI16(this, 'alpha', o);
-			o += memberI16(this, 'beta', o);
-			o += memberI16(this, 'gamma', o, true);
-			o += memberI16(this, 'delta', o, false);
+			o += int16(this, 'alpha', o);
+			o += int16(this, 'beta', o);
+			o += int16(this, 'gamma', o, true);
+			o += int16(this, 'delta', o, false);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -85,7 +85,7 @@ Deno.test('memberI16', () => {
 	}
 });
 
-Deno.test('memberU16', () => {
+Deno.test('uint16', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -98,10 +98,10 @@ Deno.test('memberU16', () => {
 		declare public delta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU16(this, 'alpha', o);
-			o += memberU16(this, 'beta', o);
-			o += memberU16(this, 'gamma', o, true);
-			o += memberU16(this, 'delta', o, false);
+			o += uint16(this, 'alpha', o);
+			o += uint16(this, 'beta', o);
+			o += uint16(this, 'gamma', o, true);
+			o += uint16(this, 'delta', o, false);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

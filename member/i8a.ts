@@ -11,7 +11,7 @@ import { memberView } from '../view.ts';
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberI8A<C extends typeof Struct>(
+export function int8A<C extends typeof Struct>(
 	count: number,
 	StructC: C,
 	name: MembersExtends<C['prototype'], Int8Array>,
@@ -43,7 +43,7 @@ export function memberI8A<C extends typeof Struct>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberU8A<C extends typeof Struct>(
+export function uint8A<C extends typeof Struct>(
 	count: number,
 	StructC: C,
 	name: MembersExtends<C['prototype'], Uint8Array>,
@@ -75,7 +75,7 @@ export function memberU8A<C extends typeof Struct>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberU8AC<C extends typeof Struct>(
+export function uint8AC<C extends typeof Struct>(
 	count: number,
 	StructC: C,
 	name: MembersExtends<C['prototype'], Uint8ClampedArray>,

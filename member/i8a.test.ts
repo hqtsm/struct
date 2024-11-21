@@ -7,9 +7,9 @@ import {
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
-import { memberI8A, memberU8A, memberU8AC } from './i8a.ts';
+import { int8A, uint8A, uint8AC } from './i8a.ts';
 
-Deno.test('memberI8A', () => {
+Deno.test('int8A', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -20,9 +20,9 @@ Deno.test('memberI8A', () => {
 		declare public gamma: Int8Array;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI8A(2, this, 'alpha', o);
-			o += memberI8A(4, this, 'beta', o);
-			o += memberI8A(0, this, 'gamma', o);
+			o += int8A(2, this, 'alpha', o);
+			o += int8A(4, this, 'beta', o);
+			o += int8A(0, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -70,7 +70,7 @@ Deno.test('memberI8A', () => {
 	assertNotStrictEquals(test.alpha, source);
 });
 
-Deno.test('memberU8A', () => {
+Deno.test('uint8A', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -81,9 +81,9 @@ Deno.test('memberU8A', () => {
 		declare public gamma: Uint8Array;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU8A(2, this, 'alpha', o);
-			o += memberU8A(4, this, 'beta', o);
-			o += memberU8A(0, this, 'gamma', o);
+			o += uint8A(2, this, 'alpha', o);
+			o += uint8A(4, this, 'beta', o);
+			o += uint8A(0, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -131,7 +131,7 @@ Deno.test('memberU8A', () => {
 	assertNotStrictEquals(test.alpha, source);
 });
 
-Deno.test('memberU8AC', () => {
+Deno.test('uint8AC', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -142,9 +142,9 @@ Deno.test('memberU8AC', () => {
 		declare public gamma: Uint8ClampedArray;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU8AC(2, this, 'alpha', o);
-			o += memberU8AC(4, this, 'beta', o);
-			o += memberU8AC(0, this, 'gamma', o);
+			o += uint8AC(2, this, 'alpha', o);
+			o += uint8AC(4, this, 'beta', o);
+			o += uint8AC(0, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

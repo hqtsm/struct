@@ -18,7 +18,7 @@ Binary structures
 Endianness can be defined for each individual member.
 
 ```ts
-import { memberI8, memberU16, Struct } from '@hqtsm/struct';
+import { int8, Struct, uint16 } from '@hqtsm/struct';
 
 class Example extends Struct {
 	declare public readonly ['constructor']: typeof Example;
@@ -30,9 +30,9 @@ class Example extends Struct {
 	declare public gamma: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += memberU16(this, 'alpha', o, true);
-		o += memberU16(this, 'beta', o, false);
-		o += memberI8(this, 'gamma', o);
+		o += uint16(this, 'alpha', o, true);
+		o += uint16(this, 'beta', o, false);
+		o += int8(this, 'gamma', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -51,7 +51,7 @@ console.assert(data.join(', ') === '205, 171, 188, 222, 133');
 Using the endian passed into the constructor, or host endianness.
 
 ```ts
-import { memberU16, Struct } from '@hqtsm/struct';
+import { Struct, uint16 } from '@hqtsm/struct';
 
 class Example extends Struct {
 	declare public readonly ['constructor']: typeof Example;
@@ -61,8 +61,8 @@ class Example extends Struct {
 	declare public beta: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += memberU16(this, 'alpha', o);
-		o += memberU16(this, 'beta', o);
+		o += uint16(this, 'alpha', o);
+		o += uint16(this, 'beta', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -85,7 +85,7 @@ console.assert(data.join(', ') === '171, 205, 188, 222');
 Structures can be extended with new child members.
 
 ```ts
-import { memberF32, memberU32, Struct } from '@hqtsm/struct';
+import { float32, Struct, uint32 } from '@hqtsm/struct';
 
 class Variable extends Struct {
 	declare public readonly ['constructor']: typeof Variable;
@@ -93,7 +93,7 @@ class Variable extends Struct {
 	declare public type: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += memberU32(this, 'type', o);
+		o += uint32(this, 'type', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -104,7 +104,7 @@ class VariableFloat extends Variable {
 	declare public value: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += memberF32(this, 'value', o);
+		o += float32(this, 'value', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -121,7 +121,7 @@ console.assert(data.join(', ') === '15, 0, 0, 0, 86, 14, 73, 64');
 Defining a child structure is easy.
 
 ```ts
-import { memberStruct, memberU32, memberU8A, Struct } from '@hqtsm/struct';
+import { memberStruct, Struct, uint32, uint8A } from '@hqtsm/struct';
 
 class Child extends Struct {
 	declare public readonly ['constructor']: typeof Child;
@@ -131,8 +131,8 @@ class Child extends Struct {
 	declare public beta: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += memberU32(this, 'alpha', o, false);
-		o += memberU32(this, 'beta', o, false);
+		o += uint32(this, 'alpha', o, false);
+		o += uint32(this, 'beta', o, false);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -145,7 +145,7 @@ class Parent extends Struct {
 	declare public child: Child;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += memberU8A(4, this, 'array', o);
+		o += uint8A(4, this, 'array', o);
 		o += memberStruct(Child, this, 'child', o);
 		return o;
 	})(super.BYTE_LENGTH);
@@ -166,7 +166,7 @@ Members can be made `private` or `protected` but type checking must be relaxed.
 Casting the name to `never` or `any` will pass the type checker.
 
 ```ts
-import { memberU8, Struct } from '@hqtsm/struct';
+import { Struct, uint8 } from '@hqtsm/struct';
 
 class Example extends Struct {
 	declare public readonly ['constructor']: typeof Example;
@@ -186,9 +186,9 @@ class Example extends Struct {
 	}
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += memberU8(this, 'alpha' as never, o);
-		o += memberU8(this, 'beta' as never, o);
-		o += memberU8(this, 'gamma', o);
+		o += uint8(this, 'alpha' as never, o);
+		o += uint8(this, 'beta' as never, o);
+		o += uint8(this, 'gamma', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }

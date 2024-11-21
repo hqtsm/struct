@@ -4,9 +4,9 @@ import { getInt24, getUint24 } from '@hqtsm/dataview/i24';
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
-import { memberI24, memberU24 } from './i24.ts';
+import { int24, uint24 } from './i24.ts';
 
-Deno.test('memberI24', () => {
+Deno.test('int24', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -19,10 +19,10 @@ Deno.test('memberI24', () => {
 		declare public delta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberI24(this, 'alpha', o);
-			o += memberI24(this, 'beta', o);
-			o += memberI24(this, 'gamma', o, true);
-			o += memberI24(this, 'delta', o, false);
+			o += int24(this, 'alpha', o);
+			o += int24(this, 'beta', o);
+			o += int24(this, 'gamma', o, true);
+			o += int24(this, 'delta', o, false);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -86,7 +86,7 @@ Deno.test('memberI24', () => {
 	}
 });
 
-Deno.test('memberU24', () => {
+Deno.test('uint24', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
@@ -99,10 +99,10 @@ Deno.test('memberU24', () => {
 		declare public delta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberU24(this, 'alpha', o);
-			o += memberU24(this, 'beta', o);
-			o += memberU24(this, 'gamma', o, true);
-			o += memberU24(this, 'delta', o, false);
+			o += uint24(this, 'alpha', o);
+			o += uint24(this, 'beta', o);
+			o += uint24(this, 'gamma', o, true);
+			o += uint24(this, 'delta', o, false);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

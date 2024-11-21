@@ -11,7 +11,7 @@ import { memberValue } from '../value.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function memberF32<C extends typeof Struct>(
+export function float32<C extends typeof Struct>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,

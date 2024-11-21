@@ -11,7 +11,7 @@ import { memberValue } from '../value.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function memberI64<C extends typeof Struct>(
+export function int64<C extends typeof Struct>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], bigint>,
 	byteOffset: number,
@@ -49,7 +49,7 @@ export function memberI64<C extends typeof Struct>(
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function memberU64<C extends typeof Struct>(
+export function uint64<C extends typeof Struct>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], bigint>,
 	byteOffset: number,
