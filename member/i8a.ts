@@ -2,7 +2,7 @@ import type { MembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
 import { assignView } from '../macro.ts';
 
-import { memberValue } from './value.ts';
+import { memberView } from './view.ts';
 
 /**
  * Member int8 array.
@@ -19,8 +19,7 @@ export function memberI8A<C extends typeof Struct>(
 	name: MembersExtends<C, Int8Array>,
 	byteOffset: number,
 ): number {
-	const m = new WeakMap<C['prototype'], Int8Array>();
-	return memberValue(
+	return memberView(
 		StructC,
 		name,
 		byteOffset,
@@ -28,16 +27,11 @@ export function memberI8A<C extends typeof Struct>(
 		null,
 		Int8Array,
 		function (): Int8Array {
-			let r = m.get(this);
-			if (!r) {
-				r = new Int8Array(
-					this.buffer,
-					this.byteOffset + byteOffset,
-					count,
-				);
-				m.set(this, r);
-			}
-			return r;
+			return new Int8Array(
+				this.buffer,
+				this.byteOffset + byteOffset,
+				count,
+			);
 		},
 		function (value: Int8Array): void {
 			assignView(this[name] as Int8Array, value);
@@ -60,8 +54,7 @@ export function memberU8A<C extends typeof Struct>(
 	name: MembersExtends<C, Uint8Array>,
 	byteOffset: number,
 ): number {
-	const m = new WeakMap<C['prototype'], Uint8Array>();
-	return memberValue(
+	return memberView(
 		StructC,
 		name,
 		byteOffset,
@@ -69,16 +62,11 @@ export function memberU8A<C extends typeof Struct>(
 		null,
 		Uint8Array,
 		function (): Uint8Array {
-			let r = m.get(this);
-			if (!r) {
-				r = new Uint8Array(
-					this.buffer,
-					this.byteOffset + byteOffset,
-					count,
-				);
-				m.set(this, r);
-			}
-			return r;
+			return new Uint8Array(
+				this.buffer,
+				this.byteOffset + byteOffset,
+				count,
+			);
 		},
 		function (value: Uint8Array): void {
 			assignView(this[name] as Uint8Array, value);

@@ -2,7 +2,7 @@ import type { MembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
 import { assignStruct } from '../macro.ts';
 
-import { memberValue } from './value.ts';
+import { memberView } from './view.ts';
 
 /**
  * Member struct.
@@ -21,8 +21,7 @@ export function memberStruct<M extends typeof Struct, C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<C['prototype'], M['prototype']>();
-	return memberValue(
+	return memberView(
 		StructC,
 		name,
 		byteOffset,
@@ -30,16 +29,11 @@ export function memberStruct<M extends typeof Struct, C extends typeof Struct>(
 		littleEndian,
 		StructM,
 		function (): M['prototype'] {
-			let r = m.get(this);
-			if (!r) {
-				r = new StructM(
-					this.buffer,
-					this.byteOffset + byteOffset,
-					littleEndian ?? this.littleEndian,
-				);
-				m.set(this, r);
-			}
-			return r;
+			return new StructM(
+				this.buffer,
+				this.byteOffset + byteOffset,
+				littleEndian ?? this.littleEndian,
+			);
 		},
 		function (value: M['prototype']): void {
 			assignStruct(this[name] as M['prototype'], value);
