@@ -1,5 +1,6 @@
 import type { MembersExtends, MemberTypes } from '../type.ts';
 import type { Struct } from '../struct.ts';
+import { assignView } from '../macro.ts';
 
 import { memberValue } from './value.ts';
 
@@ -13,10 +14,10 @@ import { memberValue } from './value.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @param Type Member type.
  * @param get Member getter.
- * @param set Member setter.
+ * @param set Member setter, or null for default assign view.
  * @returns Byte length.
  */
-export function memberView<C extends typeof Struct, M>(
+export function memberView<C extends typeof Struct, M extends ArrayBufferView>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], M>,
 	byteOffset: number,
@@ -24,7 +25,7 @@ export function memberView<C extends typeof Struct, M>(
 	littleEndian: boolean | null,
 	Type: MemberTypes,
 	get: (this: C['prototype']) => M,
-	set: (this: C['prototype'], value: M) => void,
+	set: ((this: C['prototype'], value: M) => void) | null = null,
 ): number {
 	const m = new WeakMap<C['prototype'], M>();
 	return memberValue(
@@ -42,6 +43,8 @@ export function memberView<C extends typeof Struct, M>(
 			}
 			return r;
 		},
-		set,
+		set || function (value: M): void {
+			assignView(this[name] as M, value);
+		},
 	);
 }

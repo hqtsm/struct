@@ -1,6 +1,5 @@
 import type { MembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
-import { assignStruct } from '../macro.ts';
 
 import { memberView } from './view.ts';
 
@@ -34,9 +33,6 @@ export function memberStruct<M extends typeof Struct, C extends typeof Struct>(
 				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
-		},
-		function (value: M['prototype']): void {
-			assignStruct(this[name] as M['prototype'], value);
 		},
 	);
 }

@@ -1,6 +1,5 @@
 import type { MembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
-import { assignView } from '../macro.ts';
 
 import { memberView } from './view.ts';
 
@@ -32,9 +31,6 @@ export function memberI8A<C extends typeof Struct>(
 				this.byteOffset + byteOffset,
 				count,
 			);
-		},
-		function (value: Int8Array): void {
-			assignView(this[name] as Int8Array, value);
 		},
 	);
 }
@@ -68,9 +64,6 @@ export function memberU8A<C extends typeof Struct>(
 				count,
 			);
 		},
-		function (value: Uint8Array): void {
-			assignView(this[name] as Uint8Array, value);
-		},
 	);
 }
 
@@ -102,9 +95,6 @@ export function memberU8AC<C extends typeof Struct>(
 				this.byteOffset + byteOffset,
 				count,
 			);
-		},
-		function (value: Uint8ClampedArray): void {
-			assignView(this[name] as Uint8ClampedArray, value);
 		},
 	);
 }
