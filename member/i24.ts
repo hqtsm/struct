@@ -2,7 +2,8 @@ import { getInt24, getUint24, setInt24, setUint24 } from '@hqtsm/dataview/i24';
 
 import type { MembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
-import { member } from '../member.ts';
+
+import { memberValue } from './value.ts';
 
 /**
  * Member int24.
@@ -19,7 +20,7 @@ export function memberI24<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return member(
+	return memberValue(
 		StructC,
 		name,
 		byteOffset,
@@ -59,7 +60,7 @@ export function memberU24<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return member(
+	return memberValue(
 		StructC,
 		name,
 		byteOffset,

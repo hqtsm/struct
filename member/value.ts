@@ -1,5 +1,5 @@
-import type { Member, MembersExtends, MemberTypes } from './type.ts';
-import type { Struct } from './struct.ts';
+import type { Member, MembersExtends, MemberTypes } from '../type.ts';
+import type { Struct } from '../struct.ts';
 
 /**
  * Set member info.
@@ -14,7 +14,7 @@ import type { Struct } from './struct.ts';
  * @param set Member setter.
  * @returns Byte length.
  */
-export function member<C extends typeof Struct, T>(
+export function memberValue<C extends typeof Struct, T>(
 	StructC: C,
 	name: MembersExtends<C, T>,
 	byteOffset: number,

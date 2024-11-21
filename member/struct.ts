@@ -1,7 +1,8 @@
 import type { MembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
-import { member } from '../member.ts';
 import { assignStruct } from '../macro.ts';
+
+import { memberValue } from './value.ts';
 
 /**
  * Member struct.
@@ -21,7 +22,7 @@ export function memberStruct<M extends typeof Struct, C extends typeof Struct>(
 	littleEndian: boolean | null = null,
 ): number {
 	const m = new WeakMap<C['prototype'], M['prototype']>();
-	return member(
+	return memberValue(
 		StructC,
 		name,
 		byteOffset,

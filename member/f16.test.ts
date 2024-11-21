@@ -4,6 +4,7 @@ import { getFloat16, setFloat16 } from '@hqtsm/dataview/f16';
 import type { ArrayBufferReal } from '../type.ts';
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
+
 import { memberF16 } from './f16.ts';
 
 Deno.test('memberF16', () => {

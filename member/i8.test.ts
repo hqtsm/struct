@@ -2,6 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
+
 import { memberI8, memberU8 } from './i8.ts';
 
 Deno.test('memberI8', () => {

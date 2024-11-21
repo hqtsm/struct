@@ -1,6 +1,7 @@
 import type { MembersExtends } from '../type.ts';
 import type { Struct } from '../struct.ts';
-import { member } from '../member.ts';
+
+import { memberValue } from './value.ts';
 
 /**
  * Member int32.
@@ -17,7 +18,7 @@ export function memberI32<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return member(
+	return memberValue(
 		StructC,
 		name,
 		byteOffset,
@@ -55,7 +56,7 @@ export function memberU32<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return member(
+	return memberValue(
 		StructC,
 		name,
 		byteOffset,

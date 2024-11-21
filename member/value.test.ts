@@ -1,7 +1,8 @@
 import { assertEquals, assertNotStrictEquals } from '@std/assert';
 
-import { Struct } from './struct.ts';
-import { member } from './member.ts';
+import { Struct } from '../struct.ts';
+
+import { memberValue } from './value.ts';
 
 Deno.test('member', () => {
 	class Test extends Struct {
@@ -9,7 +10,7 @@ Deno.test('member', () => {
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += 16;
-			o += member(
+			o += memberValue(
 				this,
 				'unk' as never,
 				o,

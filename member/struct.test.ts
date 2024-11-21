@@ -6,6 +6,7 @@ import {
 
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
+
 import { memberU32 } from './i32.ts';
 import { memberStruct } from './struct.ts';
 
