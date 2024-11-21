@@ -39,9 +39,9 @@ Deno.test('memberI8A', () => {
 	assertEquals(littleEndian(Test, 'alpha'), null);
 	assertEquals(littleEndian(Test, 'beta'), null);
 	assertEquals(littleEndian(Test, 'gamma'), null);
-	assertEquals(getType(Test, 'alpha'), 'i8a');
-	assertEquals(getType(Test, 'beta'), 'i8a');
-	assertEquals(getType(Test, 'gamma'), 'i8a');
+	assertEquals(getType(Test, 'alpha'), Int8Array);
+	assertEquals(getType(Test, 'beta'), Int8Array);
+	assertEquals(getType(Test, 'gamma'), Int8Array);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -100,9 +100,9 @@ Deno.test('memberU8A', () => {
 	assertEquals(littleEndian(Test, 'alpha'), null);
 	assertEquals(littleEndian(Test, 'beta'), null);
 	assertEquals(littleEndian(Test, 'gamma'), null);
-	assertEquals(getType(Test, 'alpha'), 'u8a');
-	assertEquals(getType(Test, 'beta'), 'u8a');
-	assertEquals(getType(Test, 'gamma'), 'u8a');
+	assertEquals(getType(Test, 'alpha'), Uint8Array);
+	assertEquals(getType(Test, 'beta'), Uint8Array);
+	assertEquals(getType(Test, 'gamma'), Uint8Array);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);

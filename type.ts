@@ -26,6 +26,16 @@ export type MembersExtends<S extends typeof Struct, T> = Exclude<
 export type ArrayBufferReal = ArrayBufferLike & { BYTES_PER_ELEMENT?: never };
 
 /**
+ * Types of child structures.
+ */
+export type ChildTypes = typeof Int8Array | typeof Uint8Array | typeof Struct;
+
+/**
+ * Types of member type.
+ */
+export type MemberTypes = string | ChildTypes;
+
+/**
  * Member info.
  */
 export type Member = {
@@ -47,5 +57,5 @@ export type Member = {
 	/**
 	 * Type of member.
 	 */
-	Type: string | typeof Struct;
+	Type: MemberTypes;
 };

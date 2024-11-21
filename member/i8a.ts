@@ -25,7 +25,7 @@ export function memberI8A<C extends typeof Struct>(
 		byteOffset,
 		count,
 		null,
-		'i8a',
+		Int8Array,
 		function (): Int8Array {
 			let r = m.get(this);
 			if (!r) {
@@ -66,7 +66,7 @@ export function memberU8A<C extends typeof Struct>(
 		byteOffset,
 		count,
 		null,
-		'u8a',
+		Uint8Array,
 		function (): Uint8Array {
 			let r = m.get(this);
 			if (!r) {

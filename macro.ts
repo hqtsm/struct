@@ -1,4 +1,5 @@
 import type { Struct } from './struct.ts';
+import type { MemberTypes } from './type.ts';
 
 /**
  * Get byte offset of member.
@@ -52,7 +53,7 @@ export function littleEndian<C extends typeof Struct>(
 export function getType<C extends typeof Struct>(
 	StructC: C,
 	name: Exclude<keyof C['prototype'], keyof Struct>,
-): string | typeof Struct {
+): MemberTypes {
 	return StructC.MEMBERS[name].Type;
 }
 

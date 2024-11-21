@@ -1,4 +1,4 @@
-import type { Member, MembersExtends } from './type.ts';
+import type { Member, MembersExtends, MemberTypes } from './type.ts';
 import type { Struct } from './struct.ts';
 
 /**
@@ -20,7 +20,7 @@ export function member<C extends typeof Struct, T>(
 	byteOffset: number,
 	byteLength: number,
 	littleEndian: boolean | null,
-	Type: string | typeof Struct,
+	Type: MemberTypes,
 	get: (this: C['prototype']) => T,
 	set: (this: C['prototype'], value: T) => void,
 ): number {
