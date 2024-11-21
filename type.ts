@@ -10,7 +10,8 @@ export type KeyofExtends<T, E> = {
 /**
  * Possible members of a struct.
  */
-export type Members<S extends typeof Struct> = Exclude<keyof S, keyof Struct>;
+// deno-lint-ignore no-explicit-any
+export type Members<S extends typeof Struct> = MembersExtends<S, any>;
 
 /**
  * Possible members of a struct that another type extends.
