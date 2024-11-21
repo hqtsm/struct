@@ -1,7 +1,6 @@
 import { assertEquals, assertNotStrictEquals } from '@std/assert';
 
-import { Struct } from '../struct.ts';
-
+import { Struct } from './struct.ts';
 import { memberValue } from './value.ts';
 
 Deno.test('member', () => {

@@ -4,8 +4,7 @@ import {
 	assertStrictEquals,
 } from '@std/assert';
 
-import { Struct } from '../struct.ts';
-
+import { Struct } from './struct.ts';
 import { memberView } from './view.ts';
 
 Deno.test('member', () => {

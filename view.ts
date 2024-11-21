@@ -1,7 +1,6 @@
-import type { MembersExtends, MemberTypes } from '../type.ts';
-import type { Struct } from '../struct.ts';
-import { assignView } from '../macro.ts';
-
+import type { MembersExtends, MemberTypes } from './type.ts';
+import type { Struct } from './struct.ts';
+import { assignView } from './macro.ts';
 import { memberValue } from './value.ts';
 
 /**

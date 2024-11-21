@@ -1,5 +1,5 @@
-import type { Member, MembersExtends, MemberTypes } from '../type.ts';
-import type { Struct } from '../struct.ts';
+import type { Member, MembersExtends, MemberTypes } from './type.ts';
+import type { Struct } from './struct.ts';
 
 /**
  * Member value.
