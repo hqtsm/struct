@@ -7,7 +7,7 @@ import {
 
 import { assignStruct, assignView, endianSwap } from './macro.ts';
 import { Struct } from './struct.ts';
-import { uint8 } from './member/i8.ts';
+import { uint8 } from './member/int/8.ts';
 
 Deno.test('endianSwap', () => {
 	class Test extends Struct {

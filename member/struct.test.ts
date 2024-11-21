@@ -7,7 +7,7 @@ import {
 import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
-import { uint32 } from './i32.ts';
+import { uint32 } from './int/32.ts';
 import { memberStruct } from './struct.ts';
 
 Deno.test('memberStruct', () => {

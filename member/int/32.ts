@@ -1,9 +1,9 @@
-import type { MembersExtends } from '../type.ts';
-import type { Struct } from '../struct.ts';
-import { memberValue } from '../value.ts';
+import type { MembersExtends } from '../../type.ts';
+import type { Struct } from '../../struct.ts';
+import { memberValue } from '../../value.ts';
 
 /**
- * Member int16.
+ * Member int32.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -11,7 +11,7 @@ import { memberValue } from '../value.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function int16<C extends typeof Struct>(
+export function int32<C extends typeof Struct>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
@@ -21,17 +21,17 @@ export function int16<C extends typeof Struct>(
 		StructC,
 		name,
 		byteOffset,
-		2,
+		4,
 		littleEndian,
-		'i16',
+		'i32',
 		function (): number {
-			return this.dataView.getInt16(
+			return this.dataView.getInt32(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		function (value: number): void {
-			this.dataView.setInt16(
+			this.dataView.setInt32(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
@@ -41,7 +41,7 @@ export function int16<C extends typeof Struct>(
 }
 
 /**
- * Member uint16.
+ * Member uint32.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -49,7 +49,7 @@ export function int16<C extends typeof Struct>(
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function uint16<C extends typeof Struct>(
+export function uint32<C extends typeof Struct>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
@@ -59,17 +59,17 @@ export function uint16<C extends typeof Struct>(
 		StructC,
 		name,
 		byteOffset,
-		2,
+		4,
 		littleEndian,
-		'u16',
+		'u32',
 		function (): number {
-			return this.dataView.getUint16(
+			return this.dataView.getUint32(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		function (value: number): void {
-			this.dataView.setUint16(
+			this.dataView.setUint32(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,

@@ -1,8 +1,8 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/f16';
 
-import type { MembersExtends } from '../type.ts';
-import type { Struct } from '../struct.ts';
-import { memberValue } from '../value.ts';
+import type { MembersExtends } from '../../type.ts';
+import type { Struct } from '../../struct.ts';
+import { memberValue } from '../../value.ts';
 
 /**
  * Member float16.

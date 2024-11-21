@@ -1,6 +1,6 @@
-import type { MembersExtends } from '../type.ts';
-import type { Struct } from '../struct.ts';
-import { memberView } from '../view.ts';
+import type { MembersExtends } from '../../type.ts';
+import type { Struct } from '../../struct.ts';
+import { memberView } from '../../view.ts';
 
 /**
  * Member int8 array.

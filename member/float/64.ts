@@ -1,9 +1,9 @@
-import type { MembersExtends } from '../type.ts';
-import type { Struct } from '../struct.ts';
-import { memberValue } from '../value.ts';
+import type { MembersExtends } from '../../type.ts';
+import type { Struct } from '../../struct.ts';
+import { memberValue } from '../../value.ts';
 
 /**
- * Member float32.
+ * Member float64.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -11,7 +11,7 @@ import { memberValue } from '../value.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function float32<C extends typeof Struct>(
+export function float64<C extends typeof Struct>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
@@ -21,17 +21,17 @@ export function float32<C extends typeof Struct>(
 		StructC,
 		name,
 		byteOffset,
-		4,
+		8,
 		littleEndian,
-		'f32',
+		'f64',
 		function (): number {
-			return this.dataView.getFloat32(
+			return this.dataView.getFloat64(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		function (value: number): void {
-			this.dataView.setFloat32(
+			this.dataView.setFloat64(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,

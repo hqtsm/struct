@@ -1,11 +1,11 @@
 import { assertEquals } from '@std/assert';
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/f16';
 
-import type { ArrayBufferReal } from '../type.ts';
-import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
-import { Struct } from '../struct.ts';
+import type { ArrayBufferReal } from '../../type.ts';
+import { byteLength, byteOffset, getType, littleEndian } from '../../macro.ts';
+import { Struct } from '../../struct.ts';
 
-import { float16 } from './f16.ts';
+import { float16 } from './16.ts';
 
 Deno.test('float16', () => {
 	class Test extends Struct {

@@ -1,9 +1,9 @@
 import { assertEquals } from '@std/assert';
 
-import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
-import { Struct } from '../struct.ts';
+import { byteLength, byteOffset, getType, littleEndian } from '../../macro.ts';
+import { Struct } from '../../struct.ts';
 
-import { float64 } from './f64.ts';
+import { float64 } from './64.ts';
 
 Deno.test('float64', () => {
 	class Test extends Struct {

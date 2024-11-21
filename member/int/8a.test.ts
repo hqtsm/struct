@@ -4,10 +4,10 @@ import {
 	assertStrictEquals,
 } from '@std/assert';
 
-import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
-import { Struct } from '../struct.ts';
+import { byteLength, byteOffset, getType, littleEndian } from '../../macro.ts';
+import { Struct } from '../../struct.ts';
 
-import { int8A, uint8A, uint8AC } from './i8a.ts';
+import { int8A, uint8A, uint8AC } from './8a.ts';
 
 Deno.test('int8A', () => {
 	class Test extends Struct {

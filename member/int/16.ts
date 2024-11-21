@@ -1,9 +1,9 @@
-import type { MembersExtends } from '../type.ts';
-import type { Struct } from '../struct.ts';
-import { memberValue } from '../value.ts';
+import type { MembersExtends } from '../../type.ts';
+import type { Struct } from '../../struct.ts';
+import { memberValue } from '../../value.ts';
 
 /**
- * Member int64.
+ * Member int16.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -11,9 +11,9 @@ import { memberValue } from '../value.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function int64<C extends typeof Struct>(
+export function int16<C extends typeof Struct>(
 	StructC: C,
-	name: MembersExtends<C['prototype'], bigint>,
+	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -21,17 +21,17 @@ export function int64<C extends typeof Struct>(
 		StructC,
 		name,
 		byteOffset,
-		8,
+		2,
 		littleEndian,
-		'i64',
-		function (): bigint {
-			return this.dataView.getBigInt64(
+		'i16',
+		function (): number {
+			return this.dataView.getInt16(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		function (value: bigint): void {
-			this.dataView.setBigInt64(
+		function (value: number): void {
+			this.dataView.setInt16(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
@@ -41,7 +41,7 @@ export function int64<C extends typeof Struct>(
 }
 
 /**
- * Member uint64.
+ * Member uint16.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -49,9 +49,9 @@ export function int64<C extends typeof Struct>(
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function uint64<C extends typeof Struct>(
+export function uint16<C extends typeof Struct>(
 	StructC: C,
-	name: MembersExtends<C['prototype'], bigint>,
+	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -59,17 +59,17 @@ export function uint64<C extends typeof Struct>(
 		StructC,
 		name,
 		byteOffset,
-		8,
+		2,
 		littleEndian,
-		'u64',
-		function (): bigint {
-			return this.dataView.getBigUint64(
+		'u16',
+		function (): number {
+			return this.dataView.getUint16(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		function (value: bigint): void {
-			this.dataView.setBigUint64(
+		function (value: number): void {
+			this.dataView.setUint16(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,

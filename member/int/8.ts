@@ -1,6 +1,6 @@
-import type { MembersExtends } from '../type.ts';
-import type { Struct } from '../struct.ts';
-import { memberValue } from '../value.ts';
+import type { MembersExtends } from '../../type.ts';
+import type { Struct } from '../../struct.ts';
+import { memberValue } from '../../value.ts';
 
 /**
  * Member int8.

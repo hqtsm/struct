@@ -1,10 +1,10 @@
 import { assertEquals } from '@std/assert';
 import { getInt24, getUint24 } from '@hqtsm/dataview/i24';
 
-import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
-import { Struct } from '../struct.ts';
+import { byteLength, byteOffset, getType, littleEndian } from '../../macro.ts';
+import { Struct } from '../../struct.ts';
 
-import { int24, uint24 } from './i24.ts';
+import { int24, uint24 } from './24.ts';
 
 Deno.test('int24', () => {
 	class Test extends Struct {
