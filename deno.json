@@ -7,8 +7,6 @@
 		"./const": "./const.ts",
 		"./macro": "./macro.ts",
 		"./member": "./member/mod.ts",
-		"./member/value": "./member/value.ts",
-		"./member/view": "./member/view.ts",
 		"./member/f16": "./member/f16.ts",
 		"./member/f32": "./member/f32.ts",
 		"./member/f64": "./member/f64.ts",
@@ -20,7 +18,9 @@
 		"./member/i64": "./member/i64.ts",
 		"./member/struct": "./member/struct.ts",
 		"./struct": "./struct.ts",
-		"./type": "./type.ts"
+		"./type": "./type.ts",
+		"./value": "./value.ts",
+		"./view": "./view.ts"
 	},
 	"imports": {
 		"@deno/dnt": "jsr:@deno/dnt@^0.41.3",
