@@ -80,12 +80,17 @@ export function endianSwap<S extends Struct>(
  *
  * @param dst Destination memory.
  * @param src Source memory of equal or greater size.
+ * @returns Destination memory.
  */
-export function assignView(dst: ArrayBufferView, src: ArrayBufferView): void {
+export function assignView<D extends ArrayBufferView>(
+	dst: D,
+	src: ArrayBufferView,
+): D {
 	const { byteLength } = dst;
 	new Uint8Array(dst.buffer, dst.byteOffset, byteLength).set(
 		new Uint8Array(src.buffer, src.byteOffset, byteLength),
 	);
+	return dst;
 }
 
 /**
@@ -93,10 +98,11 @@ export function assignView(dst: ArrayBufferView, src: ArrayBufferView): void {
  *
  * @param dst Destination struct.
  * @param src Source struct, must extend destination type.
+ * @returns Destination struct.
  */
 export function assignStruct<D extends Struct, S extends D>(
 	dst: D,
 	src: S,
-): void {
-	assignView(dst, src);
+): D {
+	return assignView(dst, src);
 }
