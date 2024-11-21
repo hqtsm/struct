@@ -73,3 +73,38 @@ export function memberU8A<C extends typeof Struct>(
 		},
 	);
 }
+
+/**
+ * Member uint8 array clamped.
+ *
+ * @param count Array length.
+ * @param StructC Struct constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function memberU8AC<C extends typeof Struct>(
+	count: number,
+	StructC: C,
+	name: MembersExtends<C, Uint8ClampedArray>,
+	byteOffset: number,
+): number {
+	return memberView(
+		StructC,
+		name,
+		byteOffset,
+		count,
+		null,
+		Uint8ClampedArray,
+		function (): Uint8ClampedArray {
+			return new Uint8ClampedArray(
+				this.buffer,
+				this.byteOffset + byteOffset,
+				count,
+			);
+		},
+		function (value: Uint8ClampedArray): void {
+			assignView(this[name] as Uint8ClampedArray, value);
+		},
+	);
+}

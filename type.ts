@@ -28,7 +28,11 @@ export type ArrayBufferReal = ArrayBufferLike & { BYTES_PER_ELEMENT?: never };
 /**
  * Types of child structures.
  */
-export type ChildTypes = typeof Int8Array | typeof Uint8Array | typeof Struct;
+export type ChildTypes =
+	| typeof Int8Array
+	| typeof Uint8Array
+	| typeof Uint8ClampedArray
+	| typeof Struct;
 
 /**
  * Types of member type.
