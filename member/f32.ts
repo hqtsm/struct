@@ -17,20 +17,25 @@ export function memberF32<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): number {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		4,
+		littleEndian,
+		'f32',
+		function (): number {
 			return this.dataView.getFloat32(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(this: C['prototype'], value: number): void {
+		function (value: number): void {
 			this.dataView.setFloat32(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	});
-	return member(StructC, name, byteOffset, 4, littleEndian, 'f32');
+	);
 }

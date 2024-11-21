@@ -19,8 +19,14 @@ export function memberF16<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): number {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		2,
+		littleEndian,
+		'f16',
+		function (): number {
 			const { dataView } = this as unknown as {
 				dataView: DataView & {
 					getFloat16?: (
@@ -34,7 +40,7 @@ export function memberF16<C extends typeof Struct>(
 				? dataView.getFloat16(byteOffset, le)
 				: getFloat16(dataView, byteOffset, le);
 		},
-		set(this: C['prototype'], value: number): void {
+		function (value: number): void {
 			const { dataView } = this as unknown as {
 				dataView: DataView & {
 					setFloat16?: (
@@ -55,6 +61,5 @@ export function memberF16<C extends typeof Struct>(
 				setFloat16(dataView, byteOffset, value, le);
 			}
 		},
-	});
-	return member(StructC, name, byteOffset, 2, littleEndian, 'f16');
+	);
 }

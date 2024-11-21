@@ -15,15 +15,20 @@ export function memberI8<C extends typeof Struct>(
 	name: MembersExtends<C, number>,
 	byteOffset: number,
 ): number {
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): number {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		1,
+		null,
+		'i8',
+		function (): number {
 			return this.dataView.getInt8(byteOffset);
 		},
-		set(this: C['prototype'], value: number): void {
+		function (value: number): void {
 			this.dataView.setInt8(byteOffset, value);
 		},
-	});
-	return member(StructC, name, byteOffset, 1, null, 'i8');
+	);
 }
 
 /**
@@ -39,13 +44,18 @@ export function memberU8<C extends typeof Struct>(
 	name: MembersExtends<C, number>,
 	byteOffset: number,
 ): number {
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): number {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		1,
+		null,
+		'u8',
+		function (): number {
 			return this.dataView.getUint8(byteOffset);
 		},
-		set(this: C['prototype'], value: number): void {
+		function (value: number): void {
 			this.dataView.setUint8(byteOffset, value);
 		},
-	});
-	return member(StructC, name, byteOffset, 1, null, 'u8');
+	);
 }

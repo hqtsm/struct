@@ -17,22 +17,27 @@ export function memberI64<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): bigint {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		8,
+		littleEndian,
+		'i64',
+		function (): bigint {
 			return this.dataView.getBigInt64(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(this: C['prototype'], value: bigint): void {
+		function (value: bigint): void {
 			this.dataView.setBigInt64(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	});
-	return member(StructC, name, byteOffset, 8, littleEndian, 'i64');
+	);
 }
 
 /**
@@ -50,20 +55,25 @@ export function memberU64<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): bigint {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		8,
+		littleEndian,
+		'u64',
+		function (): bigint {
 			return this.dataView.getBigUint64(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(this: C['prototype'], value: bigint): void {
+		function (value: bigint): void {
 			this.dataView.setBigUint64(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	});
-	return member(StructC, name, byteOffset, 8, littleEndian, 'u64');
+	);
 }

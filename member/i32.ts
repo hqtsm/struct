@@ -17,22 +17,27 @@ export function memberI32<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): number {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		4,
+		littleEndian,
+		'i32',
+		function (): number {
 			return this.dataView.getInt32(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(this: C['prototype'], value: number): void {
+		function (value: number): void {
 			this.dataView.setInt32(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	});
-	return member(StructC, name, byteOffset, 4, littleEndian, 'i32');
+	);
 }
 
 /**
@@ -50,20 +55,25 @@ export function memberU32<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): number {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		4,
+		littleEndian,
+		'u32',
+		function (): number {
 			return this.dataView.getUint32(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(this: C['prototype'], value: number): void {
+		function (value: number): void {
 			this.dataView.setUint32(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	});
-	return member(StructC, name, byteOffset, 4, littleEndian, 'u32');
+	);
 }

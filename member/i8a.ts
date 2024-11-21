@@ -18,8 +18,14 @@ export function memberI8A<C extends typeof Struct>(
 	byteOffset: number,
 ): number {
 	const m = new WeakMap<C['prototype'], Int8Array>();
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): Int8Array {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		count,
+		null,
+		'i8a',
+		function (): Int8Array {
 			let r = m.get(this);
 			if (!r) {
 				r = new Int8Array(
@@ -31,8 +37,7 @@ export function memberI8A<C extends typeof Struct>(
 			}
 			return r;
 		},
-	});
-	return member(StructC, name, byteOffset, count, null, 'i8a');
+	);
 }
 
 /**
@@ -51,8 +56,14 @@ export function memberU8A<C extends typeof Struct>(
 	byteOffset: number,
 ): number {
 	const m = new WeakMap<C['prototype'], Uint8Array>();
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): Uint8Array {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		count,
+		null,
+		'u8a',
+		function (): Uint8Array {
 			let r = m.get(this);
 			if (!r) {
 				r = new Uint8Array(
@@ -64,6 +75,5 @@ export function memberU8A<C extends typeof Struct>(
 			}
 			return r;
 		},
-	});
-	return member(StructC, name, byteOffset, count, null, 'u8a');
+	);
 }

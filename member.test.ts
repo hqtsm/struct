@@ -9,7 +9,17 @@ Deno.test('member', () => {
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += 16;
-			o += member(this, 'unk' as never, o, 32, false, 'unk32');
+			o += member(
+				this,
+				'unk' as never,
+				o,
+				32,
+				false,
+				'unk32',
+				function (): number {
+					return 0;
+				},
+			);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

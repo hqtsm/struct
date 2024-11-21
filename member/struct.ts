@@ -20,8 +20,14 @@ export function memberStruct<M extends typeof Struct, C extends typeof Struct>(
 	littleEndian: boolean | null = null,
 ): number {
 	const m = new WeakMap<C['prototype'], M['prototype']>();
-	Object.defineProperty(StructC.prototype, name, {
-		get(this: C['prototype']): M['prototype'] {
+	return member(
+		StructC,
+		name,
+		byteOffset,
+		StructM.BYTE_LENGTH,
+		littleEndian,
+		StructM,
+		function (): M['prototype'] {
 			let r = m.get(this);
 			if (!r) {
 				r = new StructM(
@@ -33,13 +39,5 @@ export function memberStruct<M extends typeof Struct, C extends typeof Struct>(
 			}
 			return r;
 		},
-	});
-	return member(
-		StructC,
-		name,
-		byteOffset,
-		StructM.BYTE_LENGTH,
-		littleEndian,
-		StructM,
 	);
 }

@@ -10,16 +10,21 @@ import type { Struct } from './struct.ts';
  * @param byteLength Byte length.
  * @param littleEndian Little endian, big endian, or default.
  * @param Type Member type.
+ * @param get Member getter.
+ * @param set Member setter.
  * @returns Byte length.
  */
-export function member<C extends typeof Struct>(
+export function member<C extends typeof Struct, T>(
 	StructC: C,
 	name: Members<C>,
 	byteOffset: number,
 	byteLength: number,
 	littleEndian: boolean | null,
 	Type: string | typeof Struct,
+	get: (this: C['prototype']) => T,
+	set?: (this: C['prototype'], value: T) => void,
 ): number {
+	Object.defineProperty(StructC.prototype, name, { get, set });
 	const o: { [p: PropertyKey]: Member } = Object.hasOwn(StructC, 'MEMBERS')
 		? StructC.MEMBERS
 		: (StructC as { MEMBERS: C['MEMBERS'] }).MEMBERS = Object
