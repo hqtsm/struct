@@ -7,6 +7,8 @@
 		"./const": "./const.ts",
 		"./macro": "./macro.ts",
 		"./member": "./member/mod.ts",
+		"./member/value": "./member/value.ts",
+		"./member/view": "./member/view.ts",
 		"./member/f16": "./member/f16.ts",
 		"./member/f32": "./member/f32.ts",
 		"./member/f64": "./member/f64.ts",
