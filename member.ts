@@ -24,7 +24,11 @@ export function member<C extends typeof Struct, T>(
 	get: (this: C['prototype']) => T,
 	set: (this: C['prototype'], value: T) => void,
 ): number {
-	Object.defineProperty(StructC.prototype, name, { get, set });
+	Object.defineProperty(StructC.prototype, name, {
+		get,
+		set,
+		configurable: true,
+	});
 	const o: { [p: PropertyKey]: Member } = Object.hasOwn(StructC, 'MEMBERS')
 		? StructC.MEMBERS
 		: (StructC as { MEMBERS: C['MEMBERS'] }).MEMBERS = Object
