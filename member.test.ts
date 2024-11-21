@@ -19,7 +19,7 @@ Deno.test('member', () => {
 				function (): number {
 					return 0;
 				},
-				function (): void {},
+				function (_: number): void {},
 			);
 			return o;
 		})(super.BYTE_LENGTH);
