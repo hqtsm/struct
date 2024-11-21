@@ -42,7 +42,7 @@ export type MemberTypes = string | ChildTypes;
 /**
  * Member info.
  */
-export type Member = {
+export type MemberInfo = {
 	/**
 	 * Byte offset.
 	 */
@@ -63,3 +63,8 @@ export type Member = {
 	 */
 	Type: MemberTypes;
 };
+
+/**
+ * Member infos.
+ */
+export type MemberInfos = { [member: PropertyKey]: Readonly<MemberInfo> };

@@ -1,4 +1,4 @@
-import type { Member, MembersExtends, MemberTypes } from './type.ts';
+import type { MemberInfos, MembersExtends, MemberTypes } from './type.ts';
 import type { Struct } from './struct.ts';
 
 /**
@@ -15,7 +15,7 @@ import type { Struct } from './struct.ts';
  * @returns Byte length.
  */
 export function memberValue<C extends typeof Struct, M>(
-	StructC: C,
+	StructC: C & { MEMBERS: MemberInfos },
 	name: MembersExtends<C['prototype'], M>,
 	byteOffset: number,
 	byteLength: number,
@@ -28,11 +28,17 @@ export function memberValue<C extends typeof Struct, M>(
 		get,
 		set,
 		configurable: true,
+		enumerable: false,
 	});
-	const o: { [p: PropertyKey]: Member } = Object.hasOwn(StructC, 'MEMBERS')
-		? StructC.MEMBERS
-		: (StructC as { MEMBERS: C['MEMBERS'] }).MEMBERS = Object
-			.create(StructC.MEMBERS);
-	o[name] = { byteOffset, byteLength, littleEndian, Type };
+	(
+		Object.hasOwn(StructC, 'MEMBERS')
+			? StructC.MEMBERS
+			: StructC.MEMBERS = Object.create(StructC.MEMBERS)
+	)[name] = {
+		byteOffset,
+		byteLength,
+		littleEndian,
+		Type,
+	};
 	return byteLength;
 }
