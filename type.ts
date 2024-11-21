@@ -10,14 +10,13 @@ export type KeyofExtends<T, E> = {
 /**
  * Possible members of a struct.
  */
-// deno-lint-ignore no-explicit-any
-export type Members<S extends typeof Struct> = MembersExtends<S, any>;
+export type Members<S extends Struct> = Exclude<keyof S, keyof Struct>;
 
 /**
  * Possible members of a struct that another type extends.
  */
-export type MembersExtends<S extends typeof Struct, T> = Exclude<
-	KeyofExtends<S['prototype'], T>,
+export type MembersExtends<S extends Struct, M> = Exclude<
+	KeyofExtends<S, M>,
 	keyof Struct
 >;
 

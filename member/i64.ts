@@ -14,7 +14,7 @@ import { memberValue } from './value.ts';
  */
 export function memberI64<C extends typeof Struct>(
 	StructC: C,
-	name: MembersExtends<C, bigint>,
+	name: MembersExtends<C['prototype'], bigint>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -52,7 +52,7 @@ export function memberI64<C extends typeof Struct>(
  */
 export function memberU64<C extends typeof Struct>(
 	StructC: C,
-	name: MembersExtends<C, bigint>,
+	name: MembersExtends<C['prototype'], bigint>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {

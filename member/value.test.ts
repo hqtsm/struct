@@ -8,11 +8,13 @@ Deno.test('member', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
+		declare public unk: number;
+
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += 16;
-			o += memberValue(
+			o += memberValue<typeof Test, number>(
 				this,
-				'unk' as never,
+				'unk',
 				o,
 				32,
 				false,

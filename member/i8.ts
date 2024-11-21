@@ -13,7 +13,7 @@ import { memberValue } from './value.ts';
  */
 export function memberI8<C extends typeof Struct>(
 	StructC: C,
-	name: MembersExtends<C, number>,
+	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
 ): number {
 	return memberValue(
@@ -42,7 +42,7 @@ export function memberI8<C extends typeof Struct>(
  */
 export function memberU8<C extends typeof Struct>(
 	StructC: C,
-	name: MembersExtends<C, number>,
+	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
 ): number {
 	return memberValue(

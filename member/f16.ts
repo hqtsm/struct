@@ -16,7 +16,7 @@ import { memberValue } from './value.ts';
  */
 export function memberF16<C extends typeof Struct>(
 	StructC: C,
-	name: MembersExtends<C, number>,
+	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {

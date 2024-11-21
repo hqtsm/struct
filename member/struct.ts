@@ -17,7 +17,7 @@ import { memberView } from './view.ts';
 export function memberStruct<M extends typeof Struct, C extends typeof Struct>(
 	StructM: M,
 	StructC: C,
-	name: MembersExtends<C, M['prototype']>,
+	name: MembersExtends<C['prototype'], M['prototype']>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {

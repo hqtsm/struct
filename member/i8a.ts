@@ -16,7 +16,7 @@ import { memberView } from './view.ts';
 export function memberI8A<C extends typeof Struct>(
 	count: number,
 	StructC: C,
-	name: MembersExtends<C, Int8Array>,
+	name: MembersExtends<C['prototype'], Int8Array>,
 	byteOffset: number,
 ): number {
 	return memberView(
@@ -51,7 +51,7 @@ export function memberI8A<C extends typeof Struct>(
 export function memberU8A<C extends typeof Struct>(
 	count: number,
 	StructC: C,
-	name: MembersExtends<C, Uint8Array>,
+	name: MembersExtends<C['prototype'], Uint8Array>,
 	byteOffset: number,
 ): number {
 	return memberView(
@@ -86,7 +86,7 @@ export function memberU8A<C extends typeof Struct>(
 export function memberU8AC<C extends typeof Struct>(
 	count: number,
 	StructC: C,
-	name: MembersExtends<C, Uint8ClampedArray>,
+	name: MembersExtends<C['prototype'], Uint8ClampedArray>,
 	byteOffset: number,
 ): number {
 	return memberView(

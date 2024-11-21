@@ -16,17 +16,17 @@ import { memberValue } from './value.ts';
  * @param set Member setter.
  * @returns Byte length.
  */
-export function memberView<C extends typeof Struct, T>(
+export function memberView<C extends typeof Struct, M>(
 	StructC: C,
-	name: MembersExtends<C, T>,
+	name: MembersExtends<C['prototype'], M>,
 	byteOffset: number,
 	byteLength: number,
 	littleEndian: boolean | null,
 	Type: MemberTypes,
-	get: (this: C['prototype']) => T,
-	set: (this: C['prototype'], value: T) => void,
+	get: (this: C['prototype']) => M,
+	set: (this: C['prototype'], value: M) => void,
 ): number {
-	const m = new WeakMap<C['prototype'], T>();
+	const m = new WeakMap<C['prototype'], M>();
 	return memberValue(
 		StructC,
 		name,
@@ -34,7 +34,7 @@ export function memberView<C extends typeof Struct, T>(
 		byteLength,
 		littleEndian,
 		Type,
-		function (): T {
+		function (): M {
 			let r = m.get(this);
 			if (!r) {
 				r = get.call(this);

@@ -14,15 +14,15 @@ import type { Struct } from '../struct.ts';
  * @param set Member setter.
  * @returns Byte length.
  */
-export function memberValue<C extends typeof Struct, T>(
+export function memberValue<C extends typeof Struct, M>(
 	StructC: C,
-	name: MembersExtends<C, T>,
+	name: MembersExtends<C['prototype'], M>,
 	byteOffset: number,
 	byteLength: number,
 	littleEndian: boolean | null,
 	Type: MemberTypes,
-	get: (this: C['prototype']) => T,
-	set: (this: C['prototype'], value: T) => void,
+	get: (this: C['prototype']) => M,
+	set: (this: C['prototype'], value: M) => void,
 ): number {
 	Object.defineProperty(StructC.prototype, name, {
 		get,
