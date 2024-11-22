@@ -64,7 +64,7 @@ Deno.test('member', () => {
 		declare public readonly ['constructor']: typeof TestParentExtended;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			// Extended overrides are possible.
+			// Extending overrides are possible.
 			member(
 				TestChildExtended,
 				this,
