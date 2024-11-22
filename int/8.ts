@@ -1,5 +1,5 @@
-import { defineMember } from '../../member.ts';
-import type { MembersExtends, Struct } from '../../struct.ts';
+import { defineMember } from '../member.ts';
+import type { MembersExtends, Struct } from '../struct.ts';
 
 /**
  * Member: int8.

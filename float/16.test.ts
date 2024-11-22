@@ -1,8 +1,8 @@
 import { assertEquals } from '@std/assert';
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
-import { byteLength, byteOffset, getType, littleEndian } from '../../macro.ts';
-import { Struct, type StructBuffer } from '../../struct.ts';
+import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
+import { Struct, type StructBuffer } from '../struct.ts';
 
 import { float16 } from './16.ts';
 

@@ -1,15 +1,8 @@
-import {
-	getInt24,
-	getUint24,
-	setInt24,
-	setUint24,
-} from '@hqtsm/dataview/int/24';
-
-import type { MembersExtends, Struct } from '../../struct.ts';
-import { defineMember } from '../../member.ts';
+import { defineMember } from '../member.ts';
+import type { MembersExtends, Struct } from '../struct.ts';
 
 /**
- * Member: int24.
+ * Member: int16.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -17,7 +10,7 @@ import { defineMember } from '../../member.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function int24<C extends typeof Struct>(
+export function int16<C extends typeof Struct>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
@@ -25,19 +18,17 @@ export function int24<C extends typeof Struct>(
 ): number {
 	return defineMember(StructC, name, {
 		byteOffset,
-		byteLength: 3,
+		byteLength: 2,
 		littleEndian,
-		Type: 'i24',
+		Type: 'i16',
 		get(): number {
-			return getInt24(
-				this.dataView,
+			return this.dataView.getInt16(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		set(value: number): void {
-			setInt24(
-				this.dataView,
+			this.dataView.setInt16(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
@@ -47,7 +38,7 @@ export function int24<C extends typeof Struct>(
 }
 
 /**
- * Member: uint24.
+ * Member: uint16.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -55,7 +46,7 @@ export function int24<C extends typeof Struct>(
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function uint24<C extends typeof Struct>(
+export function uint16<C extends typeof Struct>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
@@ -63,19 +54,17 @@ export function uint24<C extends typeof Struct>(
 ): number {
 	return defineMember(StructC, name, {
 		byteOffset,
-		byteLength: 3,
+		byteLength: 2,
 		littleEndian,
-		Type: 'u24',
+		Type: 'u16',
 		get(): number {
-			return getUint24(
-				this.dataView,
+			return this.dataView.getUint16(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		set(value: number): void {
-			setUint24(
-				this.dataView,
+			this.dataView.setUint16(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,

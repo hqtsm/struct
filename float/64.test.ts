@@ -1,7 +1,7 @@
 import { assertEquals } from '@std/assert';
 
-import { byteLength, byteOffset, getType, littleEndian } from '../../macro.ts';
-import { Struct } from '../../struct.ts';
+import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
+import { Struct } from '../struct.ts';
 
 import { float64 } from './64.ts';
 
