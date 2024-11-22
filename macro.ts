@@ -1,5 +1,4 @@
-import type { Struct } from './struct.ts';
-import type { MemberTypes } from './type.ts';
+import type { MemberTypes, Struct } from './struct.ts';
 
 /**
  * Get byte offset of member.
