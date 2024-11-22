@@ -8,7 +8,7 @@ import {
 	getLittleEndian,
 	getSigned,
 	getType,
-} from '../macro.ts';
+} from '../util.ts';
 import { Struct, type StructBuffer } from '../struct.ts';
 
 import { float16 } from './16.ts';

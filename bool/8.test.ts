@@ -7,7 +7,7 @@ import {
 	getLittleEndian,
 	getSigned,
 	getType,
-} from '../macro.ts';
+} from '../util.ts';
 import { Struct } from '../struct.ts';
 
 import { bool8 } from './8.ts';

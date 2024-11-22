@@ -8,7 +8,7 @@ import {
 	getLittleEndian,
 	getSigned,
 	getType,
-} from '../macro.ts';
+} from '../util.ts';
 import { Struct } from '../struct.ts';
 
 import { int24, uint24 } from './24.ts';

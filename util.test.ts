@@ -5,7 +5,7 @@ import {
 	assertThrows,
 } from '@std/assert';
 
-import { assignStruct, assignView, swapEndian } from './macro.ts';
+import { assignStruct, assignView, swapEndian } from './util.ts';
 import { Struct } from './struct.ts';
 import { uint8 } from './int/8.ts';
 

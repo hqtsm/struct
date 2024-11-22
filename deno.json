@@ -19,9 +19,9 @@
 		"./int/24": "./int/24.ts",
 		"./int/32": "./int/32.ts",
 		"./int/64": "./int/64.ts",
-		"./macro": "./macro.ts",
 		"./member": "./member.ts",
-		"./struct": "./struct.ts"
+		"./struct": "./struct.ts",
+		"./util": "./util.ts"
 	},
 	"imports": {
 		"@deno/dnt": "jsr:@deno/dnt@^0.41.3",

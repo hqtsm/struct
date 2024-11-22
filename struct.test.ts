@@ -4,7 +4,7 @@ import { Struct } from './struct.ts';
 import { LITTLE_ENDIAN } from './endian.ts';
 import { int8 } from './int/8.ts';
 import { member, pad } from './member.ts';
-import { getByteOffset } from './macro.ts';
+import { getByteOffset } from './util.ts';
 
 Deno.test('buffer', () => {
 	const buffer = new ArrayBuffer(0);

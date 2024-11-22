@@ -12,7 +12,7 @@ import {
 	getLittleEndian,
 	getSigned,
 	getType,
-} from './macro.ts';
+} from './util.ts';
 import { Struct } from './struct.ts';
 import { uint32 } from './int/32.ts';
 import { array, member, pad, view } from './member.ts';

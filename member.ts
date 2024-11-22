@@ -1,4 +1,4 @@
-import { assignView } from './macro.ts';
+import { assignView } from './util.ts';
 import type {
 	Membered,
 	MemberInfo,
