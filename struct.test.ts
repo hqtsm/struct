@@ -3,7 +3,8 @@ import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 import { Struct } from './struct.ts';
 import { LITTLE_ENDIAN } from './endian.ts';
 import { int8 } from './int/8.ts';
-import { member } from './member.ts';
+import { member, pad } from './member.ts';
+import { byteOffset } from './macro.ts';
 
 Deno.test('buffer', () => {
 	const buffer = new ArrayBuffer(0);
@@ -181,6 +182,52 @@ Deno.test('abstract', () => {
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer, 0, true);
+	test.child.value = 123;
+	assertEquals(data, new Uint8Array([123]));
+});
+
+Deno.test('abstract placeholder', () => {
+	abstract class Member extends Struct {
+		declare public value: number;
+
+		public abstract method(): number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += int8(this, 'value', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	class MemberImp extends Member {
+		declare public value: number;
+
+		public method(): number {
+			return 42;
+		}
+	}
+
+	abstract class Test extends Struct {
+		declare public child: Member;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += pad(Member.BYTE_LENGTH, this, 'child' as never, o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	class TestImp extends Test {
+		declare public readonly ['constructor']: typeof TestImp;
+
+		declare public child: Member;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += member(MemberImp, this, 'child', byteOffset(this, 'child'));
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	const data = new Uint8Array(Test.BYTE_LENGTH);
+	const test = new TestImp(data.buffer, 0, true);
 	test.child.value = 123;
 	assertEquals(data, new Uint8Array([123]));
 });
