@@ -1,4 +1,4 @@
-import type { MemberInfoType, Struct } from './struct.ts';
+import type { MemberInfoType, Members, Struct } from './struct.ts';
 
 /**
  * Get byte offset of member.
@@ -9,7 +9,7 @@ import type { MemberInfoType, Struct } from './struct.ts';
  */
 export function byteOffset<C extends typeof Struct>(
 	StructC: C,
-	name: Exclude<keyof C['prototype'], keyof Struct>,
+	name: Members<C['prototype']>,
 ): number {
 	return StructC.MEMBERS[name].byteOffset;
 }
@@ -23,7 +23,7 @@ export function byteOffset<C extends typeof Struct>(
  */
 export function byteLength<C extends typeof Struct>(
 	StructC: C,
-	name: Exclude<keyof C['prototype'], keyof Struct>,
+	name: Members<C['prototype']>,
 ): number {
 	return StructC.MEMBERS[name].byteLength;
 }
@@ -37,7 +37,7 @@ export function byteLength<C extends typeof Struct>(
  */
 export function littleEndian<C extends typeof Struct>(
 	StructC: C,
-	name: Exclude<keyof C['prototype'], keyof Struct>,
+	name: Members<C['prototype']>,
 ): boolean | null {
 	return StructC.MEMBERS[name].littleEndian;
 }
@@ -51,7 +51,7 @@ export function littleEndian<C extends typeof Struct>(
  */
 export function getKind<C extends typeof Struct>(
 	StructC: C,
-	name: Exclude<keyof C['prototype'], keyof Struct>,
+	name: Members<C['prototype']>,
 ): string {
 	return StructC.MEMBERS[name].kind;
 }
@@ -65,7 +65,7 @@ export function getKind<C extends typeof Struct>(
  */
 export function getSigned<C extends typeof Struct>(
 	StructC: C,
-	name: Exclude<keyof C['prototype'], keyof Struct>,
+	name: Members<C['prototype']>,
 ): boolean | null {
 	return StructC.MEMBERS[name].signed;
 }
@@ -79,7 +79,7 @@ export function getSigned<C extends typeof Struct>(
  */
 export function getType<C extends typeof Struct>(
 	StructC: C,
-	name: Exclude<keyof C['prototype'], keyof Struct>,
+	name: Members<C['prototype']>,
 ): MemberInfoType {
 	return StructC.MEMBERS[name].Type;
 }
