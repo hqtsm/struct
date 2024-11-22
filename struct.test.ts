@@ -41,6 +41,12 @@ Deno.test('byteOffset', () => {
 	// Offset over buffer size throws lazy.
 	const over = new Test(data, 33);
 	assertThrows(() => over.dataView, RangeError);
+
+	// Non-ArrayBuffer throws immediately.
+	assertThrows(
+		() => new Test(new Uint8Array() as ArrayBufferLike),
+		TypeError,
+	);
 });
 
 Deno.test('dataView', () => {

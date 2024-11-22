@@ -126,6 +126,11 @@ export class Struct implements ArrayBufferView {
 		if ((byteOffset |= 0) < 0) {
 			throw new RangeError(`Negative offset: ${byteOffset}`);
 		}
+		if (byteOffset > buffer.byteLength) {
+			new DataView(buffer, 0);
+		} else {
+			this.#dataView = new DataView(buffer, byteOffset);
+		}
 		this.#buffer = buffer;
 		this.#byteOffset = byteOffset;
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
