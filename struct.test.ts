@@ -32,8 +32,13 @@ Deno.test('byteOffset', () => {
 	assertEquals(new Test(data, 3.14).byteOffset, 3);
 	assertEquals(new Test(data, 3.99).byteOffset, 3);
 	assertEquals(new Test(data, 32).byteOffset, 32);
+
+	// Negative offset throws immediately.
 	assertThrows(() => new Test(data, -1), RangeError);
-	assertThrows(() => new Test(data, 33), RangeError);
+
+	// Offset over buffer size throws lazy.
+	const over = new Test(data, 33);
+	assertThrows(() => over.dataView, RangeError);
 });
 
 Deno.test('dataView', () => {

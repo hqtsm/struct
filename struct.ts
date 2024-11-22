@@ -66,14 +66,24 @@ export class Struct implements ArrayBufferView {
 	declare public readonly ['constructor']: typeof Struct;
 
 	/**
-	 * Data view of buffer.
+	 * Buffer data.
 	 */
-	readonly #dataView: DataView;
+	readonly #buffer: StructBuffer;
+
+	/**
+	 * Byte offset into buffer.
+	 */
+	readonly #byteOffset: number;
 
 	/**
 	 * Little endian, or not.
 	 */
 	readonly #littleEndian: boolean;
+
+	/**
+	 * Data view of buffer, lazy init.
+	 */
+	#dataView?: DataView;
 
 	/**
 	 * Blob constructor.
@@ -87,15 +97,19 @@ export class Struct implements ArrayBufferView {
 		byteOffset = 0,
 		littleEndian: boolean | null = null,
 	) {
-		this.#dataView = new DataView(buffer, byteOffset);
-		this.#littleEndian = littleEndian ?? LITTLE_ENDIAN;
+		if ((byteOffset |= 0) < 0) {
+			new DataView(buffer, byteOffset);
+		}
+		this.#buffer = buffer;
+		this.#byteOffset = byteOffset;
+		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public get buffer(): ArrayBuffer {
-		return this.#dataView.buffer;
+		return this.#buffer;
 	}
 
 	/**
@@ -109,7 +123,7 @@ export class Struct implements ArrayBufferView {
 	 * @inheritdoc
 	 */
 	public get byteOffset(): number {
-		return this.#dataView.byteOffset;
+		return this.#byteOffset;
 	}
 
 	/**
@@ -118,7 +132,7 @@ export class Struct implements ArrayBufferView {
 	 * @returns Data view of buffer.
 	 */
 	public get dataView(): DataView {
-		return this.#dataView;
+		return this.#dataView ??= new DataView(this.#buffer, this.byteOffset);
 	}
 
 	/**
