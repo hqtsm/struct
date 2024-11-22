@@ -6,7 +6,7 @@ import { LITTLE_ENDIAN } from './endian.ts';
 export type Members<S extends Struct> = Exclude<keyof S, keyof Struct>;
 
 /**
- * Possible members of a struct that another type extends.
+ * Possible members of a struct that member type extends.
  */
 export type MembersExtends<S extends Struct, M> = Exclude<
 	{ [K in keyof S]: M extends S[K] ? K : never }[keyof S],
