@@ -1,4 +1,4 @@
-import { LITTLE_ENDIAN } from './const.ts';
+import { LITTLE_ENDIAN } from './endian.ts';
 import type { ArrayBufferReal, MemberInfos } from './type.ts';
 
 /**

@@ -1,7 +1,7 @@
 import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 
 import { Struct } from './struct.ts';
-import { LITTLE_ENDIAN } from './const.ts';
+import { LITTLE_ENDIAN } from './endian.ts';
 import { int8 } from './member/int/8.ts';
 
 Deno.test('buffer', () => {

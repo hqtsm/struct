@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"exports": {
 		".": "./mod.ts",
-		"./const": "./const.ts",
+		"./endian": "./endian.ts",
 		"./macro": "./macro.ts",
 		"./member": "./member/mod.ts",
 		"./member/float": "./member/float/mod.ts",
