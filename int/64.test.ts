@@ -14,8 +14,6 @@ import { int64, uint64 } from './64.ts';
 
 Deno.test('int64', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: bigint;
 
 		declare public beta: bigint;
@@ -102,8 +100,6 @@ Deno.test('int64', () => {
 
 Deno.test('uint64', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: bigint;
 
 		declare public beta: bigint;

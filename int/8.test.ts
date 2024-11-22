@@ -14,8 +14,6 @@ import { int8, uint8 } from './8.ts';
 
 Deno.test('int8', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public beta: number;
@@ -58,8 +56,6 @@ Deno.test('int8', () => {
 
 Deno.test('uint8', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public beta: number;

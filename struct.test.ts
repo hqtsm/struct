@@ -13,8 +13,6 @@ Deno.test('buffer', () => {
 
 Deno.test('byteLength', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		public static override readonly BYTE_LENGTH: number = 8;
 	}
 
@@ -24,8 +22,6 @@ Deno.test('byteLength', () => {
 
 Deno.test('byteOffset', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
@@ -67,8 +63,6 @@ Deno.test('BYTE_LENGTH', () => {
 
 Deno.test('protected properties', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare protected alpha: number;
 
 		declare public unrelated: number;
@@ -89,8 +83,6 @@ Deno.test('protected properties', () => {
 
 Deno.test('private properties', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare private alpha: number;
 
 		declare public unrelated: number;
@@ -111,8 +103,6 @@ Deno.test('private properties', () => {
 
 Deno.test('extends', () => {
 	class Var extends Struct {
-		declare public readonly ['constructor']: typeof Var;
-
 		declare public type: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
@@ -122,8 +112,6 @@ Deno.test('extends', () => {
 	}
 
 	class Int8 extends Var {
-		declare public readonly ['constructor']: typeof Int8;
-
 		declare public value: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
@@ -160,8 +148,6 @@ Deno.test('abstract', () => {
 	}
 
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public child: MemberImp;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
@@ -206,8 +192,6 @@ Deno.test('abstract placeholder', () => {
 	}
 
 	class TestImp extends Test {
-		declare public readonly ['constructor']: typeof TestImp;
-
 		declare public child: Member;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {

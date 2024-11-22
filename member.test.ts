@@ -19,8 +19,6 @@ import { array, member, pad, view } from './member.ts';
 
 Deno.test('member', () => {
 	class TestChild extends Struct {
-		declare public readonly ['constructor']: typeof TestChild;
-
 		declare public one: number;
 
 		declare public two: number;
@@ -33,8 +31,6 @@ Deno.test('member', () => {
 	}
 
 	class TestChildExtended extends TestChild {
-		declare public readonly ['constructor']: typeof TestChildExtended;
-
 		public extraProperty = 123;
 
 		public extraMethod(): number {
@@ -43,8 +39,6 @@ Deno.test('member', () => {
 	}
 
 	class TestParent extends Struct {
-		declare public readonly ['constructor']: typeof TestParent;
-
 		declare public alpha: TestChild;
 
 		declare public beta: TestChild;
@@ -62,8 +56,6 @@ Deno.test('member', () => {
 	}
 
 	class TestParentExtended extends TestParent {
-		declare public readonly ['constructor']: typeof TestParentExtended;
-
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			// Extending overrides are possible.
 			member(
@@ -165,8 +157,6 @@ Deno.test('member', () => {
 
 Deno.test('array: Int8Array', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: Int8Array;
 
 		declare public beta: Int8Array;
@@ -232,8 +222,6 @@ Deno.test('array: Int8Array', () => {
 
 Deno.test('array: Uint8Array', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: Uint8Array;
 
 		declare public beta: Uint8Array;
@@ -299,8 +287,6 @@ Deno.test('array: Uint8Array', () => {
 
 Deno.test('array: Uint8ClampedArray', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: Uint8ClampedArray;
 
 		declare public beta: Uint8ClampedArray;
@@ -366,8 +352,6 @@ Deno.test('array: Uint8ClampedArray', () => {
 
 Deno.test('view: DataView', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: DataView;
 
 		declare public beta: DataView;
@@ -440,8 +424,6 @@ Deno.test('view: DataView', () => {
 
 Deno.test('pad', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public mystery: unknown;

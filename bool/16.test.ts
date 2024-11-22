@@ -14,8 +14,6 @@ import { bool16 } from './16.ts';
 
 Deno.test('bool16', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: boolean;
 
 		declare public beta: boolean;

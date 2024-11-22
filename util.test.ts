@@ -1,54 +1,8 @@
-import {
-	assertEquals,
-	assertInstanceOf,
-	assertNotStrictEquals,
-	assertThrows,
-} from '@std/assert';
+import { assertEquals, assertThrows } from '@std/assert';
 
-import { assignStruct, assignView, swapEndian } from './util.ts';
+import { assignStruct, assignView } from './util.ts';
 import { Struct } from './struct.ts';
 import { uint8 } from './int/8.ts';
-
-Deno.test('endianSwap', () => {
-	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-	}
-
-	const le = new Test(new ArrayBuffer(0), 0, true);
-	const be = new Test(new ArrayBuffer(0), 0, false);
-
-	const leSwap = swapEndian(le);
-	const leSwapLe = swapEndian(le, true);
-	const leSwapBe = swapEndian(le, false);
-
-	const beSwap = swapEndian(be);
-	const beSwapLe = swapEndian(be, true);
-	const beSwapBe = swapEndian(be, false);
-
-	assertInstanceOf(leSwap, Test);
-	assertInstanceOf(leSwapLe, Test);
-	assertInstanceOf(leSwapBe, Test);
-
-	assertInstanceOf(beSwap, Test);
-	assertInstanceOf(beSwapLe, Test);
-	assertInstanceOf(beSwapBe, Test);
-
-	assertEquals(leSwap.littleEndian, false);
-	assertEquals(leSwapLe.littleEndian, true);
-	assertEquals(leSwapBe.littleEndian, false);
-
-	assertEquals(beSwap.littleEndian, true);
-	assertEquals(beSwapLe.littleEndian, true);
-	assertEquals(beSwapBe.littleEndian, false);
-
-	assertNotStrictEquals(leSwap, le);
-	assertNotStrictEquals(leSwapLe, le);
-	assertNotStrictEquals(leSwapBe, le);
-
-	assertNotStrictEquals(beSwap, be);
-	assertNotStrictEquals(beSwapLe, be);
-	assertNotStrictEquals(beSwapBe, be);
-});
 
 Deno.test('assignView', () => {
 	const src = new Uint8Array([0xff, 0xfe, 0xfd, 0xfc]);
@@ -60,8 +14,6 @@ Deno.test('assignView', () => {
 
 Deno.test('assignStruct', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public beta: number;
@@ -74,8 +26,6 @@ Deno.test('assignStruct', () => {
 	}
 
 	class TestExt extends Test {
-		declare public readonly ['constructor']: typeof TestExt;
-
 		declare public gamma: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {

@@ -102,24 +102,6 @@ export function getType<C extends typeof Struct>(
 }
 
 /**
- * Swap endian of struct.
- *
- * @param struct Struct to swap the endian of.
- * @param littleEndian Little endian, big endian, or default to swap.
- * @returns New instance of the same type and memory, different endian.
- */
-export function swapEndian<S extends Struct>(
-	struct: S,
-	littleEndian: boolean | null = null,
-): S {
-	return new struct.constructor(
-		struct.buffer,
-		struct.byteOffset,
-		littleEndian ?? !struct.littleEndian,
-	) as S;
-}
-
-/**
  * Assign ArrayBuffer data from one view to another.
  *
  * @param dst Destination memory.

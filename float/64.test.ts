@@ -14,8 +14,6 @@ import { float64 } from './64.ts';
 
 Deno.test('float64', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public beta: number;

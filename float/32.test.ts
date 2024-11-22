@@ -14,8 +14,6 @@ import { float32 } from './32.ts';
 
 Deno.test('float32', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public beta: number;

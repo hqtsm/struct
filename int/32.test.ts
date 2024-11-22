@@ -14,8 +14,6 @@ import { int32, uint32 } from './32.ts';
 
 Deno.test('int32', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public beta: number;
@@ -102,8 +100,6 @@ Deno.test('int32', () => {
 
 Deno.test('uint32', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public beta: number;

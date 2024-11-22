@@ -14,8 +14,6 @@ import { int16, uint16 } from './16.ts';
 
 Deno.test('int16', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public beta: number;
@@ -102,8 +100,6 @@ Deno.test('int16', () => {
 
 Deno.test('uint16', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public beta: number;

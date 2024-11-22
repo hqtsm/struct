@@ -21,8 +21,6 @@ Endianness can be defined for each individual member.
 import { int8, Struct, uint16 } from '@hqtsm/struct';
 
 class Example extends Struct {
-	declare public readonly ['constructor']: typeof Example;
-
 	declare public alpha: number;
 
 	declare public beta: number;
@@ -54,8 +52,6 @@ Using the endian passed into the constructor, or host endianness.
 import { Struct, uint16 } from '@hqtsm/struct';
 
 class Example extends Struct {
-	declare public readonly ['constructor']: typeof Example;
-
 	declare public alpha: number;
 
 	declare public beta: number;
@@ -88,8 +84,6 @@ Structures can be extended with new child members.
 import { float32, Struct, uint32 } from '@hqtsm/struct';
 
 class Variable extends Struct {
-	declare public readonly ['constructor']: typeof Variable;
-
 	declare public type: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
@@ -99,8 +93,6 @@ class Variable extends Struct {
 }
 
 class VariableFloat extends Variable {
-	declare public readonly ['constructor']: typeof VariableFloat;
-
 	declare public value: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
@@ -124,8 +116,6 @@ Defining a child structure is easy.
 import { array, member, Struct, uint32 } from '@hqtsm/struct';
 
 class Child extends Struct {
-	declare public readonly ['constructor']: typeof Child;
-
 	declare public alpha: number;
 
 	declare public beta: number;
@@ -138,8 +128,6 @@ class Child extends Struct {
 }
 
 class Parent extends Struct {
-	declare public readonly ['constructor']: typeof Parent;
-
 	declare public array: Uint8Array;
 
 	declare public child: Child;
@@ -169,8 +157,6 @@ Casting the name to `never` or `any` will pass the type checker.
 import { Struct, uint8 } from '@hqtsm/struct';
 
 class Example extends Struct {
-	declare public readonly ['constructor']: typeof Example;
-
 	declare private alpha: number;
 
 	declare protected beta: number;

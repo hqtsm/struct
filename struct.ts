@@ -90,7 +90,7 @@ export type StructBuffer = ArrayBufferLike & { BYTES_PER_ELEMENT?: never };
  * Binary structure buffer view.
  */
 export class Struct implements ArrayBufferView {
-	declare public readonly ['constructor']: typeof Struct;
+	declare public readonly ['constructor']: Omit<typeof Struct, 'new'>;
 
 	/**
 	 * Buffer data.

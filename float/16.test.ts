@@ -16,8 +16,6 @@ import { float16 } from './16.ts';
 
 Deno.test('float16', () => {
 	class Test extends Struct {
-		declare public readonly ['constructor']: typeof Test;
-
 		declare public alpha: number;
 
 		declare public beta: number;
@@ -33,8 +31,6 @@ Deno.test('float16', () => {
 	}
 
 	class TestM extends Test {
-		declare public readonly ['constructor']: typeof TestM;
-
 		constructor(
 			buffer: StructBuffer,
 			byteOffset = 0,
@@ -70,8 +66,6 @@ Deno.test('float16', () => {
 	}
 
 	class TestF extends Test {
-		declare public readonly ['constructor']: typeof TestF;
-
 		constructor(
 			buffer: StructBuffer,
 			byteOffset = 0,
