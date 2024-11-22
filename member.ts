@@ -267,3 +267,35 @@ export function view<M extends ViewConstructor, C extends Membered>(
 		},
 	});
 }
+
+/**
+ * Member: padding.
+ *
+ * @param byteLength Padding size.
+ * @param StructC Struct constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @param littleEndian Little endian, big endian, or default.
+ * @returns Byte length.
+ */
+export function pad<C extends Membered>(
+	byteLength: number,
+	StructC: C,
+	name: MembersExtends<C['prototype'], unknown>,
+	byteOffset: number,
+): number {
+	return defineMember(StructC, name, {
+		byteOffset,
+		byteLength,
+		littleEndian: null,
+		kind: 'pad',
+		signed: null,
+		Type: null,
+		get(): unknown {
+			throw new TypeError(`Read from padding member: ${String(name)}`);
+		},
+		set(_value: unknown): void {
+			throw new TypeError(`Write to padding member: ${String(name)}`);
+		},
+	});
+}

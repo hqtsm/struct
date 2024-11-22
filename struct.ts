@@ -22,7 +22,7 @@ export type ChildTypes = unknown;
  * Types of member type.
  */
 // deno-lint-ignore ban-types
-export type MemberInfoType = Function;
+export type MemberInfoType = Function | null;
 
 /**
  * Member info.

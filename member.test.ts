@@ -2,6 +2,7 @@ import {
 	assertEquals,
 	assertNotStrictEquals,
 	assertStrictEquals,
+	assertThrows,
 } from '@std/assert';
 
 import {
@@ -14,7 +15,7 @@ import {
 } from './macro.ts';
 import { Struct } from './struct.ts';
 import { uint32 } from './int/32.ts';
-import { array, member, view } from './member.ts';
+import { array, member, pad, view } from './member.ts';
 
 Deno.test('member', () => {
 	class TestChild extends Struct {
@@ -435,4 +436,63 @@ Deno.test('view: DataView', () => {
 		new Uint8Array(source.buffer, source.byteOffset, source.byteLength),
 	);
 	assertNotStrictEquals(test.alpha, source);
+});
+
+Deno.test('pad', () => {
+	class Test extends Struct {
+		declare public readonly ['constructor']: typeof Test;
+
+		declare public alpha: number;
+
+		declare public mystery: unknown;
+
+		declare public beta: number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += uint32(this, 'alpha', o);
+			o += pad(8, this, 'mystery', o);
+			o += uint32(this, 'beta', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	const off = {
+		alpha: byteOffset(Test, 'alpha'),
+		mystery: byteOffset(Test, 'mystery'),
+		beta: byteOffset(Test, 'beta'),
+	};
+
+	assertEquals(Test.BYTE_LENGTH, 16);
+	assertEquals(byteLength(Test, 'alpha'), 4);
+	assertEquals(byteLength(Test, 'mystery'), 8);
+	assertEquals(byteLength(Test, 'beta'), 4);
+	assertEquals(littleEndian(Test, 'alpha'), null);
+	assertEquals(littleEndian(Test, 'mystery'), null);
+	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(getType(Test, 'alpha'), Number);
+	assertEquals(getType(Test, 'mystery'), null);
+	assertEquals(getType(Test, 'beta'), Number);
+	assertEquals(getKind(Test, 'alpha'), 'int');
+	assertEquals(getKind(Test, 'mystery'), 'pad');
+	assertEquals(getKind(Test, 'beta'), 'int');
+	assertEquals(getSigned(Test, 'alpha'), false);
+	assertEquals(getSigned(Test, 'mystery'), null);
+	assertEquals(getSigned(Test, 'beta'), false);
+
+	const data = new Uint8Array(Test.BYTE_LENGTH);
+	const view = new DataView(data.buffer);
+	const test = new Test(data.buffer);
+	view.setUint32(off.alpha, 0x12345678, test.littleEndian);
+	view.setUint32(off.beta, 0x23456789, test.littleEndian);
+
+	assertEquals(test.byteLength, Test.BYTE_LENGTH);
+	assertEquals(test.alpha, 0x12345678);
+	assertEquals(test.beta, 0x23456789);
+
+	assertThrows(() => {
+		void test.mystery;
+	});
+	assertThrows(() => {
+		test.mystery = null;
+	});
 });
