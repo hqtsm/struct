@@ -1,7 +1,14 @@
 import { assertEquals } from '@std/assert';
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
-import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
+import {
+	byteLength,
+	byteOffset,
+	getKind,
+	getSigned,
+	getType,
+	littleEndian,
+} from '../macro.ts';
 import { Struct, type StructBuffer } from '../struct.ts';
 
 import { float16 } from './16.ts';
@@ -86,9 +93,15 @@ Deno.test('float16', () => {
 	assertEquals(littleEndian(Test, 'alpha'), true);
 	assertEquals(littleEndian(Test, 'beta'), false);
 	assertEquals(littleEndian(Test, 'gamma'), null);
-	assertEquals(getType(Test, 'alpha'), 'f16');
-	assertEquals(getType(Test, 'beta'), 'f16');
-	assertEquals(getType(Test, 'gamma'), 'f16');
+	assertEquals(getType(Test, 'alpha'), Number);
+	assertEquals(getType(Test, 'beta'), Number);
+	assertEquals(getType(Test, 'gamma'), Number);
+	assertEquals(getKind(Test, 'alpha'), 'float');
+	assertEquals(getKind(Test, 'beta'), 'float');
+	assertEquals(getKind(Test, 'gamma'), 'float');
+	assertEquals(getSigned(Test, 'alpha'), true);
+	assertEquals(getSigned(Test, 'beta'), true);
+	assertEquals(getSigned(Test, 'gamma'), true);
 
 	const v = new DataView(new ArrayBuffer(4));
 	for (

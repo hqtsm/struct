@@ -55,8 +55,10 @@ export function defineMember<C extends typeof Struct, M>(
 		byteOffset: desc.byteOffset,
 		byteLength,
 		littleEndian: desc.littleEndian,
+		kind: desc.kind,
+		signed: desc.signed,
 		Type: desc.Type,
-	};
+	} satisfies MemberInfo;
 	return byteLength;
 }
 
@@ -106,6 +108,8 @@ export function member<M extends MemberConstructor, C extends typeof Struct>(
 		byteOffset,
 		byteLength: MemberC.BYTE_LENGTH,
 		littleEndian,
+		kind: 'member',
+		signed: null,
 		Type: MemberC,
 		get(): InstanceType<M> {
 			let r = m.get(this);
@@ -175,6 +179,8 @@ export function array<M extends ArrayTypeConstructor, C extends typeof Struct>(
 		byteOffset,
 		byteLength: length * ArrayC.BYTES_PER_ELEMENT,
 		littleEndian,
+		kind: 'array',
+		signed: null,
 		Type: ArrayC,
 		get(): InstanceType<M> {
 			let r = m.get(this);
@@ -240,6 +246,8 @@ export function view<M extends ViewConstructor, C extends typeof Struct>(
 		byteOffset,
 		byteLength: byteLength,
 		littleEndian,
+		kind: 'view',
+		signed: null,
 		Type: ViewC,
 		get(): InstanceType<M> {
 			let r = m.get(this);

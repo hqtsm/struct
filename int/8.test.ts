@@ -1,6 +1,13 @@
 import { assertEquals } from '@std/assert';
 
-import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
+import {
+	byteLength,
+	byteOffset,
+	getKind,
+	getSigned,
+	getType,
+	littleEndian,
+} from '../macro.ts';
 import { Struct } from '../struct.ts';
 
 import { int8, uint8 } from './8.ts';
@@ -30,8 +37,12 @@ Deno.test('int8', () => {
 	assertEquals(byteLength(Test, 'beta'), 1);
 	assertEquals(littleEndian(Test, 'alpha'), null);
 	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(getType(Test, 'alpha'), 'i8');
-	assertEquals(getType(Test, 'beta'), 'i8');
+	assertEquals(getType(Test, 'alpha'), Number);
+	assertEquals(getType(Test, 'beta'), Number);
+	assertEquals(getKind(Test, 'alpha'), 'int');
+	assertEquals(getKind(Test, 'beta'), 'int');
+	assertEquals(getSigned(Test, 'alpha'), true);
+	assertEquals(getSigned(Test, 'beta'), true);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -70,8 +81,12 @@ Deno.test('uint8', () => {
 	assertEquals(byteLength(Test, 'beta'), 1);
 	assertEquals(littleEndian(Test, 'alpha'), null);
 	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(getType(Test, 'alpha'), 'u8');
-	assertEquals(getType(Test, 'beta'), 'u8');
+	assertEquals(getType(Test, 'alpha'), Number);
+	assertEquals(getType(Test, 'beta'), Number);
+	assertEquals(getKind(Test, 'alpha'), 'int');
+	assertEquals(getKind(Test, 'beta'), 'int');
+	assertEquals(getSigned(Test, 'alpha'), false);
+	assertEquals(getSigned(Test, 'beta'), false);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);

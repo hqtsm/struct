@@ -22,7 +22,9 @@ export function float16<C extends typeof Struct>(
 		byteOffset,
 		byteLength: 2,
 		littleEndian,
-		Type: 'f16',
+		kind: 'float',
+		signed: true,
+		Type: Number,
 		get(): number {
 			const { dataView } = this as unknown as {
 				dataView: DataView & {

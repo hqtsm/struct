@@ -1,7 +1,14 @@
 import { assertEquals } from '@std/assert';
 import { getInt24, getUint24 } from '@hqtsm/dataview/int/24';
 
-import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
+import {
+	byteLength,
+	byteOffset,
+	getKind,
+	getSigned,
+	getType,
+	littleEndian,
+} from '../macro.ts';
 import { Struct } from '../struct.ts';
 
 import { int24, uint24 } from './24.ts';
@@ -43,10 +50,18 @@ Deno.test('int24', () => {
 	assertEquals(littleEndian(Test, 'beta'), null);
 	assertEquals(littleEndian(Test, 'gamma'), true);
 	assertEquals(littleEndian(Test, 'delta'), false);
-	assertEquals(getType(Test, 'alpha'), 'i24');
-	assertEquals(getType(Test, 'beta'), 'i24');
-	assertEquals(getType(Test, 'gamma'), 'i24');
-	assertEquals(getType(Test, 'delta'), 'i24');
+	assertEquals(getType(Test, 'alpha'), Number);
+	assertEquals(getType(Test, 'beta'), Number);
+	assertEquals(getType(Test, 'gamma'), Number);
+	assertEquals(getType(Test, 'delta'), Number);
+	assertEquals(getKind(Test, 'alpha'), 'int');
+	assertEquals(getKind(Test, 'beta'), 'int');
+	assertEquals(getKind(Test, 'gamma'), 'int');
+	assertEquals(getKind(Test, 'delta'), 'int');
+	assertEquals(getSigned(Test, 'alpha'), true);
+	assertEquals(getSigned(Test, 'beta'), true);
+	assertEquals(getSigned(Test, 'gamma'), true);
+	assertEquals(getSigned(Test, 'delta'), true);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -123,10 +138,18 @@ Deno.test('uint24', () => {
 	assertEquals(littleEndian(Test, 'beta'), null);
 	assertEquals(littleEndian(Test, 'gamma'), true);
 	assertEquals(littleEndian(Test, 'delta'), false);
-	assertEquals(getType(Test, 'alpha'), 'u24');
-	assertEquals(getType(Test, 'beta'), 'u24');
-	assertEquals(getType(Test, 'gamma'), 'u24');
-	assertEquals(getType(Test, 'delta'), 'u24');
+	assertEquals(getType(Test, 'alpha'), Number);
+	assertEquals(getType(Test, 'beta'), Number);
+	assertEquals(getType(Test, 'gamma'), Number);
+	assertEquals(getType(Test, 'delta'), Number);
+	assertEquals(getKind(Test, 'alpha'), 'int');
+	assertEquals(getKind(Test, 'beta'), 'int');
+	assertEquals(getKind(Test, 'gamma'), 'int');
+	assertEquals(getKind(Test, 'delta'), 'int');
+	assertEquals(getSigned(Test, 'alpha'), false);
+	assertEquals(getSigned(Test, 'beta'), false);
+	assertEquals(getSigned(Test, 'gamma'), false);
+	assertEquals(getSigned(Test, 'delta'), false);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);

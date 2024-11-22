@@ -1,6 +1,13 @@
 import { assertEquals } from '@std/assert';
 
-import { byteLength, byteOffset, getType, littleEndian } from '../macro.ts';
+import {
+	byteLength,
+	byteOffset,
+	getKind,
+	getSigned,
+	getType,
+	littleEndian,
+} from '../macro.ts';
 import { Struct } from '../struct.ts';
 
 import { float64 } from './64.ts';
@@ -36,9 +43,15 @@ Deno.test('float64', () => {
 	assertEquals(littleEndian(Test, 'alpha'), true);
 	assertEquals(littleEndian(Test, 'beta'), false);
 	assertEquals(littleEndian(Test, 'gamma'), null);
-	assertEquals(getType(Test, 'alpha'), 'f64');
-	assertEquals(getType(Test, 'beta'), 'f64');
-	assertEquals(getType(Test, 'gamma'), 'f64');
+	assertEquals(getType(Test, 'alpha'), Number);
+	assertEquals(getType(Test, 'beta'), Number);
+	assertEquals(getType(Test, 'gamma'), Number);
+	assertEquals(getKind(Test, 'alpha'), 'float');
+	assertEquals(getKind(Test, 'beta'), 'float');
+	assertEquals(getKind(Test, 'gamma'), 'float');
+	assertEquals(getSigned(Test, 'alpha'), true);
+	assertEquals(getSigned(Test, 'beta'), true);
+	assertEquals(getSigned(Test, 'gamma'), true);
 
 	for (
 		const f64 of [

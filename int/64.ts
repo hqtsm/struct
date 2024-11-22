@@ -20,7 +20,9 @@ export function int64<C extends typeof Struct>(
 		byteOffset,
 		byteLength: 8,
 		littleEndian,
-		Type: 'i64',
+		kind: 'int',
+		signed: true,
+		Type: BigInt,
 		get(): bigint {
 			return this.dataView.getBigInt64(
 				byteOffset,
@@ -56,7 +58,9 @@ export function uint64<C extends typeof Struct>(
 		byteOffset,
 		byteLength: 8,
 		littleEndian,
-		Type: 'u64',
+		kind: 'int',
+		signed: false,
+		Type: BigInt,
 		get(): bigint {
 			return this.dataView.getBigUint64(
 				byteOffset,

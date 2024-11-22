@@ -27,7 +27,9 @@ export function int24<C extends typeof Struct>(
 		byteOffset,
 		byteLength: 3,
 		littleEndian,
-		Type: 'i24',
+		kind: 'int',
+		signed: true,
+		Type: Number,
 		get(): number {
 			return getInt24(
 				this.dataView,
@@ -65,7 +67,9 @@ export function uint24<C extends typeof Struct>(
 		byteOffset,
 		byteLength: 3,
 		littleEndian,
-		Type: 'u24',
+		kind: 'int',
+		signed: false,
+		Type: Number,
 		get(): number {
 			return getUint24(
 				this.dataView,

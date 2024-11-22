@@ -20,7 +20,9 @@ export function int16<C extends typeof Struct>(
 		byteOffset,
 		byteLength: 2,
 		littleEndian,
-		Type: 'i16',
+		kind: 'int',
+		signed: true,
+		Type: Number,
 		get(): number {
 			return this.dataView.getInt16(
 				byteOffset,
@@ -56,7 +58,9 @@ export function uint16<C extends typeof Struct>(
 		byteOffset,
 		byteLength: 2,
 		littleEndian,
-		Type: 'u16',
+		kind: 'int',
+		signed: false,
+		Type: Number,
 		get(): number {
 			return this.dataView.getUint16(
 				byteOffset,

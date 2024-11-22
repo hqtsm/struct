@@ -21,7 +21,8 @@ export type ChildTypes = unknown;
 /**
  * Types of member type.
  */
-export type MemberTypes = string | ChildTypes;
+// deno-lint-ignore ban-types
+export type MemberInfoType = Function;
 
 /**
  * Member info.
@@ -43,9 +44,19 @@ export type MemberInfo = {
 	littleEndian: boolean | null;
 
 	/**
+	 * Kind of member.
+	 */
+	kind: string;
+
+	/**
+	 * Signed or unsigned type, if applicable.
+	 */
+	signed: boolean | null;
+
+	/**
 	 * Type of member.
 	 */
-	Type: MemberTypes;
+	Type: MemberInfoType;
 };
 
 /**

@@ -1,4 +1,4 @@
-import type { MemberTypes, Struct } from './struct.ts';
+import type { MemberInfoType, Struct } from './struct.ts';
 
 /**
  * Get byte offset of member.
@@ -43,6 +43,34 @@ export function littleEndian<C extends typeof Struct>(
 }
 
 /**
+ * Get kind of member.
+ *
+ * @param StructC Struct constructor.
+ * @param name Member name.
+ * @returns Kind.
+ */
+export function getKind<C extends typeof Struct>(
+	StructC: C,
+	name: Exclude<keyof C['prototype'], keyof Struct>,
+): string {
+	return StructC.MEMBERS[name].kind;
+}
+
+/**
+ * Get signed of member.
+ *
+ * @param StructC Struct constructor.
+ * @param name Member name.
+ * @returns Signed or null where not applicable.
+ */
+export function getSigned<C extends typeof Struct>(
+	StructC: C,
+	name: Exclude<keyof C['prototype'], keyof Struct>,
+): boolean | null {
+	return StructC.MEMBERS[name].signed;
+}
+
+/**
  * Get type of member.
  *
  * @param StructC Struct constructor.
@@ -52,7 +80,7 @@ export function littleEndian<C extends typeof Struct>(
 export function getType<C extends typeof Struct>(
 	StructC: C,
 	name: Exclude<keyof C['prototype'], keyof Struct>,
-): MemberTypes {
+): MemberInfoType {
 	return StructC.MEMBERS[name].Type;
 }
 

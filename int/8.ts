@@ -18,7 +18,9 @@ export function int8<C extends typeof Struct>(
 		byteOffset,
 		byteLength: 1,
 		littleEndian: null,
-		Type: 'i8',
+		kind: 'int',
+		signed: true,
+		Type: Number,
 		get(): number {
 			return this.dataView.getInt8(byteOffset);
 		},
@@ -45,7 +47,9 @@ export function uint8<C extends typeof Struct>(
 		byteOffset,
 		byteLength: 1,
 		littleEndian: null,
-		Type: 'u8',
+		kind: 'int',
+		signed: false,
+		Type: Number,
 		get(): number {
 			return this.dataView.getUint8(byteOffset);
 		},

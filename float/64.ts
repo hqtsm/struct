@@ -20,7 +20,9 @@ export function float64<C extends typeof Struct>(
 		byteOffset,
 		byteLength: 8,
 		littleEndian,
-		Type: 'f64',
+		kind: 'float',
+		signed: true,
+		Type: Number,
 		get(): number {
 			return this.dataView.getFloat64(
 				byteOffset,
