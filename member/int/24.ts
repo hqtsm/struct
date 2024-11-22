@@ -6,10 +6,10 @@ import {
 } from '@hqtsm/dataview/int/24';
 
 import type { MembersExtends, Struct } from '../../struct.ts';
-import { memberValue } from '../../value.ts';
+import { defineMember } from '../../member.ts';
 
 /**
- * Member int24.
+ * Member: int24.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -23,21 +23,19 @@ export function int24<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return memberValue(
-		StructC,
-		name,
+	return defineMember(StructC, name, {
 		byteOffset,
-		3,
+		byteLength: 3,
 		littleEndian,
-		'i24',
-		function (): number {
+		Type: 'i24',
+		get(): number {
 			return getInt24(
 				this.dataView,
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		function (value: number): void {
+		set(value: number): void {
 			setInt24(
 				this.dataView,
 				byteOffset,
@@ -45,11 +43,11 @@ export function int24<C extends typeof Struct>(
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	);
+	});
 }
 
 /**
- * Member uint24.
+ * Member: uint24.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -63,21 +61,19 @@ export function uint24<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return memberValue(
-		StructC,
-		name,
+	return defineMember(StructC, name, {
 		byteOffset,
-		3,
+		byteLength: 3,
 		littleEndian,
-		'u24',
-		function (): number {
+		Type: 'u24',
+		get(): number {
 			return getUint24(
 				this.dataView,
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		function (value: number): void {
+		set(value: number): void {
 			setUint24(
 				this.dataView,
 				byteOffset,
@@ -85,5 +81,5 @@ export function uint24<C extends typeof Struct>(
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	);
+	});
 }

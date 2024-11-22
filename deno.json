@@ -13,15 +13,11 @@
 		"./member/float/64": "./member/float/64.ts",
 		"./member/int": "./member/int/mod.ts",
 		"./member/int/8": "./member/int/8.ts",
-		"./member/int/8a": "./member/int/8a.ts",
 		"./member/int/16": "./member/int/16.ts",
 		"./member/int/24": "./member/int/24.ts",
 		"./member/int/32": "./member/int/32.ts",
 		"./member/int/64": "./member/int/64.ts",
-		"./member/struct": "./member/struct.ts",
-		"./struct": "./struct.ts",
-		"./value": "./value.ts",
-		"./view": "./view.ts"
+		"./struct": "./struct.ts"
 	},
 	"imports": {
 		"@deno/dnt": "jsr:@deno/dnt@^0.41.3",

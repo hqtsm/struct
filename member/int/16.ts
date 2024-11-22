@@ -1,8 +1,8 @@
+import { defineMember } from '../../member.ts';
 import type { MembersExtends, Struct } from '../../struct.ts';
-import { memberValue } from '../../value.ts';
 
 /**
- * Member int16.
+ * Member: int16.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -16,31 +16,29 @@ export function int16<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return memberValue(
-		StructC,
-		name,
+	return defineMember(StructC, name, {
 		byteOffset,
-		2,
+		byteLength: 2,
 		littleEndian,
-		'i16',
-		function (): number {
+		Type: 'i16',
+		get(): number {
 			return this.dataView.getInt16(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		function (value: number): void {
+		set(value: number): void {
 			this.dataView.setInt16(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	);
+	});
 }
 
 /**
- * Member uint16.
+ * Member: uint16.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -54,25 +52,23 @@ export function uint16<C extends typeof Struct>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return memberValue(
-		StructC,
-		name,
+	return defineMember(StructC, name, {
 		byteOffset,
-		2,
+		byteLength: 2,
 		littleEndian,
-		'u16',
-		function (): number {
+		Type: 'u16',
+		get(): number {
 			return this.dataView.getUint16(
 				byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		function (value: number): void {
+		set(value: number): void {
 			this.dataView.setUint16(
 				byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	);
+	});
 }

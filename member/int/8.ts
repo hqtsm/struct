@@ -1,8 +1,8 @@
+import { defineMember } from '../../member.ts';
 import type { MembersExtends, Struct } from '../../struct.ts';
-import { memberValue } from '../../value.ts';
 
 /**
- * Member int8.
+ * Member: int8.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -14,24 +14,22 @@ export function int8<C extends typeof Struct>(
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
 ): number {
-	return memberValue(
-		StructC,
-		name,
+	return defineMember(StructC, name, {
 		byteOffset,
-		1,
-		null,
-		'i8',
-		function (): number {
+		byteLength: 1,
+		littleEndian: null,
+		Type: 'i8',
+		get(): number {
 			return this.dataView.getInt8(byteOffset);
 		},
-		function (value: number): void {
+		set(value: number): void {
 			this.dataView.setInt8(byteOffset, value);
 		},
-	);
+	});
 }
 
 /**
- * Member uint8.
+ * Member: uint8.
  *
  * @param StructC Struct constructor.
  * @param name Member name.
@@ -43,18 +41,16 @@ export function uint8<C extends typeof Struct>(
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
 ): number {
-	return memberValue(
-		StructC,
-		name,
+	return defineMember(StructC, name, {
 		byteOffset,
-		1,
-		null,
-		'u8',
-		function (): number {
+		byteLength: 1,
+		littleEndian: null,
+		Type: 'u8',
+		get(): number {
 			return this.dataView.getUint8(byteOffset);
 		},
-		function (value: number): void {
+		set(value: number): void {
 			this.dataView.setUint8(byteOffset, value);
 		},
-	);
+	});
 }

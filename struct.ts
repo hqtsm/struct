@@ -16,11 +16,7 @@ export type MembersExtends<S extends Struct, M> = Exclude<
 /**
  * Types of child structures.
  */
-export type ChildTypes =
-	| typeof Int8Array
-	| typeof Uint8Array
-	| typeof Uint8ClampedArray
-	| typeof Struct;
+export type ChildTypes = unknown;
 
 /**
  * Types of member type.
