@@ -3,6 +3,7 @@ import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 import { Struct } from './struct.ts';
 import { LITTLE_ENDIAN } from './endian.ts';
 import { int8 } from './int/8.ts';
+import { member } from './member.ts';
 
 Deno.test('buffer', () => {
 	const buffer = new ArrayBuffer(0);
@@ -118,8 +119,8 @@ Deno.test('private properties', () => {
 });
 
 Deno.test('extends', () => {
-	class Type extends Struct {
-		declare public readonly ['constructor']: typeof Type;
+	class Var extends Struct {
+		declare public readonly ['constructor']: typeof Var;
 
 		declare public type: number;
 
@@ -129,8 +130,8 @@ Deno.test('extends', () => {
 		})(super.BYTE_LENGTH);
 	}
 
-	class Type8 extends Type {
-		declare public readonly ['constructor']: typeof Type8;
+	class Int8 extends Var {
+		declare public readonly ['constructor']: typeof Int8;
 
 		declare public value: number;
 
@@ -140,9 +141,46 @@ Deno.test('extends', () => {
 		})(super.BYTE_LENGTH);
 	}
 
-	const data = new Uint8Array(Type8.BYTE_LENGTH);
-	const varFloat = new Type8(data.buffer, 0, true);
+	const data = new Uint8Array(Int8.BYTE_LENGTH);
+	const varFloat = new Int8(data.buffer, 0, true);
 	varFloat.type = 8;
 	varFloat.value = 123;
 	assertEquals(data, new Uint8Array([8, 123]));
+});
+
+Deno.test('abstract', () => {
+	abstract class Member extends Struct {
+		declare public value: number;
+
+		public abstract method(): number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += int8(this, 'value', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	class MemberImp extends Member {
+		declare public value: number;
+
+		public method(): number {
+			return 42;
+		}
+	}
+
+	class Test extends Struct {
+		declare public readonly ['constructor']: typeof Test;
+
+		declare public child: MemberImp;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += member(MemberImp, this, 'child', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	const data = new Uint8Array(Test.BYTE_LENGTH);
+	const test = new Test(data.buffer, 0, true);
+	test.child.value = 123;
+	assertEquals(data, new Uint8Array([123]));
 });

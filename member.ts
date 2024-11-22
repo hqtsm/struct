@@ -1,15 +1,15 @@
 import { assignView } from './macro.ts';
 import type {
+	Membered,
 	MemberInfo,
 	MemberInfos,
 	MembersExtends,
-	Struct,
 } from './struct.ts';
 
 /**
  * Member descriptor.
  */
-export type MemberDescriptor<S extends Struct, M> = MemberInfo & {
+export type MemberDescriptor<S, M> = MemberInfo & {
 	/**
 	 * Getter function.
 	 *
@@ -35,7 +35,7 @@ export type MemberDescriptor<S extends Struct, M> = MemberInfo & {
  * @param desc Member descriptor.
  * @returns Byte length.
  */
-export function defineMember<C extends typeof Struct, M>(
+export function defineMember<C extends Membered, M>(
 	StructC: C & { MEMBERS: MemberInfos },
 	name: MembersExtends<C['prototype'], M>,
 	desc: MemberDescriptor<C['prototype'], M>,
@@ -96,7 +96,7 @@ export type MemberConstructor = {
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function member<M extends MemberConstructor, C extends typeof Struct>(
+export function member<M extends MemberConstructor, C extends Membered>(
 	MemberC: M,
 	StructC: C,
 	name: MembersExtends<C['prototype'], InstanceType<M>>,
@@ -166,7 +166,7 @@ export type ArrayTypeConstructor = {
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function array<M extends ArrayTypeConstructor, C extends typeof Struct>(
+export function array<M extends ArrayTypeConstructor, C extends Membered>(
 	ArrayC: M,
 	length: number,
 	StructC: C,
@@ -233,7 +233,7 @@ export type ViewConstructor = {
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function view<M extends ViewConstructor, C extends typeof Struct>(
+export function view<M extends ViewConstructor, C extends Membered>(
 	ViewC: M,
 	byteLength: number,
 	StructC: C,

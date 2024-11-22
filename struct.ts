@@ -64,6 +64,12 @@ export type MemberInfo = {
  */
 export type MemberInfos = { [member: PropertyKey]: Readonly<MemberInfo> };
 
+export type Membered = {
+	readonly prototype: typeof Struct['prototype'];
+
+	readonly MEMBERS: Readonly<MemberInfos>;
+};
+
 /**
  * Struct acceptable buffer type.
  * ArrayBuffer, not similar but incompatible types.

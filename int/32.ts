@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { MembersExtends, Struct } from '../struct.ts';
+import type { Membered, MembersExtends } from '../struct.ts';
 
 /**
  * Member: int32.
@@ -10,7 +10,7 @@ import type { MembersExtends, Struct } from '../struct.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function int32<C extends typeof Struct>(
+export function int32<C extends Membered>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
@@ -48,7 +48,7 @@ export function int32<C extends typeof Struct>(
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function uint32<C extends typeof Struct>(
+export function uint32<C extends Membered>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,

@@ -1,6 +1,6 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
-import type { MembersExtends, Struct } from '../struct.ts';
+import type { Membered, MembersExtends } from '../struct.ts';
 import { defineMember } from '../member.ts';
 
 /**
@@ -12,7 +12,7 @@ import { defineMember } from '../member.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function float16<C extends typeof Struct>(
+export function float16<C extends Membered>(
 	StructC: C,
 	name: MembersExtends<C['prototype'], number>,
 	byteOffset: number,
