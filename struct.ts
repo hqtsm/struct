@@ -64,9 +64,18 @@ export type MemberInfo = {
  */
 export type MemberInfos = { [member: PropertyKey]: Readonly<MemberInfo> };
 
+/**
+ * Struct member info properties.
+ */
 export type Membered = {
+	/**
+	 * Struct prototype.
+	 */
 	readonly prototype: typeof Struct['prototype'];
 
+	/**
+	 * Struct members.
+	 */
 	readonly MEMBERS: Readonly<MemberInfos>;
 };
 
