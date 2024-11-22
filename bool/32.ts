@@ -1,5 +1,6 @@
 import { defineMember } from '../member.ts';
 import type { Membered, MembersExtends } from '../struct.ts';
+import { dataView } from '../util.ts';
 
 /**
  * Member: bool32.
@@ -24,14 +25,14 @@ export function bool32<C extends Membered>(
 		signed: null,
 		Type: Boolean,
 		get(): boolean {
-			return !!this.dataView.getInt32(
-				byteOffset,
+			return !!dataView(this.buffer).getInt32(
+				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		set(value: boolean): void {
-			this.dataView.setInt32(
-				byteOffset,
+			dataView(this.buffer).setInt32(
+				this.byteOffset + byteOffset,
 				value ? 1 : 0,
 				littleEndian ?? this.littleEndian,
 			);

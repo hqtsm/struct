@@ -1,5 +1,21 @@
 import type { MemberInfoType, Members, Struct } from './struct.ts';
 
+const dataViews = new WeakMap<ArrayBufferLike, DataView>();
+
+/**
+ * Get reusable data view of buffer.
+ *
+ * @param buffer Array buffer.
+ * @returns Data view.
+ */
+export function dataView(buffer: ArrayBufferLike): DataView {
+	let r = dataViews.get(buffer);
+	if (!r) {
+		dataViews.set(buffer, r = new DataView(buffer));
+	}
+	return r;
+}
+
 /**
  * Get byte offset of member.
  *

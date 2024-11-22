@@ -2,6 +2,12 @@ import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
 import type { Membered, MembersExtends } from '../struct.ts';
 import { defineMember } from '../member.ts';
+import { dataView } from '../util.ts';
+
+type MaybeNativeFloat16 = Partial<{
+	getFloat16(byteOffset: number, littleEndian?: boolean): number;
+	setFloat16(byteOffset: number, value: number, littleEndian?: boolean): void;
+}>;
 
 /**
  * Member: float16.
@@ -26,44 +32,29 @@ export function float16<C extends Membered>(
 		signed: true,
 		Type: Number,
 		get(): number {
-			const { dataView } = this as unknown as {
-				dataView: DataView & {
-					getFloat16?: (
-						byteOffset: number,
-						littleEndian?: boolean,
-					) => number;
-				};
-			};
-			return dataView.getFloat16
-				? dataView.getFloat16(
-					byteOffset,
+			const d = dataView(this.buffer) as MaybeNativeFloat16;
+			return d.getFloat16
+				? d.getFloat16(
+					this.byteOffset + byteOffset,
 					littleEndian ?? this.littleEndian,
 				)
 				: getFloat16(
-					dataView,
+					d as DataView,
 					byteOffset,
 					littleEndian ?? this.littleEndian,
 				);
 		},
 		set(value: number): void {
-			const { dataView } = this as unknown as {
-				dataView: DataView & {
-					setFloat16?: (
-						byteOffset: number,
-						value: number,
-						littleEndian?: boolean,
-					) => void;
-				};
-			};
-			if (dataView.setFloat16) {
-				dataView.setFloat16(
+			const d = dataView(this.buffer) as MaybeNativeFloat16;
+			if (d.setFloat16) {
+				d.setFloat16(
 					byteOffset,
 					value,
 					littleEndian ?? this.littleEndian,
 				);
 			} else {
 				setFloat16(
-					dataView,
+					d as DataView,
 					byteOffset,
 					value,
 					littleEndian ?? this.littleEndian,

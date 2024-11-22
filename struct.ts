@@ -1,4 +1,5 @@
 import { LITTLE_ENDIAN } from './endian.ts';
+import { dataView } from './util.ts';
 
 /**
  * Possible members of a struct.
@@ -107,11 +108,6 @@ export class Struct implements ArrayBufferView {
 	readonly #littleEndian: boolean;
 
 	/**
-	 * Data view of buffer, lazy init.
-	 */
-	#dataView?: DataView;
-
-	/**
 	 * Struct constructor.
 	 *
 	 * @param buffer Buffer data.
@@ -126,11 +122,7 @@ export class Struct implements ArrayBufferView {
 		if ((byteOffset |= 0) < 0) {
 			throw new RangeError(`Negative offset: ${byteOffset}`);
 		}
-		if (byteOffset > buffer.byteLength) {
-			new DataView(buffer, 0);
-		} else {
-			this.#dataView = new DataView(buffer, byteOffset);
-		}
+		dataView(buffer);
 		this.#buffer = buffer;
 		this.#byteOffset = byteOffset;
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
@@ -155,15 +147,6 @@ export class Struct implements ArrayBufferView {
 	 */
 	public get byteOffset(): number {
 		return this.#byteOffset;
-	}
-
-	/**
-	 * Data view.
-	 *
-	 * @returns Data view of buffer.
-	 */
-	public get dataView(): DataView {
-		return this.#dataView ??= new DataView(this.#buffer, this.byteOffset);
 	}
 
 	/**

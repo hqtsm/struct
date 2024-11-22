@@ -7,6 +7,7 @@ import {
 
 import type { Membered, MembersExtends } from '../struct.ts';
 import { defineMember } from '../member.ts';
+import { dataView } from '../util.ts';
 
 /**
  * Member: int24.
@@ -32,15 +33,15 @@ export function int24<C extends Membered>(
 		Type: Number,
 		get(): number {
 			return getInt24(
-				this.dataView,
-				byteOffset,
+				dataView(this.buffer),
+				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		set(value: number): void {
 			setInt24(
-				this.dataView,
-				byteOffset,
+				dataView(this.buffer),
+				this.byteOffset + byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);
@@ -72,15 +73,15 @@ export function uint24<C extends Membered>(
 		Type: Number,
 		get(): number {
 			return getUint24(
-				this.dataView,
-				byteOffset,
+				dataView(this.buffer),
+				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		set(value: number): void {
 			setUint24(
-				this.dataView,
-				byteOffset,
+				dataView(this.buffer),
+				this.byteOffset + byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);

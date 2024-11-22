@@ -1,5 +1,6 @@
 import { defineMember } from '../member.ts';
 import type { Membered, MembersExtends } from '../struct.ts';
+import { dataView } from '../util.ts';
 
 /**
  * Member: float64.
@@ -24,14 +25,14 @@ export function float64<C extends Membered>(
 		signed: true,
 		Type: Number,
 		get(): number {
-			return this.dataView.getFloat64(
-				byteOffset,
+			return dataView(this.buffer).getFloat64(
+				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		set(value: number): void {
-			this.dataView.setFloat64(
-				byteOffset,
+			dataView(this.buffer).setFloat64(
+				this.byteOffset + byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);

@@ -1,5 +1,6 @@
 import { defineMember } from '../member.ts';
 import type { Membered, MembersExtends } from '../struct.ts';
+import { dataView } from '../util.ts';
 
 /**
  * Member: int16.
@@ -24,14 +25,14 @@ export function int16<C extends Membered>(
 		signed: true,
 		Type: Number,
 		get(): number {
-			return this.dataView.getInt16(
-				byteOffset,
+			return dataView(this.buffer).getInt16(
+				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		set(value: number): void {
-			this.dataView.setInt16(
-				byteOffset,
+			dataView(this.buffer).setInt16(
+				this.byteOffset + byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);
@@ -62,14 +63,14 @@ export function uint16<C extends Membered>(
 		signed: false,
 		Type: Number,
 		get(): number {
-			return this.dataView.getUint16(
-				byteOffset,
+			return dataView(this.buffer).getUint16(
+				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
 		set(value: number): void {
-			this.dataView.setUint16(
-				byteOffset,
+			dataView(this.buffer).setUint16(
+				this.byteOffset + byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);

@@ -2,6 +2,7 @@ import { assertEquals } from '@std/assert';
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
 import {
+	dataView,
 	getByteLength,
 	getByteOffset,
 	getKind,
@@ -40,7 +41,9 @@ Deno.test('float16', () => {
 			littleEndian: boolean | null = null,
 		) {
 			super(buffer, byteOffset, littleEndian);
-			Object.defineProperty(this.dataView, 'getFloat16', {
+			Object.defineProperty(dataView(this.buffer), 'getFloat16', {
+				configurable: true,
+				enumerable: false,
 				value: function (
 					this: DataView,
 					offset: number,
@@ -48,8 +51,11 @@ Deno.test('float16', () => {
 				): number {
 					return getFloat16(this, offset, littleEndian);
 				},
+				writable: true,
 			});
-			Object.defineProperty(this.dataView, 'setFloat16', {
+			Object.defineProperty(dataView(this.buffer), 'setFloat16', {
+				configurable: true,
+				enumerable: false,
 				value: function (
 					this: DataView,
 					offset: number,
@@ -58,6 +64,7 @@ Deno.test('float16', () => {
 				): void {
 					setFloat16(this, offset, value, littleEndian);
 				},
+				writable: true,
 			});
 		}
 	}
@@ -71,11 +78,17 @@ Deno.test('float16', () => {
 			littleEndian: boolean | null = null,
 		) {
 			super(buffer, byteOffset, littleEndian);
-			Object.defineProperty(this.dataView, 'getFloat16', {
+			Object.defineProperty(dataView(this.buffer), 'getFloat16', {
+				configurable: true,
+				enumerable: false,
 				value: null,
+				writable: true,
 			});
-			Object.defineProperty(this.dataView, 'setFloat16', {
+			Object.defineProperty(dataView(this.buffer), 'setFloat16', {
+				configurable: true,
+				enumerable: false,
 				value: null,
+				writable: true,
 			});
 		}
 	}

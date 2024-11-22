@@ -26,7 +26,12 @@ Deno.test('byteOffset', () => {
 	class Test extends Struct {
 		declare public readonly ['constructor']: typeof Test;
 
-		public static override readonly BYTE_LENGTH: number = 8;
+		declare public alpha: number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += int8(this, 'alpha', o);
+			return o;
+		})(super.BYTE_LENGTH);
 	}
 
 	const data = new ArrayBuffer(32);
@@ -40,34 +45,13 @@ Deno.test('byteOffset', () => {
 
 	// Offset over buffer size throws lazy.
 	const over = new Test(data, 33);
-	assertThrows(() => over.dataView, RangeError);
+	assertThrows(() => over.alpha, RangeError);
 
 	// Non-ArrayBuffer throws immediately.
 	assertThrows(
 		() => new Test(new Uint8Array() as ArrayBufferLike),
 		TypeError,
 	);
-});
-
-Deno.test('dataView', () => {
-	const data = new ArrayBuffer(32);
-	{
-		const test = new Struct(data);
-		assertStrictEquals(test.dataView, test.dataView);
-	}
-	assertEquals(new Struct(data, 16).dataView.byteOffset, 16);
-	assertEquals(new Struct(data, 16).dataView.byteLength, 16);
-	assertEquals(new Struct(data, 4).dataView.byteOffset, 4);
-	assertEquals(new Struct(data, 4).dataView.byteLength, 28);
-	assertEquals(new Struct(data, 3.14).dataView.byteOffset, 3);
-	assertEquals(new Struct(data, 3.14).dataView.byteLength, 29);
-	assertEquals(new Struct(data, 32).dataView.byteOffset, 32);
-	assertEquals(new Struct(data, 32).dataView.byteLength, 0);
-	{
-		const test = new Struct(data, 16);
-		test.dataView.setUint8(0, 42);
-		assertEquals(new Uint8Array(data)[16], 42);
-	}
 });
 
 Deno.test('littleEndian', () => {
