@@ -1,9 +1,8 @@
 import { assertEquals } from '@std/assert';
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
-import type { ArrayBufferReal } from '../../type.ts';
 import { byteLength, byteOffset, getType, littleEndian } from '../../macro.ts';
-import { Struct } from '../../struct.ts';
+import { Struct, type StructBuffer } from '../../struct.ts';
 
 import { float16 } from './16.ts';
 
@@ -29,7 +28,7 @@ Deno.test('float16', () => {
 		declare public readonly ['constructor']: typeof TestM;
 
 		constructor(
-			buffer: ArrayBufferReal,
+			buffer: StructBuffer,
 			byteOffset = 0,
 			littleEndian: boolean | null = null,
 		) {
@@ -60,7 +59,7 @@ Deno.test('float16', () => {
 		declare public readonly ['constructor']: typeof TestF;
 
 		constructor(
-			buffer: ArrayBufferReal,
+			buffer: StructBuffer,
 			byteOffset = 0,
 			littleEndian: boolean | null = null,
 		) {

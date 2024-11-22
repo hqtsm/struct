@@ -20,7 +20,6 @@
 		"./member/int/64": "./member/int/64.ts",
 		"./member/struct": "./member/struct.ts",
 		"./struct": "./struct.ts",
-		"./type": "./type.ts",
 		"./value": "./value.ts",
 		"./view": "./view.ts"
 	},

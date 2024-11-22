@@ -1,5 +1,4 @@
 import { LITTLE_ENDIAN } from './endian.ts';
-import type { ArrayBufferReal, KeyofExtends } from './type.ts';
 
 /**
  * Possible members of a struct.
@@ -10,7 +9,7 @@ export type Members<S extends Struct> = Exclude<keyof S, keyof Struct>;
  * Possible members of a struct that another type extends.
  */
 export type MembersExtends<S extends Struct, M> = Exclude<
-	KeyofExtends<S, M>,
+	{ [K in keyof S]: M extends S[K] ? K : never }[keyof S],
 	keyof Struct
 >;
 
@@ -59,6 +58,12 @@ export type MemberInfo = {
 export type MemberInfos = { [member: PropertyKey]: Readonly<MemberInfo> };
 
 /**
+ * Struct acceptable buffer type.
+ * ArrayBuffer, not similar but incompatible types.
+ */
+export type StructBuffer = ArrayBufferLike & { BYTES_PER_ELEMENT?: never };
+
+/**
  * Binary structure buffer view.
  */
 export class Struct implements ArrayBufferView {
@@ -82,7 +87,7 @@ export class Struct implements ArrayBufferView {
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	constructor(
-		buffer: ArrayBufferReal,
+		buffer: StructBuffer,
 		byteOffset = 0,
 		littleEndian: boolean | null = null,
 	) {
