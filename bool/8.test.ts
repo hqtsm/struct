@@ -55,4 +55,11 @@ Deno.test('bool8', () => {
 		assertEquals(data[off.alpha], b ? 1 : 0);
 		assertEquals(data[off.beta], b ? 1 : 0);
 	}
+
+	for (let i = 0xff; i >= 0; i--) {
+		data[off.alpha] = i;
+		data[off.beta] = i;
+		assertEquals(test.alpha, i !== 0);
+		assertEquals(test.beta, i !== 0);
+	}
 });

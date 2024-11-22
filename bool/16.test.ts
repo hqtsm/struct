@@ -82,6 +82,23 @@ Deno.test('bool16', () => {
 			assertEquals(view.getInt16(off.gamma, true), b ? 1 : 0);
 			assertEquals(view.getInt16(off.delta, false), b ? 1 : 0);
 		}
+
+		for (let o = 2; o--;) {
+			test.alpha = false;
+			test.beta = false;
+			test.gamma = false;
+			test.delta = false;
+			for (let i = 0xff; i >= 0; i--) {
+				data[off.alpha + o] = i;
+				data[off.beta + o] = i;
+				data[off.gamma + o] = i;
+				data[off.delta + o] = i;
+				assertEquals(test.alpha, i !== 0);
+				assertEquals(test.beta, i !== 0);
+				assertEquals(test.gamma, i !== 0);
+				assertEquals(test.delta, i !== 0);
+			}
+		}
 	}
 	{
 		const test = new Test(data.buffer, 0, true);
@@ -100,6 +117,23 @@ Deno.test('bool16', () => {
 			assertEquals(view.getInt16(off.beta, true), b ? 1 : 0);
 			assertEquals(view.getInt16(off.gamma, true), b ? 1 : 0);
 			assertEquals(view.getInt16(off.delta, false), b ? 1 : 0);
+		}
+
+		for (let o = 2; o--;) {
+			test.alpha = false;
+			test.beta = false;
+			test.gamma = false;
+			test.delta = false;
+			for (let i = 0xff; i >= 0; i--) {
+				data[off.alpha + o] = i;
+				data[off.beta + o] = i;
+				data[off.gamma + o] = i;
+				data[off.delta + o] = i;
+				assertEquals(test.alpha, i !== 0);
+				assertEquals(test.beta, i !== 0);
+				assertEquals(test.gamma, i !== 0);
+				assertEquals(test.delta, i !== 0);
+			}
 		}
 	}
 });
