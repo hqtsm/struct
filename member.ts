@@ -114,12 +114,14 @@ export function member<M extends MemberConstructor, C extends Membered>(
 		get(): InstanceType<M> {
 			let r = m.get(this);
 			if (!r) {
-				r = new MemberC(
-					this.buffer,
-					this.byteOffset + byteOffset,
-					littleEndian ?? this.littleEndian,
-				) as InstanceType<M>;
-				m.set(this, r);
+				m.set(
+					this,
+					r = new MemberC(
+						this.buffer,
+						this.byteOffset + byteOffset,
+						littleEndian ?? this.littleEndian,
+					) as InstanceType<M>,
+				);
 			}
 			return r;
 		},
@@ -185,13 +187,15 @@ export function array<M extends ArrayTypeConstructor, C extends Membered>(
 		get(): InstanceType<M> {
 			let r = m.get(this);
 			if (!r) {
-				r = new ArrayC(
-					this.buffer,
-					this.byteOffset + byteOffset,
-					length,
-					littleEndian ?? this.littleEndian,
-				) as InstanceType<M>;
-				m.set(this, r);
+				m.set(
+					this,
+					r = new ArrayC(
+						this.buffer,
+						this.byteOffset + byteOffset,
+						length,
+						littleEndian ?? this.littleEndian,
+					) as InstanceType<M>,
+				);
 			}
 			return r;
 		},
