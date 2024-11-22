@@ -112,7 +112,7 @@ export class Struct implements ArrayBufferView {
 	#dataView?: DataView;
 
 	/**
-	 * Blob constructor.
+	 * Struct constructor.
 	 *
 	 * @param buffer Buffer data.
 	 * @param byteOffset Byte offset into buffer.
