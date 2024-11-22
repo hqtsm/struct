@@ -4,6 +4,10 @@
 	"license": "MIT",
 	"exports": {
 		".": "./mod.ts",
+		"./bool": "./bool/mod.ts",
+		"./bool/8": "./bool/8.ts",
+		"./bool/16": "./bool/16.ts",
+		"./bool/32": "./bool/32.ts",
 		"./endian": "./endian.ts",
 		"./float": "./float/mod.ts",
 		"./float/16": "./float/16.ts",
