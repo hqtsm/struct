@@ -1,12 +1,12 @@
 import { assertEquals } from '@std/assert';
 
 import {
-	byteLength,
-	byteOffset,
+	getByteLength,
+	getByteOffset,
 	getKind,
+	getLittleEndian,
 	getSigned,
 	getType,
-	littleEndian,
 } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
@@ -34,21 +34,21 @@ Deno.test('int64', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
-		gamma: byteOffset(Test, 'gamma'),
-		delta: byteOffset(Test, 'delta'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
+		gamma: getByteOffset(Test, 'gamma'),
+		delta: getByteOffset(Test, 'delta'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 32);
-	assertEquals(byteLength(Test, 'alpha'), 8);
-	assertEquals(byteLength(Test, 'beta'), 8);
-	assertEquals(byteLength(Test, 'gamma'), 8);
-	assertEquals(byteLength(Test, 'delta'), 8);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(littleEndian(Test, 'gamma'), true);
-	assertEquals(littleEndian(Test, 'delta'), false);
+	assertEquals(getByteLength(Test, 'alpha'), 8);
+	assertEquals(getByteLength(Test, 'beta'), 8);
+	assertEquals(getByteLength(Test, 'gamma'), 8);
+	assertEquals(getByteLength(Test, 'delta'), 8);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
+	assertEquals(getLittleEndian(Test, 'gamma'), true);
+	assertEquals(getLittleEndian(Test, 'delta'), false);
 	assertEquals(getType(Test, 'alpha'), BigInt);
 	assertEquals(getType(Test, 'beta'), BigInt);
 	assertEquals(getType(Test, 'gamma'), BigInt);
@@ -122,21 +122,21 @@ Deno.test('uint64', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
-		gamma: byteOffset(Test, 'gamma'),
-		delta: byteOffset(Test, 'delta'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
+		gamma: getByteOffset(Test, 'gamma'),
+		delta: getByteOffset(Test, 'delta'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 32);
-	assertEquals(byteLength(Test, 'alpha'), 8);
-	assertEquals(byteLength(Test, 'beta'), 8);
-	assertEquals(byteLength(Test, 'gamma'), 8);
-	assertEquals(byteLength(Test, 'delta'), 8);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(littleEndian(Test, 'gamma'), true);
-	assertEquals(littleEndian(Test, 'delta'), false);
+	assertEquals(getByteLength(Test, 'alpha'), 8);
+	assertEquals(getByteLength(Test, 'beta'), 8);
+	assertEquals(getByteLength(Test, 'gamma'), 8);
+	assertEquals(getByteLength(Test, 'delta'), 8);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
+	assertEquals(getLittleEndian(Test, 'gamma'), true);
+	assertEquals(getLittleEndian(Test, 'delta'), false);
 	assertEquals(getType(Test, 'alpha'), BigInt);
 	assertEquals(getType(Test, 'beta'), BigInt);
 	assertEquals(getType(Test, 'gamma'), BigInt);

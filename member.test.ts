@@ -6,12 +6,12 @@ import {
 } from '@std/assert';
 
 import {
-	byteLength,
-	byteOffset,
+	getByteLength,
+	getByteOffset,
 	getKind,
+	getLittleEndian,
 	getSigned,
 	getType,
-	littleEndian,
 } from './macro.ts';
 import { Struct } from './struct.ts';
 import { uint32 } from './int/32.ts';
@@ -70,29 +70,29 @@ Deno.test('member', () => {
 				TestChildExtended,
 				this,
 				'gamma',
-				byteOffset(this, 'gamma'),
+				getByteOffset(this, 'gamma'),
 			);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
 
 	const cOff = {
-		one: byteOffset(TestChild, 'one'),
-		two: byteOffset(TestChild, 'two'),
+		one: getByteOffset(TestChild, 'one'),
+		two: getByteOffset(TestChild, 'two'),
 	};
 	const pOff = {
-		alpha: byteOffset(TestParent, 'alpha'),
-		beta: byteOffset(TestParent, 'beta'),
-		gamma: byteOffset(TestParent, 'gamma'),
+		alpha: getByteOffset(TestParent, 'alpha'),
+		beta: getByteOffset(TestParent, 'beta'),
+		gamma: getByteOffset(TestParent, 'gamma'),
 	};
 
 	assertEquals(TestParent.BYTE_LENGTH, 24);
-	assertEquals(byteLength(TestParent, 'alpha'), 8);
-	assertEquals(byteLength(TestParent, 'beta'), 8);
-	assertEquals(byteLength(TestParent, 'gamma'), 8);
-	assertEquals(littleEndian(TestParent, 'alpha'), true);
-	assertEquals(littleEndian(TestParent, 'beta'), false);
-	assertEquals(littleEndian(TestParent, 'gamma'), null);
+	assertEquals(getByteLength(TestParent, 'alpha'), 8);
+	assertEquals(getByteLength(TestParent, 'beta'), 8);
+	assertEquals(getByteLength(TestParent, 'gamma'), 8);
+	assertEquals(getLittleEndian(TestParent, 'alpha'), true);
+	assertEquals(getLittleEndian(TestParent, 'beta'), false);
+	assertEquals(getLittleEndian(TestParent, 'gamma'), null);
 	assertEquals(getType(TestParent, 'alpha'), TestChild);
 	assertEquals(getType(TestParent, 'beta'), TestChild);
 	assertEquals(getType(TestParent, 'gamma'), TestChild);
@@ -182,18 +182,18 @@ Deno.test('array: Int8Array', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
-		gamma: byteOffset(Test, 'gamma'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
+		gamma: getByteOffset(Test, 'gamma'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 6);
-	assertEquals(byteLength(Test, 'alpha'), 2);
-	assertEquals(byteLength(Test, 'beta'), 4);
-	assertEquals(byteLength(Test, 'gamma'), 0);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(littleEndian(Test, 'gamma'), null);
+	assertEquals(getByteLength(Test, 'alpha'), 2);
+	assertEquals(getByteLength(Test, 'beta'), 4);
+	assertEquals(getByteLength(Test, 'gamma'), 0);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
+	assertEquals(getLittleEndian(Test, 'gamma'), null);
 	assertEquals(getType(Test, 'alpha'), Int8Array);
 	assertEquals(getType(Test, 'beta'), Int8Array);
 	assertEquals(getType(Test, 'gamma'), Int8Array);
@@ -249,18 +249,18 @@ Deno.test('array: Uint8Array', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
-		gamma: byteOffset(Test, 'gamma'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
+		gamma: getByteOffset(Test, 'gamma'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 6);
-	assertEquals(byteLength(Test, 'alpha'), 2);
-	assertEquals(byteLength(Test, 'beta'), 4);
-	assertEquals(byteLength(Test, 'gamma'), 0);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(littleEndian(Test, 'gamma'), null);
+	assertEquals(getByteLength(Test, 'alpha'), 2);
+	assertEquals(getByteLength(Test, 'beta'), 4);
+	assertEquals(getByteLength(Test, 'gamma'), 0);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
+	assertEquals(getLittleEndian(Test, 'gamma'), null);
 	assertEquals(getType(Test, 'alpha'), Uint8Array);
 	assertEquals(getType(Test, 'beta'), Uint8Array);
 	assertEquals(getType(Test, 'gamma'), Uint8Array);
@@ -316,18 +316,18 @@ Deno.test('array: Uint8ClampedArray', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
-		gamma: byteOffset(Test, 'gamma'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
+		gamma: getByteOffset(Test, 'gamma'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 6);
-	assertEquals(byteLength(Test, 'alpha'), 2);
-	assertEquals(byteLength(Test, 'beta'), 4);
-	assertEquals(byteLength(Test, 'gamma'), 0);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(littleEndian(Test, 'gamma'), null);
+	assertEquals(getByteLength(Test, 'alpha'), 2);
+	assertEquals(getByteLength(Test, 'beta'), 4);
+	assertEquals(getByteLength(Test, 'gamma'), 0);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
+	assertEquals(getLittleEndian(Test, 'gamma'), null);
 	assertEquals(getType(Test, 'alpha'), Uint8ClampedArray);
 	assertEquals(getType(Test, 'beta'), Uint8ClampedArray);
 	assertEquals(getType(Test, 'gamma'), Uint8ClampedArray);
@@ -383,18 +383,18 @@ Deno.test('view: DataView', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
-		gamma: byteOffset(Test, 'gamma'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
+		gamma: getByteOffset(Test, 'gamma'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 6);
-	assertEquals(byteLength(Test, 'alpha'), 2);
-	assertEquals(byteLength(Test, 'beta'), 4);
-	assertEquals(byteLength(Test, 'gamma'), 0);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(littleEndian(Test, 'gamma'), null);
+	assertEquals(getByteLength(Test, 'alpha'), 2);
+	assertEquals(getByteLength(Test, 'beta'), 4);
+	assertEquals(getByteLength(Test, 'gamma'), 0);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
+	assertEquals(getLittleEndian(Test, 'gamma'), null);
 	assertEquals(getType(Test, 'alpha'), DataView);
 	assertEquals(getType(Test, 'beta'), DataView);
 	assertEquals(getType(Test, 'gamma'), DataView);
@@ -457,18 +457,18 @@ Deno.test('pad', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		mystery: byteOffset(Test, 'mystery'),
-		beta: byteOffset(Test, 'beta'),
+		alpha: getByteOffset(Test, 'alpha'),
+		mystery: getByteOffset(Test, 'mystery'),
+		beta: getByteOffset(Test, 'beta'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 16);
-	assertEquals(byteLength(Test, 'alpha'), 4);
-	assertEquals(byteLength(Test, 'mystery'), 8);
-	assertEquals(byteLength(Test, 'beta'), 4);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'mystery'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(getByteLength(Test, 'alpha'), 4);
+	assertEquals(getByteLength(Test, 'mystery'), 8);
+	assertEquals(getByteLength(Test, 'beta'), 4);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'mystery'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
 	assertEquals(getType(Test, 'alpha'), Number);
 	assertEquals(getType(Test, 'mystery'), null);
 	assertEquals(getType(Test, 'beta'), Number);

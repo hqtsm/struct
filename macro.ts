@@ -7,7 +7,7 @@ import type { MemberInfoType, Members, Struct } from './struct.ts';
  * @param name Member name.
  * @returns Byte offset.
  */
-export function byteOffset<C extends typeof Struct>(
+export function getByteOffset<C extends typeof Struct>(
 	StructC: C,
 	name: Members<C['prototype']>,
 ): number {
@@ -21,7 +21,7 @@ export function byteOffset<C extends typeof Struct>(
  * @param name Member name.
  * @returns Byte length.
  */
-export function byteLength<C extends typeof Struct>(
+export function getByteLength<C extends typeof Struct>(
 	StructC: C,
 	name: Members<C['prototype']>,
 ): number {
@@ -35,7 +35,7 @@ export function byteLength<C extends typeof Struct>(
  * @param name Member name.
  * @returns Little endian, big endian, or default.
  */
-export function littleEndian<C extends typeof Struct>(
+export function getLittleEndian<C extends typeof Struct>(
 	StructC: C,
 	name: Members<C['prototype']>,
 ): boolean | null {
@@ -89,9 +89,9 @@ export function getType<C extends typeof Struct>(
  *
  * @param struct Struct to swap the endian of.
  * @param littleEndian Little endian, big endian, or default to swap.
- * @returns New struct of the same type and memory, different endian.
+ * @returns New instance of the same type and memory, different endian.
  */
-export function endianSwap<S extends Struct>(
+export function swapEndian<S extends Struct>(
 	struct: S,
 	littleEndian: boolean | null = null,
 ): S {

@@ -1,12 +1,12 @@
 import { assertEquals } from '@std/assert';
 
 import {
-	byteLength,
-	byteOffset,
+	getByteLength,
+	getByteOffset,
 	getKind,
+	getLittleEndian,
 	getSigned,
 	getType,
-	littleEndian,
 } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
@@ -28,15 +28,15 @@ Deno.test('int8', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 2);
-	assertEquals(byteLength(Test, 'alpha'), 1);
-	assertEquals(byteLength(Test, 'beta'), 1);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(getByteLength(Test, 'alpha'), 1);
+	assertEquals(getByteLength(Test, 'beta'), 1);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
 	assertEquals(getType(Test, 'alpha'), Number);
 	assertEquals(getType(Test, 'beta'), Number);
 	assertEquals(getKind(Test, 'alpha'), 'int');
@@ -72,15 +72,15 @@ Deno.test('uint8', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 2);
-	assertEquals(byteLength(Test, 'alpha'), 1);
-	assertEquals(byteLength(Test, 'beta'), 1);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
+	assertEquals(getByteLength(Test, 'alpha'), 1);
+	assertEquals(getByteLength(Test, 'beta'), 1);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
 	assertEquals(getType(Test, 'alpha'), Number);
 	assertEquals(getType(Test, 'beta'), Number);
 	assertEquals(getKind(Test, 'alpha'), 'int');

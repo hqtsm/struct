@@ -1,12 +1,12 @@
 import { assertEquals } from '@std/assert';
 
 import {
-	byteLength,
-	byteOffset,
+	getByteLength,
+	getByteOffset,
 	getKind,
+	getLittleEndian,
 	getSigned,
 	getType,
-	littleEndian,
 } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
@@ -34,21 +34,21 @@ Deno.test('bool32', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
-		gamma: byteOffset(Test, 'gamma'),
-		delta: byteOffset(Test, 'delta'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
+		gamma: getByteOffset(Test, 'gamma'),
+		delta: getByteOffset(Test, 'delta'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 16);
-	assertEquals(byteLength(Test, 'alpha'), 4);
-	assertEquals(byteLength(Test, 'beta'), 4);
-	assertEquals(byteLength(Test, 'gamma'), 4);
-	assertEquals(byteLength(Test, 'delta'), 4);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(littleEndian(Test, 'gamma'), true);
-	assertEquals(littleEndian(Test, 'delta'), false);
+	assertEquals(getByteLength(Test, 'alpha'), 4);
+	assertEquals(getByteLength(Test, 'beta'), 4);
+	assertEquals(getByteLength(Test, 'gamma'), 4);
+	assertEquals(getByteLength(Test, 'delta'), 4);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
+	assertEquals(getLittleEndian(Test, 'gamma'), true);
+	assertEquals(getLittleEndian(Test, 'delta'), false);
 	assertEquals(getType(Test, 'alpha'), Boolean);
 	assertEquals(getType(Test, 'beta'), Boolean);
 	assertEquals(getType(Test, 'gamma'), Boolean);

@@ -5,7 +5,7 @@ import {
 	assertThrows,
 } from '@std/assert';
 
-import { assignStruct, assignView, endianSwap } from './macro.ts';
+import { assignStruct, assignView, swapEndian } from './macro.ts';
 import { Struct } from './struct.ts';
 import { uint8 } from './int/8.ts';
 
@@ -17,13 +17,13 @@ Deno.test('endianSwap', () => {
 	const le = new Test(new ArrayBuffer(0), 0, true);
 	const be = new Test(new ArrayBuffer(0), 0, false);
 
-	const leSwap = endianSwap(le);
-	const leSwapLe = endianSwap(le, true);
-	const leSwapBe = endianSwap(le, false);
+	const leSwap = swapEndian(le);
+	const leSwapLe = swapEndian(le, true);
+	const leSwapBe = swapEndian(le, false);
 
-	const beSwap = endianSwap(be);
-	const beSwapLe = endianSwap(be, true);
-	const beSwapBe = endianSwap(be, false);
+	const beSwap = swapEndian(be);
+	const beSwapLe = swapEndian(be, true);
+	const beSwapBe = swapEndian(be, false);
 
 	assertInstanceOf(leSwap, Test);
 	assertInstanceOf(leSwapLe, Test);

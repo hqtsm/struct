@@ -4,7 +4,7 @@ import { Struct } from './struct.ts';
 import { LITTLE_ENDIAN } from './endian.ts';
 import { int8 } from './int/8.ts';
 import { member, pad } from './member.ts';
-import { byteOffset } from './macro.ts';
+import { getByteOffset } from './macro.ts';
 
 Deno.test('buffer', () => {
 	const buffer = new ArrayBuffer(0);
@@ -221,7 +221,7 @@ Deno.test('abstract placeholder', () => {
 		declare public child: Member;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += member(MemberImp, this, 'child', byteOffset(this, 'child'));
+			o += member(MemberImp, this, 'child', getByteOffset(this, 'child'));
 			return o;
 		})(super.BYTE_LENGTH);
 	}

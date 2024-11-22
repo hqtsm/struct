@@ -2,12 +2,12 @@ import { assertEquals } from '@std/assert';
 import { getInt24, getUint24 } from '@hqtsm/dataview/int/24';
 
 import {
-	byteLength,
-	byteOffset,
+	getByteLength,
+	getByteOffset,
 	getKind,
+	getLittleEndian,
 	getSigned,
 	getType,
-	littleEndian,
 } from '../macro.ts';
 import { Struct } from '../struct.ts';
 
@@ -35,21 +35,21 @@ Deno.test('int24', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
-		gamma: byteOffset(Test, 'gamma'),
-		delta: byteOffset(Test, 'delta'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
+		gamma: getByteOffset(Test, 'gamma'),
+		delta: getByteOffset(Test, 'delta'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 12);
-	assertEquals(byteLength(Test, 'alpha'), 3);
-	assertEquals(byteLength(Test, 'beta'), 3);
-	assertEquals(byteLength(Test, 'gamma'), 3);
-	assertEquals(byteLength(Test, 'delta'), 3);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(littleEndian(Test, 'gamma'), true);
-	assertEquals(littleEndian(Test, 'delta'), false);
+	assertEquals(getByteLength(Test, 'alpha'), 3);
+	assertEquals(getByteLength(Test, 'beta'), 3);
+	assertEquals(getByteLength(Test, 'gamma'), 3);
+	assertEquals(getByteLength(Test, 'delta'), 3);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
+	assertEquals(getLittleEndian(Test, 'gamma'), true);
+	assertEquals(getLittleEndian(Test, 'delta'), false);
 	assertEquals(getType(Test, 'alpha'), Number);
 	assertEquals(getType(Test, 'beta'), Number);
 	assertEquals(getType(Test, 'gamma'), Number);
@@ -123,21 +123,21 @@ Deno.test('uint24', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
-		gamma: byteOffset(Test, 'gamma'),
-		delta: byteOffset(Test, 'delta'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
+		gamma: getByteOffset(Test, 'gamma'),
+		delta: getByteOffset(Test, 'delta'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 12);
-	assertEquals(byteLength(Test, 'alpha'), 3);
-	assertEquals(byteLength(Test, 'beta'), 3);
-	assertEquals(byteLength(Test, 'gamma'), 3);
-	assertEquals(byteLength(Test, 'delta'), 3);
-	assertEquals(littleEndian(Test, 'alpha'), null);
-	assertEquals(littleEndian(Test, 'beta'), null);
-	assertEquals(littleEndian(Test, 'gamma'), true);
-	assertEquals(littleEndian(Test, 'delta'), false);
+	assertEquals(getByteLength(Test, 'alpha'), 3);
+	assertEquals(getByteLength(Test, 'beta'), 3);
+	assertEquals(getByteLength(Test, 'gamma'), 3);
+	assertEquals(getByteLength(Test, 'delta'), 3);
+	assertEquals(getLittleEndian(Test, 'alpha'), null);
+	assertEquals(getLittleEndian(Test, 'beta'), null);
+	assertEquals(getLittleEndian(Test, 'gamma'), true);
+	assertEquals(getLittleEndian(Test, 'delta'), false);
 	assertEquals(getType(Test, 'alpha'), Number);
 	assertEquals(getType(Test, 'beta'), Number);
 	assertEquals(getType(Test, 'gamma'), Number);

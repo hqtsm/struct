@@ -2,12 +2,12 @@ import { assertEquals } from '@std/assert';
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
 import {
-	byteLength,
-	byteOffset,
+	getByteLength,
+	getByteOffset,
 	getKind,
+	getLittleEndian,
 	getSigned,
 	getType,
-	littleEndian,
 } from '../macro.ts';
 import { Struct, type StructBuffer } from '../struct.ts';
 
@@ -81,18 +81,18 @@ Deno.test('float16', () => {
 	}
 
 	const off = {
-		alpha: byteOffset(Test, 'alpha'),
-		beta: byteOffset(Test, 'beta'),
-		gamma: byteOffset(Test, 'gamma'),
+		alpha: getByteOffset(Test, 'alpha'),
+		beta: getByteOffset(Test, 'beta'),
+		gamma: getByteOffset(Test, 'gamma'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 6);
-	assertEquals(byteLength(Test, 'alpha'), 2);
-	assertEquals(byteLength(Test, 'beta'), 2);
-	assertEquals(byteLength(Test, 'gamma'), 2);
-	assertEquals(littleEndian(Test, 'alpha'), true);
-	assertEquals(littleEndian(Test, 'beta'), false);
-	assertEquals(littleEndian(Test, 'gamma'), null);
+	assertEquals(getByteLength(Test, 'alpha'), 2);
+	assertEquals(getByteLength(Test, 'beta'), 2);
+	assertEquals(getByteLength(Test, 'gamma'), 2);
+	assertEquals(getLittleEndian(Test, 'alpha'), true);
+	assertEquals(getLittleEndian(Test, 'beta'), false);
+	assertEquals(getLittleEndian(Test, 'gamma'), null);
 	assertEquals(getType(Test, 'alpha'), Number);
 	assertEquals(getType(Test, 'beta'), Number);
 	assertEquals(getType(Test, 'gamma'), Number);
