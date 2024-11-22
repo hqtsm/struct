@@ -1,6 +1,6 @@
 import type { MemberInfoType, Members, Struct } from './struct.ts';
 
-const dataViews = new WeakMap<ArrayBufferLike, DataView>();
+let dataViews;
 
 /**
  * Get reusable data view of buffer.
@@ -9,6 +9,7 @@ const dataViews = new WeakMap<ArrayBufferLike, DataView>();
  * @returns Data view.
  */
 export function dataView(buffer: ArrayBufferLike): DataView {
+	dataViews ??= new WeakMap<ArrayBufferLike, DataView>();
 	let r = dataViews.get(buffer);
 	if (!r) {
 		dataViews.set(buffer, r = new DataView(buffer));
