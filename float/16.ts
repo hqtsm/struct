@@ -32,10 +32,16 @@ export function float16<C extends typeof Struct>(
 					) => number;
 				};
 			};
-			const le = littleEndian ?? this.littleEndian;
 			return dataView.getFloat16
-				? dataView.getFloat16(byteOffset, le)
-				: getFloat16(dataView, byteOffset, le);
+				? dataView.getFloat16(
+					byteOffset,
+					littleEndian ?? this.littleEndian,
+				)
+				: getFloat16(
+					dataView,
+					byteOffset,
+					littleEndian ?? this.littleEndian,
+				);
 		},
 		set(value: number): void {
 			const { dataView } = this as unknown as {
@@ -47,15 +53,19 @@ export function float16<C extends typeof Struct>(
 					) => void;
 				};
 			};
-			const le = littleEndian ?? this.littleEndian;
 			if (dataView.setFloat16) {
 				dataView.setFloat16(
 					byteOffset,
 					value,
-					le,
+					littleEndian ?? this.littleEndian,
 				);
 			} else {
-				setFloat16(dataView, byteOffset, value, le);
+				setFloat16(
+					dataView,
+					byteOffset,
+					value,
+					littleEndian ?? this.littleEndian,
+				);
 			}
 		},
 	});
