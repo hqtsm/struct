@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { MembersExtends, TypeClass } from '../type.ts';
+import type { MembersExtends, Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
@@ -10,9 +10,9 @@ import { dataView } from '../util.ts';
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function bool8<T extends TypeClass>(
-	Type: T,
-	name: MembersExtends<T['prototype'], boolean>,
+export function bool8<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, boolean>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {

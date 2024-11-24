@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { MembersExtends, TypeClass } from '../type.ts';
+import type { MembersExtends, Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
@@ -11,9 +11,9 @@ import { dataView } from '../util.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function bool32<T extends TypeClass>(
-	Type: T,
-	name: MembersExtends<T['prototype'], boolean>,
+export function bool32<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, boolean>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {

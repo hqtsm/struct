@@ -1,7 +1,7 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
 import { defineMember } from '../member.ts';
-import type { MembersExtends, TypeClass } from '../type.ts';
+import type { MembersExtends, Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 type MaybeNativeFloat16 = Partial<{
@@ -18,9 +18,9 @@ type MaybeNativeFloat16 = Partial<{
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function float16<T extends TypeClass>(
-	Type: T,
-	name: MembersExtends<T['prototype'], number>,
+export function float16<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {

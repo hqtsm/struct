@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { MembersExtends, TypeClass } from '../type.ts';
+import type { MembersExtends, Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
@@ -10,9 +10,9 @@ import { dataView } from '../util.ts';
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function int8<T extends TypeClass>(
-	Type: T,
-	name: MembersExtends<T['prototype'], number>,
+export function int8<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {
@@ -39,9 +39,9 @@ export function int8<T extends TypeClass>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function uint8<T extends TypeClass>(
-	Type: T,
-	name: MembersExtends<T['prototype'], number>,
+export function uint8<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {

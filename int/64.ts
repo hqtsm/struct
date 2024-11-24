@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { MembersExtends, TypeClass } from '../type.ts';
+import type { MembersExtends, Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
@@ -11,9 +11,9 @@ import { dataView } from '../util.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function int64<T extends TypeClass>(
-	Type: T,
-	name: MembersExtends<T['prototype'], bigint>,
+export function int64<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, bigint>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -49,9 +49,9 @@ export function int64<T extends TypeClass>(
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function uint64<T extends TypeClass>(
-	Type: T,
-	name: MembersExtends<T['prototype'], bigint>,
+export function uint64<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, bigint>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {

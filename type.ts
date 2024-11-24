@@ -66,8 +66,8 @@ export interface Type extends Readonly<ArrayBufferView> {
 /**
  * Type class.
  */
-export interface TypeClass {
-	readonly prototype: Type;
+export interface TypeClass<T = Type> {
+	readonly prototype: T;
 
 	/**
 	 * Instance size in bytes.
@@ -83,7 +83,7 @@ export interface TypeClass {
 /**
  * Type constructor.
  */
-export interface TypeConstructor extends TypeClass {
+export interface TypeConstructor<T = Type> extends TypeClass<T> {
 	/**
 	 * Type constructor.
 	 *
@@ -95,7 +95,7 @@ export interface TypeConstructor extends TypeClass {
 		buffer: ArrayBufferReal,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
-	): Type;
+	): T;
 }
 
 /**

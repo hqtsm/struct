@@ -36,10 +36,10 @@ export type MemberDescriptor<T extends Type, M> = MemberInfo & {
  * @param desc Member descriptor.
  * @returns Byte length.
  */
-export function defineMember<T extends TypeClass, M>(
-	Type: T,
-	name: MembersExtends<T['prototype'], M>,
-	desc: MemberDescriptor<T['prototype'], M>,
+export function defineMember<T extends Type, M>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, M>,
+	desc: MemberDescriptor<T, M>,
 ): number {
 	const { byteLength } = desc;
 	Object.defineProperty(Type.prototype, name, {
@@ -49,7 +49,7 @@ export function defineMember<T extends TypeClass, M>(
 		set: desc.set,
 	});
 	(
-		Object.hasOwn(Type, 'MEMBERS' satisfies keyof T)
+		Object.hasOwn(Type, 'MEMBERS' satisfies keyof typeof Type)
 			? (Type.MEMBERS satisfies MemberInfos)
 			: ((Type as { MEMBERS: MemberInfos }).MEMBERS) = Object
 				.create(Type.MEMBERS)
@@ -67,7 +67,7 @@ export function defineMember<T extends TypeClass, M>(
 /**
  * Member constructor.
  */
-export type MemberConstructor = {
+export type MemberConstructor<T = ArrayBufferView> = {
 	/**
 	 * Member constructor.
 	 *
@@ -79,7 +79,7 @@ export type MemberConstructor = {
 		buffer: ArrayBufferLike,
 		byteOffset: number,
 		littleEndian?: boolean | null,
-	): ArrayBufferView;
+	): T;
 
 	/**
 	 * Byte length.
@@ -98,14 +98,14 @@ export type MemberConstructor = {
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function member<M extends MemberConstructor, T extends TypeClass>(
-	Member: M,
-	Type: T,
-	name: MembersExtends<T['prototype'], InstanceType<M>>,
+export function member<M extends ArrayBufferView, T extends Type>(
+	Member: MemberConstructor<M>,
+	Type: TypeClass<T>,
+	name: MembersExtends<T, M>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<T['prototype'], InstanceType<M>>();
+	const m = new WeakMap<T, M>();
 	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: Member.BYTE_LENGTH,
@@ -113,7 +113,7 @@ export function member<M extends MemberConstructor, T extends TypeClass>(
 		kind: 'member',
 		signed: null,
 		Type: Member,
-		get(): InstanceType<M> {
+		get(): M {
 			let r = m.get(this);
 			if (!r) {
 				m.set(
@@ -122,13 +122,13 @@ export function member<M extends MemberConstructor, T extends TypeClass>(
 						this.buffer,
 						this.byteOffset + byteOffset,
 						littleEndian ?? this.littleEndian,
-					) as InstanceType<M>,
+					),
 				);
 			}
 			return r;
 		},
 		set(value): void {
-			assignView(this[name] as InstanceType<M>, value);
+			assignView(this[name] as T, value);
 		},
 	});
 }
@@ -136,7 +136,7 @@ export function member<M extends MemberConstructor, T extends TypeClass>(
 /**
  * Array constructor.
  */
-export type ArrayConstructor = {
+export type ArrayConstructor<T = ArrayBufferView> = {
 	/**
 	 * Array constructor.
 	 *
@@ -150,7 +150,7 @@ export type ArrayConstructor = {
 		byteOffset: number,
 		length: number,
 		littleEndian?: boolean | null,
-	): ArrayBufferView;
+	): T;
 
 	/**
 	 * Bytes length for each element.
@@ -170,15 +170,15 @@ export type ArrayConstructor = {
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function array<M extends ArrayConstructor, T extends TypeClass>(
-	Member: M,
+export function array<M extends ArrayBufferView, T extends Type>(
+	Member: ArrayConstructor<M>,
 	length: number,
-	Type: T,
-	name: MembersExtends<T['prototype'], InstanceType<M>>,
+	Type: TypeClass<T>,
+	name: MembersExtends<T, M>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<T['prototype'], InstanceType<M>>();
+	const m = new WeakMap<T, M>();
 	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: length * Member.BYTES_PER_ELEMENT,
@@ -186,7 +186,7 @@ export function array<M extends ArrayConstructor, T extends TypeClass>(
 		kind: 'array',
 		signed: null,
 		Type: Member,
-		get(): InstanceType<M> {
+		get(): M {
 			let r = m.get(this);
 			if (!r) {
 				m.set(
@@ -196,13 +196,13 @@ export function array<M extends ArrayConstructor, T extends TypeClass>(
 						this.byteOffset + byteOffset,
 						length,
 						littleEndian ?? this.littleEndian,
-					) as InstanceType<M>,
+					),
 				);
 			}
 			return r;
 		},
 		set(value): void {
-			assignView(this[name] as InstanceType<M>, value);
+			assignView(this[name] as M, value);
 		},
 	});
 }
@@ -210,7 +210,7 @@ export function array<M extends ArrayConstructor, T extends TypeClass>(
 /**
  * View constructor.
  */
-export type ViewConstructor = {
+export type ViewConstructor<T = ArrayBufferView> = {
 	/**
 	 * View constructor.
 	 *
@@ -224,7 +224,7 @@ export type ViewConstructor = {
 		byteOffset: number,
 		byteLength: number,
 		littleEndian?: boolean | null,
-	): ArrayBufferView;
+	): T;
 };
 
 /**
@@ -239,15 +239,15 @@ export type ViewConstructor = {
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function view<M extends ViewConstructor, T extends TypeClass>(
-	Member: M,
+export function view<M extends ArrayBufferView, T extends Type>(
+	Member: ViewConstructor<M>,
 	byteLength: number,
-	Type: T,
-	name: MembersExtends<T['prototype'], InstanceType<M>>,
+	Type: TypeClass<T>,
+	name: MembersExtends<T, M>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<T['prototype'], InstanceType<M>>();
+	const m = new WeakMap<T, M>();
 	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: byteLength,
@@ -255,7 +255,7 @@ export function view<M extends ViewConstructor, T extends TypeClass>(
 		kind: 'view',
 		signed: null,
 		Type: Member,
-		get(): InstanceType<M> {
+		get(): M {
 			let r = m.get(this);
 			if (!r) {
 				r = new Member(
@@ -263,13 +263,13 @@ export function view<M extends ViewConstructor, T extends TypeClass>(
 					this.byteOffset + byteOffset,
 					byteLength,
 					littleEndian ?? this.littleEndian,
-				) as InstanceType<M>;
+				);
 				m.set(this, r);
 			}
 			return r;
 		},
 		set(value): void {
-			assignView(this[name] as InstanceType<M>, value);
+			assignView(this[name] as M, value);
 		},
 	});
 }
@@ -284,10 +284,10 @@ export function view<M extends ViewConstructor, T extends TypeClass>(
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function pad<T extends TypeClass>(
+export function pad<T extends Type>(
 	byteLength: number,
-	Type: T,
-	name: MembersExtends<T['prototype'], unknown>,
+	Type: TypeClass<T>,
+	name: MembersExtends<T, unknown>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {
@@ -300,7 +300,7 @@ export function pad<T extends TypeClass>(
 		get(): unknown {
 			throw new TypeError(`Read from padding member: ${String(name)}`);
 		},
-		set(_value: unknown): void {
+		set(): void {
 			throw new TypeError(`Write to padding member: ${String(name)}`);
 		},
 	});
