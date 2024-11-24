@@ -105,7 +105,7 @@ export function member<M extends ArrayBufferView, T extends Type>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<T, M>();
+	let m;
 	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: Member.BYTE_LENGTH,
@@ -114,6 +114,7 @@ export function member<M extends ArrayBufferView, T extends Type>(
 		signed: null,
 		Type: Member,
 		get(): M {
+			m ??= new WeakMap<T, M>();
 			let r = m.get(this);
 			if (!r) {
 				m.set(
@@ -178,7 +179,7 @@ export function array<M extends ArrayBufferView, T extends Type>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<T, M>();
+	let m;
 	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: length * Member.BYTES_PER_ELEMENT,
@@ -187,6 +188,7 @@ export function array<M extends ArrayBufferView, T extends Type>(
 		signed: null,
 		Type: Member,
 		get(): M {
+			m ??= new WeakMap<T, M>();
 			let r = m.get(this);
 			if (!r) {
 				m.set(
@@ -247,7 +249,7 @@ export function view<M extends ArrayBufferView, T extends Type>(
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<T, M>();
+	let m;
 	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: byteLength,
@@ -256,6 +258,7 @@ export function view<M extends ArrayBufferView, T extends Type>(
 		signed: null,
 		Type: Member,
 		get(): M {
+			m ??= new WeakMap<T, M>();
 			let r = m.get(this);
 			if (!r) {
 				m.set(
