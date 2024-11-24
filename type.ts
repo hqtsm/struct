@@ -4,6 +4,16 @@
 export type ArrayBufferReal = ArrayBufferLike & { BYTES_PER_ELEMENT?: never };
 
 /**
+ * ArrayBufferView plus endian, readonly.
+ */
+export interface EndianBufferView extends Readonly<ArrayBufferView> {
+	/**
+	 * True for little endian, false for big endian.
+	 */
+	readonly littleEndian: boolean;
+}
+
+/**
  * Types of member type.
  */
 export type MemberInfoType =
@@ -59,16 +69,11 @@ export interface MemberInfos {
 /**
  * Type.
  */
-export interface Type extends Readonly<ArrayBufferView> {
+export interface Type extends EndianBufferView {
 	/**
 	 * Type class.
 	 */
 	readonly ['constructor']: TypeClass;
-
-	/**
-	 * True for little endian, false for big endian.
-	 */
-	readonly littleEndian: boolean;
 }
 
 /**

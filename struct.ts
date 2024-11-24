@@ -22,7 +22,7 @@ export class Struct implements Type {
 	readonly #byteOffset: number;
 
 	/**
-	 * Little endian, or not.
+	 * Little endian, or big.
 	 */
 	readonly #littleEndian: boolean;
 
