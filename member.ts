@@ -3,13 +3,14 @@ import type {
 	MemberInfo,
 	MemberInfos,
 	MembersExtends,
+	Type,
 	TypeClass,
 } from './type.ts';
 
 /**
  * Member descriptor.
  */
-export type MemberDescriptor<T, M> = MemberInfo & {
+export type MemberDescriptor<T extends Type, M> = MemberInfo & {
 	/**
 	 * Getter function.
 	 *
