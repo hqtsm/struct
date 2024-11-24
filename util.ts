@@ -24,9 +24,9 @@ export function dataView(buffer: ArrayBufferLike): DataView {
  * @param name Member name.
  * @returns Byte offset.
  */
-export function getByteOffset<T extends TypeClass>(
-	Type: T,
-	name: Members<T['prototype']>,
+export function getByteOffset<T extends Type>(
+	Type: TypeClass<T>,
+	name: Members<T>,
 ): number {
 	return Type.MEMBERS[name].byteOffset;
 }
@@ -38,9 +38,9 @@ export function getByteOffset<T extends TypeClass>(
  * @param name Member name.
  * @returns Byte length.
  */
-export function getByteLength<T extends TypeClass>(
-	Type: T,
-	name: Members<T['prototype']>,
+export function getByteLength<T extends Type>(
+	Type: TypeClass<T>,
+	name: Members<T>,
 ): number {
 	return Type.MEMBERS[name].byteLength;
 }
@@ -52,9 +52,9 @@ export function getByteLength<T extends TypeClass>(
  * @param name Member name.
  * @returns Little endian, big endian, or default.
  */
-export function getLittleEndian<T extends TypeClass>(
-	Type: T,
-	name: Members<T['prototype']>,
+export function getLittleEndian<T extends Type>(
+	Type: TypeClass<T>,
+	name: Members<T>,
 ): boolean | null {
 	return Type.MEMBERS[name].littleEndian;
 }
@@ -66,9 +66,9 @@ export function getLittleEndian<T extends TypeClass>(
  * @param name Member name.
  * @returns Kind.
  */
-export function getKind<T extends TypeClass>(
-	Type: T,
-	name: Members<T['prototype']>,
+export function getKind<T extends Type>(
+	Type: TypeClass<T>,
+	name: Members<T>,
 ): string {
 	return Type.MEMBERS[name].kind;
 }
@@ -80,9 +80,9 @@ export function getKind<T extends TypeClass>(
  * @param name Member name.
  * @returns Signed or null where not applicable.
  */
-export function getSigned<T extends TypeClass>(
-	Type: T,
-	name: Members<T['prototype']>,
+export function getSigned<T extends Type>(
+	Type: TypeClass<T>,
+	name: Members<T>,
 ): boolean | null {
 	return Type.MEMBERS[name].signed;
 }
@@ -94,9 +94,9 @@ export function getSigned<T extends TypeClass>(
  * @param name Member name.
  * @returns Type.
  */
-export function getType<T extends TypeClass>(
-	Type: T,
-	name: Members<T['prototype']>,
+export function getType<T extends Type>(
+	Type: TypeClass<T>,
+	name: Members<T>,
 ): MemberInfoType {
 	return Type.MEMBERS[name].Type;
 }
