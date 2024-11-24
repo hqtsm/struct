@@ -10,7 +10,7 @@ import type {
 /**
  * Member descriptor.
  */
-export type MemberDescriptor<T extends Type, M> = MemberInfo & {
+export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
 	/**
 	 * Getter function.
 	 *
@@ -26,7 +26,7 @@ export type MemberDescriptor<T extends Type, M> = MemberInfo & {
 	 * @param value Member value.
 	 */
 	set: (this: T, value: M) => void;
-};
+}
 
 /**
  * Define member.
@@ -67,7 +67,7 @@ export function defineMember<T extends Type, M>(
 /**
  * Member constructor.
  */
-export type MemberConstructor<T = ArrayBufferView> = {
+export interface MemberConstructor<T = ArrayBufferView> {
 	/**
 	 * Member constructor.
 	 *
@@ -85,7 +85,7 @@ export type MemberConstructor<T = ArrayBufferView> = {
 	 * Byte length.
 	 */
 	readonly BYTE_LENGTH: number;
-};
+}
 
 /**
  * Member: generic.
@@ -136,7 +136,7 @@ export function member<M extends ArrayBufferView, T extends Type>(
 /**
  * Array constructor.
  */
-export type ArrayConstructor<T = ArrayBufferView> = {
+export interface ArrayConstructor<T = ArrayBufferView> {
 	/**
 	 * Array constructor.
 	 *
@@ -156,7 +156,7 @@ export type ArrayConstructor<T = ArrayBufferView> = {
 	 * Bytes length for each element.
 	 */
 	readonly BYTES_PER_ELEMENT: number;
-};
+}
 
 /**
  * Member: array.
@@ -210,7 +210,7 @@ export function array<M extends ArrayBufferView, T extends Type>(
 /**
  * View constructor.
  */
-export type ViewConstructor<T = ArrayBufferView> = {
+export interface ViewConstructor<T = ArrayBufferView> {
 	/**
 	 * View constructor.
 	 *
@@ -225,7 +225,7 @@ export type ViewConstructor<T = ArrayBufferView> = {
 		byteLength: number,
 		littleEndian?: boolean | null,
 	): T;
-};
+}
 
 /**
  * Member: view.

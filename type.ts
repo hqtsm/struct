@@ -14,7 +14,7 @@ export type MemberInfoType =
 /**
  * Member info.
  */
-export type MemberInfo = {
+export interface MemberInfo {
 	/**
 	 * Byte offset.
 	 */
@@ -44,12 +44,14 @@ export type MemberInfo = {
 	 * Type of member.
 	 */
 	Type: MemberInfoType;
-};
+}
 
 /**
  * Member infos.
  */
-export type MemberInfos = { [member: PropertyKey]: Readonly<MemberInfo> };
+export interface MemberInfos {
+	[member: PropertyKey]: Readonly<MemberInfo>;
+}
 
 /**
  * Type.
