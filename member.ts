@@ -132,11 +132,11 @@ export function member<M extends MemberConstructor, C extends Membered>(
 }
 
 /**
- * ArrayType constructor.
+ * Array constructor.
  */
-export type ArrayTypeConstructor = {
+export type ArrayConstructor = {
 	/**
-	 * ArrayType constructor.
+	 * Array constructor.
 	 *
 	 * @param buffer Buffer data.
 	 * @param byteOffset Byte offset.
@@ -158,7 +158,7 @@ export type ArrayTypeConstructor = {
 
 /**
  * Member: array.
- * For ArrayTypeConstructor compatible types.
+ * For ArrayConstructor compatible types.
  *
  * @param ArrayC Array constructor.
  * @param length Array length (element count).
@@ -168,7 +168,7 @@ export type ArrayTypeConstructor = {
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function array<M extends ArrayTypeConstructor, C extends Membered>(
+export function array<M extends ArrayConstructor, C extends Membered>(
 	ArrayC: M,
 	length: number,
 	StructC: C,
