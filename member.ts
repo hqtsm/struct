@@ -275,7 +275,7 @@ export function view<M extends ArrayBufferView, T extends Type>(
 }
 
 /**
- * Member: padding.
+ * Member: pad.
  *
  * @param byteLength Padding size.
  * @param Type Type constructor.
