@@ -10,18 +10,14 @@ import type {
 /**
  * Member descriptor.
  */
-export interface MemberDescriptor<
-	T extends Type,
-	M,
-	N extends PropertyKey,
-> extends MemberInfo {
+export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
 	/**
 	 * Getter function.
 	 *
 	 * @param this Type instance.
 	 * @returns Member value.
 	 */
-	get: (this: T & Record<N, M>) => M;
+	get: (this: T) => M;
 
 	/**
 	 * Setter function.
@@ -29,7 +25,7 @@ export interface MemberDescriptor<
 	 * @param this Type instance.
 	 * @param value Member value.
 	 */
-	set: (this: T & Record<N, M>, value: M) => void;
+	set: (this: T, value: M) => void;
 }
 
 /**
@@ -43,7 +39,7 @@ export interface MemberDescriptor<
 export function defineMember<T extends Type, M>(
 	Type: TypeClass<T>,
 	name: MembersExtends<T, M>,
-	desc: MemberDescriptor<T, M, typeof name>,
+	desc: MemberDescriptor<(T & Record<typeof name, M>), M>,
 ): number {
 	const { byteLength } = desc;
 	Object.defineProperty(Type.prototype, name, {
