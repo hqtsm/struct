@@ -128,7 +128,7 @@ export function member<M extends ArrayBufferView, T extends Type>(
 			return r;
 		},
 		set(value): void {
-			assignView(this[name] as T, value);
+			assignView(this[name] as M, value);
 		},
 	});
 }
