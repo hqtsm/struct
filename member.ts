@@ -21,7 +21,7 @@ export interface MemberDescriptor<
 	 * @param this Type instance.
 	 * @returns Member value.
 	 */
-	get: (this: T) => M;
+	get: (this: T & Record<N, M>) => M;
 
 	/**
 	 * Setter function.
