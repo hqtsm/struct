@@ -6,6 +6,9 @@ import { dataView } from './util.ts';
  * Binary structure buffer view.
  */
 export class Struct implements Type {
+	/**
+	 * @inheritdoc
+	 */
 	declare public readonly ['constructor']: Omit<typeof Struct, 'new'>;
 
 	/**
