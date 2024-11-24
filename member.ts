@@ -90,7 +90,7 @@ export type MemberConstructor = {
  * Member: generic.
  * For MemberConstructor compatible types.
  *
- * @param MemberC Member constructor.
+ * @param Member Member constructor.
  * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -98,7 +98,7 @@ export type MemberConstructor = {
  * @returns Byte length.
  */
 export function member<M extends MemberConstructor, T extends TypeClass>(
-	MemberC: M,
+	Member: M,
 	Type: T,
 	name: MembersExtends<T['prototype'], InstanceType<M>>,
 	byteOffset: number,
@@ -107,17 +107,17 @@ export function member<M extends MemberConstructor, T extends TypeClass>(
 	const m = new WeakMap<T['prototype'], InstanceType<M>>();
 	return defineMember(Type, name, {
 		byteOffset,
-		byteLength: MemberC.BYTE_LENGTH,
+		byteLength: Member.BYTE_LENGTH,
 		littleEndian,
 		kind: 'member',
 		signed: null,
-		Type: MemberC,
+		Type: Member,
 		get(): InstanceType<M> {
 			let r = m.get(this);
 			if (!r) {
 				m.set(
 					this,
-					r = new MemberC(
+					r = new Member(
 						this.buffer,
 						this.byteOffset + byteOffset,
 						littleEndian ?? this.littleEndian,
@@ -161,7 +161,7 @@ export type ArrayConstructor = {
  * Member: array.
  * For ArrayConstructor compatible types.
  *
- * @param ArrayC Array constructor.
+ * @param Member Array constructor.
  * @param length Array length (element count).
  * @param Type Type constructor.
  * @param name Member name.
@@ -170,7 +170,7 @@ export type ArrayConstructor = {
  * @returns Byte length.
  */
 export function array<M extends ArrayConstructor, T extends TypeClass>(
-	ArrayC: M,
+	Member: M,
 	length: number,
 	Type: T,
 	name: MembersExtends<T['prototype'], InstanceType<M>>,
@@ -180,17 +180,17 @@ export function array<M extends ArrayConstructor, T extends TypeClass>(
 	const m = new WeakMap<T['prototype'], InstanceType<M>>();
 	return defineMember(Type, name, {
 		byteOffset,
-		byteLength: length * ArrayC.BYTES_PER_ELEMENT,
+		byteLength: length * Member.BYTES_PER_ELEMENT,
 		littleEndian,
 		kind: 'array',
 		signed: null,
-		Type: ArrayC,
+		Type: Member,
 		get(): InstanceType<M> {
 			let r = m.get(this);
 			if (!r) {
 				m.set(
 					this,
-					r = new ArrayC(
+					r = new Member(
 						this.buffer,
 						this.byteOffset + byteOffset,
 						length,
@@ -230,7 +230,7 @@ export type ViewConstructor = {
  * Member: view.
  * For ViewConstructor compatible types.
  *
- * @param ViewC View constructor.
+ * @param Member View constructor.
  * @param byteLength Byte length.
  * @param Type Type constructor.
  * @param name Member name.
@@ -239,7 +239,7 @@ export type ViewConstructor = {
  * @returns Byte length.
  */
 export function view<M extends ViewConstructor, T extends TypeClass>(
-	ViewC: M,
+	Member: M,
 	byteLength: number,
 	Type: T,
 	name: MembersExtends<T['prototype'], InstanceType<M>>,
@@ -253,11 +253,11 @@ export function view<M extends ViewConstructor, T extends TypeClass>(
 		littleEndian,
 		kind: 'view',
 		signed: null,
-		Type: ViewC,
+		Type: Member,
 		get(): InstanceType<M> {
 			let r = m.get(this);
 			if (!r) {
-				r = new ViewC(
+				r = new Member(
 					this.buffer,
 					this.byteOffset + byteOffset,
 					byteLength,
