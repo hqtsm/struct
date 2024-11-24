@@ -50,6 +50,9 @@ export interface MemberInfo {
  * Member infos.
  */
 export interface MemberInfos {
+	/**
+	 * Member infos.
+	 */
 	[member: PropertyKey]: Readonly<MemberInfo>;
 }
 
@@ -57,7 +60,10 @@ export interface MemberInfos {
  * Type.
  */
 export interface Type extends Readonly<ArrayBufferView> {
-	readonly ['constructor']: Omit<TypeClass, 'new'>;
+	/**
+	 * Type class.
+	 */
+	readonly ['constructor']: TypeClass;
 
 	/**
 	 * True for little endian, false for big endian.
@@ -69,6 +75,9 @@ export interface Type extends Readonly<ArrayBufferView> {
  * Type class.
  */
 export interface TypeClass<T = Type> {
+	/**
+	 * Type prototype.
+	 */
 	readonly prototype: T;
 
 	/**
