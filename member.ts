@@ -10,7 +10,11 @@ import type {
 /**
  * Member descriptor.
  */
-export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
+export interface MemberDescriptor<
+	T extends Type,
+	M,
+	N extends PropertyKey,
+> extends MemberInfo {
 	/**
 	 * Getter function.
 	 *
@@ -25,7 +29,7 @@ export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
 	 * @param this Type instance.
 	 * @param value Member value.
 	 */
-	set: (this: T, value: M) => void;
+	set: (this: T & Record<N, M>, value: M) => void;
 }
 
 /**
@@ -39,7 +43,7 @@ export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
 export function defineMember<T extends Type, M>(
 	Type: TypeClass<T>,
 	name: MembersExtends<T, M>,
-	desc: MemberDescriptor<T, M>,
+	desc: MemberDescriptor<T, M, typeof name>,
 ): number {
 	const { byteLength } = desc;
 	Object.defineProperty(Type.prototype, name, {
@@ -128,7 +132,7 @@ export function member<M extends ArrayBufferView, T extends Type>(
 			return r;
 		},
 		set(value): void {
-			assignView(this[name] as M, value);
+			assignView(this[name], value);
 		},
 	});
 }
@@ -202,7 +206,7 @@ export function array<M extends ArrayBufferView, T extends Type>(
 			return r;
 		},
 		set(value): void {
-			assignView(this[name] as M, value);
+			assignView(this[name], value);
 		},
 	});
 }
@@ -271,7 +275,7 @@ export function view<M extends ArrayBufferView, T extends Type>(
 			return r;
 		},
 		set(value): void {
-			assignView(this[name] as M, value);
+			assignView(this[name], value);
 		},
 	});
 }
