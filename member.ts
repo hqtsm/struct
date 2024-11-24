@@ -1,56 +1,57 @@
 import { assignView } from './util.ts';
 import type {
-	Membered,
 	MemberInfo,
 	MemberInfos,
 	MembersExtends,
-} from './struct.ts';
+	TypeClass,
+} from './type.ts';
 
 /**
  * Member descriptor.
  */
-export type MemberDescriptor<S, M> = MemberInfo & {
+export type MemberDescriptor<T, M> = MemberInfo & {
 	/**
 	 * Getter function.
 	 *
-	 * @param this Struct instance.
+	 * @param this Type instance.
 	 * @returns Member value.
 	 */
-	get: (this: S) => M;
+	get: (this: T) => M;
 
 	/**
 	 * Setter function.
 	 *
-	 * @param this Struct instance.
+	 * @param this Type instance.
 	 * @param value Member value.
 	 */
-	set: (this: S, value: M) => void;
+	set: (this: T, value: M) => void;
 };
 
 /**
  * Define member.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param desc Member descriptor.
  * @returns Byte length.
  */
-export function defineMember<C extends Membered, M>(
-	StructC: C & { MEMBERS: MemberInfos },
-	name: MembersExtends<C['prototype'], M>,
-	desc: MemberDescriptor<C['prototype'], M>,
+export function defineMember<T extends TypeClass, M>(
+	Type: T,
+	name: MembersExtends<T['prototype'], M>,
+	desc: MemberDescriptor<T['prototype'], M>,
 ): number {
 	const { byteLength } = desc;
-	Object.defineProperty(StructC.prototype, name, {
+	Object.defineProperty(Type.prototype, name, {
 		configurable: true,
 		enumerable: false,
 		get: desc.get,
 		set: desc.set,
 	});
 	(
-		Object.hasOwn(StructC, 'MEMBERS' satisfies keyof C)
-			? StructC.MEMBERS
-			: StructC.MEMBERS = Object.create(StructC.MEMBERS)
+		Object.hasOwn(Type, 'MEMBERS' satisfies keyof T)
+			? (Type.MEMBERS satisfies MemberInfos)
+			: ((Type as { MEMBERS: MemberInfos }).MEMBERS) = Object
+				.create(Type.MEMBERS)
 	)[name] = {
 		byteOffset: desc.byteOffset,
 		byteLength,
@@ -90,21 +91,21 @@ export type MemberConstructor = {
  * For MemberConstructor compatible types.
  *
  * @param MemberC Member constructor.
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function member<M extends MemberConstructor, C extends Membered>(
+export function member<M extends MemberConstructor, T extends TypeClass>(
 	MemberC: M,
-	StructC: C,
-	name: MembersExtends<C['prototype'], InstanceType<M>>,
+	Type: T,
+	name: MembersExtends<T['prototype'], InstanceType<M>>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<C['prototype'], InstanceType<M>>();
-	return defineMember(StructC, name, {
+	const m = new WeakMap<T['prototype'], InstanceType<M>>();
+	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: MemberC.BYTE_LENGTH,
 		littleEndian,
@@ -162,22 +163,22 @@ export type ArrayConstructor = {
  *
  * @param ArrayC Array constructor.
  * @param length Array length (element count).
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function array<M extends ArrayConstructor, C extends Membered>(
+export function array<M extends ArrayConstructor, T extends TypeClass>(
 	ArrayC: M,
 	length: number,
-	StructC: C,
-	name: MembersExtends<C['prototype'], InstanceType<M>>,
+	Type: T,
+	name: MembersExtends<T['prototype'], InstanceType<M>>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<C['prototype'], InstanceType<M>>();
-	return defineMember(StructC, name, {
+	const m = new WeakMap<T['prototype'], InstanceType<M>>();
+	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: length * ArrayC.BYTES_PER_ELEMENT,
 		littleEndian,
@@ -231,22 +232,22 @@ export type ViewConstructor = {
  *
  * @param ViewC View constructor.
  * @param byteLength Byte length.
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function view<M extends ViewConstructor, C extends Membered>(
+export function view<M extends ViewConstructor, T extends TypeClass>(
 	ViewC: M,
 	byteLength: number,
-	StructC: C,
-	name: MembersExtends<C['prototype'], InstanceType<M>>,
+	Type: T,
+	name: MembersExtends<T['prototype'], InstanceType<M>>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	const m = new WeakMap<C['prototype'], InstanceType<M>>();
-	return defineMember(StructC, name, {
+	const m = new WeakMap<T['prototype'], InstanceType<M>>();
+	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: byteLength,
 		littleEndian,
@@ -276,19 +277,19 @@ export function view<M extends ViewConstructor, C extends Membered>(
  * Member: padding.
  *
  * @param byteLength Padding size.
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function pad<C extends Membered>(
+export function pad<T extends TypeClass>(
 	byteLength: number,
-	StructC: C,
-	name: MembersExtends<C['prototype'], unknown>,
+	Type: T,
+	name: MembersExtends<T['prototype'], unknown>,
 	byteOffset: number,
 ): number {
-	return defineMember(StructC, name, {
+	return defineMember(Type, name, {
 		byteOffset,
 		byteLength,
 		littleEndian: null,

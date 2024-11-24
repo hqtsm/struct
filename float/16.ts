@@ -1,7 +1,7 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
-import type { Membered, MembersExtends } from '../struct.ts';
 import { defineMember } from '../member.ts';
+import type { MembersExtends, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 type MaybeNativeFloat16 = Partial<{
@@ -12,19 +12,19 @@ type MaybeNativeFloat16 = Partial<{
 /**
  * Member: float16.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function float16<C extends Membered>(
-	StructC: C,
-	name: MembersExtends<C['prototype'], number>,
+export function float16<T extends TypeClass>(
+	Type: T,
+	name: MembersExtends<T['prototype'], number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return defineMember(StructC, name, {
+	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: 2,
 		littleEndian,

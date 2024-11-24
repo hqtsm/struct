@@ -2,3 +2,110 @@
  * ArrayBufferLike, not similar but incompatible types.
  */
 export type ArrayBufferReal = ArrayBufferLike & { BYTES_PER_ELEMENT?: never };
+
+/**
+ * Types of member type.
+ */
+export type MemberInfoType =
+	// deno-lint-ignore ban-types
+	| Function
+	| null;
+
+/**
+ * Member info.
+ */
+export type MemberInfo = {
+	/**
+	 * Byte offset.
+	 */
+	byteOffset: number;
+
+	/**
+	 * Byte length.
+	 */
+	byteLength: number;
+
+	/**
+	 * Little endian, big endian, or default.
+	 */
+	littleEndian: boolean | null;
+
+	/**
+	 * Kind of member.
+	 */
+	kind: string;
+
+	/**
+	 * Signed or unsigned type, if applicable.
+	 */
+	signed: boolean | null;
+
+	/**
+	 * Type of member.
+	 */
+	Type: MemberInfoType;
+};
+
+/**
+ * Member infos.
+ */
+export type MemberInfos = { [member: PropertyKey]: Readonly<MemberInfo> };
+
+/**
+ * Type class.
+ */
+export interface TypeClass {
+	readonly prototype: Type;
+
+	/**
+	 * Instance size in bytes.
+	 */
+	readonly BYTE_LENGTH: number;
+
+	/**
+	 * Type members.
+	 */
+	readonly MEMBERS: Readonly<MemberInfos>;
+}
+
+/**
+ * Type.
+ */
+export interface Type extends Readonly<ArrayBufferView> {
+	readonly ['constructor']: Omit<TypeClass, 'new'>;
+
+	/**
+	 * True for little endian, false for big endian.
+	 */
+	readonly littleEndian: boolean;
+}
+
+/**
+ * Type constructor.
+ */
+export interface TypeConstructor extends TypeClass {
+	/**
+	 * Type constructor.
+	 *
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset into buffer.
+	 * @param littleEndian Host endian, little endian, big endian.
+	 */
+	new (
+		buffer: ArrayBufferReal,
+		byteOffset?: number,
+		littleEndian?: boolean | null,
+	): Type;
+}
+
+/**
+ * Type possible member keys.
+ */
+export type Members<T extends Type> = Exclude<keyof T, keyof Type>;
+
+/**
+ * Type possible member keys, that member type extends.
+ */
+export type MembersExtends<T extends Type, M> = {
+	[K in Members<T>]: M extends T[K] ? K : never;
+}[Members<T>];

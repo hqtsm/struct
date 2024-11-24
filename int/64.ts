@@ -1,23 +1,23 @@
 import { defineMember } from '../member.ts';
-import type { Membered, MembersExtends } from '../struct.ts';
+import type { MembersExtends, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
  * Member: int64.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function int64<C extends Membered>(
-	StructC: C,
-	name: MembersExtends<C['prototype'], bigint>,
+export function int64<T extends TypeClass>(
+	Type: T,
+	name: MembersExtends<T['prototype'], bigint>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return defineMember(StructC, name, {
+	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: 8,
 		littleEndian,
@@ -43,19 +43,19 @@ export function int64<C extends Membered>(
 /**
  * Member: uint64.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function uint64<C extends Membered>(
-	StructC: C,
-	name: MembersExtends<C['prototype'], bigint>,
+export function uint64<T extends TypeClass>(
+	Type: T,
+	name: MembersExtends<T['prototype'], bigint>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return defineMember(StructC, name, {
+	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: 8,
 		littleEndian,

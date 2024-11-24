@@ -1,23 +1,23 @@
 import { defineMember } from '../member.ts';
-import type { Membered, MembersExtends } from '../struct.ts';
+import type { MembersExtends, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
  * Member: bool16.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function bool16<C extends Membered>(
-	StructC: C,
-	name: MembersExtends<C['prototype'], boolean>,
+export function bool16<T extends TypeClass>(
+	Type: T,
+	name: MembersExtends<T['prototype'], boolean>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
-	return defineMember(StructC, name, {
+	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: 2,
 		littleEndian,

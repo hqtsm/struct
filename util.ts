@@ -1,4 +1,4 @@
-import type { MemberInfoType, Members, Struct } from './struct.ts';
+import type { MemberInfoType, Members, Type, TypeClass } from './type.ts';
 
 let dataViews;
 
@@ -20,85 +20,85 @@ export function dataView(buffer: ArrayBufferLike): DataView {
 /**
  * Get byte offset of member.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @returns Byte offset.
  */
-export function getByteOffset<C extends typeof Struct>(
-	StructC: C,
-	name: Members<C['prototype']>,
+export function getByteOffset<T extends TypeClass>(
+	Type: T,
+	name: Members<T['prototype']>,
 ): number {
-	return StructC.MEMBERS[name].byteOffset;
+	return Type.MEMBERS[name].byteOffset;
 }
 
 /**
  * Get byte length of member.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @returns Byte length.
  */
-export function getByteLength<C extends typeof Struct>(
-	StructC: C,
-	name: Members<C['prototype']>,
+export function getByteLength<T extends TypeClass>(
+	Type: T,
+	name: Members<T['prototype']>,
 ): number {
-	return StructC.MEMBERS[name].byteLength;
+	return Type.MEMBERS[name].byteLength;
 }
 
 /**
  * Get little endian flag of member.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @returns Little endian, big endian, or default.
  */
-export function getLittleEndian<C extends typeof Struct>(
-	StructC: C,
-	name: Members<C['prototype']>,
+export function getLittleEndian<T extends TypeClass>(
+	Type: T,
+	name: Members<T['prototype']>,
 ): boolean | null {
-	return StructC.MEMBERS[name].littleEndian;
+	return Type.MEMBERS[name].littleEndian;
 }
 
 /**
  * Get kind of member.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @returns Kind.
  */
-export function getKind<C extends typeof Struct>(
-	StructC: C,
-	name: Members<C['prototype']>,
+export function getKind<T extends TypeClass>(
+	Type: T,
+	name: Members<T['prototype']>,
 ): string {
-	return StructC.MEMBERS[name].kind;
+	return Type.MEMBERS[name].kind;
 }
 
 /**
  * Get signed of member.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @returns Signed or null where not applicable.
  */
-export function getSigned<C extends typeof Struct>(
-	StructC: C,
-	name: Members<C['prototype']>,
+export function getSigned<T extends TypeClass>(
+	Type: T,
+	name: Members<T['prototype']>,
 ): boolean | null {
-	return StructC.MEMBERS[name].signed;
+	return Type.MEMBERS[name].signed;
 }
 
 /**
  * Get type of member.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @returns Type.
  */
-export function getType<C extends typeof Struct>(
-	StructC: C,
-	name: Members<C['prototype']>,
+export function getType<T extends TypeClass>(
+	Type: T,
+	name: Members<T['prototype']>,
 ): MemberInfoType {
-	return StructC.MEMBERS[name].Type;
+	return Type.MEMBERS[name].Type;
 }
 
 /**
@@ -120,13 +120,13 @@ export function assignView<D extends ArrayBufferView>(
 }
 
 /**
- * Assign ArrayBuffer data from one struct to another.
+ * Assign ArrayBuffer data from one type to another.
  *
- * @param dst Destination struct.
- * @param src Source struct, must extend destination type.
- * @returns Destination struct.
+ * @param dst Destination type.
+ * @param src Source type, must extend destination type.
+ * @returns Destination type.
  */
-export function assignStruct<D extends Struct, S extends D>(
+export function assignType<D extends Type, S extends D>(
 	dst: D,
 	src: S,
 ): D {

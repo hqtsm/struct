@@ -1,21 +1,21 @@
 import { defineMember } from '../member.ts';
-import type { Membered, MembersExtends } from '../struct.ts';
+import type { MembersExtends, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
  * Member: int8.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function int8<C extends Membered>(
-	StructC: C,
-	name: MembersExtends<C['prototype'], number>,
+export function int8<T extends TypeClass>(
+	Type: T,
+	name: MembersExtends<T['prototype'], number>,
 	byteOffset: number,
 ): number {
-	return defineMember(StructC, name, {
+	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: 1,
 		littleEndian: null,
@@ -34,17 +34,17 @@ export function int8<C extends Membered>(
 /**
  * Member: uint8.
  *
- * @param StructC Struct constructor.
+ * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function uint8<C extends Membered>(
-	StructC: C,
-	name: MembersExtends<C['prototype'], number>,
+export function uint8<T extends TypeClass>(
+	Type: T,
+	name: MembersExtends<T['prototype'], number>,
 	byteOffset: number,
 ): number {
-	return defineMember(StructC, name, {
+	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: 1,
 		littleEndian: null,

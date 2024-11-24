@@ -1,6 +1,6 @@
 import { assertEquals, assertThrows } from '@std/assert';
 
-import { assignStruct, assignView } from './util.ts';
+import { assignType, assignView } from './util.ts';
 import { Struct } from './struct.ts';
 import { uint8 } from './int/8.ts';
 
@@ -39,7 +39,7 @@ Deno.test('assignStruct', () => {
 		src.alpha = 65;
 		src.beta = 66;
 		const dst = new Test(new ArrayBuffer(Test.BYTE_LENGTH + 2), 2);
-		assignStruct(dst, src);
+		assignType(dst, src);
 		assertEquals(dst.alpha, 65);
 		assertEquals(dst.beta, 66);
 	}
@@ -50,7 +50,7 @@ Deno.test('assignStruct', () => {
 		src.beta = 66;
 		src.gamma = 71;
 		const dst = new Test(new ArrayBuffer(Test.BYTE_LENGTH + 2), 2);
-		assignStruct(dst, src);
+		assignType(dst, src);
 		assertEquals(dst.alpha, 65);
 		assertEquals(dst.beta, 66);
 	}
