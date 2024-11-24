@@ -1,4 +1,5 @@
 import { LITTLE_ENDIAN } from './endian.ts';
+import type { ArrayBufferReal } from './type.ts';
 import { dataView } from './util.ts';
 
 /**
@@ -15,15 +16,12 @@ export type MembersExtends<S extends Struct, M> = Exclude<
 >;
 
 /**
- * Types of child structures.
- */
-export type ChildTypes = unknown;
-
-/**
  * Types of member type.
  */
-// deno-lint-ignore ban-types
-export type MemberInfoType = Function | null;
+export type MemberInfoType =
+	// deno-lint-ignore ban-types
+	| Function
+	| null;
 
 /**
  * Member info.
@@ -81,12 +79,6 @@ export type Membered = {
 };
 
 /**
- * Struct acceptable buffer type.
- * ArrayBuffer, not similar but incompatible types.
- */
-export type StructBuffer = ArrayBufferLike & { BYTES_PER_ELEMENT?: never };
-
-/**
  * Binary structure buffer view.
  */
 export class Struct implements ArrayBufferView {
@@ -95,7 +87,7 @@ export class Struct implements ArrayBufferView {
 	/**
 	 * Buffer data.
 	 */
-	readonly #buffer: StructBuffer;
+	readonly #buffer: ArrayBufferLike;
 
 	/**
 	 * Byte offset into buffer.
@@ -115,7 +107,7 @@ export class Struct implements ArrayBufferView {
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	constructor(
-		buffer: StructBuffer,
+		buffer: ArrayBufferReal,
 		byteOffset = 0,
 		littleEndian: boolean | null = null,
 	) {
@@ -129,7 +121,7 @@ export class Struct implements ArrayBufferView {
 	/**
 	 * @inheritdoc
 	 */
-	public get buffer(): ArrayBuffer {
+	public get buffer(): ArrayBufferLike {
 		return this.#buffer;
 	}
 

@@ -10,7 +10,8 @@ import {
 	getSigned,
 	getType,
 } from '../util.ts';
-import { Struct, type StructBuffer } from '../struct.ts';
+import { Struct } from '../struct.ts';
+import type { ArrayBufferReal } from '../type.ts';
 
 import { float16 } from './16.ts';
 
@@ -32,7 +33,7 @@ Deno.test('float16', () => {
 
 	class TestM extends Test {
 		constructor(
-			buffer: StructBuffer,
+			buffer: ArrayBufferReal,
 			byteOffset = 0,
 			littleEndian: boolean | null = null,
 		) {
@@ -67,7 +68,7 @@ Deno.test('float16', () => {
 
 	class TestF extends Test {
 		constructor(
-			buffer: StructBuffer,
+			buffer: ArrayBufferReal,
 			byteOffset = 0,
 			littleEndian: boolean | null = null,
 		) {
