@@ -258,13 +258,15 @@ export function view<M extends ArrayBufferView, T extends Type>(
 		get(): M {
 			let r = m.get(this);
 			if (!r) {
-				r = new Member(
-					this.buffer,
-					this.byteOffset + byteOffset,
-					byteLength,
-					littleEndian ?? this.littleEndian,
+				m.set(
+					this,
+					r = new Member(
+						this.buffer,
+						this.byteOffset + byteOffset,
+						byteLength,
+						littleEndian ?? this.littleEndian,
+					),
 				);
-				m.set(this, r);
 			}
 			return r;
 		},
