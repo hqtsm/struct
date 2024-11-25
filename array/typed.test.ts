@@ -318,6 +318,12 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 			{
 				set(): void {},
 			},
+			{
+				value: 2,
+				writable: true,
+				enumerable: true,
+				configurable: true,
+			},
 		]
 	) {
 		for (const p of properties as number[]) {
@@ -342,6 +348,21 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 			assertEquals(actErr?.constructor, expErr?.constructor, tag);
 			assertEquals(actIn, expIn, tag);
 			if ('value' in desc || 'get' in desc) {
+				assertEquals(test[p], spec[p], tag);
+			}
+
+			const specDesc = Object.getOwnPropertyDescriptor(spec, p);
+			const testDesc = Object.getOwnPropertyDescriptor(test, p);
+			assertEquals(specDesc?.get, testDesc?.get, tag);
+			assertEquals(specDesc?.set, testDesc?.set, tag);
+			assertEquals(specDesc?.value, testDesc?.value, tag);
+			assertEquals(specDesc?.writable, testDesc?.writable, tag);
+			assertEquals(specDesc?.enumerable, testDesc?.enumerable, tag);
+			assertEquals(specDesc?.configurable, testDesc?.configurable, tag);
+
+			if (desc.writable) {
+				spec[p] = 3;
+				test[p] = 3;
 				assertEquals(test[p], spec[p], tag);
 			}
 		}
