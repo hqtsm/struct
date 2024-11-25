@@ -3,14 +3,12 @@ import type { ArrayBufferReal, EndianBufferView } from '../type.ts';
 import { dataView } from '../util.ts';
 
 function parseIndex(key: PropertyKey): number | null {
-	if (key === '-0') {
-		return NaN;
-	}
-	const index = +String(key);
-	if (key === '' + index) {
-		return index === (index | 0) && index >= 0 ? index : NaN;
-	}
-	return null;
+	let index;
+	return (key === '-0')
+		? NaN
+		: ((key === '' + (index = +String(key)))
+			? (index === (index | 0) && index >= 0 ? index : NaN)
+			: null);
 }
 
 const handler: ProxyHandler<ArrayTyped<unknown>> = {
