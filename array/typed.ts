@@ -29,6 +29,18 @@ const handler: ProxyHandler<ArrayTyped<unknown>> = {
 		const index = parseIndex(key);
 		return index === null ? key in target : index < target.length;
 	},
+	ownKeys(target): (string | symbol)[] {
+		const l = target.length;
+		const k = Reflect.ownKeys(target);
+		const keys: (string | symbol)[] = [];
+		for (let i = k.length; i--;) {
+			keys[i + l] = k[i];
+		}
+		for (let i = l; i--;) {
+			keys[i] = '' + i;
+		}
+		return keys;
+	},
 	set(target, key, value): boolean {
 		const index = parseIndex(key);
 		if (index === null) {

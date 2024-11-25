@@ -64,6 +64,26 @@ const properties = [
 	]),
 ];
 
+function sorter(a: string | symbol, b: string | symbol): number {
+	const aT = typeof a;
+	const bT = typeof b;
+	if (aT === 'string' && bT === 'symbol') {
+		return -1;
+	}
+	if (bT === 'string' && aT === 'symbol') {
+		return 1;
+	}
+	const aS = String(a);
+	const bS = String(b);
+	if (aS < bS) {
+		return -1;
+	}
+	if (aS > bS) {
+		return 1;
+	}
+	return 0;
+}
+
 Deno.test('properties', () => {
 	class Test extends ArrayTyped<number> {
 		protected override [ArrayTyped.getter](_index: number): number {
@@ -179,5 +199,37 @@ Deno.test('has', () => {
 		const test = new Test(new ArrayBuffer(2), 0, 2);
 		const isIn = (p as number) in test;
 		assertEquals(isIn, expected, String(p));
+	}
+});
+
+Deno.test('ownKeys', () => {
+	class Test extends ArrayTyped<number> {
+		protected override [ArrayTyped.getter](index: number): number {
+			throw new Error(`Getter: ${index}`);
+		}
+
+		protected override [ArrayTyped.setter](
+			_index: number,
+			_value: number,
+		): void {
+		}
+	}
+
+	const spec = new Uint8Array([0, 1]);
+	const expected = Reflect.ownKeys(spec);
+
+	const test = new Test(new ArrayBuffer(2), 0, 2);
+	const ownKeys = Reflect.ownKeys(test);
+	assertEquals(ownKeys.sort(sorter), expected.sort(sorter));
+
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		spec[p as number] = 2;
+		const expected = Reflect.ownKeys(spec);
+
+		const test = new Test(new ArrayBuffer(2), 0, 2);
+		test[p as number] = 2;
+		const ownKeys = Reflect.ownKeys(test);
+		assertEquals(ownKeys.sort(sorter), expected.sort(sorter), String(p));
 	}
 });
