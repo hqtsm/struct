@@ -305,6 +305,19 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		const ownKeys = Reflect.ownKeys(test);
 		assertEquals(ownKeys.sort(sorter), expected.sort(sorter), String(p));
 	}
+
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		spec[p as number] = 2;
+		Object.preventExtensions(spec);
+		const expected = Object.getOwnPropertyDescriptor(spec, p as number);
+
+		const test = new GetSet(new ArrayBuffer(2), 0, 2);
+		test[p as number] = 2;
+		Object.preventExtensions(test);
+		const actual = Object.getOwnPropertyDescriptor(test, p as number);
+		assertEquals(actual, expected, String(p));
+	}
 });
 
 Deno.test('ArrayTyped: Dynamic properties', () => {
