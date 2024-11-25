@@ -15,36 +15,42 @@ const getter = Symbol('getter');
 
 const setter = Symbol('setter');
 
-const handler: ProxyHandler<ArrayTyped<unknown>> = {
-	deleteProperty(target, key): boolean {
-		const index = parseIndex(key);
-		return index === null
-			? delete (target as unknown as Record<typeof key, unknown>)[key]
-			: !(index < target.length);
-	},
-	get(target, key): unknown | undefined {
-		const index = parseIndex(key);
-		if (index === null) {
-			return (target as unknown as Record<typeof key, unknown>)[key];
-		}
-		if (index < target.length) {
-			return target[getter](index);
-		}
-	},
-	has(target, key): boolean {
-		const index = parseIndex(key);
-		return index === null ? key in target : index < target.length;
-	},
-	set(target, key, value): boolean {
-		const index = parseIndex(key);
-		if (index === null) {
-			(target as unknown as Record<typeof key, unknown>)[key] = value;
-		} else if (index < target.length) {
-			target[setter](index, value);
-		}
-		return true;
-	},
-};
+function createHandler<E>(
+	length: (a: ArrayTyped<unknown>) => number,
+): ProxyHandler<ArrayTyped<E>> {
+	return {
+		deleteProperty(target, key): boolean {
+			const index = parseIndex(key);
+			return index === null
+				? delete (target as unknown as Record<typeof key, E>)[key]
+				: !(index < length(target));
+		},
+		get(target, key): E | undefined {
+			const index = parseIndex(key);
+			if (index === null) {
+				return (target as unknown as Record<typeof key, E>)[key];
+			}
+			if (index < length(target)) {
+				return target[getter](index);
+			}
+		},
+		has(target, key): boolean {
+			const index = parseIndex(key);
+			return index === null ? key in target : index < length(target);
+		},
+		set(target, key, value): boolean {
+			const index = parseIndex(key);
+			if (index === null) {
+				(target as unknown as Record<typeof key, E>)[key] = value;
+			} else if (index < length(target)) {
+				target[setter](index, value);
+			}
+			return true;
+		},
+	};
+}
+
+let handler: ProxyHandler<ArrayTyped<unknown>>;
 
 /**
  * ArrayTyped interface.
@@ -107,6 +113,7 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 		for (let i = 0; i < length;) {
 			(this as { [index: number]: undefined })[i++] = undefined;
 		}
+		handler ??= createHandler((a: ArrayTyped<unknown>) => a.#length);
 		return new Proxy(this, handler as ProxyHandler<ArrayTyped<E>>);
 	}
 
