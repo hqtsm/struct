@@ -416,7 +416,7 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 	}
 });
 
-Deno.test('ArrayTyped: [[preventExtensions]]', () => {
+Deno.test('ArrayTyped: [[isExtensible]] [[preventExtensions]]', () => {
 	for (const p of properties as number[]) {
 		const spec = new Uint8Array([0, 1]);
 		Object.preventExtensions(spec);
@@ -439,6 +439,11 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		assertEquals(
 			testErr?.constructor,
 			specErr?.constructor,
+			String(p),
+		);
+		assertEquals(
+			Object.isExtensible(test),
+			Object.isExtensible(spec),
 			String(p),
 		);
 	}
