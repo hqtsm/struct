@@ -50,7 +50,7 @@ function createHandler<E>(
 	};
 }
 
-let handler: ProxyHandler<ArrayTyped<unknown>>;
+let handler;
 
 /**
  * ArrayTyped interface.
@@ -113,8 +113,10 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 		for (let i = 0; i < length;) {
 			(this as { [index: number]: undefined })[i++] = undefined;
 		}
-		handler ??= createHandler((a: ArrayTyped<unknown>) => a.#length);
-		return new Proxy(this, handler as ProxyHandler<ArrayTyped<E>>);
+		return new Proxy(
+			this,
+			handler ??= createHandler<E>((a: ArrayTyped<unknown>) => a.#length),
+		);
 	}
 
 	/**
