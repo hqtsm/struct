@@ -372,26 +372,24 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 				tag,
 			);
 
-			if (desc.configurable) {
-				expErr = null;
-				try {
-					Object.defineProperty(spec, p, {
-						value: 3,
-					});
-				} catch (err) {
-					expErr = err as Error;
-				}
-				actErr = null;
-				try {
-					Object.defineProperty(test, p, {
-						value: 3,
-					});
-				} catch (err) {
-					actErr = err as Error;
-				}
-				assertEquals(actErr?.constructor, expErr?.constructor, tag);
-				assertEquals(test[p], spec[p], tag);
+			expErr = null;
+			try {
+				Object.defineProperty(spec, p, {
+					value: 3,
+				});
+			} catch (err) {
+				expErr = err as Error;
 			}
+			actErr = null;
+			try {
+				Object.defineProperty(test, p, {
+					value: 3,
+				});
+			} catch (err) {
+				actErr = err as Error;
+			}
+			assertEquals(actErr?.constructor, expErr?.constructor, tag);
+			assertEquals(test[p], spec[p], tag);
 
 			expErr = null;
 			try {
