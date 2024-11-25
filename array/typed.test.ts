@@ -305,88 +305,46 @@ Deno.test('ArrayTyped: [[getOwnPropertyDescriptor]]', () => {
 });
 
 Deno.test('ArrayTyped: [[defineProperty]]', () => {
-	for (const p of properties as number[]) {
-		const spec = new Uint8Array([0, 1]);
-		let expErr: Error | null = null;
-		try {
-			Object.defineProperty(spec, p, {
+	for (
+		const desc of [
+			{
 				value: 2,
-			});
-		} catch (err) {
-			expErr = err as Error;
-		}
-		const expIn = p in spec;
-
-		const test = new GetSet([0, 1]);
-		let actErr: Error | null = null;
-		try {
-			Object.defineProperty(test, p, {
-				value: 2,
-			});
-		} catch (err) {
-			actErr = err as Error;
-		}
-		const actIn = p in test;
-		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
-		assertEquals(actIn, expIn, String(p));
-		assertEquals(test[p], spec[p], String(p));
-	}
-
-	for (const p of properties as number[]) {
-		const spec = new Uint8Array([0, 1]);
-		let expErr: Error | null = null;
-		try {
-			Object.defineProperty(spec, p, {
+			},
+			{
 				get(): number {
 					return 2;
 				},
-			});
-		} catch (err) {
-			expErr = err as Error;
-		}
-		const expIn = p in spec;
-
-		const test = new GetSet([0, 1]);
-		let actErr: Error | null = null;
-		try {
-			Object.defineProperty(test, p, {
-				get(): number {
-					return 2;
-				},
-			});
-		} catch (err) {
-			actErr = err as Error;
-		}
-		const actIn = p in test;
-		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
-		assertEquals(actIn, expIn, String(p));
-		assertEquals(test[p], spec[p], String(p));
-	}
-
-	for (const p of properties as number[]) {
-		const spec = new Uint8Array([0, 1]);
-		let expErr: Error | null = null;
-		try {
-			Object.defineProperty(spec, p, {
+			},
+			{
 				set(): void {},
-			});
-		} catch (err) {
-			expErr = err as Error;
-		}
-		const expIn = p in spec;
+			},
+		]
+	) {
+		for (const p of properties as number[]) {
+			const tag = `${String(p)}: ${JSON.stringify(desc)}`;
+			const spec = new Uint8Array([0, 1]);
+			let expErr: Error | null = null;
+			try {
+				Object.defineProperty(spec, p, desc);
+			} catch (err) {
+				expErr = err as Error;
+			}
+			const expIn = p in spec;
 
-		const test = new GetSet([0, 1]);
-		let actErr: Error | null = null;
-		try {
-			Object.defineProperty(test, p, {
-				set(): void {},
-			});
-		} catch (err) {
-			actErr = err as Error;
+			const test = new GetSet([0, 1]);
+			let actErr: Error | null = null;
+			try {
+				Object.defineProperty(test, p, desc);
+			} catch (err) {
+				actErr = err as Error;
+			}
+			const actIn = p in test;
+			assertEquals(actErr?.constructor, expErr?.constructor, tag);
+			assertEquals(actIn, expIn, tag);
+			if ('value' in desc || 'get' in desc) {
+				assertEquals(test[p], spec[p], tag);
+			}
 		}
-		const actIn = p in test;
-		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
-		assertEquals(actIn, expIn, String(p));
 	}
 });
 
