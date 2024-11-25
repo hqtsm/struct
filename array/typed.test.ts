@@ -233,3 +233,41 @@ Deno.test('ownKeys', () => {
 		assertEquals(ownKeys.sort(sorter), expected.sort(sorter), String(p));
 	}
 });
+
+Deno.test('delete', () => {
+	class Test extends ArrayTyped<number> {
+		protected override [ArrayTyped.getter](index: number): number {
+			return index;
+		}
+
+		protected override [ArrayTyped.setter](
+			_index: number,
+			_value: number,
+		): void {
+		}
+	}
+
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		spec[p as number] = 2;
+		let expErr: Error | null = null;
+		try {
+			delete spec[p as number];
+		} catch (err) {
+			expErr = err as Error;
+		}
+		const expIn = (p as number) in spec;
+
+		const test = new Test(new ArrayBuffer(2), 0, 2);
+		test[p as number] = 2;
+		let actErr: Error | null = null;
+		try {
+			delete test[p as number];
+		} catch (err) {
+			actErr = err as Error;
+		}
+		const actIn = (p as number) in test;
+		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
+		assertEquals(actIn, expIn, String(p));
+	}
+});

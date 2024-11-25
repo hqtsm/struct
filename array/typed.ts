@@ -16,6 +16,12 @@ const getter = Symbol('getter');
 const setter = Symbol('setter');
 
 const handler: ProxyHandler<ArrayTyped<unknown>> = {
+	deleteProperty(target, key): boolean {
+		const index = parseIndex(key);
+		return (index === null)
+			? delete (target as unknown as Record<typeof key, unknown>)[key]
+			: !(index < target.length);
+	},
 	get(target, key): unknown | undefined {
 		const index = parseIndex(key);
 		if (index === null) {
