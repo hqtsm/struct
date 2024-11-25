@@ -297,6 +297,32 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		const spec = new Uint8Array([0, 1]);
 		spec[p as number] = 2;
 		Object.preventExtensions(spec);
+		let expErr: Error | null = null;
+		try {
+			delete spec[p as number];
+		} catch (err) {
+			expErr = err as Error;
+		}
+		const expIn = (p as number) in spec;
+
+		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
+		test[p as number] = 2;
+		Object.preventExtensions(test);
+		let actErr: Error | null = null;
+		try {
+			delete test[p as number];
+		} catch (err) {
+			actErr = err as Error;
+		}
+		const actIn = (p as number) in test;
+		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
+		assertEquals(actIn, expIn, String(p));
+	}
+
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		spec[p as number] = 2;
+		Object.preventExtensions(spec);
 		const expected = Reflect.ownKeys(spec);
 
 		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
