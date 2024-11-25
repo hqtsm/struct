@@ -374,17 +374,13 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 
 			expErr = null;
 			try {
-				Object.defineProperty(spec, p, {
-					value: 3,
-				});
+				Object.defineProperty(spec, p, { value: 3 });
 			} catch (err) {
 				expErr = err as Error;
 			}
 			actErr = null;
 			try {
-				Object.defineProperty(test, p, {
-					value: 3,
-				});
+				Object.defineProperty(test, p, { value: 3 });
 			} catch (err) {
 				actErr = err as Error;
 			}
