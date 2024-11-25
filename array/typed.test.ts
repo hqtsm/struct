@@ -175,6 +175,7 @@ Deno.test('ArrayTyped: [[get]]', () => {
 		const expected = spec[p];
 
 		const test = new GetIndexSetThrow(new ArrayBuffer(2), 0, 2);
+
 		assertEquals(test[p], expected, String(p));
 	}
 });
@@ -194,11 +195,13 @@ Deno.test('ArrayTyped: [[set]]', () => {
 		const test = new GetThrowSetLog(new ArrayBuffer(2), 0, 2);
 		test[p] = 2;
 		const called = test.readCalled();
+
 		assertEquals(called, expected, String(p));
 	}
 
 	{
 		const spec = new Uint8Array([0, 1]);
+
 		assertThrows(() => {
 			(spec as { length: number }).length = 1;
 		}, TypeError);
@@ -206,6 +209,7 @@ Deno.test('ArrayTyped: [[set]]', () => {
 
 	{
 		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
+
 		assertThrows(() => {
 			(test as { length: number }).length = 1;
 		}, TypeError);
@@ -219,6 +223,7 @@ Deno.test('ArrayTyped: [[has]]', () => {
 
 		const test = new GetThrowSetThrow(new ArrayBuffer(2), 0, 2);
 		const isIn = p in test;
+
 		assertEquals(isIn, expected, String(p));
 	}
 });
@@ -230,6 +235,7 @@ Deno.test('ArrayTyped: [[ownKeys]]', () => {
 
 		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
 		const ownKeys = Reflect.ownKeys(test);
+
 		assertEquals(ownKeys.sort(sorter), expected.sort(sorter));
 	}
 
@@ -241,6 +247,7 @@ Deno.test('ArrayTyped: [[ownKeys]]', () => {
 		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
 		test[p] = 2;
 		const ownKeys = Reflect.ownKeys(test);
+
 		assertEquals(ownKeys.sort(sorter), expected.sort(sorter), String(p));
 	}
 
@@ -285,6 +292,7 @@ Deno.test('ArrayTyped: [[deleteProperty]]', () => {
 			actErr = err as Error;
 		}
 		const actIn = p in test;
+
 		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
 		assertEquals(actIn, expIn, String(p));
 	}
@@ -345,6 +353,7 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 				actErr = err as Error;
 			}
 			const actIn = p in test;
+
 			assertEquals(actErr?.constructor, expErr?.constructor, tag);
 			assertEquals(actIn, expIn, tag);
 			if ('value' in desc || 'get' in desc) {
@@ -384,6 +393,7 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 			} catch (err) {
 				actErr = err as Error;
 			}
+
 			assertEquals(actErr?.constructor, expErr?.constructor, tag);
 			assertEquals(test[p], spec[p], tag);
 
@@ -399,6 +409,7 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 			} catch (err) {
 				actErr = err as Error;
 			}
+
 			assertEquals(actErr?.constructor, expErr?.constructor, tag);
 			assertEquals(p in spec, p in test, tag);
 		}
@@ -424,6 +435,7 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		} catch (err) {
 			testErr = err as Error;
 		}
+
 		assertEquals(
 			testErr?.constructor,
 			specErr?.constructor,
@@ -453,6 +465,7 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 			actErr = err as Error;
 		}
 		const actIn = p in test;
+
 		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
 		assertEquals(actIn, expIn, String(p));
 	}
@@ -467,6 +480,7 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		test[p] = 2;
 		Object.preventExtensions(test);
 		const ownKeys = Reflect.ownKeys(test);
+
 		assertEquals(ownKeys.sort(sorter), expected.sort(sorter), String(p));
 	}
 
@@ -480,6 +494,7 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		test[p] = 2;
 		Object.preventExtensions(test);
 		const actual = Object.getOwnPropertyDescriptor(test, p);
+
 		assertEquals(actual, expected, String(p));
 	}
 });
