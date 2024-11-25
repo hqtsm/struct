@@ -37,13 +37,17 @@ const handler: ProxyHandler<ArrayTyped<unknown>> = {
 	},
 	ownKeys(target): (string | symbol)[] {
 		const l = target.length;
-		const k = Reflect.ownKeys(target);
-		const keys: (string | symbol)[] = [];
-		for (let i = k.length; i--;) {
-			keys[i + l] = k[i];
-		}
-		for (let i = l; i--;) {
-			keys[i] = '' + i;
+		const keys = Reflect.ownKeys(target);
+		let i;
+		let j = keys.length;
+		if (l) {
+			keys.length = i = l + j;
+			while (j--) {
+				keys[--i] = keys[j];
+			}
+			while (i--) {
+				keys[i] = '' + i;
+			}
 		}
 		return keys;
 	},
