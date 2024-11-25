@@ -1,4 +1,5 @@
 import { assertEquals } from '@std/assert';
+
 import { ArrayTyped } from './typed.ts';
 
 // Properties to ensure matching TypedArray behavior.
@@ -84,19 +85,61 @@ function sorter(a: string | symbol, b: string | symbol): number {
 	return 0;
 }
 
-Deno.test('properties', () => {
-	class Test extends ArrayTyped<number> {
-		protected override [ArrayTyped.getter](_index: number): number {
-			return 0;
-		}
-
-		protected override [ArrayTyped.setter](
-			_index: number,
-			_value: number,
-		): void {
-		}
+class GetIndexSetDummy extends ArrayTyped<number> {
+	protected override [ArrayTyped.getter](index: number): number {
+		return index;
 	}
 
+	protected override [ArrayTyped.setter](): void {}
+}
+
+class GetIndexSetThrow extends ArrayTyped<number> {
+	protected override [ArrayTyped.getter](index: number): number {
+		return index;
+	}
+
+	protected override [ArrayTyped.setter](index: number, value: number): void {
+		throw new Error(`Setter: ${index} = ${value}`);
+	}
+}
+
+class GetThrowSetDummy extends ArrayTyped<number> {
+	protected override [ArrayTyped.getter](index: number): number {
+		throw new Error(`Getter: ${index}`);
+	}
+
+	protected override [ArrayTyped.setter](): void {}
+}
+
+class GetThrowSetThrow extends ArrayTyped<number> {
+	protected override [ArrayTyped.getter](index: number): number {
+		throw new Error(`Getter: ${index}`);
+	}
+
+	protected override [ArrayTyped.setter](index: number, value: number): void {
+		throw new Error(`Setter: ${index} = ${value}`);
+	}
+}
+
+class GetThrowSetLog extends ArrayTyped<number> {
+	protected called: [number, number] | null = null;
+
+	protected override [ArrayTyped.getter](index: number): number {
+		throw new Error(`Getter: ${index}`);
+	}
+
+	protected override [ArrayTyped.setter](index: number, value: number): void {
+		this.called = [index, value];
+	}
+
+	public readCalled(): [number, number] | null {
+		const r = this.called;
+		this.called = null;
+		return r;
+	}
+}
+
+Deno.test('properties', () => {
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
 		const sop = Object.getOwnPropertyNames(spec).length;
@@ -105,7 +148,7 @@ Deno.test('properties', () => {
 		const sap = Object.getOwnPropertyNames(spec).length - sop;
 		const sas = Object.getOwnPropertySymbols(spec).length - sos;
 
-		const test = new Test(new ArrayBuffer(2), 0, 2);
+		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
 		const top = Object.getOwnPropertyNames(test).length;
 		const tos = Object.getOwnPropertySymbols(test).length;
 		test[p as number] = 2;
@@ -118,24 +161,11 @@ Deno.test('properties', () => {
 });
 
 Deno.test('get', () => {
-	class Test extends ArrayTyped<number> {
-		protected override [ArrayTyped.getter](index: number): number {
-			return index;
-		}
-
-		protected override [ArrayTyped.setter](
-			index: number,
-			value: number,
-		): void {
-			throw new Error(`Setter: ${index} = ${value}`);
-		}
-	}
-
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
 		const expected = spec[p as number];
 
-		const test = new Test(new ArrayBuffer(2), 0, 2);
+		const test = new GetIndexSetThrow(new ArrayBuffer(2), 0, 2);
 		assertEquals(
 			test[p as number],
 			expected,
@@ -145,21 +175,6 @@ Deno.test('get', () => {
 });
 
 Deno.test('set', () => {
-	let called: [number, number] | null;
-
-	class Test extends ArrayTyped<number> {
-		protected override [ArrayTyped.getter](index: number): number {
-			throw new Error(`Getter: ${index}`);
-		}
-
-		protected override [ArrayTyped.setter](
-			index: number,
-			value: number,
-		): void {
-			called = [index, value];
-		}
-	}
-
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
 		spec[p as number] = 2;
@@ -171,54 +186,29 @@ Deno.test('set', () => {
 			}
 		}
 
-		const test = new Test(new ArrayBuffer(2), 0, 2);
-		called = null as typeof called;
+		const test = new GetThrowSetLog(new ArrayBuffer(2), 0, 2);
 		test[p as number] = 2;
+		const called = test.readCalled();
 		assertEquals(called, expected, String(p));
 	}
 });
 
 Deno.test('has', () => {
-	class Test extends ArrayTyped<number> {
-		protected override [ArrayTyped.getter](index: number): number {
-			throw new Error(`Getter: ${index}`);
-		}
-
-		protected override [ArrayTyped.setter](
-			index: number,
-			value: number,
-		): void {
-			throw new Error(`Setter: ${index} = ${value}`);
-		}
-	}
-
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
 		const expected = (p as number) in spec;
 
-		const test = new Test(new ArrayBuffer(2), 0, 2);
+		const test = new GetThrowSetThrow(new ArrayBuffer(2), 0, 2);
 		const isIn = (p as number) in test;
 		assertEquals(isIn, expected, String(p));
 	}
 });
 
 Deno.test('ownKeys', () => {
-	class Test extends ArrayTyped<number> {
-		protected override [ArrayTyped.getter](index: number): number {
-			throw new Error(`Getter: ${index}`);
-		}
-
-		protected override [ArrayTyped.setter](
-			_index: number,
-			_value: number,
-		): void {
-		}
-	}
-
 	const spec = new Uint8Array([0, 1]);
 	const expected = Reflect.ownKeys(spec);
 
-	const test = new Test(new ArrayBuffer(2), 0, 2);
+	const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
 	const ownKeys = Reflect.ownKeys(test);
 	assertEquals(ownKeys.sort(sorter), expected.sort(sorter));
 
@@ -227,7 +217,7 @@ Deno.test('ownKeys', () => {
 		spec[p as number] = 2;
 		const expected = Reflect.ownKeys(spec);
 
-		const test = new Test(new ArrayBuffer(2), 0, 2);
+		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
 		test[p as number] = 2;
 		const ownKeys = Reflect.ownKeys(test);
 		assertEquals(ownKeys.sort(sorter), expected.sort(sorter), String(p));
@@ -235,18 +225,6 @@ Deno.test('ownKeys', () => {
 });
 
 Deno.test('delete', () => {
-	class Test extends ArrayTyped<number> {
-		protected override [ArrayTyped.getter](index: number): number {
-			return index;
-		}
-
-		protected override [ArrayTyped.setter](
-			_index: number,
-			_value: number,
-		): void {
-		}
-	}
-
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
 		spec[p as number] = 2;
@@ -258,7 +236,7 @@ Deno.test('delete', () => {
 		}
 		const expIn = (p as number) in spec;
 
-		const test = new Test(new ArrayBuffer(2), 0, 2);
+		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
 		test[p as number] = 2;
 		let actErr: Error | null = null;
 		try {
