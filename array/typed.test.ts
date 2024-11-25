@@ -497,4 +497,56 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 
 		assertEquals(actual, expected, String(p));
 	}
+
+	for (const p of properties as number[]) {
+		const spec = new Uint8Array([0, 1]);
+		Object.preventExtensions(spec);
+		let expErr: Error | null = null;
+		try {
+			Object.defineProperty(spec, p, { value: 2 });
+		} catch (err) {
+			expErr = err as Error;
+		}
+		const expIn = p in spec;
+
+		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
+		Object.preventExtensions(test);
+		let actErr: Error | null = null;
+		try {
+			Object.defineProperty(spec, p, { value: 2 });
+		} catch (err) {
+			actErr = err as Error;
+		}
+		const actIn = p in test;
+
+		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
+		assertEquals(actIn, expIn, String(p));
+	}
+
+	for (const p of properties as number[]) {
+		const spec = new Uint8Array([0, 1]);
+		spec[p] = 2;
+		Object.preventExtensions(spec);
+		let expErr: Error | null = null;
+		try {
+			Object.defineProperty(spec, p, { value: 3 });
+		} catch (err) {
+			expErr = err as Error;
+		}
+		const expIn = p in spec;
+
+		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
+		test[p] = 2;
+		Object.preventExtensions(test);
+		let actErr: Error | null = null;
+		try {
+			Object.defineProperty(spec, p, { value: 3 });
+		} catch (err) {
+			actErr = err as Error;
+		}
+		const actIn = p in test;
+
+		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
+		assertEquals(actIn, expIn, String(p));
+	}
 });
