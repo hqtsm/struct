@@ -167,15 +167,19 @@ Deno.test('ArrayTyped: [[set]]', () => {
 		assertEquals(called, expected, String(p));
 	}
 
-	const spec = new Uint8Array([0, 1]);
-	assertThrows(() => {
-		(spec as { length: number }).length = 1;
-	}, TypeError);
+	{
+		const spec = new Uint8Array([0, 1]);
+		assertThrows(() => {
+			(spec as { length: number }).length = 1;
+		}, TypeError);
+	}
 
-	const test = new GetThrowSetLog(new ArrayBuffer(2), 0, 2);
-	assertThrows(() => {
-		(test as { length: number }).length = 1;
-	}, TypeError);
+	{
+		const test = new GetThrowSetLog(new ArrayBuffer(2), 0, 2);
+		assertThrows(() => {
+			(test as { length: number }).length = 1;
+		}, TypeError);
+	}
 });
 
 Deno.test('ArrayTyped: [[has]]', () => {
