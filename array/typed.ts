@@ -12,6 +12,10 @@ function parseIndex(key: PropertyKey): number | null {
 }
 
 const handler: ProxyHandler<ArrayTyped<unknown>> = {
+	has(target, key): boolean {
+		const index = parseIndex(key);
+		return index === null ? key in target : index < target.length;
+	},
 	get(target, key): unknown | undefined {
 		const index = parseIndex(key);
 		if (index !== null) {

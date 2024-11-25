@@ -157,3 +157,27 @@ Deno.test('set', () => {
 		assertEquals(called, expected, String(p));
 	}
 });
+
+Deno.test('has', () => {
+	class Test extends ArrayTyped<number> {
+		protected override [ArrayTyped.getter](index: number): number {
+			throw new Error(`Getter: ${index}`);
+		}
+
+		protected override [ArrayTyped.setter](
+			index: number,
+			value: number,
+		): void {
+			throw new Error(`Setter: ${index} = ${value}`);
+		}
+	}
+
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		const expected = (p as number) in spec;
+
+		const test = new Test(new ArrayBuffer(2), 0, 2);
+		const isIn = (p as number) in test;
+		assertEquals(isIn, expected, String(p));
+	}
+});
