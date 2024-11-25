@@ -167,6 +167,31 @@ Deno.test('ArrayTyped: [[set]]', () => {
 		assertEquals(called, expected, String(p));
 	}
 
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		Object.preventExtensions(spec);
+		let specErr: Error | null = null;
+		try {
+			spec[p as number] = 2;
+		} catch (err) {
+			specErr = err as Error;
+		}
+
+		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
+		Object.preventExtensions(test);
+		let testErr: Error | null = null;
+		try {
+			test[p as number] = 2;
+		} catch (err) {
+			testErr = err as Error;
+		}
+		assertEquals(
+			testErr?.constructor,
+			specErr?.constructor,
+			String(p),
+		);
+	}
+
 	{
 		const spec = new Uint8Array([0, 1]);
 		assertThrows(() => {
@@ -175,7 +200,7 @@ Deno.test('ArrayTyped: [[set]]', () => {
 	}
 
 	{
-		const test = new GetThrowSetLog(new ArrayBuffer(2), 0, 2);
+		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
 		assertThrows(() => {
 			(test as { length: number }).length = 1;
 		}, TypeError);
