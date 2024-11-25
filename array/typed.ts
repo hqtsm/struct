@@ -2,18 +2,22 @@ import { LITTLE_ENDIAN } from '../endian.ts';
 import type { ArrayBufferReal, EndianBufferView } from '../type.ts';
 import { dataView } from '../util.ts';
 
+function parseIndex(key: PropertyKey): number | null {
+	if (key === '-0') {
+		return NaN;
+	}
+	const index = +String(key);
+	if (key === '' + index) {
+		return index === (index | 0) && index >= 0 ? index : NaN;
+	}
+	return null;
+}
+
 const handler: ProxyHandler<ArrayTyped<unknown>> = {
 	get(target, key): unknown | undefined {
-		if (key === '-0') {
-			return;
-		}
-		const index = +String(key);
-		if (key === '' + index) {
-			if (
-				index === (index | 0) &&
-				index >= 0 &&
-				index < target.length
-			) {
+		const index = parseIndex(key);
+		if (index !== null) {
+			if (index < target.length) {
 				return target[getter](index);
 			}
 			return;
@@ -21,16 +25,9 @@ const handler: ProxyHandler<ArrayTyped<unknown>> = {
 		return (target as unknown as Record<typeof key, unknown>)[key];
 	},
 	set(target, key, value): boolean {
-		if (key === '-0') {
-			return true;
-		}
-		const index = +String(key);
-		if (key === '' + index) {
-			if (
-				index === (index | 0) &&
-				index >= 0 &&
-				index < target.length
-			) {
+		const index = parseIndex(key);
+		if (index !== null) {
+			if (index < target.length) {
 				target[setter](index, value);
 			}
 			return true;

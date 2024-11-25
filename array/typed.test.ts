@@ -97,7 +97,7 @@ Deno.test('properties', () => {
 	}
 });
 
-Deno.test('getter', () => {
+Deno.test('get', () => {
 	class Test extends ArrayTyped<number> {
 		protected override [ArrayTyped.getter](index: number): number {
 			return index;
@@ -119,12 +119,12 @@ Deno.test('getter', () => {
 		assertEquals(
 			test[p as number],
 			expected,
-			`[${String(p)}]: ${expected}`,
+			String(p),
 		);
 	}
 });
 
-Deno.test('setter', () => {
+Deno.test('set', () => {
 	let called: [number, number] | null;
 
 	class Test extends ArrayTyped<number> {
@@ -154,6 +154,6 @@ Deno.test('setter', () => {
 		const test = new Test(new ArrayBuffer(2), 0, 2);
 		called = null as typeof called;
 		test[p as number] = 2;
-		assertEquals(called, expected, `[${String(p)}]: ${expected}`);
+		assertEquals(called, expected, String(p));
 	}
 });
