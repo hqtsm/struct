@@ -224,7 +224,7 @@ Deno.test('ownKeys', () => {
 	}
 });
 
-Deno.test('delete', () => {
+Deno.test('deleteProperty', () => {
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
 		spec[p as number] = 2;
