@@ -197,10 +197,10 @@ Deno.test('ArrayTyped: [[set]]', () => {
 Deno.test('ArrayTyped: [[has]]', () => {
 	for (const p of properties as number[]) {
 		const spec = new Uint8Array([0, 1]);
-		const expected = (p as number) in spec;
+		const expected = p in spec;
 
 		const test = new GetThrowSetThrow(new ArrayBuffer(2), 0, 2);
-		const isIn = (p as number) in test;
+		const isIn = p in test;
 		assertEquals(isIn, expected, String(p));
 	}
 });
@@ -256,7 +256,7 @@ Deno.test('ArrayTyped: [[deleteProperty]]', () => {
 		} catch (err) {
 			expErr = err as Error;
 		}
-		const expIn = (p as number) in spec;
+		const expIn = p in spec;
 
 		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
 		test[p] = 2;
@@ -266,7 +266,7 @@ Deno.test('ArrayTyped: [[deleteProperty]]', () => {
 		} catch (err) {
 			actErr = err as Error;
 		}
-		const actIn = (p as number) in test;
+		const actIn = p in test;
 		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
 		assertEquals(actIn, expIn, String(p));
 	}
@@ -276,11 +276,11 @@ Deno.test('ArrayTyped: [[getOwnPropertyDescriptor]]', () => {
 	for (const p of properties as number[]) {
 		const spec = new Uint8Array([0, 1]);
 		spec[p] = 2;
-		const expected = Object.getOwnPropertyDescriptor(spec, p as number);
+		const expected = Object.getOwnPropertyDescriptor(spec, p);
 
 		const test = new GetSet(new ArrayBuffer(2), 0, 2);
 		test[p] = 2;
-		const actual = Object.getOwnPropertyDescriptor(test, p as number);
+		const actual = Object.getOwnPropertyDescriptor(test, p);
 
 		assertEquals(expected, actual, String(p));
 	}
@@ -322,7 +322,7 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		} catch (err) {
 			expErr = err as Error;
 		}
-		const expIn = (p as number) in spec;
+		const expIn = p in spec;
 
 		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
 		test[p] = 2;
@@ -333,7 +333,7 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		} catch (err) {
 			actErr = err as Error;
 		}
-		const actIn = (p as number) in test;
+		const actIn = p in test;
 		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
 		assertEquals(actIn, expIn, String(p));
 	}
@@ -355,12 +355,12 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		const spec = new Uint8Array([0, 1]);
 		spec[p] = 2;
 		Object.preventExtensions(spec);
-		const expected = Object.getOwnPropertyDescriptor(spec, p as number);
+		const expected = Object.getOwnPropertyDescriptor(spec, p);
 
 		const test = new GetSet(new ArrayBuffer(2), 0, 2);
 		test[p] = 2;
 		Object.preventExtensions(test);
-		const actual = Object.getOwnPropertyDescriptor(test, p as number);
+		const actual = Object.getOwnPropertyDescriptor(test, p);
 		assertEquals(actual, expected, String(p));
 	}
 });
