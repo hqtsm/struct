@@ -19,6 +19,17 @@ function createHandler<E>(
 	length: (a: ArrayTyped<unknown>) => number,
 ): ProxyHandler<ArrayTyped<E>> {
 	return {
+		defineProperty(target, key, desc: PropertyDescriptor): boolean {
+			const index = parseIndex(key);
+			if (index === null) {
+				return Reflect.defineProperty(target, key, desc);
+			}
+			if (index < length(target) && 'value' in desc) {
+				target[setter](index, desc.value);
+				return true;
+			}
+			return false;
+		},
 		deleteProperty(target, key): boolean {
 			const index = parseIndex(key);
 			return index === null
@@ -188,7 +199,7 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 	 *
 	 * @param value Element value.
 	 */
-	protected abstract [setter](index: number, value: E): void;
+	protected abstract [setter](index: number, value: unknown): void;
 
 	/**
 	 * Getter symbol.

@@ -98,7 +98,10 @@ class GetIndexSetThrow extends ArrayTyped<number> {
 		return index;
 	}
 
-	protected override [ArrayTyped.setter](index: number, value: number): void {
+	protected override [ArrayTyped.setter](
+		index: number,
+		value: unknown,
+	): void {
 		throw new Error(`Setter: ${index} = ${value}`);
 	}
 }
@@ -116,23 +119,29 @@ class GetThrowSetThrow extends ArrayTyped<number> {
 		throw new Error(`Getter: ${index}`);
 	}
 
-	protected override [ArrayTyped.setter](index: number, value: number): void {
+	protected override [ArrayTyped.setter](
+		index: number,
+		value: unknown,
+	): void {
 		throw new Error(`Setter: ${index} = ${value}`);
 	}
 }
 
 class GetThrowSetLog extends ArrayTyped<number> {
-	protected called: [number, number] | null = null;
+	protected called: [number, unknown] | null = null;
 
 	protected override [ArrayTyped.getter](index: number): number {
 		throw new Error(`Getter: ${index}`);
 	}
 
-	protected override [ArrayTyped.setter](index: number, value: number): void {
+	protected override [ArrayTyped.setter](
+		index: number,
+		value: unknown,
+	): void {
 		this.called = [index, value];
 	}
 
-	public readCalled(): [number, number] | null {
+	public readCalled(): [number, unknown] | null {
 		const r = this.called;
 		this.called = null;
 		return r;
@@ -142,12 +151,21 @@ class GetThrowSetLog extends ArrayTyped<number> {
 class GetSet extends ArrayTyped<number> {
 	private values: number[] = [];
 
+	constructor(values: number[]) {
+		values = [...values];
+		super(new ArrayBuffer(values.length), 0, values.length);
+		this.values = values;
+	}
+
 	protected override [ArrayTyped.getter](index: number): number {
 		return this.values[index];
 	}
 
-	protected override [ArrayTyped.setter](index: number, value: number): void {
-		this.values[index] = value;
+	protected override [ArrayTyped.setter](
+		index: number,
+		value: unknown,
+	): void {
+		this.values[index] = Number(value) | 0;
 	}
 }
 
@@ -278,11 +296,71 @@ Deno.test('ArrayTyped: [[getOwnPropertyDescriptor]]', () => {
 		spec[p] = 2;
 		const expected = Object.getOwnPropertyDescriptor(spec, p);
 
-		const test = new GetSet(new ArrayBuffer(2), 0, 2);
+		const test = new GetSet([0, 1]);
 		test[p] = 2;
 		const actual = Object.getOwnPropertyDescriptor(test, p);
 
 		assertEquals(expected, actual, String(p));
+	}
+});
+
+Deno.test('ArrayTyped: [[defineProperty]]', () => {
+	for (const p of properties as number[]) {
+		const spec = new Uint8Array([0, 1]);
+		let expErr: Error | null = null;
+		try {
+			Object.defineProperty(spec, p, {
+				value: 2,
+			});
+		} catch (err) {
+			expErr = err as Error;
+		}
+		const expIn = p in spec;
+
+		const test = new GetSet([0, 1]);
+		let actErr: Error | null = null;
+		try {
+			Object.defineProperty(test, p, {
+				value: 2,
+			});
+		} catch (err) {
+			actErr = err as Error;
+		}
+		const actIn = p in test;
+		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
+		assertEquals(actIn, expIn, String(p));
+		assertEquals(test[p], spec[p], String(p));
+	}
+
+	for (const p of properties as number[]) {
+		const spec = new Uint8Array([0, 1]);
+		let expErr: Error | null = null;
+		try {
+			Object.defineProperty(spec, p, {
+				get(): number {
+					return 2;
+				},
+			});
+		} catch (err) {
+			expErr = err as Error;
+		}
+		const expIn = p in spec;
+
+		const test = new GetSet([0, 1]);
+		let actErr: Error | null = null;
+		try {
+			Object.defineProperty(test, p, {
+				get(): number {
+					return 2;
+				},
+			});
+		} catch (err) {
+			actErr = err as Error;
+		}
+		const actIn = p in test;
+		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
+		assertEquals(actIn, expIn, String(p));
+		assertEquals(test[p], spec[p], String(p));
 	}
 });
 
@@ -357,7 +435,7 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		Object.preventExtensions(spec);
 		const expected = Object.getOwnPropertyDescriptor(spec, p);
 
-		const test = new GetSet(new ArrayBuffer(2), 0, 2);
+		const test = new GetSet([0, 1]);
 		test[p] = 2;
 		Object.preventExtensions(test);
 		const actual = Object.getOwnPropertyDescriptor(test, p);
