@@ -1,4 +1,4 @@
-import { assertEquals } from '@std/assert';
+import { assertEquals, assertThrows } from '@std/assert';
 
 import { ArrayTyped } from './typed.ts';
 
@@ -166,6 +166,16 @@ Deno.test('ArrayTyped: [[set]]', () => {
 		const called = test.readCalled();
 		assertEquals(called, expected, String(p));
 	}
+
+	const spec = new Uint8Array([0, 1]);
+	assertThrows(() => {
+		(spec as { length: number }).length = 1;
+	}, TypeError);
+
+	const test = new GetThrowSetLog(new ArrayBuffer(2), 0, 2);
+	assertThrows(() => {
+		(test as { length: number }).length = 1;
+	}, TypeError);
 });
 
 Deno.test('ArrayTyped: [[has]]', () => {
