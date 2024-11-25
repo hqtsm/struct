@@ -32,14 +32,15 @@ function createHandler<E>(
 		},
 		deleteProperty(target, key): boolean {
 			const index = parseIndex(key);
-			return index === null
-				? delete (target as unknown as Record<typeof key, E>)[key]
-				: !(index < length(target));
+			if (index === null) {
+				return Reflect.deleteProperty(target, key);
+			}
+			return !(index < length(target));
 		},
 		get(target, key): E | undefined {
 			const index = parseIndex(key);
 			if (index === null) {
-				return (target as unknown as Record<typeof key, E>)[key];
+				return Reflect.get(target, key);
 			}
 			if (index < length(target)) {
 				return target[getter](index);
@@ -51,20 +52,25 @@ function createHandler<E>(
 				return Reflect.getOwnPropertyDescriptor(target, key);
 			}
 			if (index < length(target)) {
+				const value = target[getter](index);
 				const r = Reflect.getOwnPropertyDescriptor(target, key)!;
-				r.value = target[getter](index);
+				r.value = value;
 				return r;
 			}
 		},
 		has(target, key): boolean {
 			const index = parseIndex(key);
-			return index === null ? key in target : index < length(target);
+			if (index === null) {
+				return Reflect.has(target, key);
+			}
+			return index < length(target);
 		},
 		set(target, key, value): boolean {
 			const index = parseIndex(key);
 			if (index === null) {
-				(target as unknown as Record<typeof key, E>)[key] = value;
-			} else if (index < length(target)) {
+				return Reflect.set(target, key, value);
+			}
+			if (index < length(target)) {
 				target[setter](index, value);
 			}
 			return true;
