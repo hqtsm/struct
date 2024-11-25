@@ -18,23 +18,20 @@ const handler: ProxyHandler<ArrayTyped<unknown>> = {
 	},
 	get(target, key): unknown | undefined {
 		const index = parseIndex(key);
-		if (index !== null) {
-			if (index < target.length) {
-				return target[getter](index);
-			}
-			return;
+		if (index === null) {
+			return (target as unknown as Record<typeof key, unknown>)[key];
 		}
-		return (target as unknown as Record<typeof key, unknown>)[key];
+		if (index < target.length) {
+			return target[getter](index);
+		}
 	},
 	set(target, key, value): boolean {
 		const index = parseIndex(key);
-		if (index !== null) {
-			if (index < target.length) {
-				target[setter](index, value);
-			}
-			return true;
+		if (index === null) {
+			(target as unknown as Record<typeof key, unknown>)[key] = value;
+		} else if (index < target.length) {
+			target[setter](index, value);
 		}
-		(target as unknown as Record<typeof key, unknown>)[key] = value;
 		return true;
 	},
 };
