@@ -145,11 +145,7 @@ Deno.test('ArrayTyped: [[get]]', () => {
 		const expected = spec[p as number];
 
 		const test = new GetIndexSetThrow(new ArrayBuffer(2), 0, 2);
-		assertEquals(
-			test[p as number],
-			expected,
-			String(p),
-		);
+		assertEquals(test[p as number], expected, String(p));
 	}
 });
 
