@@ -139,28 +139,7 @@ class GetThrowSetLog extends ArrayTyped<number> {
 	}
 }
 
-Deno.test('properties', () => {
-	for (const p of properties) {
-		const spec = new Uint8Array([0, 1]);
-		const sop = Object.getOwnPropertyNames(spec).length;
-		const sos = Object.getOwnPropertySymbols(spec).length;
-		spec[p as number] = 2;
-		const sap = Object.getOwnPropertyNames(spec).length - sop;
-		const sas = Object.getOwnPropertySymbols(spec).length - sos;
-
-		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
-		const top = Object.getOwnPropertyNames(test).length;
-		const tos = Object.getOwnPropertySymbols(test).length;
-		test[p as number] = 2;
-		const tap = Object.getOwnPropertyNames(test).length - top;
-		const tas = Object.getOwnPropertySymbols(test).length - tos;
-
-		assertEquals(tap, sap, `[${String(p)}]: ${tap} != ${sap}`);
-		assertEquals(tas, sas, `[${String(p)}]: ${tas} != ${sas}`);
-	}
-});
-
-Deno.test('get', () => {
+Deno.test('ArrayTyped: [[get]]', () => {
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
 		const expected = spec[p as number];
@@ -174,7 +153,7 @@ Deno.test('get', () => {
 	}
 });
 
-Deno.test('set', () => {
+Deno.test('ArrayTyped: [[set]]', () => {
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
 		spec[p as number] = 2;
@@ -193,7 +172,7 @@ Deno.test('set', () => {
 	}
 });
 
-Deno.test('has', () => {
+Deno.test('ArrayTyped: [[has]]', () => {
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
 		const expected = (p as number) in spec;
@@ -204,7 +183,7 @@ Deno.test('has', () => {
 	}
 });
 
-Deno.test('ownKeys', () => {
+Deno.test('ArrayTyped: [[ownKeys]]', () => {
 	const spec = new Uint8Array([0, 1]);
 	const expected = Reflect.ownKeys(spec);
 
@@ -224,7 +203,7 @@ Deno.test('ownKeys', () => {
 	}
 });
 
-Deno.test('deleteProperty', () => {
+Deno.test('ArrayTyped: [[deleteProperty]]', () => {
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
 		spec[p as number] = 2;
@@ -247,5 +226,26 @@ Deno.test('deleteProperty', () => {
 		const actIn = (p as number) in test;
 		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
 		assertEquals(actIn, expIn, String(p));
+	}
+});
+
+Deno.test('ArrayTyped: Dynamic properties', () => {
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		const sop = Object.getOwnPropertyNames(spec).length;
+		const sos = Object.getOwnPropertySymbols(spec).length;
+		spec[p as number] = 2;
+		const sap = Object.getOwnPropertyNames(spec).length - sop;
+		const sas = Object.getOwnPropertySymbols(spec).length - sos;
+
+		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
+		const top = Object.getOwnPropertyNames(test).length;
+		const tos = Object.getOwnPropertySymbols(test).length;
+		test[p as number] = 2;
+		const tap = Object.getOwnPropertyNames(test).length - top;
+		const tas = Object.getOwnPropertySymbols(test).length - tos;
+
+		assertEquals(tap, sap, `[${String(p)}]: ${tap} != ${sap}`);
+		assertEquals(tas, sas, `[${String(p)}]: ${tas} != ${sas}`);
 	}
 });
