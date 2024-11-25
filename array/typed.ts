@@ -48,10 +48,10 @@ function createHandler<E>(
 		getOwnPropertyDescriptor(target, key): PropertyDescriptor | undefined {
 			const index = parseIndex(key);
 			if (index === null) {
-				return Object.getOwnPropertyDescriptor(target, key);
+				return Reflect.getOwnPropertyDescriptor(target, key);
 			}
 			if (index < length(target)) {
-				const r = Object.getOwnPropertyDescriptor(target, key)!;
+				const r = Reflect.getOwnPropertyDescriptor(target, key)!;
 				r.value = target[getter](index);
 				return r;
 			}
