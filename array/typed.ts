@@ -4,7 +4,7 @@ import { dataView } from '../util.ts';
 
 function parseIndex(key: PropertyKey): number | null {
 	let index;
-	return (key === '-0')
+	return key === '-0'
 		? NaN
 		: ((key === '' + (index = +String(key)))
 			? (index === (index | 0) && index >= 0 ? index : NaN)
@@ -18,7 +18,7 @@ const setter = Symbol('setter');
 const handler: ProxyHandler<ArrayTyped<unknown>> = {
 	deleteProperty(target, key): boolean {
 		const index = parseIndex(key);
-		return (index === null)
+		return index === null
 			? delete (target as unknown as Record<typeof key, unknown>)[key]
 			: !(index < target.length);
 	},
