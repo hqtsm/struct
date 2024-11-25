@@ -362,6 +362,32 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 		assertEquals(actIn, expIn, String(p));
 		assertEquals(test[p], spec[p], String(p));
 	}
+
+	for (const p of properties as number[]) {
+		const spec = new Uint8Array([0, 1]);
+		let expErr: Error | null = null;
+		try {
+			Object.defineProperty(spec, p, {
+				set(): void {},
+			});
+		} catch (err) {
+			expErr = err as Error;
+		}
+		const expIn = p in spec;
+
+		const test = new GetSet([0, 1]);
+		let actErr: Error | null = null;
+		try {
+			Object.defineProperty(test, p, {
+				set(): void {},
+			});
+		} catch (err) {
+			actErr = err as Error;
+		}
+		const actIn = p in test;
+		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
+		assertEquals(actIn, expIn, String(p));
+	}
 });
 
 Deno.test('ArrayTyped: [[preventExtensions]]', () => {
