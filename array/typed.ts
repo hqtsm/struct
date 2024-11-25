@@ -11,6 +11,10 @@ function parseIndex(key: PropertyKey): number | null {
 			: null);
 }
 
+const getter = Symbol('getter');
+
+const setter = Symbol('setter');
+
 const handler: ProxyHandler<ArrayTyped<unknown>> = {
 	get(target, key): unknown | undefined {
 		const index = parseIndex(key);
@@ -35,10 +39,6 @@ const handler: ProxyHandler<ArrayTyped<unknown>> = {
 		return true;
 	},
 };
-
-const getter = Symbol('getter');
-
-const setter = Symbol('setter');
 
 /**
  * ArrayTyped interface.
