@@ -266,6 +266,19 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 			String(p),
 		);
 	}
+
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		spec[p as number] = 2;
+		Object.preventExtensions(spec);
+		const expected = Reflect.ownKeys(spec);
+
+		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
+		test[p as number] = 2;
+		Object.preventExtensions(test);
+		const ownKeys = Reflect.ownKeys(test);
+		assertEquals(ownKeys.sort(sorter), expected.sort(sorter), String(p));
+	}
 });
 
 Deno.test('ArrayTyped: Dynamic properties', () => {

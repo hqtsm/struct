@@ -35,22 +35,6 @@ const handler: ProxyHandler<ArrayTyped<unknown>> = {
 		const index = parseIndex(key);
 		return index === null ? key in target : index < target.length;
 	},
-	ownKeys(target): (string | symbol)[] {
-		const l = target.length;
-		const keys = Reflect.ownKeys(target);
-		let i;
-		let j = keys.length;
-		if (l) {
-			keys.length = i = l + j;
-			while (j--) {
-				keys[--i] = keys[j];
-			}
-			while (i--) {
-				keys[i] = '' + i;
-			}
-		}
-		return keys;
-	},
 	set(target, key, value): boolean {
 		const index = parseIndex(key);
 		if (index === null) {
@@ -118,8 +102,11 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 			throw new RangeError(`Invalid length: ${length}`);
 		}
 		this.#byteOffset = byteOffset | 0;
-		this.#length = length | 0;
+		this.#length = length |= 0;
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
+		for (let i = length; i--;) {
+			(this as { [index: number]: undefined })[i] = undefined;
+		}
 		return new Proxy(this, handler as ProxyHandler<ArrayTyped<E>>);
 	}
 
