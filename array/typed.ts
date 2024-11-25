@@ -34,6 +34,17 @@ function createHandler<E>(
 				return target[getter](index);
 			}
 		},
+		getOwnPropertyDescriptor(target, key): PropertyDescriptor | undefined {
+			const index = parseIndex(key);
+			if (index === null) {
+				return Object.getOwnPropertyDescriptor(target, key);
+			}
+			if (index < length(target)) {
+				const r = Object.getOwnPropertyDescriptor(target, key)!;
+				r.value = target[getter](index);
+				return r;
+			}
+		},
 		has(target, key): boolean {
 			const index = parseIndex(key);
 			return index === null ? key in target : index < length(target);

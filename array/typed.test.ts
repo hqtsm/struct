@@ -139,6 +139,18 @@ class GetThrowSetLog extends ArrayTyped<number> {
 	}
 }
 
+class GetSet extends ArrayTyped<number> {
+	private values: number[] = [];
+
+	protected override [ArrayTyped.getter](index: number): number {
+		return this.values[index];
+	}
+
+	protected override [ArrayTyped.setter](index: number, value: number): void {
+		this.values[index] = value;
+	}
+}
+
 Deno.test('ArrayTyped: [[get]]', () => {
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
@@ -238,6 +250,20 @@ Deno.test('ArrayTyped: [[deleteProperty]]', () => {
 		const actIn = (p as number) in test;
 		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
 		assertEquals(actIn, expIn, String(p));
+	}
+});
+
+Deno.test('ArrayTyped: [[getOwnPropertyDescriptor]]', () => {
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		spec[p as number] = 2;
+		const expected = Object.getOwnPropertyDescriptor(spec, p as number);
+
+		const test = new GetSet(new ArrayBuffer(2), 0, 2);
+		test[p as number] = 2;
+		const actual = Object.getOwnPropertyDescriptor(test, p as number);
+
+		assertEquals(expected, actual, String(p));
 	}
 });
 
