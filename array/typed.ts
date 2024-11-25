@@ -104,8 +104,8 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 		this.#byteOffset = byteOffset | 0;
 		this.#length = length |= 0;
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
-		for (let i = length; i--;) {
-			(this as { [index: number]: undefined })[i] = undefined;
+		for (let i = 0; i < length;) {
+			(this as { [index: number]: undefined })[i++] = undefined;
 		}
 		return new Proxy(this, handler as ProxyHandler<ArrayTyped<E>>);
 	}
