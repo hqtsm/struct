@@ -392,6 +392,21 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 				assertEquals(actErr?.constructor, expErr?.constructor, tag);
 				assertEquals(test[p], spec[p], tag);
 			}
+
+			expErr = null;
+			try {
+				delete spec[p];
+			} catch (err) {
+				expErr = err as Error;
+			}
+			actErr = null;
+			try {
+				delete test[p];
+			} catch (err) {
+				actErr = err as Error;
+			}
+			assertEquals(actErr?.constructor, expErr?.constructor, tag);
+			assertEquals(p in spec, p in test, tag);
 		}
 	}
 });
