@@ -225,6 +225,25 @@ Deno.test('ArrayTyped: [[ownKeys]]', () => {
 		const ownKeys = Reflect.ownKeys(test);
 		assertEquals(ownKeys.sort(sorter), expected.sort(sorter), String(p));
 	}
+
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		const sop = Object.getOwnPropertyNames(spec).length;
+		const sos = Object.getOwnPropertySymbols(spec).length;
+		spec[p as number] = 2;
+		const sap = Object.getOwnPropertyNames(spec).length - sop;
+		const sas = Object.getOwnPropertySymbols(spec).length - sos;
+
+		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
+		const top = Object.getOwnPropertyNames(test).length;
+		const tos = Object.getOwnPropertySymbols(test).length;
+		test[p as number] = 2;
+		const tap = Object.getOwnPropertyNames(test).length - top;
+		const tas = Object.getOwnPropertySymbols(test).length - tos;
+
+		assertEquals(tap, sap, `[${String(p)}]: ${tap} != ${sap}`);
+		assertEquals(tas, sas, `[${String(p)}]: ${tas} != ${sas}`);
+	}
 });
 
 Deno.test('ArrayTyped: [[deleteProperty]]', () => {
@@ -343,26 +362,5 @@ Deno.test('ArrayTyped: [[preventExtensions]]', () => {
 		Object.preventExtensions(test);
 		const actual = Object.getOwnPropertyDescriptor(test, p as number);
 		assertEquals(actual, expected, String(p));
-	}
-});
-
-Deno.test('ArrayTyped: Dynamic properties', () => {
-	for (const p of properties) {
-		const spec = new Uint8Array([0, 1]);
-		const sop = Object.getOwnPropertyNames(spec).length;
-		const sos = Object.getOwnPropertySymbols(spec).length;
-		spec[p as number] = 2;
-		const sap = Object.getOwnPropertyNames(spec).length - sop;
-		const sas = Object.getOwnPropertySymbols(spec).length - sos;
-
-		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
-		const top = Object.getOwnPropertyNames(test).length;
-		const tos = Object.getOwnPropertySymbols(test).length;
-		test[p as number] = 2;
-		const tap = Object.getOwnPropertyNames(test).length - top;
-		const tas = Object.getOwnPropertySymbols(test).length - tos;
-
-		assertEquals(tap, sap, `[${String(p)}]: ${tap} != ${sap}`);
-		assertEquals(tas, sas, `[${String(p)}]: ${tas} != ${sas}`);
 	}
 });
