@@ -167,31 +167,6 @@ Deno.test('ArrayTyped: [[set]]', () => {
 		assertEquals(called, expected, String(p));
 	}
 
-	for (const p of properties) {
-		const spec = new Uint8Array([0, 1]);
-		Object.preventExtensions(spec);
-		let specErr: Error | null = null;
-		try {
-			spec[p as number] = 2;
-		} catch (err) {
-			specErr = err as Error;
-		}
-
-		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
-		Object.preventExtensions(test);
-		let testErr: Error | null = null;
-		try {
-			test[p as number] = 2;
-		} catch (err) {
-			testErr = err as Error;
-		}
-		assertEquals(
-			testErr?.constructor,
-			specErr?.constructor,
-			String(p),
-		);
-	}
-
 	{
 		const spec = new Uint8Array([0, 1]);
 		assertThrows(() => {
@@ -219,12 +194,14 @@ Deno.test('ArrayTyped: [[has]]', () => {
 });
 
 Deno.test('ArrayTyped: [[ownKeys]]', () => {
-	const spec = new Uint8Array([0, 1]);
-	const expected = Reflect.ownKeys(spec);
+	{
+		const spec = new Uint8Array([0, 1]);
+		const expected = Reflect.ownKeys(spec);
 
-	const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
-	const ownKeys = Reflect.ownKeys(test);
-	assertEquals(ownKeys.sort(sorter), expected.sort(sorter));
+		const test = new GetThrowSetDummy(new ArrayBuffer(2), 0, 2);
+		const ownKeys = Reflect.ownKeys(test);
+		assertEquals(ownKeys.sort(sorter), expected.sort(sorter));
+	}
 
 	for (const p of properties) {
 		const spec = new Uint8Array([0, 1]);
@@ -261,6 +238,33 @@ Deno.test('ArrayTyped: [[deleteProperty]]', () => {
 		const actIn = (p as number) in test;
 		assertEquals(actErr?.constructor, expErr?.constructor, String(p));
 		assertEquals(actIn, expIn, String(p));
+	}
+});
+
+Deno.test('ArrayTyped: [[preventExtensions]]', () => {
+	for (const p of properties) {
+		const spec = new Uint8Array([0, 1]);
+		Object.preventExtensions(spec);
+		let specErr: Error | null = null;
+		try {
+			spec[p as number] = 2;
+		} catch (err) {
+			specErr = err as Error;
+		}
+
+		const test = new GetIndexSetDummy(new ArrayBuffer(2), 0, 2);
+		Object.preventExtensions(test);
+		let testErr: Error | null = null;
+		try {
+			test[p as number] = 2;
+		} catch (err) {
+			testErr = err as Error;
+		}
+		assertEquals(
+			testErr?.constructor,
+			specErr?.constructor,
+			String(p),
+		);
 	}
 });
 
