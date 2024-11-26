@@ -26,7 +26,7 @@ function createHandler<E>(
 			}
 			return !(index < length(target));
 		},
-		get(target, key, receiver): E | undefined {
+		get(target, key, receiver: ArrayTyped<E>): E | undefined {
 			const index = parseIndex(key);
 			if (index === null) {
 				return Reflect.get(target, key);
@@ -41,7 +41,7 @@ function createHandler<E>(
 				(parseIndex(key) ?? NaN) < length(target)
 			);
 		},
-		set(target, key, value, receiver): boolean {
+		set(target, key, value, receiver: ArrayTyped<E>): boolean {
 			const index = parseIndex(key);
 			if (index === null) {
 				return Reflect.set(target, key, value);
