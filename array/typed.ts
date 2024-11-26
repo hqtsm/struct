@@ -15,39 +15,7 @@ const getter = Symbol('getter');
 
 const setter = Symbol('setter');
 
-const handler = {
-	deleteProperty(target, key): boolean {
-		let i;
-		return (Reflect.has(target, key) || (i = index(key)) === null)
-			? Reflect.deleteProperty(target, key)
-			: !(i < length.call(target));
-	},
-	get(target, key, receiver: ArrayTyped<unknown>): unknown | undefined {
-		let i;
-		if (Reflect.has(target, key) || (i = index(key)) === null) {
-			return Reflect.get(target, key);
-		}
-		if (i < length.call(target)) {
-			return receiver[getter](i);
-		}
-	},
-	has(target, key): boolean {
-		return (
-			Reflect.has(target, key) ||
-			(index(key) ?? NaN) < length.call(target)
-		);
-	},
-	set(target, key, value, receiver: ArrayTyped<unknown>): boolean {
-		let i;
-		if (Reflect.has(target, key) || (i = index(key)) === null) {
-			return Reflect.set(target, key, value);
-		}
-		if (i < length.call(target)) {
-			receiver[setter](i, value);
-		}
-		return true;
-	},
-} satisfies ProxyHandler<ArrayTyped<unknown>>;
+let handler: ProxyHandler<ArrayTyped<unknown>>;
 
 /**
  * ArrayTyped interface.
@@ -183,9 +151,37 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 	/**
 	 * Size of each array element.
 	 */
-	public static readonly BYTES_PER_ELEMENT: number;
+	public static readonly BYTES_PER_ELEMENT: number = void (handler = {
+		deleteProperty(target, key): boolean {
+			let i;
+			return (Reflect.has(target, key) || (i = index(key)) === null)
+				? Reflect.deleteProperty(target, key)
+				: !(i < target.#length);
+		},
+		get(target, key, receiver: ArrayTyped<unknown>): unknown | undefined {
+			let i;
+			if (Reflect.has(target, key) || (i = index(key)) === null) {
+				return Reflect.get(target, key);
+			}
+			if (i < target.#length) {
+				return receiver[getter](i);
+			}
+		},
+		has(target, key): boolean {
+			return (
+				Reflect.has(target, key) ||
+				(index(key) ?? NaN) < target.#length
+			);
+		},
+		set(target, key, value, receiver: ArrayTyped<unknown>): boolean {
+			let i;
+			if (Reflect.has(target, key) || (i = index(key)) === null) {
+				return Reflect.set(target, key, value);
+			}
+			if (i < target.#length) {
+				receiver[setter](i, value);
+			}
+			return true;
+		},
+	}) as unknown as number;
 }
-
-// Get private length directly.
-const length = Object.getOwnPropertyDescriptor(ArrayTyped.prototype, 'length')!
-	.get as { call(a: ArrayTyped<unknown>): number };
