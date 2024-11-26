@@ -1,5 +1,6 @@
-import { assertEquals, assertThrows } from '@std/assert';
+import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 
+import { LITTLE_ENDIAN } from '../endian.ts';
 import { ArrayTyped } from './typed.ts';
 
 // Properties to ensure matching TypedArray behavior.
@@ -96,6 +97,21 @@ function sorter(a: string | symbol, b: string | symbol): number {
 	return 0;
 }
 
+class DummyArray extends ArrayTyped<number> {
+	protected override [ArrayTyped.getter](index: number): number {
+		throw new Error(`Getter: [${index}]`);
+	}
+
+	protected override [ArrayTyped.setter](
+		index: number,
+		value: unknown,
+	): void {
+		throw new Error(`Setter: [${index}] = ${String(value)}`);
+	}
+
+	public static override readonly BYTES_PER_ELEMENT: number = 1;
+}
+
 class TestArray extends ArrayTyped<number> {
 	#values: number[] = [];
 
@@ -105,7 +121,7 @@ class TestArray extends ArrayTyped<number> {
 
 	constructor(values: number[]) {
 		super(new ArrayBuffer(values.length), 0, values.length);
-		this.#values = [...values];
+		this.#values = values.map((i) => i | 0);
 	}
 
 	protected override [ArrayTyped.getter](index: number): number {
@@ -132,7 +148,52 @@ class TestArray extends ArrayTyped<number> {
 		this.#lastSetter = null;
 		return r;
 	}
+
+	public static override readonly BYTES_PER_ELEMENT: number = 4;
 }
+
+Deno.test('buffer', () => {
+	const buffer = new ArrayBuffer(0);
+	assertStrictEquals(new DummyArray(buffer).buffer, buffer);
+
+	// Non-ArrayBuffer throws immediately.
+	assertThrows(
+		() => new DummyArray(new Uint8Array() as ArrayBufferLike),
+		TypeError,
+	);
+});
+
+Deno.test('length + byteLength', () => {
+	const buffer = new ArrayBuffer(0);
+	assertEquals(new DummyArray(buffer).byteLength, 0);
+	assertEquals(new DummyArray(buffer, 1).byteLength, 0);
+	assertEquals(new DummyArray(buffer, 0, 1).byteLength, 1);
+	assertEquals(new DummyArray(buffer, 0, 2).byteLength, 2);
+	assertEquals(new TestArray([]).byteLength, 0);
+	assertEquals(new TestArray([1]).byteLength, 4);
+	assertEquals(new TestArray([1, 2]).byteLength, 8);
+
+	// Negative length throws immediately.
+	assertThrows(() => new DummyArray(buffer, 0, -1), RangeError);
+});
+
+Deno.test('byteOffset', () => {
+	const data = new ArrayBuffer(32);
+
+	// Negative offset throws immediately.
+	assertThrows(() => new DummyArray(data, -1), RangeError);
+
+	// Offset over buffer size does not throw unless later accessed.
+	assertEquals(new DummyArray(data, 32).byteOffset, 32);
+	assertEquals(new DummyArray(data, 33).byteOffset, 33);
+});
+
+Deno.test('littleEndian', () => {
+	const data = new ArrayBuffer(32);
+	assertEquals(new DummyArray(data).littleEndian, LITTLE_ENDIAN);
+	assertEquals(new DummyArray(data, 0, 0, true).littleEndian, true);
+	assertEquals(new DummyArray(data, 0, 0, false).littleEndian, false);
+});
 
 Deno.test('ArrayTyped: [[get]]', () => {
 	for (const p of properties as number[]) {

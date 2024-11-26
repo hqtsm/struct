@@ -46,8 +46,8 @@ Deno.test('byteOffset', () => {
 	assertThrows(() => new Test(data, -1), RangeError);
 
 	// Offset over buffer size throws lazy.
-	const over = new Test(data, 33);
-	assertThrows(() => over.alpha, RangeError);
+	assertThrows(() => new Test(data, 32).alpha, RangeError);
+	assertThrows(() => new Test(data, 33).alpha, RangeError);
 });
 
 Deno.test('littleEndian', () => {
