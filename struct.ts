@@ -35,10 +35,10 @@ export class Struct implements Type {
 		littleEndian: boolean | null = null,
 	) {
 		dataView(this.#buffer = buffer);
-		if (byteOffset < 0) {
+		if (byteOffset < 0 || byteOffset > 0x1fffffffffffff) {
 			throw new RangeError(`Invalid offset: ${byteOffset}`);
 		}
-		this.#byteOffset = byteOffset | 0;
+		this.#byteOffset = byteOffset - byteOffset % 1 || 0;
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
 	}
 

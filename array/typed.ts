@@ -66,14 +66,14 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 		littleEndian: boolean | null = null,
 	) {
 		dataView(this.#buffer = buffer);
-		if (byteOffset < 0) {
+		if (byteOffset < 0 || byteOffset > 0x1fffffffffffff) {
 			throw new RangeError(`Invalid offset: ${byteOffset}`);
 		}
-		if (length < 0) {
+		if (length < 0 || length > 0x1fffffffffffff) {
 			throw new RangeError(`Invalid length: ${length}`);
 		}
-		this.#byteOffset = byteOffset | 0;
-		this.#length = length |= 0;
+		this.#byteOffset = byteOffset - byteOffset % 1 || 0;
+		this.#length = length - length % 1 || 0;
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
 		return new Proxy(this, handler as ProxyHandler<ArrayTyped<E>>);
 	}
