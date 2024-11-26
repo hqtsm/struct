@@ -1,4 +1,5 @@
 import { assertEquals } from '@std/assert';
+
 import { ArrayInt64, ArrayUint64 } from './64.ts';
 
 Deno.test('ArrayInt64 + ArrayUint64', () => {

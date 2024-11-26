@@ -1,4 +1,5 @@
 import { assertEquals } from '@std/assert';
+
 import { ArrayBool8 } from './8.ts';
 
 Deno.test('ArrayBool8', () => {

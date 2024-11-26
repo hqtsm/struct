@@ -1,4 +1,5 @@
 import { assertEquals } from '@std/assert';
+
 import { ArrayInt32, ArrayUint32 } from './32.ts';
 
 Deno.test('ArrayInt32 + ArrayUint32', () => {
