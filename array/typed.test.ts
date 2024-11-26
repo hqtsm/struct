@@ -96,19 +96,7 @@ function sorter(a: string | symbol, b: string | symbol): number {
 	return 0;
 }
 
-class GetIndexSetDummy extends ArrayTyped<number> {
-	constructor(values: number[]) {
-		super(new ArrayBuffer(values.length), 0, values.length);
-	}
-
-	protected override [ArrayTyped.getter](index: number): number {
-		return index;
-	}
-
-	protected override [ArrayTyped.setter](): void {}
-}
-
-class GetSet extends ArrayTyped<number> {
+class TestArray extends ArrayTyped<number> {
 	#values: number[] = [];
 
 	#lastGetter: number | null = null;
@@ -151,7 +139,7 @@ Deno.test('ArrayTyped: [[get]]', () => {
 		const spec = new Uint8Array([0, 1]);
 		const expected = spec[p];
 
-		const test = new GetSet([0, 1]);
+		const test = new TestArray([0, 1]);
 
 		assertEquals(test[p], expected, String(p));
 	}
@@ -169,7 +157,7 @@ Deno.test('ArrayTyped: [[set]]', () => {
 			}
 		}
 
-		const test = new GetSet([0, 1]);
+		const test = new TestArray([0, 1]);
 		test[p] = 2;
 		const called = test.lastSetter();
 
@@ -185,7 +173,7 @@ Deno.test('ArrayTyped: [[set]]', () => {
 	}
 
 	{
-		const test = new GetIndexSetDummy([0, 1]);
+		const test = new TestArray([0, 1]);
 
 		assertThrows(() => {
 			(test as { length: number }).length = 1;
@@ -198,7 +186,7 @@ Deno.test('ArrayTyped: [[has]]', () => {
 		const spec = new Uint8Array([0, 1]);
 		const expected = p in spec;
 
-		const test = new GetSet([0, 1]);
+		const test = new TestArray([0, 1]);
 		const isIn = p in test;
 
 		assertEquals(isIn, expected, String(p));
@@ -218,7 +206,7 @@ Deno.test('ArrayTyped: [[deleteProperty]]', () => {
 		}
 		const expIn = p in spec;
 
-		const test = new GetIndexSetDummy([0, 1]);
+		const test = new TestArray([0, 1]);
 		test[p] = 2;
 		let actErr: Error | null = null;
 		try {
@@ -235,7 +223,7 @@ Deno.test('ArrayTyped: [[deleteProperty]]', () => {
 
 Deno.test('ArrayTyped: [[ownKeys]]', () => {
 	{
-		const test = new GetSet([0, 1]);
+		const test = new TestArray([0, 1]);
 		const ownKeys = Reflect.ownKeys(test);
 
 		assertEquals(ownKeys, []);
@@ -246,7 +234,7 @@ Deno.test('ArrayTyped: [[ownKeys]]', () => {
 		spec[p] = 2;
 		const expected = Reflect.ownKeys(spec).filter(filterArrayKeys(2, true));
 
-		const test = new GetSet([0, 1]);
+		const test = new TestArray([0, 1]);
 		test[p] = 2;
 		const ownKeys = Reflect.ownKeys(test);
 
@@ -261,7 +249,7 @@ Deno.test('ArrayTyped: [[ownKeys]]', () => {
 		const sap = Object.getOwnPropertyNames(spec).length - sop;
 		const sas = Object.getOwnPropertySymbols(spec).length - sos;
 
-		const test = new GetSet([0, 1]);
+		const test = new TestArray([0, 1]);
 		const top = Object.getOwnPropertyNames(test).length;
 		const tos = Object.getOwnPropertySymbols(test).length;
 		test[p] = 2;
@@ -288,7 +276,7 @@ Deno.test('ArrayTyped: [[getOwnPropertyDescriptor]]', () => {
 			}
 			: undefined;
 
-		const test = new GetSet([0, 1]);
+		const test = new TestArray([0, 1]);
 		test[p] = 2;
 		const actual = Object.getOwnPropertyDescriptor(test, p);
 
@@ -331,7 +319,7 @@ Deno.test('ArrayTyped: [[defineProperty]]', () => {
 				continue;
 			}
 
-			const test = new GetSet([0, 1]);
+			const test = new TestArray([0, 1]);
 			Object.defineProperty(test, p, desc);
 			assertEquals(p in test, p in spec, tag);
 
@@ -402,7 +390,7 @@ Deno.test('ArrayTyped: [[isExtensible]] [[preventExtensions]]', () => {
 			specErr = err as Error;
 		}
 
-		const test = new GetIndexSetDummy([0, 1]);
+		const test = new TestArray([0, 1]);
 		Object.preventExtensions(test);
 		let testErr: Error | null = null;
 		try {
@@ -435,7 +423,7 @@ Deno.test('ArrayTyped: [[isExtensible]] [[preventExtensions]]', () => {
 		}
 		const expIn = p in spec;
 
-		const test = new GetIndexSetDummy([0, 1]);
+		const test = new TestArray([0, 1]);
 		test[p] = 2;
 		Object.preventExtensions(test);
 		let actErr: Error | null = null;
@@ -456,7 +444,7 @@ Deno.test('ArrayTyped: [[isExtensible]] [[preventExtensions]]', () => {
 		Object.preventExtensions(spec);
 		const expected = Reflect.ownKeys(spec).filter(filterArrayKeys(2, true));
 
-		const test = new GetSet([0, 1]);
+		const test = new TestArray([0, 1]);
 		test[p] = 2;
 		Object.preventExtensions(test);
 		const ownKeys = Reflect.ownKeys(test);
@@ -475,7 +463,7 @@ Deno.test('ArrayTyped: [[isExtensible]] [[preventExtensions]]', () => {
 		}
 		const expIn = p in spec;
 
-		const test = new GetIndexSetDummy([0, 1]);
+		const test = new TestArray([0, 1]);
 		Object.preventExtensions(test);
 		let actErr: Error | null = null;
 		try {
@@ -501,7 +489,7 @@ Deno.test('ArrayTyped: [[isExtensible]] [[preventExtensions]]', () => {
 		}
 		const expIn = p in spec;
 
-		const test = new GetIndexSetDummy([0, 1]);
+		const test = new TestArray([0, 1]);
 		test[p] = 2;
 		Object.preventExtensions(test);
 		let actErr: Error | null = null;
