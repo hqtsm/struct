@@ -23,6 +23,7 @@ const properties = [
 			Infinity,
 			NaN,
 			Number.MAX_SAFE_INTEGER,
+			Number.MAX_SAFE_INTEGER + 1,
 			Number.MAX_VALUE,
 			Number.MIN_VALUE,
 			0n,
