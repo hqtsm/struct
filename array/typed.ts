@@ -15,43 +15,39 @@ const getter = Symbol('getter');
 
 const setter = Symbol('setter');
 
-function createHandler<E>(): ProxyHandler<ArrayTyped<E>> {
-	return {
-		deleteProperty(target, key): boolean {
-			let i;
-			return (Reflect.has(target, key) || (i = index(key)) === null)
-				? Reflect.deleteProperty(target, key)
-				: !(i < length.call(target));
-		},
-		get(target, key, receiver: ArrayTyped<E>): E | undefined {
-			let i;
-			if (Reflect.has(target, key) || (i = index(key)) === null) {
-				return Reflect.get(target, key);
-			}
-			if (i < length.call(target)) {
-				return receiver[getter](i);
-			}
-		},
-		has(target, key): boolean {
-			return (
-				Reflect.has(target, key) ||
-				(index(key) ?? NaN) < length.call(target)
-			);
-		},
-		set(target, key, value, receiver: ArrayTyped<E>): boolean {
-			let i;
-			if (Reflect.has(target, key) || (i = index(key)) === null) {
-				return Reflect.set(target, key, value);
-			}
-			if (i < length.call(target)) {
-				receiver[setter](i, value);
-			}
-			return true;
-		},
-	};
-}
-
-let handler;
+const handler = {
+	deleteProperty(target, key): boolean {
+		let i;
+		return (Reflect.has(target, key) || (i = index(key)) === null)
+			? Reflect.deleteProperty(target, key)
+			: !(i < length.call(target));
+	},
+	get(target, key, receiver: ArrayTyped<unknown>): unknown | undefined {
+		let i;
+		if (Reflect.has(target, key) || (i = index(key)) === null) {
+			return Reflect.get(target, key);
+		}
+		if (i < length.call(target)) {
+			return receiver[getter](i);
+		}
+	},
+	has(target, key): boolean {
+		return (
+			Reflect.has(target, key) ||
+			(index(key) ?? NaN) < length.call(target)
+		);
+	},
+	set(target, key, value, receiver: ArrayTyped<unknown>): boolean {
+		let i;
+		if (Reflect.has(target, key) || (i = index(key)) === null) {
+			return Reflect.set(target, key, value);
+		}
+		if (i < length.call(target)) {
+			receiver[setter](i, value);
+		}
+		return true;
+	},
+} satisfies ProxyHandler<ArrayTyped<unknown>>;
 
 /**
  * ArrayTyped interface.
@@ -111,7 +107,7 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 		this.#byteOffset = byteOffset | 0;
 		this.#length = length |= 0;
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
-		return new Proxy(this, handler ??= createHandler());
+		return new Proxy(this, handler as ProxyHandler<ArrayTyped<E>>);
 	}
 
 	/**
@@ -190,5 +186,6 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 	public static readonly BYTES_PER_ELEMENT: number;
 }
 
+// Get private length directly.
 const length = Object.getOwnPropertyDescriptor(ArrayTyped.prototype, 'length')!
 	.get as unknown as { call(a: ArrayTyped<unknown>): number };
