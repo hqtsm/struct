@@ -2,7 +2,7 @@ import { LITTLE_ENDIAN } from '../endian.ts';
 import type { ArrayBufferReal, EndianBufferView } from '../type.ts';
 import { dataView } from '../util.ts';
 
-function parseIndex(key: PropertyKey): number | null {
+function index(key: PropertyKey): number | null {
 	let i;
 	return key === '-0'
 		? NaN
@@ -21,13 +21,13 @@ function createHandler<E>(
 	return {
 		deleteProperty(target, key): boolean {
 			let i;
-			return (Reflect.has(target, key) || (i = parseIndex(key)) === null)
+			return (Reflect.has(target, key) || (i = index(key)) === null)
 				? Reflect.deleteProperty(target, key)
 				: !(i < length(target));
 		},
 		get(target, key, receiver: ArrayTyped<E>): E | undefined {
 			let i;
-			if (Reflect.has(target, key) || (i = parseIndex(key)) === null) {
+			if (Reflect.has(target, key) || (i = index(key)) === null) {
 				return Reflect.get(target, key);
 			}
 			if (i < length(target)) {
@@ -37,12 +37,12 @@ function createHandler<E>(
 		has(target, key): boolean {
 			return (
 				Reflect.has(target, key) ||
-				(parseIndex(key) ?? NaN) < length(target)
+				(index(key) ?? NaN) < length(target)
 			);
 		},
 		set(target, key, value, receiver: ArrayTyped<E>): boolean {
 			let i;
-			if (Reflect.has(target, key) || (i = parseIndex(key)) === null) {
+			if (Reflect.has(target, key) || (i = index(key)) === null) {
 				return Reflect.set(target, key, value);
 			}
 			if (i < length(target)) {
