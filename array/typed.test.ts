@@ -155,7 +155,7 @@ class GetThrowSetThrow extends ArrayTyped<number> {
 }
 
 class GetThrowSetLog extends ArrayTyped<number> {
-	protected called: [number, unknown] | null = null;
+	#called: [number, unknown] | null = null;
 
 	constructor(values: number[]) {
 		super(new ArrayBuffer(values.length), 0, values.length);
@@ -169,12 +169,12 @@ class GetThrowSetLog extends ArrayTyped<number> {
 		index: number,
 		value: unknown,
 	): void {
-		this.called = [index, value];
+		this.#called = [index, value];
 	}
 
 	public readCalled(): [number, unknown] | null {
-		const r = this.called;
-		this.called = null;
+		const r = this.#called;
+		this.#called = null;
 		return r;
 	}
 }
