@@ -21,10 +21,9 @@ function createHandler<E>(
 	return {
 		deleteProperty(target, key): boolean {
 			const index = parseIndex(key);
-			if (index === null) {
-				return Reflect.deleteProperty(target, key);
-			}
-			return !(index < length(target));
+			return index === null
+				? Reflect.deleteProperty(target, key)
+				: !(index < length(target));
 		},
 		get(target, key, receiver: ArrayTyped<E>): E | undefined {
 			const index = parseIndex(key);
