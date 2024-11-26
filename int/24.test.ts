@@ -1,5 +1,5 @@
-import { assertEquals } from '@std/assert';
 import { getInt24, getUint24 } from '@hqtsm/dataview/int/24';
+import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import {
