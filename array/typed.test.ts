@@ -125,23 +125,6 @@ class GetIndexSetThrow extends ArrayTyped<number> {
 	}
 }
 
-class GetThrowSetThrow extends ArrayTyped<number> {
-	constructor(values: number[]) {
-		super(new ArrayBuffer(values.length), 0, values.length);
-	}
-
-	protected override [ArrayTyped.getter](index: number): number {
-		throw new Error(`Getter: ${index}`);
-	}
-
-	protected override [ArrayTyped.setter](
-		index: number,
-		value: unknown,
-	): void {
-		throw new Error(`Setter: ${index} = ${value}`);
-	}
-}
-
 class GetSet extends ArrayTyped<number> {
 	#values: number[] = [];
 
@@ -232,10 +215,11 @@ Deno.test('ArrayTyped: [[has]]', () => {
 		const spec = new Uint8Array([0, 1]);
 		const expected = p in spec;
 
-		const test = new GetThrowSetThrow([0, 1]);
+		const test = new GetSet([0, 1]);
 		const isIn = p in test;
 
 		assertEquals(isIn, expected, String(p));
+		assertEquals(test.lastGetter(), null, String(p));
 	}
 });
 
