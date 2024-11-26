@@ -3,11 +3,11 @@ import type { ArrayBufferReal, EndianBufferView } from '../type.ts';
 import { dataView } from '../util.ts';
 
 function parseIndex(key: PropertyKey): number | null {
-	let index;
+	let i;
 	return key === '-0'
 		? NaN
-		: ((key === '' + (index = +String(key)))
-			? (index === (index | 0) && index >= 0 ? index : NaN)
+		: ((key === '' + (i = +String(key)))
+			? (i === (i | 0) && i >= 0 ? i : NaN)
 			: null);
 }
 
