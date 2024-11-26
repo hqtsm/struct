@@ -1,6 +1,7 @@
 import { assertEquals } from '@std/assert';
 import { getInt24, getUint24 } from '@hqtsm/dataview/int/24';
 
+import { Struct } from '../struct.ts';
 import {
 	getByteLength,
 	getByteOffset,
@@ -9,7 +10,6 @@ import {
 	getSigned,
 	getType,
 } from '../util.ts';
-import { Struct } from '../struct.ts';
 
 import { int24, uint24 } from './24.ts';
 

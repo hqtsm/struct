@@ -1,8 +1,8 @@
 import { assertEquals, assertThrows } from '@std/assert';
 
-import { assignType, assignView } from './util.ts';
-import { Struct } from './struct.ts';
 import { uint8 } from './int/8.ts';
+import { Struct } from './struct.ts';
+import { assignType, assignView } from './util.ts';
 
 Deno.test('assignView', () => {
 	const src = new Uint8Array([0xff, 0xfe, 0xfd, 0xfc]);

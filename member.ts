@@ -1,4 +1,3 @@
-import { assignView } from './util.ts';
 import type {
 	MemberInfo,
 	MemberInfos,
@@ -6,6 +5,7 @@ import type {
 	Type,
 	TypeClass,
 } from './type.ts';
+import { assignView } from './util.ts';
 
 /**
  * Member descriptor.

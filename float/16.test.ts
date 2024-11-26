@@ -1,6 +1,8 @@
 import { assertEquals } from '@std/assert';
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
+import { Struct } from '../struct.ts';
+import type { ArrayBufferReal } from '../type.ts';
 import {
 	dataView,
 	getByteLength,
@@ -10,8 +12,6 @@ import {
 	getSigned,
 	getType,
 } from '../util.ts';
-import { Struct } from '../struct.ts';
-import type { ArrayBufferReal } from '../type.ts';
 
 import { float16 } from './16.ts';
 

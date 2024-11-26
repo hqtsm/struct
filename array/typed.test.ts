@@ -1,6 +1,7 @@
 import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 
 import { LITTLE_ENDIAN } from '../endian.ts';
+
 import { ArrayTyped } from './typed.ts';
 
 // Properties to ensure matching TypedArray behavior.

@@ -5,6 +5,9 @@ import {
 	assertThrows,
 } from '@std/assert';
 
+import { uint32 } from './int/32.ts';
+import { array, member, pad, view } from './member.ts';
+import { Struct } from './struct.ts';
 import {
 	getByteLength,
 	getByteOffset,
@@ -13,9 +16,6 @@ import {
 	getSigned,
 	getType,
 } from './util.ts';
-import { Struct } from './struct.ts';
-import { uint32 } from './int/32.ts';
-import { array, member, pad, view } from './member.ts';
 
 Deno.test('member', () => {
 	class TestChild extends Struct {
