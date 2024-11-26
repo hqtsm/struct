@@ -16,7 +16,7 @@ const getter = Symbol('getter');
 const setter = Symbol('setter');
 
 function createHandler<E>(
-	length: (a: ArrayTyped<E>) => number,
+	length: (a: ArrayTyped<unknown>) => number,
 ): ProxyHandler<ArrayTyped<E>> {
 	return {
 		deleteProperty(target, key): boolean {
@@ -115,7 +115,7 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
 		return new Proxy(
 			this,
-			handler ??= createHandler<E>((a: ArrayTyped<E>) => a.#length),
+			handler ??= createHandler<E>((a) => a.#length),
 		);
 	}
 
