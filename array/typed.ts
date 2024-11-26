@@ -20,7 +20,7 @@ let handler: ProxyHandler<ArrayTyped<unknown>>;
 /**
  * ArrayTyped interface.
  */
-export abstract class ArrayTyped<E> implements EndianBufferView {
+export abstract class ArrayTyped<T> implements EndianBufferView {
 	/**
 	 * ArrayTyped class.
 	 */
@@ -29,7 +29,7 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 	/**
 	 * Array elements.
 	 */
-	[index: number]: E;
+	[index: number]: T;
 
 	/**
 	 * Buffer data.
@@ -75,7 +75,7 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 		this.#byteOffset = byteOffset - byteOffset % 1 || 0;
 		this.#length = length - length % 1 || 0;
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
-		return new Proxy(this, handler as ProxyHandler<ArrayTyped<E>>);
+		return new Proxy(this, handler as ProxyHandler<ArrayTyped<T>>);
 	}
 
 	/**
@@ -129,14 +129,14 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 	 *
 	 * @returns Element value.
 	 */
-	protected abstract [getter](index: number): E;
+	protected abstract [getter](index: number): T;
 
 	/**
 	 * Setter accessor.
 	 *
 	 * @param value Element value.
 	 */
-	protected abstract [setter](index: number, value: E): void;
+	protected abstract [setter](index: number, value: T): void;
 
 	/**
 	 * Getter symbol.
