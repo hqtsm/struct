@@ -22,7 +22,7 @@ let handler: ProxyHandler<ArrayTyped<unknown>>;
  */
 export abstract class ArrayTyped<E> implements EndianBufferView {
 	/**
-	 * ArrayType class.
+	 * ArrayTyped class.
 	 */
 	declare public readonly ['constructor']: Omit<typeof ArrayTyped, 'new'>;
 
