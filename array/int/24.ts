@@ -75,7 +75,7 @@ export class ArrayUint24 extends ArrayTyped<number> {
 }
 
 /**
- * Array: int24.
+ * Array: int24, aligned to 4 bytes.
  */
 export class ArrayInt24Align4 extends ArrayInt24 {
 	/**
@@ -85,7 +85,7 @@ export class ArrayInt24Align4 extends ArrayInt24 {
 }
 
 /**
- * Array: uint24.
+ * Array: uint24, aligned to 4 bytes.
  */
 export class ArrayUint24Align4 extends ArrayUint24 {
 	/**
