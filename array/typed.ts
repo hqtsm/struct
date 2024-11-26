@@ -5,7 +5,7 @@ import { dataView } from '../util.ts';
 function index(key: PropertyKey): number | null {
 	let i;
 	return key === '-0' ? NaN : (
-		(key === '' + (i = +String(key)))
+		key === '' + (i = +String(key))
 			? (i === (i | 0) && i >= 0 ? i : NaN)
 			: null
 	);
