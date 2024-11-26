@@ -20,18 +20,18 @@ function createHandler<E>(
 ): ProxyHandler<ArrayTyped<E>> {
 	return {
 		deleteProperty(target, key): boolean {
-			const index = parseIndex(key);
-			return index === null
+			let i;
+			return (Reflect.has(target, key) || (i = parseIndex(key)) === null)
 				? Reflect.deleteProperty(target, key)
-				: !(index < length(target));
+				: !(i < length(target));
 		},
 		get(target, key, receiver: ArrayTyped<E>): E | undefined {
-			const index = parseIndex(key);
-			if (index === null) {
+			let i;
+			if (Reflect.has(target, key) || (i = parseIndex(key)) === null) {
 				return Reflect.get(target, key);
 			}
-			if (index < length(target)) {
-				return receiver[getter](index);
+			if (i < length(target)) {
+				return receiver[getter](i);
 			}
 		},
 		has(target, key): boolean {
@@ -41,12 +41,12 @@ function createHandler<E>(
 			);
 		},
 		set(target, key, value, receiver: ArrayTyped<E>): boolean {
-			const index = parseIndex(key);
-			if (index === null) {
+			let i;
+			if (Reflect.has(target, key) || (i = parseIndex(key)) === null) {
 				return Reflect.set(target, key, value);
 			}
-			if (index < length(target)) {
-				receiver[setter](index, value);
+			if (i < length(target)) {
+				receiver[setter](i, value);
 			}
 			return true;
 		},
