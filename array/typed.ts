@@ -188,4 +188,4 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 
 // Get private length directly.
 const length = Object.getOwnPropertyDescriptor(ArrayTyped.prototype, 'length')!
-	.get as unknown as { call(a: ArrayTyped<unknown>): number };
+	.get as { call(a: ArrayTyped<unknown>): number };
