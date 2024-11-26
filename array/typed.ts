@@ -19,17 +19,6 @@ function createHandler<E>(
 	length: (a: ArrayTyped<unknown>) => number,
 ): ProxyHandler<ArrayTyped<E>> {
 	return {
-		defineProperty(target, key, desc: PropertyDescriptor): boolean {
-			const index = parseIndex(key);
-			if (index === null) {
-				return Reflect.defineProperty(target, key, desc);
-			}
-			if (index < length(target) && 'value' in desc) {
-				target[setter](index, desc.value);
-				return true;
-			}
-			return false;
-		},
 		deleteProperty(target, key): boolean {
 			const index = parseIndex(key);
 			if (index === null) {
@@ -37,41 +26,28 @@ function createHandler<E>(
 			}
 			return !(index < length(target));
 		},
-		get(target, key): E | undefined {
+		get(target, key, receiver): E | undefined {
 			const index = parseIndex(key);
 			if (index === null) {
 				return Reflect.get(target, key);
 			}
 			if (index < length(target)) {
-				return target[getter](index);
-			}
-		},
-		getOwnPropertyDescriptor(target, key): PropertyDescriptor | undefined {
-			const index = parseIndex(key);
-			if (index === null) {
-				return Reflect.getOwnPropertyDescriptor(target, key);
-			}
-			if (index < length(target)) {
-				const value = target[getter](index);
-				const r = Reflect.getOwnPropertyDescriptor(target, key)!;
-				r.value = value;
-				return r;
+				return receiver[getter](index);
 			}
 		},
 		has(target, key): boolean {
-			const index = parseIndex(key);
-			if (index === null) {
-				return Reflect.has(target, key);
-			}
-			return index < length(target);
+			return (
+				Reflect.has(target, key) ||
+				(parseIndex(key) ?? NaN) < length(target)
+			);
 		},
-		set(target, key, value): boolean {
+		set(target, key, value, receiver): boolean {
 			const index = parseIndex(key);
 			if (index === null) {
 				return Reflect.set(target, key, value);
 			}
 			if (index < length(target)) {
-				target[setter](index, value);
+				receiver[setter](index, value);
 			}
 			return true;
 		},
@@ -138,9 +114,6 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 		this.#byteOffset = byteOffset | 0;
 		this.#length = length |= 0;
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
-		for (let i = 0; i < length;) {
-			(this as { [index: number]: undefined })[i++] = undefined;
-		}
 		return new Proxy(
 			this,
 			handler ??= createHandler<E>((a: ArrayTyped<unknown>) => a.#length),
