@@ -142,33 +142,12 @@ class GetThrowSetThrow extends ArrayTyped<number> {
 	}
 }
 
-class GetThrowSetLog extends ArrayTyped<number> {
-	#called: [number, unknown] | null = null;
-
-	constructor(values: number[]) {
-		super(new ArrayBuffer(values.length), 0, values.length);
-	}
-
-	protected override [ArrayTyped.getter](index: number): number {
-		throw new Error(`Getter: ${index}`);
-	}
-
-	protected override [ArrayTyped.setter](
-		index: number,
-		value: unknown,
-	): void {
-		this.#called = [index, value];
-	}
-
-	public readCalled(): [number, unknown] | null {
-		const r = this.#called;
-		this.#called = null;
-		return r;
-	}
-}
-
 class GetSet extends ArrayTyped<number> {
 	#values: number[] = [];
+
+	#lastGetter: number | null = null;
+
+	#lastSetter: [number, unknown] | null = null;
 
 	constructor(values: number[]) {
 		super(new ArrayBuffer(values.length), 0, values.length);
@@ -176,6 +155,7 @@ class GetSet extends ArrayTyped<number> {
 	}
 
 	protected override [ArrayTyped.getter](index: number): number {
+		this.#lastGetter = index;
 		return this.#values[index];
 	}
 
@@ -183,7 +163,20 @@ class GetSet extends ArrayTyped<number> {
 		index: number,
 		value: unknown,
 	): void {
+		this.#lastSetter = [index, value];
 		this.#values[index] = Number(value) | 0;
+	}
+
+	public lastGetter(): number | null {
+		const r = this.#lastGetter;
+		this.#lastGetter = null;
+		return r;
+	}
+
+	public lastSetter(): [number, unknown] | null {
+		const r = this.#lastSetter;
+		this.#lastSetter = null;
+		return r;
 	}
 }
 
@@ -210,9 +203,9 @@ Deno.test('ArrayTyped: [[set]]', () => {
 			}
 		}
 
-		const test = new GetThrowSetLog([0, 1]);
+		const test = new GetSet([0, 1]);
 		test[p] = 2;
-		const called = test.readCalled();
+		const called = test.lastSetter();
 
 		assertEquals(called, expected, String(p));
 	}
@@ -275,7 +268,7 @@ Deno.test('ArrayTyped: [[deleteProperty]]', () => {
 
 Deno.test('ArrayTyped: [[ownKeys]]', () => {
 	{
-		const test = new GetThrowSetLog([0, 1]);
+		const test = new GetSet([0, 1]);
 		const ownKeys = Reflect.ownKeys(test);
 
 		assertEquals(ownKeys, []);
@@ -286,7 +279,7 @@ Deno.test('ArrayTyped: [[ownKeys]]', () => {
 		spec[p] = 2;
 		const expected = Reflect.ownKeys(spec).filter(filterArrayKeys(2, true));
 
-		const test = new GetThrowSetLog([0, 1]);
+		const test = new GetSet([0, 1]);
 		test[p] = 2;
 		const ownKeys = Reflect.ownKeys(test);
 
@@ -301,7 +294,7 @@ Deno.test('ArrayTyped: [[ownKeys]]', () => {
 		const sap = Object.getOwnPropertyNames(spec).length - sop;
 		const sas = Object.getOwnPropertySymbols(spec).length - sos;
 
-		const test = new GetThrowSetLog([0, 1]);
+		const test = new GetSet([0, 1]);
 		const top = Object.getOwnPropertyNames(test).length;
 		const tos = Object.getOwnPropertySymbols(test).length;
 		test[p] = 2;
@@ -496,7 +489,7 @@ Deno.test('ArrayTyped: [[isExtensible]] [[preventExtensions]]', () => {
 		Object.preventExtensions(spec);
 		const expected = Reflect.ownKeys(spec).filter(filterArrayKeys(2, true));
 
-		const test = new GetThrowSetLog([0, 1]);
+		const test = new GetSet([0, 1]);
 		test[p] = 2;
 		Object.preventExtensions(test);
 		const ownKeys = Reflect.ownKeys(test);
