@@ -125,18 +125,6 @@ class GetIndexSetThrow extends ArrayTyped<number> {
 	}
 }
 
-class GetThrowSetDummy extends ArrayTyped<number> {
-	constructor(values: number[]) {
-		super(new ArrayBuffer(values.length), 0, values.length);
-	}
-
-	protected override [ArrayTyped.getter](index: number): number {
-		throw new Error(`Getter: ${index}`);
-	}
-
-	protected override [ArrayTyped.setter](): void {}
-}
-
 class GetThrowSetThrow extends ArrayTyped<number> {
 	constructor(values: number[]) {
 		super(new ArrayBuffer(values.length), 0, values.length);
@@ -287,7 +275,7 @@ Deno.test('ArrayTyped: [[deleteProperty]]', () => {
 
 Deno.test('ArrayTyped: [[ownKeys]]', () => {
 	{
-		const test = new GetThrowSetDummy([0, 1]);
+		const test = new GetThrowSetLog([0, 1]);
 		const ownKeys = Reflect.ownKeys(test);
 
 		assertEquals(ownKeys, []);
@@ -298,7 +286,7 @@ Deno.test('ArrayTyped: [[ownKeys]]', () => {
 		spec[p] = 2;
 		const expected = Reflect.ownKeys(spec).filter(filterArrayKeys(2, true));
 
-		const test = new GetThrowSetDummy([0, 1]);
+		const test = new GetThrowSetLog([0, 1]);
 		test[p] = 2;
 		const ownKeys = Reflect.ownKeys(test);
 
@@ -313,7 +301,7 @@ Deno.test('ArrayTyped: [[ownKeys]]', () => {
 		const sap = Object.getOwnPropertyNames(spec).length - sop;
 		const sas = Object.getOwnPropertySymbols(spec).length - sos;
 
-		const test = new GetThrowSetDummy([0, 1]);
+		const test = new GetThrowSetLog([0, 1]);
 		const top = Object.getOwnPropertyNames(test).length;
 		const tos = Object.getOwnPropertySymbols(test).length;
 		test[p] = 2;
@@ -508,7 +496,7 @@ Deno.test('ArrayTyped: [[isExtensible]] [[preventExtensions]]', () => {
 		Object.preventExtensions(spec);
 		const expected = Reflect.ownKeys(spec).filter(filterArrayKeys(2, true));
 
-		const test = new GetThrowSetDummy([0, 1]);
+		const test = new GetThrowSetLog([0, 1]);
 		test[p] = 2;
 		Object.preventExtensions(test);
 		const ownKeys = Reflect.ownKeys(test);
