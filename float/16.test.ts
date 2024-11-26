@@ -12,7 +12,6 @@ import {
 	getSigned,
 	getType,
 } from '../util.ts';
-
 import { float16 } from './16.ts';
 
 Deno.test('float16', () => {

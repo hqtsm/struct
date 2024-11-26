@@ -9,7 +9,6 @@ import {
 	getSigned,
 	getType,
 } from '../util.ts';
-
 import { int8, uint8 } from './8.ts';
 
 Deno.test('int8', () => {

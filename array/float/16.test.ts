@@ -3,7 +3,6 @@ import { assertEquals } from '@std/assert';
 
 import type { ArrayBufferReal } from '../../type.ts';
 import { dataView } from '../../util.ts';
-
 import { ArrayFloat16 } from './16.ts';
 
 function round(n: number): number {

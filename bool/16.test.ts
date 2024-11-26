@@ -9,7 +9,6 @@ import {
 	getSigned,
 	getType,
 } from '../util.ts';
-
 import { bool16 } from './16.ts';
 
 Deno.test('bool16', () => {

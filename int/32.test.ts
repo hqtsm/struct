@@ -9,7 +9,6 @@ import {
 	getSigned,
 	getType,
 } from '../util.ts';
-
 import { int32, uint32 } from './32.ts';
 
 Deno.test('int32', () => {

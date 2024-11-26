@@ -9,7 +9,6 @@ import {
 	getSigned,
 	getType,
 } from '../util.ts';
-
 import { float64 } from './64.ts';
 
 Deno.test('float64', () => {

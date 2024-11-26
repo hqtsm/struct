@@ -10,7 +10,6 @@ import {
 	getSigned,
 	getType,
 } from '../util.ts';
-
 import { int24, uint24 } from './24.ts';
 
 Deno.test('int24', () => {

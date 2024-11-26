@@ -1,7 +1,6 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
 import { dataView } from '../../util.ts';
-
 import { ArrayTyped } from '../typed.ts';
 
 type MaybeNativeFloat16 = Partial<{

@@ -1,5 +1,4 @@
 import { dataView } from '../../util.ts';
-
 import { ArrayTyped } from '../typed.ts';
 
 /**
