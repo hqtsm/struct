@@ -103,10 +103,7 @@ class DummyArray extends ArrayTyped<number> {
 		throw new Error(`Getter: [${index}]`);
 	}
 
-	protected override [ArrayTyped.setter](
-		index: number,
-		value: unknown,
-	): void {
+	protected override [ArrayTyped.setter](index: number, value: number): void {
 		throw new Error(`Setter: [${index}] = ${String(value)}`);
 	}
 
@@ -130,10 +127,7 @@ class TestArray extends ArrayTyped<number> {
 		return this.#values[index];
 	}
 
-	protected override [ArrayTyped.setter](
-		index: number,
-		value: unknown,
-	): void {
+	protected override [ArrayTyped.setter](index: number, value: number): void {
 		this.#lastSetter = [index, value];
 		this.#values[index] = Number(value) | 0;
 	}

@@ -174,7 +174,7 @@ export abstract class ArrayTyped<E> implements EndianBufferView {
 	 *
 	 * @param value Element value.
 	 */
-	protected abstract [setter](index: number, value: unknown): void;
+	protected abstract [setter](index: number, value: E): void;
 
 	/**
 	 * Getter symbol.
