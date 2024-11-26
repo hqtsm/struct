@@ -27,6 +27,8 @@ Deno.test('byteLength', () => {
 });
 
 Deno.test('byteOffset', () => {
+	const MAX = Number.MAX_SAFE_INTEGER;
+
 	class Test extends Struct {
 		declare public alpha: number;
 
@@ -36,25 +38,32 @@ Deno.test('byteOffset', () => {
 		})(super.BYTE_LENGTH);
 	}
 
-	const data = new ArrayBuffer(32);
-	assertEquals(new Test(data, 4).byteOffset, 4);
-	assertEquals(new Test(data, 3.14).byteOffset, 3);
-	assertEquals(new Test(data, 3.99).byteOffset, 3);
-	assertEquals(new Test(data, 32).byteOffset, 32);
+	const buffer = new ArrayBuffer(32);
+	assertEquals(new Test(buffer, 4).byteOffset, 4);
+	assertEquals(new Test(buffer, 3.14).byteOffset, 3);
+	assertEquals(new Test(buffer, 3.99).byteOffset, 3);
+	assertEquals(new Test(buffer, Number.EPSILON).byteOffset, 0);
+	assertEquals(new Test(buffer, 1 - Number.EPSILON).byteOffset, 0);
+	assertEquals(new Test(buffer, NaN).byteOffset, 0);
+	assertEquals(new Test(buffer, MAX).byteOffset, MAX);
+	assertEquals(new Test(buffer, 32).byteOffset, 32);
 
-	// Negative offset throws immediately.
-	assertThrows(() => new Test(data, -1), RangeError);
+	// Negative and impossible offset throws immediately.
+	assertThrows(() => new Test(buffer, -1), RangeError);
+	assertThrows(() => new Test(buffer, MAX + 1), RangeError);
+	assertThrows(() => new Test(buffer, MAX + .5), RangeError);
+	assertThrows(() => new Test(buffer, Infinity), RangeError);
 
 	// Offset over buffer size throws lazy.
-	assertThrows(() => new Test(data, 32).alpha, RangeError);
-	assertThrows(() => new Test(data, 33).alpha, RangeError);
+	assertThrows(() => new Test(buffer, 32).alpha, RangeError);
+	assertThrows(() => new Test(buffer, 33).alpha, RangeError);
 });
 
 Deno.test('littleEndian', () => {
-	const data = new ArrayBuffer(32);
-	assertEquals(new Struct(data).littleEndian, LITTLE_ENDIAN);
-	assertEquals(new Struct(data, 0, true).littleEndian, true);
-	assertEquals(new Struct(data, 0, false).littleEndian, false);
+	const buffer = new ArrayBuffer(32);
+	assertEquals(new Struct(buffer).littleEndian, LITTLE_ENDIAN);
+	assertEquals(new Struct(buffer, 0, true).littleEndian, true);
+	assertEquals(new Struct(buffer, 0, false).littleEndian, false);
 });
 
 Deno.test('BYTE_LENGTH', () => {

@@ -158,6 +158,8 @@ Deno.test('buffer', () => {
 });
 
 Deno.test('length + byteLength', () => {
+	const MAX = Number.MAX_SAFE_INTEGER;
+
 	const buffer = new ArrayBuffer(0);
 	assertEquals(new DummyArray(buffer).byteLength, 0);
 	assertEquals(new DummyArray(buffer, 1).byteLength, 0);
@@ -167,26 +169,33 @@ Deno.test('length + byteLength', () => {
 	assertEquals(new TestArray([1]).byteLength, 4);
 	assertEquals(new TestArray([1, 2]).byteLength, 8);
 
-	// Negative length throws immediately.
+	// Negative and impossible values throws immediately.
 	assertThrows(() => new DummyArray(buffer, 0, -1), RangeError);
+	assertThrows(() => new DummyArray(buffer, 0, MAX + 1), RangeError);
+	assertThrows(() => new DummyArray(buffer, 0, MAX + .5), RangeError);
+	assertThrows(() => new DummyArray(buffer, 0, Infinity), RangeError);
 });
 
 Deno.test('byteOffset', () => {
-	const data = new ArrayBuffer(32);
+	const MAX = Number.MAX_SAFE_INTEGER;
+	const buffer = new ArrayBuffer(32);
 
-	// Negative offset throws immediately.
-	assertThrows(() => new DummyArray(data, -1), RangeError);
+	// Negative and impossible values throws immediately.
+	assertThrows(() => new DummyArray(buffer, -1), RangeError);
+	assertThrows(() => new DummyArray(buffer, MAX + 1), RangeError);
+	assertThrows(() => new DummyArray(buffer, MAX + .5), RangeError);
+	assertThrows(() => new DummyArray(buffer, Infinity), RangeError);
 
 	// Offset over buffer size does not throw unless later accessed.
-	assertEquals(new DummyArray(data, 32).byteOffset, 32);
-	assertEquals(new DummyArray(data, 33).byteOffset, 33);
+	assertEquals(new DummyArray(buffer, 32).byteOffset, 32);
+	assertEquals(new DummyArray(buffer, 33).byteOffset, 33);
 });
 
 Deno.test('littleEndian', () => {
-	const data = new ArrayBuffer(32);
-	assertEquals(new DummyArray(data).littleEndian, LITTLE_ENDIAN);
-	assertEquals(new DummyArray(data, 0, 0, true).littleEndian, true);
-	assertEquals(new DummyArray(data, 0, 0, false).littleEndian, false);
+	const buffer = new ArrayBuffer(32);
+	assertEquals(new DummyArray(buffer).littleEndian, LITTLE_ENDIAN);
+	assertEquals(new DummyArray(buffer, 0, 0, true).littleEndian, true);
+	assertEquals(new DummyArray(buffer, 0, 0, false).littleEndian, false);
 });
 
 Deno.test('ArrayTyped: [[get]]', () => {
