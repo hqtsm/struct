@@ -29,7 +29,8 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 				index,
 				r = new this.constructor.Type(
 					this.buffer,
-					this.byteOffset + index * this.bytesPerElement,
+					this.byteOffset +
+						index * this.constructor.BYTES_PER_ELEMENT,
 					this.littleEndian,
 				) as T,
 			);
@@ -48,7 +49,8 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 				index,
 				r = new this.constructor.Type(
 					this.buffer,
-					this.byteOffset + index * this.bytesPerElement,
+					this.byteOffset +
+						index * this.constructor.BYTES_PER_ELEMENT,
 					this.littleEndian,
 				) as T,
 			);

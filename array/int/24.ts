@@ -23,7 +23,7 @@ export class ArrayInt24 extends ArrayTyped<number> {
 	protected override [ArrayTyped.getter](index: number): number {
 		return getInt24(
 			dataView(this.buffer),
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			this.littleEndian,
 		);
 	}
@@ -34,7 +34,7 @@ export class ArrayInt24 extends ArrayTyped<number> {
 	protected override [ArrayTyped.setter](index: number, value: number): void {
 		setInt24(
 			dataView(this.buffer),
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			value,
 			this.littleEndian,
 		);
@@ -61,7 +61,7 @@ export class ArrayUint24 extends ArrayTyped<number> {
 	protected override [ArrayTyped.getter](index: number): number {
 		return getUint24(
 			dataView(this.buffer),
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			this.littleEndian,
 		);
 	}
@@ -72,7 +72,7 @@ export class ArrayUint24 extends ArrayTyped<number> {
 	protected override [ArrayTyped.setter](index: number, value: number): void {
 		setUint24(
 			dataView(this.buffer),
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			value,
 			this.littleEndian,
 		);

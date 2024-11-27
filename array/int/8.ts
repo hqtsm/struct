@@ -15,7 +15,7 @@ export class ArrayInt8 extends ArrayTyped<number> {
 	 */
 	protected override [ArrayTyped.getter](index: number): number {
 		return dataView(this.buffer).getInt8(
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 		);
 	}
 
@@ -24,7 +24,7 @@ export class ArrayInt8 extends ArrayTyped<number> {
 	 */
 	protected override [ArrayTyped.setter](index: number, value: number): void {
 		dataView(this.buffer).setInt8(
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			value,
 		);
 	}
@@ -49,7 +49,7 @@ export class ArrayUint8 extends ArrayTyped<number> {
 	 */
 	protected override [ArrayTyped.getter](index: number): number {
 		return dataView(this.buffer).getUint8(
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 		);
 	}
 
@@ -58,7 +58,7 @@ export class ArrayUint8 extends ArrayTyped<number> {
 	 */
 	protected override [ArrayTyped.setter](index: number, value: number): void {
 		dataView(this.buffer).setUint8(
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			value,
 		);
 	}

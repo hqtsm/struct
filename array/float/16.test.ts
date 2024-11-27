@@ -72,23 +72,22 @@ class ArrayFloat16F extends ArrayFloat16 {
 
 Deno.test('ArrayFloat16', () => {
 	const count = 3;
-	assertEquals(ArrayFloat16.BYTES_PER_ELEMENT, 2);
+	const bpe = ArrayFloat16.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 2);
 
 	const fA = round(Math.PI);
 	const fB = round(-Math.E);
 
 	for (const ArrayFloat16 of [ArrayFloat16M, ArrayFloat16F]) {
 		for (const littleEndian of [undefined, true, false]) {
-			const buffer = new ArrayBuffer(
-				ArrayFloat16.BYTES_PER_ELEMENT * count + 1,
-			);
+			const buffer = new ArrayBuffer(bpe * count + 1);
 			const view = new DataView(buffer, 1);
 			const a = new ArrayFloat16(buffer, 1, count, littleEndian);
 			const le = a.littleEndian;
 			for (let i = 0; i < count; i++) {
 				a[i] = fA;
-				assertEquals(getFloat16(view, i * a.bytesPerElement, le), fA);
-				setFloat16(view, i * a.bytesPerElement, fB, le);
+				assertEquals(getFloat16(view, i * bpe, le), fA);
+				setFloat16(view, i * bpe, fB, le);
 				assertEquals(a[i], fB);
 			}
 		}

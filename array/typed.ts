@@ -89,7 +89,7 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 	 * @inheritdoc
 	 */
 	public get byteLength(): number {
-		return this.length * this.bytesPerElement;
+		return this.length * this.constructor.BYTES_PER_ELEMENT;
 	}
 
 	/**
@@ -113,15 +113,6 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 	 */
 	public get length(): number {
 		return this.#length;
-	}
-
-	/**
-	 * Get bytes per element.
-	 *
-	 * @returns Bytes length for element.
-	 */
-	public get bytesPerElement(): number {
-		return this.constructor.BYTES_PER_ELEMENT;
 	}
 
 	/**

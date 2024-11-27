@@ -15,7 +15,7 @@ export class ArrayInt64 extends ArrayTyped<bigint> {
 	 */
 	protected override [ArrayTyped.getter](index: number): bigint {
 		return dataView(this.buffer).getBigInt64(
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			this.littleEndian,
 		);
 	}
@@ -25,7 +25,7 @@ export class ArrayInt64 extends ArrayTyped<bigint> {
 	 */
 	protected override [ArrayTyped.setter](index: number, value: bigint): void {
 		dataView(this.buffer).setBigInt64(
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			value,
 			this.littleEndian,
 		);
@@ -51,7 +51,7 @@ export class ArrayUint64 extends ArrayTyped<bigint> {
 	 */
 	protected override [ArrayTyped.getter](index: number): bigint {
 		return dataView(this.buffer).getBigUint64(
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			this.littleEndian,
 		);
 	}
@@ -61,7 +61,7 @@ export class ArrayUint64 extends ArrayTyped<bigint> {
 	 */
 	protected override [ArrayTyped.setter](index: number, value: bigint): void {
 		dataView(this.buffer).setBigUint64(
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			value,
 			this.littleEndian,
 		);

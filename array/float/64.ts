@@ -15,7 +15,7 @@ export class ArrayFloat64 extends ArrayTyped<number> {
 	 */
 	protected override [ArrayTyped.getter](index: number): number {
 		return dataView(this.buffer).getFloat64(
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			this.littleEndian,
 		);
 	}
@@ -25,7 +25,7 @@ export class ArrayFloat64 extends ArrayTyped<number> {
 	 */
 	protected override [ArrayTyped.setter](index: number, value: number): void {
 		dataView(this.buffer).setFloat64(
-			this.byteOffset + index * this.bytesPerElement,
+			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
 			value,
 			this.littleEndian,
 		);
