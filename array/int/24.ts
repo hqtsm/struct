@@ -73,23 +73,3 @@ export class ArrayUint24 extends ArrayTyped<number> {
 	 */
 	static override readonly BYTES_PER_ELEMENT: number = 3;
 }
-
-/**
- * Array: int24, aligned to 4 bytes.
- */
-export class ArrayInt24Align4 extends ArrayInt24 {
-	/**
-	 * @inheritdoc
-	 */
-	static override readonly BYTES_PER_ELEMENT: number = 4;
-}
-
-/**
- * Array: uint24, aligned to 4 bytes.
- */
-export class ArrayUint24Align4 extends ArrayUint24 {
-	/**
-	 * @inheritdoc
-	 */
-	static override readonly BYTES_PER_ELEMENT: number = 4;
-}
