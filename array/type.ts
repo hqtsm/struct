@@ -13,7 +13,7 @@ let types;
 /**
  * Array: Type.
  */
-export abstract class ArrayType<T extends Type> extends ArrayTyped<T> {
+export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	/**
 	 * ArrayType class.
 	 */

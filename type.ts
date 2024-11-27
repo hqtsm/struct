@@ -79,7 +79,7 @@ export interface Type extends EndianBufferView {
 /**
  * Type class.
  */
-export interface TypeClass<T = Type> {
+export interface TypeClass<T extends Type = Type> {
 	/**
 	 * Type prototype.
 	 */
@@ -99,7 +99,7 @@ export interface TypeClass<T = Type> {
 /**
  * Type constructor.
  */
-export interface TypeConstructor<T = Type> extends TypeClass<T> {
+export interface TypeConstructor<T extends Type = Type> extends TypeClass<T> {
 	/**
 	 * Type constructor.
 	 *

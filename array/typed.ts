@@ -186,11 +186,12 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 	}) as unknown as number;
 }
 
-export interface ArrayTypedClass<T extends Type>
+export interface ArrayTypedClass<T extends Type = Type>
 	extends Omit<typeof ArrayTyped<T>, 'new'> {}
 
-export interface ArrayTypedConstructor<T extends Type>
-	extends ArrayTypedClass<T> {
+export interface ArrayTypedConstructor<
+	T extends Type = Type,
+> extends ArrayTypedClass<T> {
 	new (
 		buffer: ArrayBufferReal,
 		byteOffset?: number,

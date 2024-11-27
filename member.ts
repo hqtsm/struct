@@ -67,7 +67,9 @@ export function defineMember<T extends Type, M>(
 /**
  * Member constructor.
  */
-export interface MemberConstructor<T = ArrayBufferView> {
+export interface MemberConstructor<
+	T extends ArrayBufferView = ArrayBufferView,
+> {
 	/**
 	 * Member constructor.
 	 *
@@ -137,7 +139,7 @@ export function member<M extends ArrayBufferView, T extends Type>(
 /**
  * Array constructor.
  */
-export interface ArrayConstructor<T = ArrayBufferView> {
+export interface ArrayConstructor<T extends ArrayBufferView = ArrayBufferView> {
 	/**
 	 * Array constructor.
 	 *
@@ -212,7 +214,7 @@ export function array<M extends ArrayBufferView, T extends Type>(
 /**
  * View constructor.
  */
-export interface ViewConstructor<T = ArrayBufferView> {
+export interface ViewConstructor<T extends ArrayBufferView = ArrayBufferView> {
 	/**
 	 * View constructor.
 	 *
