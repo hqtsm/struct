@@ -70,6 +70,16 @@ Deno.test('BYTE_LENGTH', () => {
 	assertEquals(Struct.BYTE_LENGTH, 0);
 });
 
+Deno.test('MEMBERS', () => {
+	class A extends Struct {}
+	class B extends A {}
+	class C extends B {}
+
+	assertStrictEquals(Object.getPrototypeOf(C).MEMBERS, B.MEMBERS);
+	assertStrictEquals(Object.getPrototypeOf(B).MEMBERS, A.MEMBERS);
+	assertStrictEquals(Object.getPrototypeOf(A).MEMBERS, Struct.MEMBERS);
+});
+
 Deno.test('protected properties', () => {
 	class Test extends Struct {
 		declare protected alpha: number;

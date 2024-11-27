@@ -2,6 +2,8 @@ import { LITTLE_ENDIAN } from './endian.ts';
 import type { ArrayBufferReal, MemberInfos, Type } from './type.ts';
 import { dataView } from './util.ts';
 
+let members: WeakMap<typeof Struct, MemberInfos>;
+
 /**
  * Binary structure buffer view.
  */
@@ -78,5 +80,16 @@ export class Struct implements Type {
 	/**
 	 * @inheritdoc
 	 */
-	public static readonly MEMBERS: Readonly<MemberInfos> = {};
+	public static get MEMBERS(): Readonly<MemberInfos> {
+		let r = (members ??= new WeakMap()).get(this);
+		if (!r) {
+			members.set(
+				this,
+				r = Object.create(
+					Object.getPrototypeOf(this).MEMBERS ?? null,
+				) as MemberInfos,
+			);
+		}
+		return r;
+	}
 }

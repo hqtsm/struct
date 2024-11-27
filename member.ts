@@ -42,25 +42,21 @@ export function defineMember<T extends Type, M>(
 	desc: MemberDescriptor<(T & Record<typeof name, M>), M>,
 ): number {
 	const { byteLength } = desc;
+	const { MEMBERS } = Type;
 	Object.defineProperty(Type.prototype, name, {
 		configurable: true,
 		enumerable: false,
 		get: desc.get,
 		set: desc.set,
 	});
-	(
-		Object.hasOwn(Type, 'MEMBERS' satisfies keyof typeof Type)
-			? (Type.MEMBERS satisfies MemberInfos)
-			: ((Type as { MEMBERS: MemberInfos }).MEMBERS) = Object
-				.create(Type.MEMBERS)
-	)[name] = {
+	(MEMBERS as MemberInfos)[name] = {
 		byteOffset: desc.byteOffset,
 		byteLength,
 		littleEndian: desc.littleEndian,
 		kind: desc.kind,
 		signed: desc.signed,
 		Type: desc.Type,
-	} satisfies MemberInfo;
+	};
 	return byteLength;
 }
 
