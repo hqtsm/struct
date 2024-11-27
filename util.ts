@@ -1,6 +1,6 @@
 import type { MemberInfoType, Members, Type, TypeClass } from './type.ts';
 
-let dataViews;
+let dataViews: WeakMap<ArrayBufferLike, DataView>;
 
 /**
  * Get reusable data view of buffer.
@@ -9,8 +9,7 @@ let dataViews;
  * @returns Data view.
  */
 export function dataView(buffer: ArrayBufferLike): DataView {
-	dataViews ??= new WeakMap<ArrayBufferLike, DataView>();
-	let r = dataViews.get(buffer);
+	let r = (dataViews ??= new WeakMap()).get(buffer);
 	if (!r) {
 		dataViews.set(buffer, r = new DataView(buffer));
 	}

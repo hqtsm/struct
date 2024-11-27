@@ -2,7 +2,7 @@ import type { ArrayBufferReal, Type, TypeConstructor } from '../type.ts';
 import { assignType } from '../util.ts';
 import { ArrayTyped, type ArrayTypedConstructor } from './typed.ts';
 
-let types;
+let types: WeakMap<TypeConstructor, ArrayTypedConstructor>;
 
 /**
  * ArrayType interface.
@@ -70,8 +70,9 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	public static of<T extends Type>(
 		Type: TypeConstructor<T>,
 	): ArrayTypeConstructor<T> {
-		types ??= new WeakMap<TypeConstructor<T>, ArrayTypedConstructor<T>>();
-		let r = types.get(Type);
+		let r = (types ??= new WeakMap()).get(Type) as
+			| ArrayTypeConstructor<T>
+			| undefined;
 		if (!r) {
 			const name = `${ArrayType.name}<${Type.name}>`;
 			types.set(
