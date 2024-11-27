@@ -5,7 +5,7 @@ import { ArrayTyped, type ArrayTypedConstructor } from './typed.ts';
 let types;
 
 /**
- * Array: Type.
+ * ArrayType interface.
  */
 export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	/**
@@ -92,14 +92,32 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	}
 }
 
-export interface ArrayTypeClass<T extends Type = Type>
-	extends Omit<typeof ArrayType<T>, 'new'> {
+/**
+ * ArrayType class.
+ */
+export interface ArrayTypeClass<
+	T extends Type = Type,
+> extends Omit<typeof ArrayType<T>, 'new'> {
+	/**
+	 * @inheritdoc
+	 */
 	readonly Type: TypeConstructor<T>;
 }
 
+/**
+ * ArrayType constructor.
+ */
 export interface ArrayTypeConstructor<
 	T extends Type = Type,
 > extends ArrayTypeClass<T> {
+	/**
+	 * ArrayType constructor.
+	 *
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset into buffer.
+	 * @param length Array length (element count).
+	 * @param littleEndian Host endian, little endian, big endian.
+	 */
 	new (
 		buffer: ArrayBufferReal,
 		byteOffset?: number,
