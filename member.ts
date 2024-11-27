@@ -50,7 +50,7 @@ export function defineMember<T extends Type, M>(
 			kind: desc.kind,
 			signed: desc.signed,
 			Type: desc.Type,
-		},
+		} satisfies MemberInfo,
 		configurable: true,
 		enumerable: false,
 		writable: true,
