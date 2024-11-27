@@ -78,6 +78,9 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 			types,
 			Type,
 			class extends ArrayType<T> {
+				/**
+				 * @inheritdoc
+				 */
 				declare public readonly ['constructor']: Omit<
 					typeof ArrayType<T>,
 					'new'
