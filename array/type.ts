@@ -1,4 +1,4 @@
-import type { Type, TypeConstructor } from '../type.ts';
+import type { ArrayBufferReal, Type, TypeConstructor } from '../type.ts';
 import { assignType } from '../util.ts';
 import { ArrayTyped, type ArrayTypedConstructor } from './typed.ts';
 
@@ -11,7 +11,7 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	/**
 	 * ArrayType class.
 	 */
-	declare public readonly ['constructor']: Omit<typeof ArrayType, 'new'>;
+	declare public readonly ['constructor']: Omit<typeof ArrayType<T>, 'new'>;
 
 	/**
 	 * Instances mapped over indexes.
@@ -69,7 +69,7 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	 */
 	public static of<T extends Type>(
 		Type: TypeConstructor<T>,
-	): ArrayTypedConstructor<T> {
+	): ArrayTypeConstructor<T> {
 		types ??= new WeakMap<TypeConstructor<T>, ArrayTypedConstructor<T>>();
 		let r = types.get(Type);
 		if (!r) {
@@ -78,22 +78,10 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 				Type,
 				r = {
 					[name]: class extends ArrayType<T> {
-						/**
-						 * @inheritdoc
-						 */
-						declare public readonly ['constructor']: Omit<
-							typeof ArrayType<T>,
-							'new'
-						>;
+						public static override readonly Type: TypeConstructor<
+							T
+						> = Type;
 
-						/**
-						 * @inheritdoc
-						 */
-						public static override readonly Type = Type;
-
-						/**
-						 * @inheritdoc
-						 */
 						public static override readonly BYTES_PER_ELEMENT:
 							number = Type.BYTE_LENGTH;
 					},
@@ -102,4 +90,20 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 		}
 		return r;
 	}
+}
+
+export interface ArrayTypeClass<T extends Type = Type>
+	extends Omit<typeof ArrayType<T>, 'new'> {
+	readonly Type: TypeConstructor<T>;
+}
+
+export interface ArrayTypeConstructor<
+	T extends Type = Type,
+> extends ArrayTypeClass<T> {
+	new (
+		buffer: ArrayBufferReal,
+		byteOffset?: number,
+		length?: number,
+		littleEndian?: boolean | null,
+	): ArrayTyped<T>;
 }

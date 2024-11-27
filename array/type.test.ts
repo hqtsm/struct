@@ -23,6 +23,7 @@ Deno.test('ArrayType of', () => {
 		ArrayType.of(MembersThree8),
 	);
 	assertEquals(ArrayType.of(MembersThree8).name, 'ArrayType<MembersThree8>');
+	assertStrictEquals(ArrayType.of(MembersThree8).Type, MembersThree8);
 });
 
 Deno.test('ArrayType get/set', () => {
