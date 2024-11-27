@@ -1,10 +1,4 @@
-import type {
-	MemberInfo,
-	MemberInfos,
-	MembersExtends,
-	Type,
-	TypeClass,
-} from './type.ts';
+import type { MemberInfo, MembersExtends, Type, TypeClass } from './type.ts';
 import { assignView } from './util.ts';
 
 /**
@@ -42,21 +36,25 @@ export function defineMember<T extends Type, M>(
 	desc: MemberDescriptor<(T & Record<typeof name, M>), M>,
 ): number {
 	const { byteLength } = desc;
-	const { MEMBERS } = Type;
 	Object.defineProperty(Type.prototype, name, {
 		configurable: true,
 		enumerable: false,
 		get: desc.get,
 		set: desc.set,
 	});
-	(MEMBERS as MemberInfos)[name] = {
-		byteOffset: desc.byteOffset,
-		byteLength,
-		littleEndian: desc.littleEndian,
-		kind: desc.kind,
-		signed: desc.signed,
-		Type: desc.Type,
-	};
+	Object.defineProperty(Type.MEMBERS, name, {
+		value: {
+			byteOffset: desc.byteOffset,
+			byteLength,
+			littleEndian: desc.littleEndian,
+			kind: desc.kind,
+			signed: desc.signed,
+			Type: desc.Type,
+		},
+		configurable: true,
+		enumerable: false,
+		writable: true,
+	});
 	return byteLength;
 }
 
