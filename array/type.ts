@@ -22,15 +22,15 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	/**
 	 * Instances mapped over indexes.
 	 */
-	#map = new Map<number, T>();
+	#values = new Map<number, T>();
 
 	/**
 	 * @inheritdoc
 	 */
 	protected override [ArrayTyped.getter](index: number): T {
-		const m = this.#map;
-		return m.get(index) || set(
-			m,
+		const values = this.#values;
+		return values.get(index) || set(
+			values,
 			index,
 			new this.constructor.Type(
 				this.buffer,
@@ -44,10 +44,10 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	 * @inheritdoc
 	 */
 	protected override [ArrayTyped.setter](index: number, value: T): void {
-		const m = this.#map;
+		const values = this.#values;
 		assignType(
-			m.get(index) || set(
-				m,
+			values.get(index) || set(
+				values,
 				index,
 				new this.constructor.Type(
 					this.buffer,
