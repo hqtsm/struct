@@ -29,7 +29,7 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	 */
 	protected override [ArrayTyped.getter](index: number): T {
 		const values = this.#values;
-		return values.get(index) || set(
+		return values.get(index) ?? set(
 			values,
 			index,
 			new this.constructor.Type(
@@ -46,7 +46,7 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	protected override [ArrayTyped.setter](index: number, value: T): void {
 		const values = this.#values;
 		assignType(
-			values.get(index) || set(
+			values.get(index) ?? set(
 				values,
 				index,
 				new this.constructor.Type(
@@ -74,7 +74,7 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 		Type: TypeConstructor<T>,
 	): ArrayTypedConstructor<T> {
 		types ??= new WeakMap<TypeConstructor<T>, ArrayTypedConstructor<T>>();
-		return types.get(Type) || set(
+		return types.get(Type) ?? set(
 			types,
 			Type,
 			class extends ArrayType<T> {
