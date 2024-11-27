@@ -17,14 +17,17 @@ class MembersThree8 extends Struct {
 	})(super.BYTE_LENGTH);
 }
 
-const ArrayMembersThree8 = ArrayType.of(MembersThree8);
+Deno.test('ArrayType of', () => {
+	assertStrictEquals(
+		ArrayType.of(MembersThree8),
+		ArrayType.of(MembersThree8),
+	);
+});
 
 Deno.test('ArrayType get/set', () => {
-	const arr = new ArrayMembersThree8(
-		new ArrayBuffer(ArrayMembersThree8.BYTES_PER_ELEMENT * 3 + 1),
-		1,
-		3,
-	);
+	const Arr = ArrayType.of(MembersThree8);
+
+	const arr = new Arr(new ArrayBuffer(Arr.BYTES_PER_ELEMENT * 3 + 1), 1, 3);
 
 	assertStrictEquals(arr[0].constructor, MembersThree8);
 	assertStrictEquals(arr[0], arr[0]);
