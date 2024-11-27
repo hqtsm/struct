@@ -8,6 +8,11 @@ export class ArrayFloat32 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
+	declare public readonly ['constructor']: Omit<typeof ArrayFloat32, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
 	protected override [ArrayTyped.getter](index: number): number {
 		return dataView(this.buffer).getFloat32(
 			this.byteOffset + index * this.bytesPerElement,

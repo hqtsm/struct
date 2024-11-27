@@ -8,6 +8,11 @@ export class ArrayInt64 extends ArrayTyped<bigint> {
 	/**
 	 * @inheritdoc
 	 */
+	declare public readonly ['constructor']: Omit<typeof ArrayInt64, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
 	protected override [ArrayTyped.getter](index: number): bigint {
 		return dataView(this.buffer).getBigInt64(
 			this.byteOffset + index * this.bytesPerElement,
@@ -36,6 +41,11 @@ export class ArrayInt64 extends ArrayTyped<bigint> {
  * Array: uint64.
  */
 export class ArrayUint64 extends ArrayTyped<bigint> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof ArrayUint64, 'new'>;
+
 	/**
 	 * @inheritdoc
 	 */

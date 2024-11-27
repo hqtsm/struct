@@ -8,6 +8,11 @@ export class ArrayBool16 extends ArrayTyped<boolean> {
 	/**
 	 * @inheritdoc
 	 */
+	declare public readonly ['constructor']: Omit<typeof ArrayBool16, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
 	protected override [ArrayTyped.getter](index: number): boolean {
 		return !!dataView(this.buffer).getInt16(
 			this.byteOffset + index * this.bytesPerElement,

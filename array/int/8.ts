@@ -8,6 +8,11 @@ export class ArrayInt8 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
+	declare public readonly ['constructor']: Omit<typeof ArrayInt8, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
 	protected override [ArrayTyped.getter](index: number): number {
 		return dataView(this.buffer).getInt8(
 			this.byteOffset + index * this.bytesPerElement,
@@ -34,6 +39,11 @@ export class ArrayInt8 extends ArrayTyped<number> {
  * Array: uint8.
  */
 export class ArrayUint8 extends ArrayTyped<number> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof ArrayUint8, 'new'>;
+
 	/**
 	 * @inheritdoc
 	 */

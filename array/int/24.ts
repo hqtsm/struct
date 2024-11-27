@@ -15,6 +15,11 @@ export class ArrayInt24 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
+	declare public readonly ['constructor']: Omit<typeof ArrayInt24, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
 	protected override [ArrayTyped.getter](index: number): number {
 		return getInt24(
 			dataView(this.buffer),
@@ -45,6 +50,11 @@ export class ArrayInt24 extends ArrayTyped<number> {
  * Array: uint24.
  */
 export class ArrayUint24 extends ArrayTyped<number> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof ArrayUint24, 'new'>;
+
 	/**
 	 * @inheritdoc
 	 */

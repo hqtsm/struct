@@ -15,6 +15,11 @@ export class ArrayFloat16 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
+	declare public readonly ['constructor']: Omit<typeof ArrayFloat16, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
 	protected override [ArrayTyped.getter](index: number): number {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		return d.getFloat16
