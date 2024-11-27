@@ -1,5 +1,5 @@
 import { LITTLE_ENDIAN } from '../endian.ts';
-import type { ArrayBufferReal, EndianBufferView } from '../type.ts';
+import type { ArrayBufferReal, EndianBufferView, Type } from '../type.ts';
 import { dataView } from '../util.ts';
 
 function index(key: PropertyKey): number | null {
@@ -184,4 +184,17 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 			return true;
 		},
 	}) as unknown as number;
+}
+
+export interface ArrayTypedClass<T extends Type>
+	extends Omit<typeof ArrayTyped<T>, 'new'> {}
+
+export interface ArrayTypedConstructor<T extends Type>
+	extends ArrayTypedClass<T> {
+	new (
+		buffer: ArrayBufferReal,
+		byteOffset?: number,
+		length?: number,
+		littleEndian?: boolean | null,
+	): ArrayTyped<T>;
 }
