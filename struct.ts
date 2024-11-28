@@ -87,7 +87,7 @@ export class Struct implements Type {
 				this,
 				r = Object.create(
 					Object.getPrototypeOf(this).MEMBERS ?? null,
-				) as MemberInfos,
+				) as Readonly<MemberInfos>,
 			);
 		}
 		return r;
