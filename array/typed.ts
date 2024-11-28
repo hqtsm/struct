@@ -145,7 +145,7 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 	public static readonly BYTES_PER_ELEMENT: number = void (handler = {
 		deleteProperty(target, key): boolean {
 			let i;
-			return (Reflect.has(target, key) || (i = index(key)) === null)
+			return Reflect.has(target, key) || (i = index(key)) === null
 				? Reflect.deleteProperty(target, key)
 				: !(i < target.#length);
 		},
