@@ -2,6 +2,7 @@ import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 
 import { LITTLE_ENDIAN } from '../endian.ts';
 import { ArrayTyped } from './typed.ts';
+import type { MemberInfos } from '../type.ts';
 
 // Properties to ensure matching TypedArray behavior.
 // Use real TypedArray to detect the expected bahavior.
@@ -153,6 +154,13 @@ Deno.test('ArrayTyped: MEMBERS', () => {
 	assertEquals(typeof ArrayTyped.MEMBERS[1.5], 'undefined');
 	assertEquals(typeof ArrayTyped.MEMBERS[NaN], 'undefined');
 	assertEquals(typeof ArrayTyped.MEMBERS[Infinity], 'undefined');
+
+	class Test extends DummyArray {}
+	const value = { ...Test.MEMBERS[0] };
+	(Test.MEMBERS as MemberInfos)['weird'] = value;
+	assertThrows(() => {
+		(Test.MEMBERS as MemberInfos)[0] = value;
+	});
 });
 
 Deno.test('ArrayTyped: buffer', () => {

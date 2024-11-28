@@ -216,10 +216,7 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 						Object.getPrototypeOf(this).MEMBERS ?? null,
 					) as Readonly<MemberInfos>,
 					{
-						get(
-							target,
-							key,
-						): Readonly<MemberInfo> | undefined {
+						get(target, key): Readonly<MemberInfo> | undefined {
 							const i = index(key);
 							if (i === null) {
 								return Reflect.get(target, key);
@@ -235,6 +232,11 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 									Type: ArrayTyped.TYPE,
 								};
 							}
+						},
+						set(target, key, value): boolean {
+							return index(key) === null
+								? Reflect.set(target, key, value)
+								: false;
 						},
 					},
 				),
