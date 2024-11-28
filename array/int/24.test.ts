@@ -6,11 +6,20 @@ import { ArrayInt24, ArrayUint24 } from './24.ts';
 Deno.test('ArrayInt24 + ArrayUint24', () => {
 	const count = 3;
 	for (const ArrayInt of [ArrayInt24, ArrayUint24]) {
+		const signed = ArrayInt === ArrayInt24;
 		const bpe = ArrayInt.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 3);
 		assertEquals(ArrayInt.KIND, 'int');
-		assertEquals(ArrayInt.SIGNED, ArrayInt === ArrayInt24);
+		assertEquals(ArrayInt.SIGNED, signed);
 		assertEquals(ArrayInt.TYPE, Number);
+		assertEquals(ArrayInt.MEMBERS[2], {
+			byteOffset: 6,
+			byteLength: 3,
+			littleEndian: null,
+			kind: 'int',
+			signed,
+			Type: Number,
+		});
 
 		for (const littleEndian of [undefined, true, false]) {
 			const buffer = new ArrayBuffer(bpe * count + 1);

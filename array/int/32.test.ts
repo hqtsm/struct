@@ -5,11 +5,20 @@ import { ArrayInt32, ArrayUint32 } from './32.ts';
 Deno.test('ArrayInt32 + ArrayUint32', () => {
 	const count = 3;
 	for (const ArrayInt of [ArrayInt32, ArrayUint32]) {
+		const signed = ArrayInt === ArrayInt32;
 		const bpe = ArrayInt.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 4);
 		assertEquals(ArrayInt.KIND, 'int');
-		assertEquals(ArrayInt.SIGNED, ArrayInt === ArrayInt32);
+		assertEquals(ArrayInt.SIGNED, signed);
 		assertEquals(ArrayInt.TYPE, Number);
+		assertEquals(ArrayInt.MEMBERS[2], {
+			byteOffset: 8,
+			byteLength: 4,
+			littleEndian: null,
+			kind: 'int',
+			signed,
+			Type: Number,
+		});
 
 		for (const littleEndian of [undefined, true, false]) {
 			const buffer = new ArrayBuffer(bpe * count + 1);

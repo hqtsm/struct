@@ -147,6 +147,10 @@ class TestArray extends ArrayTyped<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 }
 
+Deno.test('ArrayTyped.MEMBERS', () => {
+	assertEquals(ArrayTyped.MEMBERS['unknown'], undefined);
+});
+
 Deno.test('buffer', () => {
 	const buffer = new ArrayBuffer(0);
 	assertStrictEquals(new DummyArray(buffer).buffer, buffer);

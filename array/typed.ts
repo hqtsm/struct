@@ -2,6 +2,8 @@ import { LITTLE_ENDIAN } from '../endian.ts';
 import type {
 	ArrayBufferReal,
 	EndianBufferView,
+	MemberInfo,
+	MemberInfos,
 	MemberInfoSigned,
 	MemberInfoType,
 	Type,
@@ -22,6 +24,8 @@ const getter = Symbol('getter');
 const setter = Symbol('setter');
 
 let handler: ProxyHandler<ArrayTyped<unknown>>;
+
+let members: WeakMap<typeof ArrayTyped, Readonly<MemberInfos>>;
 
 /**
  * ArrayTyped interface.
@@ -196,6 +200,47 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 	 * Type of member.
 	 */
 	public static readonly TYPE: MemberInfoType;
+
+	/*
+	 * @inheritdoc
+	 */
+	public static get MEMBERS(): Readonly<MemberInfos> {
+		let r = (members ??= new WeakMap()).get(this);
+		if (!r) {
+			// deno-lint-ignore no-this-alias
+			const ArrayTyped = this;
+			members.set(
+				this,
+				r = new Proxy(
+					Object.create(
+						Object.getPrototypeOf(this).MEMBERS ?? null,
+					) as Readonly<MemberInfos>,
+					{
+						get(
+							target,
+							key,
+						): Readonly<MemberInfo> | undefined {
+							let i;
+							if ((i = index(key)) === null) {
+								return Reflect.get(target, key);
+							}
+							const { BYTES_PER_ELEMENT } = ArrayTyped;
+							return {
+								byteOffset: i * BYTES_PER_ELEMENT,
+								byteLength: BYTES_PER_ELEMENT,
+								littleEndian: null,
+								kind: ArrayTyped.KIND,
+								signed: ArrayTyped.SIGNED,
+								Type: ArrayTyped.TYPE,
+							};
+						},
+					},
+				),
+			);
+			members.set(this, r);
+		}
+		return r;
+	}
 }
 
 /**

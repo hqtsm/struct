@@ -9,6 +9,14 @@ Deno.test('ArrayBool8', () => {
 	assertEquals(ArrayBool8.KIND, 'bool');
 	assertEquals(ArrayBool8.SIGNED, null);
 	assertEquals(ArrayBool8.TYPE, Boolean);
+	assertEquals(ArrayBool8.MEMBERS[2], {
+		byteOffset: 2,
+		byteLength: 1,
+		littleEndian: null,
+		kind: 'bool',
+		signed: null,
+		Type: Boolean,
+	});
 
 	for (const littleEndian of [undefined, true, false]) {
 		const buffer = new ArrayBuffer(bpe * count + 1);
