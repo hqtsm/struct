@@ -17,7 +17,7 @@ class MembersThree8 extends Struct {
 	})(super.BYTE_LENGTH);
 }
 
-Deno.test('ArrayType of', () => {
+Deno.test('ArrayType: of', () => {
 	assertStrictEquals(
 		ArrayType.of(MembersThree8),
 		ArrayType.of(MembersThree8),
@@ -26,7 +26,7 @@ Deno.test('ArrayType of', () => {
 	assertStrictEquals(ArrayType.of(MembersThree8).TYPE, MembersThree8);
 });
 
-Deno.test('ArrayType get/set', () => {
+Deno.test('ArrayType: get + set', () => {
 	const Arr = ArrayType.of(MembersThree8);
 
 	const arr = new Arr(new ArrayBuffer(Arr.BYTES_PER_ELEMENT * 3 + 1), 1, 3);

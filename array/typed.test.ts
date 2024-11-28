@@ -147,11 +147,11 @@ class TestArray extends ArrayTyped<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 }
 
-Deno.test('ArrayTyped.MEMBERS', () => {
+Deno.test('ArrayTyped: MEMBERS', () => {
 	assertEquals(ArrayTyped.MEMBERS['unknown'], undefined);
 });
 
-Deno.test('buffer', () => {
+Deno.test('ArrayTyped: buffer', () => {
 	const buffer = new ArrayBuffer(0);
 	assertStrictEquals(new DummyArray(buffer).buffer, buffer);
 
@@ -162,7 +162,7 @@ Deno.test('buffer', () => {
 	);
 });
 
-Deno.test('length + byteLength', () => {
+Deno.test('ArrayTyped: length + byteLength', () => {
 	const MAX = Number.MAX_SAFE_INTEGER;
 
 	const buffer = new ArrayBuffer(0);
@@ -181,7 +181,7 @@ Deno.test('length + byteLength', () => {
 	assertThrows(() => new DummyArray(buffer, 0, Infinity), RangeError);
 });
 
-Deno.test('byteOffset', () => {
+Deno.test('ArrayTyped: byteOffset', () => {
 	const MAX = Number.MAX_SAFE_INTEGER;
 	const buffer = new ArrayBuffer(32);
 
@@ -196,7 +196,7 @@ Deno.test('byteOffset', () => {
 	assertEquals(new DummyArray(buffer, 33).byteOffset, 33);
 });
 
-Deno.test('littleEndian', () => {
+Deno.test('ArrayTyped: littleEndian', () => {
 	const buffer = new ArrayBuffer(32);
 	assertEquals(new DummyArray(buffer).littleEndian, LITTLE_ENDIAN);
 	assertEquals(new DummyArray(buffer, 0, 0, true).littleEndian, true);

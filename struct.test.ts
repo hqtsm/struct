@@ -6,7 +6,7 @@ import { member, pad } from './member.ts';
 import { Struct } from './struct.ts';
 import { getByteOffset } from './util.ts';
 
-Deno.test('buffer', () => {
+Deno.test('Struct: buffer', () => {
 	const buffer = new ArrayBuffer(0);
 	assertStrictEquals(new Struct(buffer).buffer, buffer);
 
@@ -17,7 +17,7 @@ Deno.test('buffer', () => {
 	);
 });
 
-Deno.test('byteLength', () => {
+Deno.test('Struct: byteLength', () => {
 	class Test extends Struct {
 		public static override readonly BYTE_LENGTH: number = 8;
 	}
@@ -26,7 +26,7 @@ Deno.test('byteLength', () => {
 	assertEquals(new Test(data.buffer, 4).byteLength, 8);
 });
 
-Deno.test('byteOffset', () => {
+Deno.test('Struct: byteOffset', () => {
 	const MAX = Number.MAX_SAFE_INTEGER;
 
 	class Test extends Struct {
@@ -59,18 +59,18 @@ Deno.test('byteOffset', () => {
 	assertThrows(() => new Test(buffer, 33).alpha, RangeError);
 });
 
-Deno.test('littleEndian', () => {
+Deno.test('Struct: littleEndian', () => {
 	const buffer = new ArrayBuffer(32);
 	assertEquals(new Struct(buffer).littleEndian, LITTLE_ENDIAN);
 	assertEquals(new Struct(buffer, 0, true).littleEndian, true);
 	assertEquals(new Struct(buffer, 0, false).littleEndian, false);
 });
 
-Deno.test('BYTE_LENGTH', () => {
+Deno.test('Struct: BYTE_LENGTH', () => {
 	assertEquals(Struct.BYTE_LENGTH, 0);
 });
 
-Deno.test('MEMBERS', () => {
+Deno.test('Struct: MEMBERS', () => {
 	class A extends Struct {}
 	class B extends A {}
 	class C extends B {}
@@ -80,7 +80,7 @@ Deno.test('MEMBERS', () => {
 	assertStrictEquals(Object.getPrototypeOf(A).MEMBERS, Struct.MEMBERS);
 });
 
-Deno.test('protected properties', () => {
+Deno.test('Struct: protected properties', () => {
 	class Test extends Struct {
 		declare protected alpha: number;
 
@@ -100,7 +100,7 @@ Deno.test('protected properties', () => {
 	assertEquals(test.getAlpha(), 42);
 });
 
-Deno.test('private properties', () => {
+Deno.test('Struct: private properties', () => {
 	class Test extends Struct {
 		declare private alpha: number;
 
@@ -120,7 +120,7 @@ Deno.test('private properties', () => {
 	assertEquals(test.getAlpha(), 42);
 });
 
-Deno.test('extends', () => {
+Deno.test('Struct: extends', () => {
 	class Var extends Struct {
 		declare public type: number;
 
@@ -146,7 +146,7 @@ Deno.test('extends', () => {
 	assertEquals(data, new Uint8Array([8, 123]));
 });
 
-Deno.test('abstract', () => {
+Deno.test('Struct: abstract', () => {
 	abstract class Member extends Struct {
 		declare public value: number;
 
@@ -181,7 +181,7 @@ Deno.test('abstract', () => {
 	assertEquals(data, new Uint8Array([123]));
 });
 
-Deno.test('abstract placeholder', () => {
+Deno.test('Struct: abstract placeholder', () => {
 	abstract class Member extends Struct {
 		declare public value: number;
 
