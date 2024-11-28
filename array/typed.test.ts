@@ -148,7 +148,11 @@ class TestArray extends ArrayTyped<number> {
 }
 
 Deno.test('ArrayTyped: MEMBERS', () => {
-	assertEquals(ArrayTyped.MEMBERS['unknown'], undefined);
+	assertEquals(typeof ArrayTyped.MEMBERS['unknown'], 'undefined');
+	assertEquals(typeof ArrayTyped.MEMBERS[-1], 'undefined');
+	assertEquals(typeof ArrayTyped.MEMBERS[1.5], 'undefined');
+	assertEquals(typeof ArrayTyped.MEMBERS[NaN], 'undefined');
+	assertEquals(typeof ArrayTyped.MEMBERS[Infinity], 'undefined');
 });
 
 Deno.test('ArrayTyped: buffer', () => {

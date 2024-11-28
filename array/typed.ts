@@ -220,19 +220,21 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 							target,
 							key,
 						): Readonly<MemberInfo> | undefined {
-							let i;
-							if ((i = index(key)) === null) {
+							const i = index(key);
+							if (i === null) {
 								return Reflect.get(target, key);
 							}
-							const { BYTES_PER_ELEMENT } = ArrayTyped;
-							return {
-								byteOffset: i * BYTES_PER_ELEMENT,
-								byteLength: BYTES_PER_ELEMENT,
-								littleEndian: null,
-								kind: ArrayTyped.KIND,
-								signed: ArrayTyped.SIGNED,
-								Type: ArrayTyped.TYPE,
-							};
+							if (i >= 0) {
+								const { BYTES_PER_ELEMENT } = ArrayTyped;
+								return {
+									byteOffset: i * BYTES_PER_ELEMENT,
+									byteLength: BYTES_PER_ELEMENT,
+									littleEndian: null,
+									kind: ArrayTyped.KIND,
+									signed: ArrayTyped.SIGNED,
+									Type: ArrayTyped.TYPE,
+								};
+							}
 						},
 					},
 				),
