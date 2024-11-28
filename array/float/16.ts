@@ -58,5 +58,5 @@ export class ArrayFloat16 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 2;
+	public static override readonly BYTES_PER_ELEMENT: number = 2;
 }

@@ -32,7 +32,7 @@ export class ArrayInt8 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 1;
+	public static override readonly BYTES_PER_ELEMENT: number = 1;
 }
 
 /**
@@ -66,5 +66,5 @@ export class ArrayUint8 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 1;
+	public static override readonly BYTES_PER_ELEMENT: number = 1;
 }

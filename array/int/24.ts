@@ -43,7 +43,7 @@ export class ArrayInt24 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 3;
+	public static override readonly BYTES_PER_ELEMENT: number = 3;
 }
 
 /**
@@ -81,5 +81,5 @@ export class ArrayUint24 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 3;
+	public static override readonly BYTES_PER_ELEMENT: number = 3;
 }

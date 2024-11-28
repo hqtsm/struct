@@ -34,7 +34,7 @@ export class ArrayInt64 extends ArrayTyped<bigint> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 8;
+	public static override readonly BYTES_PER_ELEMENT: number = 8;
 }
 
 /**
@@ -70,5 +70,5 @@ export class ArrayUint64 extends ArrayTyped<bigint> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 8;
+	public static override readonly BYTES_PER_ELEMENT: number = 8;
 }

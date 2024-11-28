@@ -34,7 +34,7 @@ export class ArrayInt16 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 2;
+	public static override readonly BYTES_PER_ELEMENT: number = 2;
 }
 
 /**
@@ -70,5 +70,5 @@ export class ArrayUint16 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 2;
+	public static override readonly BYTES_PER_ELEMENT: number = 2;
 }

@@ -34,5 +34,5 @@ export class ArrayFloat64 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 8;
+	public static override readonly BYTES_PER_ELEMENT: number = 8;
 }

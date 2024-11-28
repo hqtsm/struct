@@ -37,5 +37,5 @@ export class ArrayBool16 extends ArrayTyped<boolean> {
 	/**
 	 * @inheritdoc
 	 */
-	static override readonly BYTES_PER_ELEMENT: number = 2;
+	public static override readonly BYTES_PER_ELEMENT: number = 2;
 }
