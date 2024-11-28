@@ -14,6 +14,11 @@ export interface EndianBufferView extends Readonly<ArrayBufferView> {
 }
 
 /**
+ * Signed of member type.
+ */
+export type MemberInfoSigned = boolean | null;
+
+/**
  * Types of member type.
  */
 export type MemberInfoType =
@@ -48,7 +53,7 @@ export interface MemberInfo {
 	/**
 	 * Signed or unsigned type, if applicable.
 	 */
-	signed: boolean | null;
+	signed: MemberInfoSigned;
 
 	/**
 	 * Type of member.

@@ -1,3 +1,4 @@
+import type { MemberInfoSigned, MemberInfoType } from '../../type.ts';
 import { dataView } from '../../util.ts';
 import { ArrayTyped } from '../typed.ts';
 
@@ -35,6 +36,21 @@ export class ArrayInt32 extends ArrayTyped<number> {
 	 * @inheritdoc
 	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly KIND: string = 'int';
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly SIGNED: MemberInfoSigned = true;
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly TYPE: MemberInfoType = Number;
 }
 
 /**
@@ -71,4 +87,19 @@ export class ArrayUint32 extends ArrayTyped<number> {
 	 * @inheritdoc
 	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly KIND: string = 'int';
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly SIGNED: MemberInfoSigned = false;
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly TYPE: MemberInfoType = Number;
 }

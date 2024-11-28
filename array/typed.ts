@@ -1,5 +1,11 @@
 import { LITTLE_ENDIAN } from '../endian.ts';
-import type { ArrayBufferReal, EndianBufferView, Type } from '../type.ts';
+import type {
+	ArrayBufferReal,
+	EndianBufferView,
+	MemberInfoSigned,
+	MemberInfoType,
+	Type,
+} from '../type.ts';
 import { dataView } from '../util.ts';
 
 function index(key: PropertyKey): number | null {
@@ -175,6 +181,21 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 			return true;
 		},
 	}) as unknown as number;
+
+	/**
+	 * Kind of member.
+	 */
+	public static readonly KIND: string;
+
+	/**
+	 * Signed or unsigned members, if applicable.
+	 */
+	public static readonly SIGNED: MemberInfoSigned;
+
+	/**
+	 * Type of member.
+	 */
+	public static readonly TYPE: MemberInfoType;
 }
 
 /**

@@ -90,9 +90,9 @@ Deno.test('member', () => {
 	assertEquals(getType(TestParent, 'alpha'), TestChild);
 	assertEquals(getType(TestParent, 'beta'), TestChild);
 	assertEquals(getType(TestParent, 'gamma'), TestChild);
-	assertEquals(getKind(TestParent, 'alpha'), 'member');
-	assertEquals(getKind(TestParent, 'beta'), 'member');
-	assertEquals(getKind(TestParent, 'gamma'), 'member');
+	assertEquals(getKind(TestParent, 'alpha'), 'type');
+	assertEquals(getKind(TestParent, 'beta'), 'type');
+	assertEquals(getKind(TestParent, 'gamma'), 'type');
 	assertEquals(getSigned(TestParent, 'alpha'), null);
 	assertEquals(getSigned(TestParent, 'beta'), null);
 	assertEquals(getSigned(TestParent, 'gamma'), null);

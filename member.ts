@@ -106,7 +106,7 @@ export function member<M extends ArrayBufferView, T extends Type>(
 		byteOffset,
 		byteLength: Member.BYTE_LENGTH,
 		littleEndian,
-		kind: 'member',
+		kind: 'type',
 		signed: null,
 		Type: Member,
 		get(): M {

@@ -1,4 +1,9 @@
-import type { ArrayBufferReal, Type, TypeConstructor } from '../type.ts';
+import type {
+	ArrayBufferReal,
+	MemberInfoSigned,
+	Type,
+	TypeConstructor,
+} from '../type.ts';
 import { assignType } from '../util.ts';
 import { ArrayTyped, type ArrayTypedConstructor } from './typed.ts';
 
@@ -27,7 +32,7 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 		if (!r) {
 			values.set(
 				index,
-				r = new this.constructor.Type(
+				r = new this.constructor.TYPE(
 					this.buffer,
 					this.byteOffset +
 						index * this.constructor.BYTES_PER_ELEMENT,
@@ -47,7 +52,7 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 		if (!r) {
 			values.set(
 				index,
-				r = new this.constructor.Type(
+				r = new this.constructor.TYPE(
 					this.buffer,
 					this.byteOffset +
 						index * this.constructor.BYTES_PER_ELEMENT,
@@ -59,9 +64,19 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	}
 
 	/**
+	 * @inheritdoc
+	 */
+	public static override readonly KIND: string = 'type';
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly SIGNED: MemberInfoSigned = null;
+
+	/**
 	 * Type constructor.
 	 */
-	public static readonly Type: TypeConstructor;
+	public static override readonly TYPE: TypeConstructor;
 
 	/**
 	 * Get the ArrayType of Type constructor.
@@ -81,7 +96,7 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 				Type,
 				r = {
 					[name]: class extends ArrayType<T> {
-						public static override readonly Type: TypeConstructor<
+						public static override readonly TYPE: TypeConstructor<
 							T
 						> = Type;
 
@@ -104,7 +119,7 @@ export interface ArrayTypeClass<
 	/**
 	 * @inheritdoc
 	 */
-	readonly Type: TypeConstructor<T>;
+	readonly TYPE: TypeConstructor<T>;
 }
 
 /**
