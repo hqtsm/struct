@@ -96,7 +96,7 @@ export class ArrayUint64 extends ArrayTyped<bigint> {
 	/**
 	 * @inheritdoc
 	 */
-	public static override readonly SIGNED: MemberInfoSigned = true;
+	public static override readonly SIGNED: MemberInfoSigned = false;
 
 	/**
 	 * @inheritdoc
