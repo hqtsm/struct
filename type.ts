@@ -72,6 +72,16 @@ export interface MemberInfos {
 }
 
 /**
+ * Membered type.
+ */
+export interface Membered {
+	/**
+	 * Member infos of members.
+	 */
+	readonly MEMBERS: Readonly<MemberInfos>;
+}
+
+/**
  * Type.
  */
 export interface Type extends EndianBufferView {
@@ -84,7 +94,7 @@ export interface Type extends EndianBufferView {
 /**
  * Type class.
  */
-export interface TypeClass<T extends Type = Type> {
+export interface TypeClass<T extends Type = Type> extends Membered {
 	/**
 	 * Type prototype.
 	 */
@@ -94,11 +104,6 @@ export interface TypeClass<T extends Type = Type> {
 	 * Instance size in bytes.
 	 */
 	readonly BYTE_LENGTH: number;
-
-	/**
-	 * Type members.
-	 */
-	readonly MEMBERS: Readonly<MemberInfos>;
 }
 
 /**
