@@ -74,6 +74,9 @@ Deno.test('ArrayFloat16', () => {
 	const count = 3;
 	const bpe = ArrayFloat16.BYTES_PER_ELEMENT;
 	assertEquals(bpe, 2);
+	assertEquals(ArrayFloat16.KIND, 'float');
+	assertEquals(ArrayFloat16.SIGNED, true);
+	assertEquals(ArrayFloat16.TYPE, Number);
 
 	const fA = round(Math.PI);
 	const fB = round(-Math.E);

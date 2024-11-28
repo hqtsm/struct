@@ -7,6 +7,9 @@ Deno.test('ArrayInt8 + ArrayUint8', () => {
 	for (const ArrayInt of [ArrayInt8, ArrayUint8]) {
 		const bpe = ArrayInt.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 1);
+		assertEquals(ArrayInt.KIND, 'int');
+		assertEquals(ArrayInt.SIGNED, ArrayInt === ArrayInt8);
+		assertEquals(ArrayInt.TYPE, Number);
 
 		for (const littleEndian of [undefined, true, false]) {
 			const buffer = new ArrayBuffer(bpe * count + 1);

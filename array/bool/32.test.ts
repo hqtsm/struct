@@ -6,6 +6,9 @@ Deno.test('ArrayBool32', () => {
 	const count = 3;
 	const bpe = ArrayBool32.BYTES_PER_ELEMENT;
 	assertEquals(bpe, 4);
+	assertEquals(ArrayBool32.KIND, 'bool');
+	assertEquals(ArrayBool32.SIGNED, null);
+	assertEquals(ArrayBool32.TYPE, Boolean);
 
 	for (const littleEndian of [undefined, true, false]) {
 		const buffer = new ArrayBuffer(bpe * count + 1);
