@@ -1,4 +1,4 @@
-import type { MemberInfoSigned, MemberInfoType } from '../../type.ts';
+import type { MemberInfoType } from '../../type.ts';
 import { dataView } from '../../util.ts';
 import { ArrayTyped } from '../typed.ts';
 
@@ -40,15 +40,5 @@ export class ArrayFloat64 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	public static override readonly KIND: string = 'float';
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly SIGNED: MemberInfoSigned = true;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = Number;
+	public static override readonly TYPE: MemberInfoType = 'float64';
 }

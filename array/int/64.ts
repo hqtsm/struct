@@ -1,4 +1,4 @@
-import type { MemberInfoSigned, MemberInfoType } from '../../type.ts';
+import type { MemberInfoType } from '../../type.ts';
 import { dataView } from '../../util.ts';
 import { ArrayTyped } from '../typed.ts';
 
@@ -40,17 +40,7 @@ export class ArrayInt64 extends ArrayTyped<bigint> {
 	/**
 	 * @inheritdoc
 	 */
-	public static override readonly KIND: string = 'int';
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly SIGNED: MemberInfoSigned = true;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = BigInt;
+	public static override readonly TYPE: MemberInfoType = 'int64';
 }
 
 /**
@@ -91,15 +81,5 @@ export class ArrayUint64 extends ArrayTyped<bigint> {
 	/**
 	 * @inheritdoc
 	 */
-	public static override readonly KIND: string = 'int';
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly SIGNED: MemberInfoSigned = false;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = BigInt;
+	public static override readonly TYPE: MemberInfoType = 'uint64';
 }

@@ -4,9 +4,7 @@ import { Struct } from '../struct.ts';
 import {
 	getByteLength,
 	getByteOffset,
-	getKind,
 	getLittleEndian,
-	getSigned,
 	getType,
 } from '../util.ts';
 import { int8, uint8 } from './8.ts';
@@ -34,12 +32,8 @@ Deno.test('int8', () => {
 	assertEquals(getByteLength(Test, 'beta'), 1);
 	assertEquals(getLittleEndian(Test, 'alpha'), null);
 	assertEquals(getLittleEndian(Test, 'beta'), null);
-	assertEquals(getType(Test, 'alpha'), Number);
-	assertEquals(getType(Test, 'beta'), Number);
-	assertEquals(getKind(Test, 'alpha'), 'int');
-	assertEquals(getKind(Test, 'beta'), 'int');
-	assertEquals(getSigned(Test, 'alpha'), true);
-	assertEquals(getSigned(Test, 'beta'), true);
+	assertEquals(getType(Test, 'alpha'), 'int8');
+	assertEquals(getType(Test, 'beta'), 'int8');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -76,12 +70,8 @@ Deno.test('uint8', () => {
 	assertEquals(getByteLength(Test, 'beta'), 1);
 	assertEquals(getLittleEndian(Test, 'alpha'), null);
 	assertEquals(getLittleEndian(Test, 'beta'), null);
-	assertEquals(getType(Test, 'alpha'), Number);
-	assertEquals(getType(Test, 'beta'), Number);
-	assertEquals(getKind(Test, 'alpha'), 'int');
-	assertEquals(getKind(Test, 'beta'), 'int');
-	assertEquals(getSigned(Test, 'alpha'), false);
-	assertEquals(getSigned(Test, 'beta'), false);
+	assertEquals(getType(Test, 'alpha'), 'uint8');
+	assertEquals(getType(Test, 'beta'), 'uint8');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);

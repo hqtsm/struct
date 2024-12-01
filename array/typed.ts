@@ -4,7 +4,6 @@ import type {
 	EndianBufferView,
 	MemberInfo,
 	MemberInfos,
-	MemberInfoSigned,
 	MemberInfoType,
 	Type,
 } from '../type.ts';
@@ -187,16 +186,6 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 	}) as unknown as number;
 
 	/**
-	 * Kind of member.
-	 */
-	public static readonly KIND: string;
-
-	/**
-	 * Signed or unsigned members, if applicable.
-	 */
-	public static readonly SIGNED: MemberInfoSigned;
-
-	/**
 	 * Type of member.
 	 */
 	public static readonly TYPE: MemberInfoType;
@@ -227,9 +216,7 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 									byteOffset: i * BYTES_PER_ELEMENT,
 									byteLength: BYTES_PER_ELEMENT,
 									littleEndian: null,
-									kind: ArrayTyped.KIND,
-									signed: ArrayTyped.SIGNED,
-									Type: ArrayTyped.TYPE,
+									type: ArrayTyped.TYPE,
 								};
 							}
 						},

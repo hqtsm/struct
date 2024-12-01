@@ -22,6 +22,7 @@ export type MemberInfoSigned = boolean | null;
  * Types of member type.
  */
 export type MemberInfoType =
+	| string
 	// deno-lint-ignore ban-types
 	| Function
 	| null;
@@ -46,19 +47,9 @@ export interface MemberInfo {
 	littleEndian: boolean | null;
 
 	/**
-	 * Kind of member.
-	 */
-	kind: string;
-
-	/**
-	 * Signed or unsigned type, if applicable.
-	 */
-	signed: MemberInfoSigned;
-
-	/**
 	 * Type of member.
 	 */
-	Type: MemberInfoType;
+	type: MemberInfoType;
 }
 
 /**

@@ -28,9 +28,7 @@ export function int24<T extends Type>(
 		byteOffset,
 		byteLength: 3,
 		littleEndian,
-		kind: 'int',
-		signed: true,
-		Type: Number,
+		type: 'int24',
 		get(): number {
 			return getInt24(
 				dataView(this.buffer),
@@ -68,9 +66,7 @@ export function uint24<T extends Type>(
 		byteOffset,
 		byteLength: 3,
 		littleEndian,
-		kind: 'int',
-		signed: false,
-		Type: Number,
+		type: 'uint24',
 		get(): number {
 			return getUint24(
 				dataView(this.buffer),

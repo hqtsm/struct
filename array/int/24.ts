@@ -5,7 +5,7 @@ import {
 	setUint24,
 } from '@hqtsm/dataview/int/24';
 
-import type { MemberInfoSigned, MemberInfoType } from '../../type.ts';
+import type { MemberInfoType } from '../../type.ts';
 import { dataView } from '../../util.ts';
 import { ArrayTyped } from '../typed.ts';
 
@@ -49,17 +49,7 @@ export class ArrayInt24 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	public static override readonly KIND: string = 'int';
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly SIGNED: MemberInfoSigned = true;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = Number;
+	public static override readonly TYPE: MemberInfoType = 'int24';
 }
 
 /**
@@ -102,15 +92,5 @@ export class ArrayUint24 extends ArrayTyped<number> {
 	/**
 	 * @inheritdoc
 	 */
-	public static override readonly KIND: string = 'int';
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly SIGNED: MemberInfoSigned = false;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = Number;
+	public static override readonly TYPE: MemberInfoType = 'uint24';
 }

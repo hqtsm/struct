@@ -4,9 +4,7 @@ import { Struct } from '../struct.ts';
 import {
 	getByteLength,
 	getByteOffset,
-	getKind,
 	getLittleEndian,
-	getSigned,
 	getType,
 } from '../util.ts';
 import { bool32 } from './32.ts';
@@ -46,18 +44,10 @@ Deno.test('bool32', () => {
 	assertEquals(getLittleEndian(Test, 'beta'), null);
 	assertEquals(getLittleEndian(Test, 'gamma'), true);
 	assertEquals(getLittleEndian(Test, 'delta'), false);
-	assertEquals(getType(Test, 'alpha'), Boolean);
-	assertEquals(getType(Test, 'beta'), Boolean);
-	assertEquals(getType(Test, 'gamma'), Boolean);
-	assertEquals(getType(Test, 'delta'), Boolean);
-	assertEquals(getKind(Test, 'alpha'), 'bool');
-	assertEquals(getKind(Test, 'beta'), 'bool');
-	assertEquals(getKind(Test, 'gamma'), 'bool');
-	assertEquals(getKind(Test, 'delta'), 'bool');
-	assertEquals(getSigned(Test, 'alpha'), null);
-	assertEquals(getSigned(Test, 'beta'), null);
-	assertEquals(getSigned(Test, 'gamma'), null);
-	assertEquals(getSigned(Test, 'delta'), null);
+	assertEquals(getType(Test, 'alpha'), 'bool32');
+	assertEquals(getType(Test, 'beta'), 'bool32');
+	assertEquals(getType(Test, 'gamma'), 'bool32');
+	assertEquals(getType(Test, 'delta'), 'bool32');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);

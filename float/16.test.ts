@@ -7,9 +7,7 @@ import {
 	dataView,
 	getByteLength,
 	getByteOffset,
-	getKind,
 	getLittleEndian,
-	getSigned,
 	getType,
 } from '../util.ts';
 import { float16 } from './16.ts';
@@ -100,15 +98,9 @@ Deno.test('float16', () => {
 	assertEquals(getLittleEndian(Test, 'alpha'), true);
 	assertEquals(getLittleEndian(Test, 'beta'), false);
 	assertEquals(getLittleEndian(Test, 'gamma'), null);
-	assertEquals(getType(Test, 'alpha'), Number);
-	assertEquals(getType(Test, 'beta'), Number);
-	assertEquals(getType(Test, 'gamma'), Number);
-	assertEquals(getKind(Test, 'alpha'), 'float');
-	assertEquals(getKind(Test, 'beta'), 'float');
-	assertEquals(getKind(Test, 'gamma'), 'float');
-	assertEquals(getSigned(Test, 'alpha'), true);
-	assertEquals(getSigned(Test, 'beta'), true);
-	assertEquals(getSigned(Test, 'gamma'), true);
+	assertEquals(getType(Test, 'alpha'), 'float16');
+	assertEquals(getType(Test, 'beta'), 'float16');
+	assertEquals(getType(Test, 'gamma'), 'float16');
 
 	const v = new DataView(new ArrayBuffer(4));
 	for (

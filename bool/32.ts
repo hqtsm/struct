@@ -21,9 +21,7 @@ export function bool32<T extends Type>(
 		byteOffset,
 		byteLength: 4,
 		littleEndian,
-		kind: 'bool',
-		signed: null,
-		Type: Boolean,
+		type: 'bool32',
 		get(): boolean {
 			return !!dataView(this.buffer).getInt32(
 				this.byteOffset + byteOffset,

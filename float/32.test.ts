@@ -4,9 +4,7 @@ import { Struct } from '../struct.ts';
 import {
 	getByteLength,
 	getByteOffset,
-	getKind,
 	getLittleEndian,
-	getSigned,
 	getType,
 } from '../util.ts';
 import { float32 } from './32.ts';
@@ -40,15 +38,9 @@ Deno.test('float32', () => {
 	assertEquals(getLittleEndian(Test, 'alpha'), true);
 	assertEquals(getLittleEndian(Test, 'beta'), false);
 	assertEquals(getLittleEndian(Test, 'gamma'), null);
-	assertEquals(getType(Test, 'alpha'), Number);
-	assertEquals(getType(Test, 'beta'), Number);
-	assertEquals(getType(Test, 'gamma'), Number);
-	assertEquals(getKind(Test, 'alpha'), 'float');
-	assertEquals(getKind(Test, 'beta'), 'float');
-	assertEquals(getKind(Test, 'gamma'), 'float');
-	assertEquals(getSigned(Test, 'alpha'), true);
-	assertEquals(getSigned(Test, 'beta'), true);
-	assertEquals(getSigned(Test, 'gamma'), true);
+	assertEquals(getType(Test, 'alpha'), 'float32');
+	assertEquals(getType(Test, 'beta'), 'float32');
+	assertEquals(getType(Test, 'gamma'), 'float32');
 
 	const v = new DataView(new ArrayBuffer(4));
 	for (

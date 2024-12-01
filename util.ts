@@ -59,34 +59,6 @@ export function getLittleEndian<T extends Type>(
 }
 
 /**
- * Get kind of member.
- *
- * @param Type Type constructor.
- * @param name Member name.
- * @returns Kind.
- */
-export function getKind<T extends Type>(
-	Type: TypeClass<T>,
-	name: Members<T>,
-): string {
-	return Type.MEMBERS[name].kind;
-}
-
-/**
- * Get signed of member.
- *
- * @param Type Type constructor.
- * @param name Member name.
- * @returns Signed or null where not applicable.
- */
-export function getSigned<T extends Type>(
-	Type: TypeClass<T>,
-	name: Members<T>,
-): boolean | null {
-	return Type.MEMBERS[name].signed;
-}
-
-/**
  * Get type of member.
  *
  * @param Type Type constructor.
@@ -97,7 +69,7 @@ export function getType<T extends Type>(
 	Type: TypeClass<T>,
 	name: Members<T>,
 ): MemberInfoType {
-	return Type.MEMBERS[name].Type;
+	return Type.MEMBERS[name].type;
 }
 
 /**

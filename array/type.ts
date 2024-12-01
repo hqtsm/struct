@@ -1,9 +1,4 @@
-import type {
-	ArrayBufferReal,
-	MemberInfoSigned,
-	Type,
-	TypeConstructor,
-} from '../type.ts';
+import type { ArrayBufferReal, Type, TypeConstructor } from '../type.ts';
 import { assignType } from '../util.ts';
 import { ArrayTyped, type ArrayTypedConstructor } from './typed.ts';
 
@@ -62,16 +57,6 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 		}
 		assignType(r, value);
 	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly KIND: string = 'type';
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly SIGNED: MemberInfoSigned = null;
 
 	/**
 	 * Type constructor.

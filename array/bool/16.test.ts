@@ -6,16 +6,12 @@ Deno.test('ArrayBool16', () => {
 	const count = 3;
 	const bpe = ArrayBool16.BYTES_PER_ELEMENT;
 	assertEquals(bpe, 2);
-	assertEquals(ArrayBool16.KIND, 'bool');
-	assertEquals(ArrayBool16.SIGNED, null);
-	assertEquals(ArrayBool16.TYPE, Boolean);
+	assertEquals(ArrayBool16.TYPE, 'bool16');
 	assertEquals(ArrayBool16.MEMBERS[2], {
 		byteOffset: 4,
 		byteLength: 2,
 		littleEndian: null,
-		kind: 'bool',
-		signed: null,
-		Type: Boolean,
+		type: 'bool16',
 	});
 
 	for (const littleEndian of [undefined, true, false]) {

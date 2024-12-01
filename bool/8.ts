@@ -19,9 +19,7 @@ export function bool8<T extends Type>(
 		byteOffset,
 		byteLength: 1,
 		littleEndian: null,
-		kind: 'bool',
-		signed: null,
-		Type: Boolean,
+		type: 'bool8',
 		get(): boolean {
 			return !!dataView(this.buffer).getInt8(
 				this.byteOffset + byteOffset,

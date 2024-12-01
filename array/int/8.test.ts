@@ -6,18 +6,15 @@ Deno.test('ArrayInt8 + ArrayUint8', () => {
 	const count = 3;
 	for (const ArrayInt of [ArrayInt8, ArrayUint8]) {
 		const signed = ArrayInt === ArrayInt8;
+		const type = signed ? 'int8' : 'uint8';
 		const bpe = ArrayInt.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 1);
-		assertEquals(ArrayInt.KIND, 'int');
-		assertEquals(ArrayInt.SIGNED, signed);
-		assertEquals(ArrayInt.TYPE, Number);
+		assertEquals(ArrayInt.TYPE, type);
 		assertEquals(ArrayInt.MEMBERS[2], {
 			byteOffset: 2,
 			byteLength: 1,
 			littleEndian: null,
-			kind: 'int',
-			signed,
-			Type: Number,
+			type,
 		});
 
 		for (const littleEndian of [undefined, true, false]) {

@@ -11,9 +11,7 @@ import { Struct } from './struct.ts';
 import {
 	getByteLength,
 	getByteOffset,
-	getKind,
 	getLittleEndian,
-	getSigned,
 	getType,
 } from './util.ts';
 
@@ -90,12 +88,6 @@ Deno.test('member', () => {
 	assertEquals(getType(TestParent, 'alpha'), TestChild);
 	assertEquals(getType(TestParent, 'beta'), TestChild);
 	assertEquals(getType(TestParent, 'gamma'), TestChild);
-	assertEquals(getKind(TestParent, 'alpha'), 'type');
-	assertEquals(getKind(TestParent, 'beta'), 'type');
-	assertEquals(getKind(TestParent, 'gamma'), 'type');
-	assertEquals(getSigned(TestParent, 'alpha'), null);
-	assertEquals(getSigned(TestParent, 'beta'), null);
-	assertEquals(getSigned(TestParent, 'gamma'), null);
 
 	const data = new Uint8Array(TestParent.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -189,12 +181,6 @@ Deno.test('array: Int8Array', () => {
 	assertEquals(getType(Test, 'alpha'), Int8Array);
 	assertEquals(getType(Test, 'beta'), Int8Array);
 	assertEquals(getType(Test, 'gamma'), Int8Array);
-	assertEquals(getKind(Test, 'alpha'), 'array');
-	assertEquals(getKind(Test, 'beta'), 'array');
-	assertEquals(getKind(Test, 'gamma'), 'array');
-	assertEquals(getSigned(Test, 'alpha'), null);
-	assertEquals(getSigned(Test, 'beta'), null);
-	assertEquals(getSigned(Test, 'gamma'), null);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -254,12 +240,6 @@ Deno.test('array: Uint8Array', () => {
 	assertEquals(getType(Test, 'alpha'), Uint8Array);
 	assertEquals(getType(Test, 'beta'), Uint8Array);
 	assertEquals(getType(Test, 'gamma'), Uint8Array);
-	assertEquals(getKind(Test, 'alpha'), 'array');
-	assertEquals(getKind(Test, 'beta'), 'array');
-	assertEquals(getKind(Test, 'gamma'), 'array');
-	assertEquals(getSigned(Test, 'alpha'), null);
-	assertEquals(getSigned(Test, 'beta'), null);
-	assertEquals(getSigned(Test, 'gamma'), null);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -319,12 +299,6 @@ Deno.test('array: Uint8ClampedArray', () => {
 	assertEquals(getType(Test, 'alpha'), Uint8ClampedArray);
 	assertEquals(getType(Test, 'beta'), Uint8ClampedArray);
 	assertEquals(getType(Test, 'gamma'), Uint8ClampedArray);
-	assertEquals(getKind(Test, 'alpha'), 'array');
-	assertEquals(getKind(Test, 'beta'), 'array');
-	assertEquals(getKind(Test, 'gamma'), 'array');
-	assertEquals(getSigned(Test, 'alpha'), null);
-	assertEquals(getSigned(Test, 'beta'), null);
-	assertEquals(getSigned(Test, 'gamma'), null);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -384,12 +358,6 @@ Deno.test('view: DataView', () => {
 	assertEquals(getType(Test, 'alpha'), DataView);
 	assertEquals(getType(Test, 'beta'), DataView);
 	assertEquals(getType(Test, 'gamma'), DataView);
-	assertEquals(getKind(Test, 'alpha'), 'view');
-	assertEquals(getKind(Test, 'beta'), 'view');
-	assertEquals(getKind(Test, 'gamma'), 'view');
-	assertEquals(getSigned(Test, 'alpha'), null);
-	assertEquals(getSigned(Test, 'beta'), null);
-	assertEquals(getSigned(Test, 'gamma'), null);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -453,15 +421,9 @@ Deno.test('pad', () => {
 	assertEquals(getLittleEndian(Test, 'alpha'), null);
 	assertEquals(getLittleEndian(Test, 'mystery'), null);
 	assertEquals(getLittleEndian(Test, 'beta'), null);
-	assertEquals(getType(Test, 'alpha'), Number);
+	assertEquals(getType(Test, 'alpha'), 'uint32');
 	assertEquals(getType(Test, 'mystery'), null);
-	assertEquals(getType(Test, 'beta'), Number);
-	assertEquals(getKind(Test, 'alpha'), 'int');
-	assertEquals(getKind(Test, 'mystery'), 'pad');
-	assertEquals(getKind(Test, 'beta'), 'int');
-	assertEquals(getSigned(Test, 'alpha'), false);
-	assertEquals(getSigned(Test, 'mystery'), null);
-	assertEquals(getSigned(Test, 'beta'), false);
+	assertEquals(getType(Test, 'beta'), 'uint32');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);

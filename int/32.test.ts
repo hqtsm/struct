@@ -4,9 +4,7 @@ import { Struct } from '../struct.ts';
 import {
 	getByteLength,
 	getByteOffset,
-	getKind,
 	getLittleEndian,
-	getSigned,
 	getType,
 } from '../util.ts';
 import { int32, uint32 } from './32.ts';
@@ -46,18 +44,10 @@ Deno.test('int32', () => {
 	assertEquals(getLittleEndian(Test, 'beta'), null);
 	assertEquals(getLittleEndian(Test, 'gamma'), true);
 	assertEquals(getLittleEndian(Test, 'delta'), false);
-	assertEquals(getType(Test, 'alpha'), Number);
-	assertEquals(getType(Test, 'beta'), Number);
-	assertEquals(getType(Test, 'gamma'), Number);
-	assertEquals(getType(Test, 'delta'), Number);
-	assertEquals(getKind(Test, 'alpha'), 'int');
-	assertEquals(getKind(Test, 'beta'), 'int');
-	assertEquals(getKind(Test, 'gamma'), 'int');
-	assertEquals(getKind(Test, 'delta'), 'int');
-	assertEquals(getSigned(Test, 'alpha'), true);
-	assertEquals(getSigned(Test, 'beta'), true);
-	assertEquals(getSigned(Test, 'gamma'), true);
-	assertEquals(getSigned(Test, 'delta'), true);
+	assertEquals(getType(Test, 'alpha'), 'int32');
+	assertEquals(getType(Test, 'beta'), 'int32');
+	assertEquals(getType(Test, 'gamma'), 'int32');
+	assertEquals(getType(Test, 'delta'), 'int32');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -132,18 +122,10 @@ Deno.test('uint32', () => {
 	assertEquals(getLittleEndian(Test, 'beta'), null);
 	assertEquals(getLittleEndian(Test, 'gamma'), true);
 	assertEquals(getLittleEndian(Test, 'delta'), false);
-	assertEquals(getType(Test, 'alpha'), Number);
-	assertEquals(getType(Test, 'beta'), Number);
-	assertEquals(getType(Test, 'gamma'), Number);
-	assertEquals(getType(Test, 'delta'), Number);
-	assertEquals(getKind(Test, 'alpha'), 'int');
-	assertEquals(getKind(Test, 'beta'), 'int');
-	assertEquals(getKind(Test, 'gamma'), 'int');
-	assertEquals(getKind(Test, 'delta'), 'int');
-	assertEquals(getSigned(Test, 'alpha'), false);
-	assertEquals(getSigned(Test, 'beta'), false);
-	assertEquals(getSigned(Test, 'gamma'), false);
-	assertEquals(getSigned(Test, 'delta'), false);
+	assertEquals(getType(Test, 'alpha'), 'uint32');
+	assertEquals(getType(Test, 'beta'), 'uint32');
+	assertEquals(getType(Test, 'gamma'), 'uint32');
+	assertEquals(getType(Test, 'delta'), 'uint32');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);

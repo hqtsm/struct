@@ -1,4 +1,4 @@
-import type { MemberInfoSigned, MemberInfoType } from '../../type.ts';
+import type { MemberInfoType } from '../../type.ts';
 import { dataView } from '../../util.ts';
 import { ArrayTyped } from '../typed.ts';
 
@@ -43,15 +43,5 @@ export class ArrayBool32 extends ArrayTyped<boolean> {
 	/**
 	 * @inheritdoc
 	 */
-	public static override readonly KIND: string = 'bool';
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly SIGNED: MemberInfoSigned = null;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = Boolean;
+	public static override readonly TYPE: MemberInfoType = 'bool32';
 }

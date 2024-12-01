@@ -4,9 +4,7 @@ import { Struct } from '../struct.ts';
 import {
 	getByteLength,
 	getByteOffset,
-	getKind,
 	getLittleEndian,
-	getSigned,
 	getType,
 } from '../util.ts';
 import { bool8 } from './8.ts';
@@ -34,12 +32,8 @@ Deno.test('bool8', () => {
 	assertEquals(getByteLength(Test, 'beta'), 1);
 	assertEquals(getLittleEndian(Test, 'alpha'), null);
 	assertEquals(getLittleEndian(Test, 'beta'), null);
-	assertEquals(getType(Test, 'alpha'), Boolean);
-	assertEquals(getType(Test, 'beta'), Boolean);
-	assertEquals(getKind(Test, 'alpha'), 'bool');
-	assertEquals(getKind(Test, 'beta'), 'bool');
-	assertEquals(getSigned(Test, 'alpha'), null);
-	assertEquals(getSigned(Test, 'beta'), null);
+	assertEquals(getType(Test, 'alpha'), 'bool8');
+	assertEquals(getType(Test, 'beta'), 'bool8');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
