@@ -4,13 +4,38 @@
 export type ArrayBufferReal = ArrayBufferLike & { BYTES_PER_ELEMENT?: never };
 
 /**
- * ArrayBufferView plus endian, readonly.
+ * Buffer pointer.
  */
-export interface EndianBufferView extends Readonly<ArrayBufferView> {
+export interface BufferPointer {
+	/**
+	 * ArrayBuffer instance.
+	 */
+	readonly buffer: ArrayBufferLike;
+
+	/**
+	 * Byte offset into buffer.
+	 */
+	readonly byteOffset: number;
+}
+
+/**
+ * Endian aware buffer pointer.
+ */
+export interface EndianBufferPointer extends BufferPointer {
 	/**
 	 * True for little endian, false for big endian.
 	 */
 	readonly littleEndian: boolean;
+}
+
+/**
+ * Endian aware buffer view.
+ */
+export interface EndianBufferView extends EndianBufferPointer {
+	/**
+	 * Byte length of view.
+	 */
+	readonly byteLength: number;
 }
 
 /**
