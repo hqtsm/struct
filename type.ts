@@ -19,9 +19,19 @@ export interface BufferPointer {
 }
 
 /**
- * Endian aware buffer pointer.
+ * Buffer view.
  */
-export interface EndianBufferPointer extends BufferPointer {
+export interface BufferView extends BufferPointer {
+	/**
+	 * Byte length of view.
+	 */
+	readonly byteLength: number;
+}
+
+/**
+ * Endian aware.
+ */
+export interface Endian {
 	/**
 	 * True for little endian, false for big endian.
 	 */
@@ -29,14 +39,14 @@ export interface EndianBufferPointer extends BufferPointer {
 }
 
 /**
+ * Endian aware buffer pointer.
+ */
+export interface EndianBufferPointer extends BufferPointer, Endian {}
+
+/**
  * Endian aware buffer view.
  */
-export interface EndianBufferView extends EndianBufferPointer {
-	/**
-	 * Byte length of view.
-	 */
-	readonly byteLength: number;
-}
+export interface EndianBufferView extends BufferView, Endian {}
 
 /**
  * Signed of member type.
