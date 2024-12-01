@@ -81,7 +81,7 @@ export abstract class Ptr<T> implements EndianBufferPointer {
 		littleEndian: boolean | null = null,
 	) {
 		dataView(this.#buffer = buffer);
-		if (byteOffset < -0x1fffffffffffff || byteOffset > 0x1fffffffffffff) {
+		if (byteOffset < 0 || byteOffset > 0x1fffffffffffff) {
 			throw new RangeError(`Invalid offset: ${byteOffset}`);
 		}
 		this.#byteOffset = byteOffset - byteOffset % 1 || 0;
