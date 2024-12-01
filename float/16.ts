@@ -1,6 +1,7 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
 import { defineMember } from '../member.ts';
+import { Ptr } from '../ptr.ts';
 import type { MembersExtends, Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
@@ -60,4 +61,57 @@ export function float16<T extends Type>(
 			}
 		},
 	});
+}
+
+/**
+ * Pointer: float16.
+ */
+export class Float16Ptr extends Ptr<number> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof Float16Ptr, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.getter](index: number): number {
+		const d = dataView(this.buffer) as MaybeNativeFloat16;
+		return d.getFloat16
+			? d.getFloat16(
+				this.byteOffset + index * 2,
+				this.littleEndian,
+			)
+			: getFloat16(
+				d as DataView,
+				this.byteOffset + index * 2,
+				this.littleEndian,
+			);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.setter](index: number, value: number): void {
+		const d = dataView(this.buffer) as MaybeNativeFloat16;
+		if (d.setFloat16) {
+			d.setFloat16(
+				this.byteOffset + index * 2,
+				value,
+				this.littleEndian,
+			);
+		} else {
+			setFloat16(
+				d as DataView,
+				this.byteOffset + index * 2,
+				value,
+				this.littleEndian,
+			);
+		}
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly BYTES_PER_ELEMENT: number = 2;
 }

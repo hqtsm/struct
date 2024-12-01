@@ -7,7 +7,13 @@ import {
 	getLittleEndian,
 	getType,
 } from '../util.ts';
-import { float32 } from './32.ts';
+import { float32, Float32Ptr } from './32.ts';
+
+function round(n: number): number {
+	const dataView = new DataView(new ArrayBuffer(4));
+	dataView.setFloat32(0, n);
+	return dataView.getFloat32(0);
+}
 
 Deno.test('float32', () => {
 	class Test extends Struct {
@@ -94,6 +100,28 @@ Deno.test('float32', () => {
 			assertEquals(view.getFloat32(off.alpha, true), f32);
 			assertEquals(view.getFloat32(off.beta, false), f32);
 			assertEquals(view.getFloat32(off.gamma, true), f32);
+		}
+	}
+});
+
+Deno.test('Float32Ptr', () => {
+	const bpe = Float32Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 4);
+
+	const fA = round(Math.PI);
+	const fB = round(-Math.E);
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Float32Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = fA;
+			assertEquals(view.getFloat32(o, ptr.littleEndian), fA);
+			view.setFloat32(o, fB, ptr.littleEndian);
+			assertEquals(ptr[i], fB);
 		}
 	}
 });

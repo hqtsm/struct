@@ -7,7 +7,7 @@ import {
 	getLittleEndian,
 	getType,
 } from '../util.ts';
-import { float64 } from './64.ts';
+import { float64, Float64Ptr } from './64.ts';
 
 Deno.test('float64', () => {
 	class Test extends Struct {
@@ -91,6 +91,28 @@ Deno.test('float64', () => {
 			assertEquals(view.getFloat64(off.alpha, true), f64);
 			assertEquals(view.getFloat64(off.beta, false), f64);
 			assertEquals(view.getFloat64(off.gamma, true), f64);
+		}
+	}
+});
+
+Deno.test('Float64Ptr', () => {
+	const bpe = Float64Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 8);
+
+	const fA = Math.PI;
+	const fB = -Math.E;
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Float64Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = fA;
+			assertEquals(view.getFloat64(o, ptr.littleEndian), fA);
+			view.setFloat64(o, fB, ptr.littleEndian);
+			assertEquals(ptr[i], fB);
 		}
 	}
 });
