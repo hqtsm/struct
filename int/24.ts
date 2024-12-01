@@ -6,6 +6,7 @@ import {
 } from '@hqtsm/dataview/int/24';
 
 import { defineMember } from '../member.ts';
+import { Ptr } from '../ptr.ts';
 import type { MembersExtends, Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
@@ -83,4 +84,80 @@ export function uint24<T extends Type>(
 			);
 		},
 	});
+}
+
+/**
+ * Pointer: int24.
+ */
+export class Int24Ptr extends Ptr<number> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof Int24Ptr, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.getter](index: number): number {
+		return getInt24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+			this.littleEndian,
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.setter](index: number, value: number): void {
+		setInt24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+			value,
+			this.littleEndian,
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly BYTES_PER_ELEMENT: number = 3;
+}
+
+/**
+ * Pointer: uint24.
+ */
+export class Uint24Ptr extends Ptr<number> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof Uint24Ptr, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.getter](index: number): number {
+		return getUint24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+			this.littleEndian,
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.setter](index: number, value: number): void {
+		setUint24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+			value,
+			this.littleEndian,
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly BYTES_PER_ELEMENT: number = 3;
 }

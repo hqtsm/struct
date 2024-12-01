@@ -1,4 +1,5 @@
 import { defineMember } from '../member.ts';
+import { Ptr } from '../ptr.ts';
 import type { MembersExtends, Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
@@ -54,4 +55,62 @@ export function uint8<T extends Type>(
 			dataView(this.buffer).setUint8(this.byteOffset + byteOffset, value);
 		},
 	});
+}
+
+/**
+ * Pointer: int8.
+ */
+export class Int8Ptr extends Ptr<number> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof Int8Ptr, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.getter](index: number): number {
+		return dataView(this.buffer).getInt8(this.byteOffset + index);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.setter](index: number, value: number): void {
+		dataView(this.buffer).setInt8(this.byteOffset + index, value);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly BYTES_PER_ELEMENT: number = 1;
+}
+
+/**
+ * Pointer: uint8.
+ */
+export class Uint8Ptr extends Ptr<number> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof Uint8Ptr, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.getter](index: number): number {
+		return dataView(this.buffer).getUint8(this.byteOffset + index);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.setter](index: number, value: number): void {
+		dataView(this.buffer).setUint8(this.byteOffset + index, value);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly BYTES_PER_ELEMENT: number = 1;
 }

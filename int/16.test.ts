@@ -7,7 +7,7 @@ import {
 	getLittleEndian,
 	getType,
 } from '../util.ts';
-import { int16, uint16 } from './16.ts';
+import { int16, Int16Ptr, uint16, Uint16Ptr } from './16.ts';
 
 Deno.test('int16', () => {
 	class Test extends Struct {
@@ -162,5 +162,43 @@ Deno.test('uint16', () => {
 		assertEquals(view.getUint16(off.beta, true), 0xfffe);
 		assertEquals(view.getUint16(off.gamma, true), 0xfffd);
 		assertEquals(view.getUint16(off.delta, false), 0xfffc);
+	}
+});
+
+Deno.test('Int16Ptr', () => {
+	const bpe = Int16Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 2);
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Int16Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = -1;
+			assertEquals(view.getInt16(o, ptr.littleEndian), -1);
+			view.setInt16(o, 1, ptr.littleEndian);
+			assertEquals(ptr[i], 1);
+		}
+	}
+});
+
+Deno.test('Uint16Ptr', () => {
+	const bpe = Uint16Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 2);
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Uint16Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = -1;
+			assertEquals(view.getUint16(o, ptr.littleEndian), 0xffff);
+			view.setUint16(o, 1, ptr.littleEndian);
+			assertEquals(ptr[i], 1);
+		}
 	}
 });

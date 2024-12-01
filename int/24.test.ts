@@ -1,4 +1,9 @@
-import { getInt24, getUint24 } from '@hqtsm/dataview/int/24';
+import {
+	getInt24,
+	getUint24,
+	setInt24,
+	setUint24,
+} from '@hqtsm/dataview/int/24';
 import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
@@ -8,7 +13,7 @@ import {
 	getLittleEndian,
 	getType,
 } from '../util.ts';
-import { int24, uint24 } from './24.ts';
+import { int24, Int24Ptr, uint24, Uint24Ptr } from './24.ts';
 
 Deno.test('int24', () => {
 	class Test extends Struct {
@@ -163,5 +168,43 @@ Deno.test('uint24', () => {
 		assertEquals(getUint24(view, off.beta, true), 0xfffffe);
 		assertEquals(getUint24(view, off.gamma, true), 0xfffffd);
 		assertEquals(getUint24(view, off.delta, false), 0xfffffc);
+	}
+});
+
+Deno.test('Int24Ptr', () => {
+	const bpe = Int24Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 3);
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Int24Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = -1;
+			assertEquals(getInt24(view, o, ptr.littleEndian), -1);
+			setInt24(view, o, 1, ptr.littleEndian);
+			assertEquals(ptr[i], 1);
+		}
+	}
+});
+
+Deno.test('Uint24Ptr', () => {
+	const bpe = Uint24Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 3);
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Uint24Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = -1;
+			assertEquals(getUint24(view, o, ptr.littleEndian), 0xffffff);
+			setUint24(view, o, 1, ptr.littleEndian);
+			assertEquals(ptr[i], 1);
+		}
 	}
 });

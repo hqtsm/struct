@@ -1,4 +1,5 @@
 import { defineMember } from '../member.ts';
+import { Ptr } from '../ptr.ts';
 import type { MembersExtends, Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
@@ -72,4 +73,76 @@ export function uint64<T extends Type>(
 			);
 		},
 	});
+}
+
+/**
+ * Pointer: int64.
+ */
+export class Int64Ptr extends Ptr<bigint> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof Int64Ptr, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.getter](index: number): bigint {
+		return dataView(this.buffer).getBigInt64(
+			this.byteOffset + index * 8,
+			this.littleEndian,
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.setter](index: number, value: bigint): void {
+		dataView(this.buffer).setBigInt64(
+			this.byteOffset + index * 8,
+			value,
+			this.littleEndian,
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly BYTES_PER_ELEMENT: number = 8;
+}
+
+/**
+ * Pointer: uint64.
+ */
+export class Uint64Ptr extends Ptr<bigint> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof Uint64Ptr, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.getter](index: number): bigint {
+		return dataView(this.buffer).getBigUint64(
+			this.byteOffset + index * 8,
+			this.littleEndian,
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.setter](index: number, value: bigint): void {
+		dataView(this.buffer).setBigUint64(
+			this.byteOffset + index * 8,
+			value,
+			this.littleEndian,
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly BYTES_PER_ELEMENT: number = 8;
 }

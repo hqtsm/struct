@@ -7,7 +7,7 @@ import {
 	getLittleEndian,
 	getType,
 } from '../util.ts';
-import { int32, uint32 } from './32.ts';
+import { int32, Int32Ptr, uint32, Uint32Ptr } from './32.ts';
 
 Deno.test('int32', () => {
 	class Test extends Struct {
@@ -162,5 +162,43 @@ Deno.test('uint32', () => {
 		assertEquals(view.getUint32(off.beta, true), 0xfffffffe);
 		assertEquals(view.getUint32(off.gamma, true), 0xfffffffd);
 		assertEquals(view.getUint32(off.delta, false), 0xfffffffc);
+	}
+});
+
+Deno.test('Int32Ptr', () => {
+	const bpe = Int32Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 4);
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Int32Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = -1;
+			assertEquals(view.getInt32(o, ptr.littleEndian), -1);
+			view.setInt32(o, 1, ptr.littleEndian);
+			assertEquals(ptr[i], 1);
+		}
+	}
+});
+
+Deno.test('Uint32Ptr', () => {
+	const bpe = Uint32Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 4);
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Uint32Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = -1;
+			assertEquals(view.getUint32(o, ptr.littleEndian), 0xffffffff);
+			view.setUint32(o, 1, ptr.littleEndian);
+			assertEquals(ptr[i], 1);
+		}
 	}
 });
