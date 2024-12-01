@@ -7,7 +7,7 @@ import {
 	getLittleEndian,
 	getType,
 } from '../util.ts';
-import { bool32 } from './32.ts';
+import { bool32, Bool32Ptr } from './32.ts';
 
 Deno.test('bool32', () => {
 	class Test extends Struct {
@@ -121,6 +121,27 @@ Deno.test('bool32', () => {
 				assertEquals(test.gamma, i !== 0);
 				assertEquals(test.delta, i !== 0);
 			}
+		}
+	}
+});
+
+Deno.test('Bool32Ptr', () => {
+	const bpe = Bool32Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 4);
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Bool32Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = true;
+			assertEquals(view.getInt32(o, ptr.littleEndian), 1);
+			ptr[i] = false;
+			assertEquals(view.getInt32(o, ptr.littleEndian), 0);
+			view.setInt32(o, -1, ptr.littleEndian);
+			assertEquals(ptr[i], true);
 		}
 	}
 });

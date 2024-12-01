@@ -7,7 +7,7 @@ import {
 	getLittleEndian,
 	getType,
 } from '../util.ts';
-import { bool16 } from './16.ts';
+import { bool16, Bool16Ptr } from './16.ts';
 
 Deno.test('bool16', () => {
 	class Test extends Struct {
@@ -121,6 +121,27 @@ Deno.test('bool16', () => {
 				assertEquals(test.gamma, i !== 0);
 				assertEquals(test.delta, i !== 0);
 			}
+		}
+	}
+});
+
+Deno.test('Bool16Ptr', () => {
+	const bpe = Bool16Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 2);
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Bool16Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = true;
+			assertEquals(view.getInt16(o, ptr.littleEndian), 1);
+			ptr[i] = false;
+			assertEquals(view.getInt16(o, ptr.littleEndian), 0);
+			view.setInt16(o, -1, ptr.littleEndian);
+			assertEquals(ptr[i], true);
 		}
 	}
 });

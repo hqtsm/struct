@@ -7,7 +7,7 @@ import {
 	getLittleEndian,
 	getType,
 } from '../util.ts';
-import { bool8 } from './8.ts';
+import { bool8, Bool8Ptr } from './8.ts';
 
 Deno.test('bool8', () => {
 	class Test extends Struct {
@@ -52,5 +52,26 @@ Deno.test('bool8', () => {
 		data[off.beta] = i;
 		assertEquals(test.alpha, i !== 0);
 		assertEquals(test.beta, i !== 0);
+	}
+});
+
+Deno.test('Bool8Ptr', () => {
+	const bpe = Bool8Ptr.BYTES_PER_ELEMENT;
+	assertEquals(bpe, 1);
+
+	const count = 3;
+	for (const littleEndian of [undefined, true, false]) {
+		const buffer = new ArrayBuffer(bpe * count + bpe);
+		const view = new DataView(buffer);
+		const ptr = new Bool8Ptr(buffer, bpe, littleEndian);
+		for (let i = -1; i < count; i++) {
+			const o = bpe * i + bpe;
+			ptr[i] = true;
+			assertEquals(view.getInt8(o), 1);
+			ptr[i] = false;
+			assertEquals(view.getInt8(o), 0);
+			view.setInt8(o, -1);
+			assertEquals(ptr[i], true);
+		}
 	}
 });

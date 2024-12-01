@@ -1,4 +1,5 @@
 import { defineMember } from '../member.ts';
+import { Ptr } from '../ptr.ts';
 import type { MembersExtends, Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
@@ -36,4 +37,40 @@ export function bool16<T extends Type>(
 			);
 		},
 	});
+}
+
+/**
+ * Pointer: bool16.
+ */
+export class Bool16Ptr extends Ptr<boolean> {
+	/**
+	 * @inheritdoc
+	 */
+	declare public readonly ['constructor']: Omit<typeof Bool16Ptr, 'new'>;
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.getter](index: number): boolean {
+		return !!dataView(this.buffer).getInt16(
+			this.byteOffset + index * 2,
+			this.littleEndian,
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected override [Ptr.setter](index: number, value: boolean): void {
+		dataView(this.buffer).setInt16(
+			this.byteOffset + index * 2,
+			value ? 1 : 0,
+			this.littleEndian,
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static override readonly BYTES_PER_ELEMENT: number = 2;
 }
