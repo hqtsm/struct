@@ -73,12 +73,12 @@ export class Struct implements Type {
 	}
 
 	/**
-	 * @inheritdoc
+	 * Byte length of struct.
 	 */
 	public static readonly BYTE_LENGTH: number = 0;
 
 	/**
-	 * @inheritdoc
+	 * Members infos.
 	 */
 	public static get MEMBERS(): Readonly<MemberInfos> {
 		let r = (members ??= new WeakMap()).get(this);

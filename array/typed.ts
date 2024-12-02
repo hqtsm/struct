@@ -184,8 +184,8 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 		},
 	}) as unknown as number;
 
-	/*
-	 * @inheritdoc
+	/**
+	 * Members infos.
 	 */
 	public static get MEMBERS(): Readonly<MemberInfos> {
 		let r = (members ??= new WeakMap()).get(this);
@@ -205,10 +205,10 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 								return Reflect.get(target, key);
 							}
 							if (i >= 0) {
-								const { BYTES_PER_ELEMENT } = ArrayTyped;
+								const b = ArrayTyped.BYTES_PER_ELEMENT;
 								return {
-									byteOffset: i * BYTES_PER_ELEMENT,
-									byteLength: BYTES_PER_ELEMENT,
+									byteOffset: i * b,
+									byteLength: b,
 								};
 							}
 						},
