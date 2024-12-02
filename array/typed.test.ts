@@ -156,6 +156,10 @@ Deno.test('ArrayTyped: MEMBERS', () => {
 	assertEquals(typeof ArrayTyped.MEMBERS[Infinity], 'undefined');
 
 	class Test extends DummyArray {}
+	assertEquals(Test.MEMBERS[0], { byteOffset: 0, byteLength: 1 });
+	assertEquals(Test.MEMBERS[1], { byteOffset: 1, byteLength: 1 });
+	assertEquals(Test.MEMBERS[2], { byteOffset: 2, byteLength: 1 });
+
 	const value = { ...Test.MEMBERS[0] };
 	(Test.MEMBERS as MemberInfos)['weird'] = value;
 	assertThrows(() => {

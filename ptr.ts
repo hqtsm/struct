@@ -1,8 +1,13 @@
 import { LITTLE_ENDIAN } from './endian.ts';
-import type { ArrayBufferReal, EndianBufferPointer } from './type.ts';
+import type {
+	ArrayBufferReal,
+	EndianBufferPointer,
+	MemberInfo,
+	MemberInfos,
+} from './type.ts';
 import { dataView } from './util.ts';
 
-function index(key: PropertyKey): number | null {
+function parseNumeric(key: PropertyKey): number | null {
 	let n;
 	return key === '-0' ? null : (key === '' + (n = +String(key)) ? n : null);
 }
@@ -14,33 +19,39 @@ const setter = Symbol('setter');
 const handler: ProxyHandler<Ptr<unknown>> = {
 	deleteProperty(target, key): boolean {
 		let i;
-		return Reflect.has(target, key) || (i = index(key)) === null
+		return Reflect.has(target, key) || (i = parseNumeric(key)) === null
 			? Reflect.deleteProperty(target, key)
-			: !Number.isSafeInteger(i);
+			: !(i === i - i % 1);
 	},
 	get(target, key, receiver: Ptr<unknown>): unknown | undefined {
 		let i;
-		if (Reflect.has(target, key) || (i = index(key)) === null) {
+		if (Reflect.has(target, key) || (i = parseNumeric(key)) === null) {
 			return Reflect.get(target, key);
 		}
-		if (Number.isSafeInteger(i)) {
+		if ((i === i - i % 1)) {
 			return receiver[getter](i);
 		}
 	},
 	has(target, key): boolean {
-		return Reflect.has(target, key) || Number.isSafeInteger(index(key));
+		let i;
+		return (
+			Reflect.has(target, key) ||
+			((i = parseNumeric(key)) !== null && i === i - i % 1)
+		);
 	},
 	set(target, key, value, receiver: Ptr<unknown>): boolean {
 		let i;
-		if (Reflect.has(target, key) || (i = index(key)) === null) {
+		if (Reflect.has(target, key) || (i = parseNumeric(key)) === null) {
 			return Reflect.set(target, key, value);
 		}
-		if (Number.isSafeInteger(i)) {
+		if (i === i - i % 1) {
 			receiver[setter](i, value);
 		}
 		return true;
 	},
 };
+
+let members: WeakMap<typeof Ptr, Readonly<MemberInfos>>;
 
 /**
  * Pointer to a type.
@@ -138,4 +149,45 @@ export abstract class Ptr<T> implements EndianBufferPointer {
 	 * Size of each element.
 	 */
 	public static readonly BYTES_PER_ELEMENT: number;
+
+	/**
+	 * Members infos.
+	 */
+	public static get MEMBERS(): Readonly<MemberInfos> {
+		let r = (members ??= new WeakMap()).get(this);
+		if (!r) {
+			// deno-lint-ignore no-this-alias
+			const ArrayTyped = this;
+			members.set(
+				this,
+				r = new Proxy(
+					Object.create(
+						Object.getPrototypeOf(this).MEMBERS ?? null,
+					) as Readonly<MemberInfos>,
+					{
+						get(target, key): Readonly<MemberInfo> | undefined {
+							const i = parseNumeric(key);
+							if (i === null) {
+								return Reflect.get(target, key);
+							}
+							if (i === i - i % 1) {
+								const b = ArrayTyped.BYTES_PER_ELEMENT;
+								return {
+									byteOffset: i * b,
+									byteLength: b,
+								};
+							}
+						},
+						set(target, key, value): boolean {
+							return parseNumeric(key) === null
+								? Reflect.set(target, key, value)
+								: false;
+						},
+					},
+				),
+			);
+			members.set(this, r);
+		}
+		return r;
+	}
 }

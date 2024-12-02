@@ -2,6 +2,7 @@ import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 
 import { Uint8Ptr } from './int/8.ts';
 import { Ptr } from './ptr.ts';
+import type { MemberInfos } from './type.ts';
 
 class DummyPtr extends Ptr<number> {
 	protected override [Ptr.getter](index: number): number {
@@ -14,6 +15,24 @@ class DummyPtr extends Ptr<number> {
 
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
 }
+
+Deno.test('Ptr: MEMBERS', () => {
+	assertEquals(typeof Ptr.MEMBERS['unknown'], 'undefined');
+	assertEquals(typeof Ptr.MEMBERS[1.5], 'undefined');
+	assertEquals(typeof Ptr.MEMBERS[NaN], 'undefined');
+	assertEquals(typeof Ptr.MEMBERS[Infinity], 'undefined');
+
+	class Test extends DummyPtr {}
+	assertEquals(Test.MEMBERS[0], { byteOffset: 0, byteLength: 1 });
+	assertEquals(Test.MEMBERS[1], { byteOffset: 1, byteLength: 1 });
+	assertEquals(Test.MEMBERS[-1], { byteOffset: -1, byteLength: 1 });
+
+	const value = { ...Test.MEMBERS[0] };
+	(Test.MEMBERS as MemberInfos)['weird'] = value;
+	assertThrows(() => {
+		(Test.MEMBERS as MemberInfos)[0] = value;
+	});
+});
 
 Deno.test('Ptr: buffer', () => {
 	const buffer = new ArrayBuffer(0);
