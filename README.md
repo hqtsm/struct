@@ -113,7 +113,7 @@ console.assert(data.join(', ') === '15, 0, 0, 0, 86, 14, 73, 64');
 Defining a child structure is easy.
 
 ```ts
-import { array, member, Struct, uint32 } from '@hqtsm/struct';
+import { member, Struct, uint32, view } from '@hqtsm/struct';
 
 class Child extends Struct {
 	declare public alpha: number;
@@ -133,7 +133,7 @@ class Parent extends Struct {
 	declare public child: Child;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += array(Uint8Array, 4, this, 'array', o);
+		o += view(Uint8Array, 4, this, 'array', o);
 		o += member(Child, this, 'child', o);
 		return o;
 	})(super.BYTE_LENGTH);

@@ -132,15 +132,15 @@ export function member<M extends BufferView, T extends Type>(
 }
 
 /**
- * Array constructor.
+ * View constructor.
  */
-export interface ArrayConstructor<T extends BufferView = BufferView> {
+export interface ViewConstructor<T extends BufferView = BufferView> {
 	/**
-	 * Array constructor.
+	 * View constructor.
 	 *
 	 * @param buffer Buffer data.
 	 * @param byteOffset Byte offset.
-	 * @param length Array length.
+	 * @param length View length, before multiplying by BYTES_PER_ELEMENT.
 	 * @param littleEndian Little endian, big endian, or default.
 	 */
 	new (
@@ -153,23 +153,23 @@ export interface ArrayConstructor<T extends BufferView = BufferView> {
 	/**
 	 * Bytes length for each element.
 	 */
-	readonly BYTES_PER_ELEMENT: number;
+	readonly BYTES_PER_ELEMENT?: number;
 }
 
 /**
- * Member: array.
- * For ArrayConstructor compatible types.
+ * Member: view.
+ * For ViewConstructor compatible types.
  *
- * @param Member Array constructor.
- * @param length Array length (element count).
+ * @param Member View constructor.
+ * @param length View length, before multiplying by BYTES_PER_ELEMENT.
  * @param Type Type constructor.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function array<M extends BufferView, T extends Type>(
-	Member: ArrayConstructor<M>,
+export function view<M extends BufferView, T extends Type>(
+	Member: ViewConstructor<M>,
 	length: number,
 	Type: TypeClass<T>,
 	name: MembersExtends<T, M>,
@@ -179,7 +179,7 @@ export function array<M extends BufferView, T extends Type>(
 	let m: WeakMap<T, M>;
 	return defineMember(Type, name, {
 		byteOffset,
-		byteLength: length * Member.BYTES_PER_ELEMENT,
+		byteLength: (length * (Member.BYTES_PER_ELEMENT ?? 1)),
 		littleEndian,
 		type: Member,
 		get(): M {
@@ -191,73 +191,6 @@ export function array<M extends BufferView, T extends Type>(
 						this.buffer,
 						this.byteOffset + byteOffset,
 						length,
-						littleEndian ?? this.littleEndian,
-					),
-				);
-			}
-			return r;
-		},
-		set(value): void {
-			assignView(this[name], value);
-		},
-	});
-}
-
-/**
- * View constructor.
- */
-export interface ViewConstructor<T extends BufferView = BufferView> {
-	/**
-	 * View constructor.
-	 *
-	 * @param buffer Buffer data.
-	 * @param byteOffset Byte offset.
-	 * @param byteLength Byte length.
-	 * @param littleEndian Little endian, big endian, or default.
-	 */
-	new (
-		buffer: ArrayBufferLike,
-		byteOffset: number,
-		byteLength: number,
-		littleEndian?: boolean | null,
-	): T;
-}
-
-/**
- * Member: view.
- * For ViewConstructor compatible types.
- *
- * @param Member View constructor.
- * @param byteLength Byte length.
- * @param Type Type constructor.
- * @param name Member name.
- * @param byteOffset Byte offset.
- * @param littleEndian Little endian, big endian, or default.
- * @returns Byte length.
- */
-export function view<M extends BufferView, T extends Type>(
-	Member: ViewConstructor<M>,
-	byteLength: number,
-	Type: TypeClass<T>,
-	name: MembersExtends<T, M>,
-	byteOffset: number,
-	littleEndian: boolean | null = null,
-): number {
-	let m: WeakMap<T, M>;
-	return defineMember(Type, name, {
-		byteOffset,
-		byteLength,
-		littleEndian,
-		type: Member,
-		get(): M {
-			let r = (m ??= new WeakMap()).get(this);
-			if (!r) {
-				m.set(
-					this,
-					r = new Member(
-						this.buffer,
-						this.byteOffset + byteOffset,
-						byteLength,
 						littleEndian ?? this.littleEndian,
 					),
 				);

@@ -6,7 +6,7 @@ import {
 } from '@std/assert';
 
 import { uint32 } from './int/32.ts';
-import { array, member, pad, view } from './member.ts';
+import { member, pad, view } from './member.ts';
 import { Struct } from './struct.ts';
 import {
 	getByteLength,
@@ -158,9 +158,9 @@ Deno.test('array: Int8Array', () => {
 		declare public gamma: Int8Array;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += array(Int8Array, 2, this, 'alpha', o);
-			o += array(Int8Array, 4, this, 'beta', o);
-			o += array(Int8Array, 0, this, 'gamma', o);
+			o += view(Int8Array, 2, this, 'alpha', o);
+			o += view(Int8Array, 4, this, 'beta', o);
+			o += view(Int8Array, 0, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -217,9 +217,9 @@ Deno.test('array: Uint8Array', () => {
 		declare public gamma: Uint8Array;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += array(Uint8Array, 2, this, 'alpha', o);
-			o += array(Uint8Array, 4, this, 'beta', o);
-			o += array(Uint8Array, 0, this, 'gamma', o);
+			o += view(Uint8Array, 2, this, 'alpha', o);
+			o += view(Uint8Array, 4, this, 'beta', o);
+			o += view(Uint8Array, 0, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -276,9 +276,9 @@ Deno.test('array: Uint8ClampedArray', () => {
 		declare public gamma: Uint8ClampedArray;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += array(Uint8ClampedArray, 2, this, 'alpha', o);
-			o += array(Uint8ClampedArray, 4, this, 'beta', o);
-			o += array(Uint8ClampedArray, 0, this, 'gamma', o);
+			o += view(Uint8ClampedArray, 2, this, 'alpha', o);
+			o += view(Uint8ClampedArray, 4, this, 'beta', o);
+			o += view(Uint8ClampedArray, 0, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
