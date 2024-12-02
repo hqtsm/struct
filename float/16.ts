@@ -28,7 +28,6 @@ export function float16<T extends Type>(
 	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: 2,
-		littleEndian,
 		get(): number {
 			const d = dataView(this.buffer) as MaybeNativeFloat16;
 			return d.getFloat16

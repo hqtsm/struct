@@ -11,7 +11,6 @@ Deno.test('ArrayInt24 + ArrayUint24', () => {
 		assertEquals(ArrayInt.MEMBERS[2], {
 			byteOffset: 6,
 			byteLength: 3,
-			littleEndian: null,
 		});
 
 		for (const littleEndian of [undefined, true, false]) {

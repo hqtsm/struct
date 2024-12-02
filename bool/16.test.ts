@@ -1,7 +1,7 @@
 import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
-import { getByteLength, getByteOffset, getLittleEndian } from '../util.ts';
+import { getByteLength, getByteOffset } from '../util.ts';
 import { bool16, Bool16Ptr } from './16.ts';
 
 Deno.test('bool16', () => {
@@ -35,10 +35,6 @@ Deno.test('bool16', () => {
 	assertEquals(getByteLength(Test, 'beta'), 2);
 	assertEquals(getByteLength(Test, 'gamma'), 2);
 	assertEquals(getByteLength(Test, 'delta'), 2);
-	assertEquals(getLittleEndian(Test, 'alpha'), null);
-	assertEquals(getLittleEndian(Test, 'beta'), null);
-	assertEquals(getLittleEndian(Test, 'gamma'), true);
-	assertEquals(getLittleEndian(Test, 'delta'), false);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);

@@ -209,7 +209,6 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 								return {
 									byteOffset: i * BYTES_PER_ELEMENT,
 									byteLength: BYTES_PER_ELEMENT,
-									littleEndian: null,
 								};
 							}
 						},

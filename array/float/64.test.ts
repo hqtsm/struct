@@ -9,7 +9,6 @@ Deno.test('ArrayFloat64', () => {
 	assertEquals(ArrayFloat64.MEMBERS[2], {
 		byteOffset: 16,
 		byteLength: 8,
-		littleEndian: null,
 	});
 
 	const fA = Math.PI;

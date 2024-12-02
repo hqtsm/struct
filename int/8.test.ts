@@ -1,7 +1,7 @@
 import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
-import { getByteLength, getByteOffset, getLittleEndian } from '../util.ts';
+import { getByteLength, getByteOffset } from '../util.ts';
 import { int8, Int8Ptr, uint8, Uint8Ptr } from './8.ts';
 
 Deno.test('int8', () => {
@@ -25,8 +25,6 @@ Deno.test('int8', () => {
 	assertEquals(Test.BYTE_LENGTH, 2);
 	assertEquals(getByteLength(Test, 'alpha'), 1);
 	assertEquals(getByteLength(Test, 'beta'), 1);
-	assertEquals(getLittleEndian(Test, 'alpha'), null);
-	assertEquals(getLittleEndian(Test, 'beta'), null);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);
@@ -61,8 +59,6 @@ Deno.test('uint8', () => {
 	assertEquals(Test.BYTE_LENGTH, 2);
 	assertEquals(getByteLength(Test, 'alpha'), 1);
 	assertEquals(getByteLength(Test, 'beta'), 1);
-	assertEquals(getLittleEndian(Test, 'alpha'), null);
-	assertEquals(getLittleEndian(Test, 'beta'), null);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const test = new Test(data.buffer);

@@ -9,7 +9,6 @@ Deno.test('ArrayBool8', () => {
 	assertEquals(ArrayBool8.MEMBERS[2], {
 		byteOffset: 2,
 		byteLength: 1,
-		littleEndian: null,
 	});
 
 	for (const littleEndian of [undefined, true, false]) {

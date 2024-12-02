@@ -45,20 +45,6 @@ export function getByteLength<T extends Type>(
 }
 
 /**
- * Get little endian flag of member.
- *
- * @param Type Type constructor.
- * @param name Member name.
- * @returns Little endian, big endian, or default.
- */
-export function getLittleEndian<T extends Type>(
-	Type: TypeClass<T>,
-	name: Members<T>,
-): boolean | null {
-	return Type.MEMBERS[name].littleEndian;
-}
-
-/**
  * Assign ArrayBuffer data from one view to another.
  *
  * @param dst Destination memory.

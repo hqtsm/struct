@@ -77,7 +77,6 @@ Deno.test('ArrayFloat16', () => {
 	assertEquals(ArrayFloat16.MEMBERS[2], {
 		byteOffset: 4,
 		byteLength: 2,
-		littleEndian: null,
 	});
 
 	const fA = round(Math.PI);

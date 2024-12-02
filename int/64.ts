@@ -21,7 +21,6 @@ export function int64<T extends Type>(
 	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: 8,
-		littleEndian,
 		get(): bigint {
 			return dataView(this.buffer).getBigInt64(
 				this.byteOffset + byteOffset,
@@ -56,7 +55,6 @@ export function uint64<T extends Type>(
 	return defineMember(Type, name, {
 		byteOffset,
 		byteLength: 8,
-		littleEndian,
 		get(): bigint {
 			return dataView(this.buffer).getBigUint64(
 				this.byteOffset + byteOffset,

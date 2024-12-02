@@ -66,11 +66,6 @@ export interface MemberInfo {
 	 * Byte length.
 	 */
 	byteLength: number;
-
-	/**
-	 * Little endian, big endian, or default.
-	 */
-	littleEndian: boolean | null;
 }
 
 /**
