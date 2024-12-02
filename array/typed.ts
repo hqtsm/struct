@@ -70,7 +70,7 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 		littleEndian: boolean | null = null,
 	) {
 		dataView(this.#buffer = buffer);
-		if (byteOffset < 0 || byteOffset > 0x1fffffffffffff) {
+		if (byteOffset < -0x1fffffffffffff || byteOffset > 0x1fffffffffffff) {
 			throw new RangeError(`Invalid offset: ${byteOffset}`);
 		}
 		if (length < 0 || length > 0x1fffffffffffff) {

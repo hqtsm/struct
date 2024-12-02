@@ -47,12 +47,13 @@ Deno.test('Struct: byteOffset', () => {
 	assertEquals(new Test(buffer, NaN).byteOffset, 0);
 	assertEquals(new Test(buffer, MAX).byteOffset, MAX);
 	assertEquals(new Test(buffer, 32).byteOffset, 32);
+	assertEquals(new Test(buffer, -1).byteOffset, -1);
 
-	// Negative and impossible offset throws immediately.
-	assertThrows(() => new Test(buffer, -1), RangeError);
+	// Impossible offset throws immediately.
 	assertThrows(() => new Test(buffer, MAX + 1), RangeError);
 	assertThrows(() => new Test(buffer, MAX + .5), RangeError);
 	assertThrows(() => new Test(buffer, Infinity), RangeError);
+	assertThrows(() => new Test(buffer, -Infinity), RangeError);
 
 	// Offset over buffer size throws lazy.
 	assertThrows(() => new Test(buffer, 32).alpha, RangeError);

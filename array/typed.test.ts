@@ -195,21 +195,23 @@ Deno.test('ArrayTyped: length + byteLength', () => {
 	assertThrows(() => new DummyArray(buffer, 0, MAX + 1), RangeError);
 	assertThrows(() => new DummyArray(buffer, 0, MAX + .5), RangeError);
 	assertThrows(() => new DummyArray(buffer, 0, Infinity), RangeError);
+	assertThrows(() => new DummyArray(buffer, 0, -Infinity), RangeError);
 });
 
 Deno.test('ArrayTyped: byteOffset', () => {
 	const MAX = Number.MAX_SAFE_INTEGER;
 	const buffer = new ArrayBuffer(32);
 
-	// Negative and impossible values throws immediately.
-	assertThrows(() => new DummyArray(buffer, -1), RangeError);
+	// Impossible values throws immediately.
 	assertThrows(() => new DummyArray(buffer, MAX + 1), RangeError);
 	assertThrows(() => new DummyArray(buffer, MAX + .5), RangeError);
 	assertThrows(() => new DummyArray(buffer, Infinity), RangeError);
+	assertThrows(() => new DummyArray(buffer, -Infinity), RangeError);
 
 	// Offset over buffer size does not throw unless later accessed.
 	assertEquals(new DummyArray(buffer, 32).byteOffset, 32);
 	assertEquals(new DummyArray(buffer, 33).byteOffset, 33);
+	assertEquals(new DummyArray(buffer, -1).byteOffset, -1);
 });
 
 Deno.test('ArrayTyped: littleEndian', () => {

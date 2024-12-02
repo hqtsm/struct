@@ -57,12 +57,13 @@ Deno.test('Ptr: byteOffset', () => {
 	assertEquals(new DummyPtr(buffer, NaN).byteOffset, 0);
 	assertEquals(new DummyPtr(buffer, MAX).byteOffset, MAX);
 	assertEquals(new DummyPtr(buffer, 32).byteOffset, 32);
+	assertEquals(new DummyPtr(buffer, -1).byteOffset, -1);
 
-	// Negative and impossible offset throws immediately.
-	assertThrows(() => new DummyPtr(buffer, -1), RangeError);
+	// Impossible offset throws immediately.
 	assertThrows(() => new DummyPtr(buffer, MAX + 1), RangeError);
 	assertThrows(() => new DummyPtr(buffer, MAX + .5), RangeError);
 	assertThrows(() => new DummyPtr(buffer, Infinity), RangeError);
+	assertThrows(() => new DummyPtr(buffer, -Infinity), RangeError);
 
 	// Offset over buffer size throws lazy.
 	assertThrows(() => new Uint8Ptr(buffer, 32)[0], RangeError);
