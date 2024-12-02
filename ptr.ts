@@ -7,9 +7,9 @@ import type {
 } from './type.ts';
 import { dataView } from './util.ts';
 
-function parseNumeric(key: PropertyKey): number | null {
+function index(key: PropertyKey): number | null {
 	let n;
-	return key === '-0' ? null : (key === '' + (n = +String(key)) ? n : null);
+	return key === '-0' ? NaN : (key === '' + (n = +String(key)) ? n : null);
 }
 
 const getter = Symbol('getter');
@@ -19,13 +19,13 @@ const setter = Symbol('setter');
 const handler: ProxyHandler<Ptr<unknown>> = {
 	deleteProperty(target, key): boolean {
 		let i;
-		return Reflect.has(target, key) || (i = parseNumeric(key)) === null
+		return Reflect.has(target, key) || (i = index(key)) === null
 			? Reflect.deleteProperty(target, key)
 			: !(i === i - i % 1);
 	},
 	get(target, key, receiver: Ptr<unknown>): unknown | undefined {
 		let i;
-		if (Reflect.has(target, key) || (i = parseNumeric(key)) === null) {
+		if (Reflect.has(target, key) || (i = index(key)) === null) {
 			return Reflect.get(target, key);
 		}
 		if ((i === i - i % 1)) {
@@ -36,12 +36,12 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 		let i;
 		return (
 			Reflect.has(target, key) ||
-			((i = parseNumeric(key)) !== null && i === i - i % 1)
+			((i = index(key)) !== null && i === i - i % 1)
 		);
 	},
 	set(target, key, value, receiver: Ptr<unknown>): boolean {
 		let i;
-		if (Reflect.has(target, key) || (i = parseNumeric(key)) === null) {
+		if (Reflect.has(target, key) || (i = index(key)) === null) {
 			return Reflect.set(target, key, value);
 		}
 		if (i === i - i % 1) {
@@ -166,7 +166,7 @@ export abstract class Ptr<T> implements EndianBufferPointer {
 					) as Readonly<MemberInfos>,
 					{
 						get(target, key): Readonly<MemberInfo> | undefined {
-							const i = parseNumeric(key);
+							const i = index(key);
 							if (i === null) {
 								return Reflect.get(target, key);
 							}
@@ -179,7 +179,7 @@ export abstract class Ptr<T> implements EndianBufferPointer {
 							}
 						},
 						set(target, key, value): boolean {
-							return parseNumeric(key) === null
+							return index(key) === null
 								? Reflect.set(target, key, value)
 								: false;
 						},
