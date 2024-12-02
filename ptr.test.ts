@@ -1,4 +1,9 @@
-import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
+import {
+	assertAlmostEquals,
+	assertEquals,
+	assertStrictEquals,
+	assertThrows,
+} from '@std/assert';
 
 import { Uint8Ptr } from './int/8.ts';
 import { Ptr } from './ptr.ts';
@@ -77,7 +82,32 @@ Deno.test('Ptr: [[set]]', () => {
 
 	assertEquals(data, new Uint8Array([1, 2, 3, 4]));
 
-	const unk = 'unknown' as unknown as number;
-	test[unk] = 123;
-	assertEquals(test[unk], 123);
+	const o = test as unknown as Record<PropertyKey, unknown>;
+	const unk = 'unknown';
+	o[unk] = 123;
+	assertEquals(o[unk], 123);
+	o[unk] = 'value';
+	assertEquals(o[unk], 'value');
+});
+
+Deno.test('Ptr: [[has]]', () => {
+	const data = new Uint8Array(4);
+	const test = new Uint8Ptr(data.buffer, 2);
+
+	assertEquals(0 in test, true);
+	assertEquals(1 in test, true);
+	assertEquals(10 in test, true);
+	assertEquals((-1) in test, true);
+	assertEquals((-10) in test, true);
+
+	assertEquals('0' in test, true);
+	assertEquals('1' in test, true);
+	assertEquals('10' in test, true);
+	assertEquals('-1' in test, true);
+	assertEquals('-10' in test, true);
+
+	const o = test as unknown as Record<PropertyKey, unknown>;
+	const unk = 'unknown';
+	o[unk] = 'value';
+	assertEquals(unk in test, true);
 });
