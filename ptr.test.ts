@@ -1,9 +1,4 @@
-import {
-	assertAlmostEquals,
-	assertEquals,
-	assertStrictEquals,
-	assertThrows,
-} from '@std/assert';
+import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 
 import { Uint8Ptr } from './int/8.ts';
 import { Ptr } from './ptr.ts';
