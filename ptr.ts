@@ -161,8 +161,7 @@ export abstract class Ptr<T> implements EndianBufferPointer {
 	public static get MEMBERS(): Readonly<MemberInfos> {
 		let r = (members ??= new WeakMap()).get(this);
 		if (!r) {
-			// deno-lint-ignore no-this-alias
-			const ArrayTyped = this;
+			const bpe = this.BYTES_PER_ELEMENT;
 			members.set(
 				this,
 				r = new Proxy(
@@ -176,10 +175,9 @@ export abstract class Ptr<T> implements EndianBufferPointer {
 								return Reflect.get(target, key);
 							}
 							if (i === i - i % 1) {
-								const b = ArrayTyped.BYTES_PER_ELEMENT;
 								return {
-									byteOffset: i * b,
-									byteLength: b,
+									byteOffset: i * bpe,
+									byteLength: bpe,
 								};
 							}
 						},
