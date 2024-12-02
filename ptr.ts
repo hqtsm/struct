@@ -4,6 +4,8 @@ import type {
 	EndianBufferPointer,
 	MemberInfo,
 	MemberInfos,
+	Type,
+	TypeClass,
 } from './type.ts';
 import { dataView } from './util.ts';
 
@@ -57,7 +59,10 @@ let members: WeakMap<typeof Ptr, Readonly<MemberInfos>>;
  * Pointer to a type.
  */
 export abstract class Ptr<T> implements EndianBufferPointer {
-	declare public readonly ['constructor']: Omit<typeof Ptr, 'new'>;
+	/**
+	 * Ptr class.
+	 */
+	declare public readonly ['constructor']: PtrClass<T>;
 
 	/**
 	 * Pointer elements.
@@ -190,4 +195,70 @@ export abstract class Ptr<T> implements EndianBufferPointer {
 		}
 		return r;
 	}
+}
+
+/**
+ * Ptr class.
+ */
+export interface PtrClass<T> extends Omit<typeof Ptr<T>, 'new'> {
+	/**
+	 * Ptr prototype.
+	 */
+	readonly prototype: Ptr<T>;
+}
+
+/**
+ * Ptr constructor.
+ */
+export interface PtrConstructor<T> extends PtrClass<T> {
+	/**
+	 * Ptr constructor.
+	 *
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset into buffer.
+	 * @param littleEndian Host endian, little endian, big endian.
+	 */
+	new (
+		buffer: ArrayBufferReal,
+		byteOffset?: number,
+		littleEndian?: boolean,
+	): Ptr<T>;
+}
+
+/**
+ * Ptr Type.
+ */
+export interface PtrType<T> extends Ptr<T>, Type {
+	/**
+	 * Ptr Type constructor.
+	 */
+	readonly constructor: PtrClass<T> & TypeClass;
+}
+
+/**
+ * Ptr Type class.
+ */
+export interface PtrTypeClass<T> extends PtrClass<T>, TypeClass {
+	/**
+	 * Ptr Type prototype.
+	 */
+	readonly prototype: PtrType<T>;
+}
+
+/**
+ * Ptr Type constructor.
+ */
+export interface PtrTypeConstructor<T> extends PtrTypeClass<T> {
+	/**
+	 * Ptr Type constructor.
+	 *
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset into buffer.
+	 * @param littleEndian Host endian, little endian, big endian.
+	 */
+	new (
+		buffer: ArrayBufferReal,
+		byteOffset?: number,
+		littleEndian?: boolean,
+	): PtrType<T>;
 }
