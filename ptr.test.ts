@@ -81,6 +81,7 @@ Deno.test('Ptr: [[set]]', () => {
 	const unk = 'unknown';
 	o[unk] = 123;
 	assertEquals(o[unk], 123);
+
 	o[unk] = 'value';
 	assertEquals(o[unk], 'value');
 });
@@ -105,4 +106,25 @@ Deno.test('Ptr: [[has]]', () => {
 	const unk = 'unknown';
 	o[unk] = 'value';
 	assertEquals(unk in test, true);
+});
+
+Deno.test('Ptr: [[deleteProperty]]', () => {
+	const data = new Uint8Array(4);
+	const test = new Uint8Ptr(data.buffer, 2);
+
+	assertThrows(() => delete test[0], TypeError);
+	assertThrows(() => delete test[1], TypeError);
+	assertThrows(() => delete test[10], TypeError);
+	assertThrows(() => delete test[-1], TypeError);
+	assertThrows(() => delete test[-10], TypeError);
+
+	const o = test as unknown as Record<PropertyKey, unknown>;
+	const unk = 'unknown';
+	assertEquals(delete o[unk], true);
+	assertEquals(unk in test, false);
+
+	o[unk] = 'value';
+	assertEquals(unk in test, true);
+	assertEquals(delete o[unk], true);
+	assertEquals(unk in test, false);
 });
