@@ -1,4 +1,10 @@
-import type { MemberInfo, MembersExtends, Type, TypeClass } from './type.ts';
+import type {
+	BufferView,
+	MemberInfo,
+	MembersExtends,
+	Type,
+	TypeClass,
+} from './type.ts';
 import { assignView } from './util.ts';
 
 /**
@@ -60,7 +66,7 @@ export function defineMember<T extends Type, M>(
  * Member constructor.
  */
 export interface MemberConstructor<
-	T extends ArrayBufferView = ArrayBufferView,
+	T extends BufferView = BufferView,
 > {
 	/**
 	 * Member constructor.
@@ -92,7 +98,7 @@ export interface MemberConstructor<
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function member<M extends ArrayBufferView, T extends Type>(
+export function member<M extends BufferView, T extends Type>(
 	Member: MemberConstructor<M>,
 	Type: TypeClass<T>,
 	name: MembersExtends<T, M>,
@@ -128,7 +134,7 @@ export function member<M extends ArrayBufferView, T extends Type>(
 /**
  * Array constructor.
  */
-export interface ArrayConstructor<T extends ArrayBufferView = ArrayBufferView> {
+export interface ArrayConstructor<T extends BufferView = BufferView> {
 	/**
 	 * Array constructor.
 	 *
@@ -162,7 +168,7 @@ export interface ArrayConstructor<T extends ArrayBufferView = ArrayBufferView> {
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function array<M extends ArrayBufferView, T extends Type>(
+export function array<M extends BufferView, T extends Type>(
 	Member: ArrayConstructor<M>,
 	length: number,
 	Type: TypeClass<T>,
@@ -200,7 +206,7 @@ export function array<M extends ArrayBufferView, T extends Type>(
 /**
  * View constructor.
  */
-export interface ViewConstructor<T extends ArrayBufferView = ArrayBufferView> {
+export interface ViewConstructor<T extends BufferView = BufferView> {
 	/**
 	 * View constructor.
 	 *
@@ -229,7 +235,7 @@ export interface ViewConstructor<T extends ArrayBufferView = ArrayBufferView> {
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function view<M extends ArrayBufferView, T extends Type>(
+export function view<M extends BufferView, T extends Type>(
 	Member: ViewConstructor<M>,
 	byteLength: number,
 	Type: TypeClass<T>,

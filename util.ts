@@ -1,4 +1,10 @@
-import type { MemberInfoType, Members, Type, TypeClass } from './type.ts';
+import type {
+	BufferView,
+	MemberInfoType,
+	Members,
+	Type,
+	TypeClass,
+} from './type.ts';
 
 let dataViews: WeakMap<ArrayBufferLike, DataView>;
 
@@ -79,9 +85,9 @@ export function getType<T extends Type>(
  * @param src Source memory of equal or greater size.
  * @returns Destination memory.
  */
-export function assignView<D extends ArrayBufferView>(
+export function assignView<D extends BufferView>(
 	dst: D,
-	src: ArrayBufferView,
+	src: BufferView,
 ): D {
 	const { byteLength } = dst;
 	new Uint8Array(dst.buffer, dst.byteOffset, byteLength).set(
