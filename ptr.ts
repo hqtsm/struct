@@ -8,8 +8,8 @@ import type {
 import { dataView } from './util.ts';
 
 function index(key: PropertyKey): number | null {
-	let n;
-	return key === '-0' ? NaN : (key === '' + (n = +String(key)) ? n : null);
+	let i;
+	return key === '-0' ? NaN : (key === '' + (i = +String(key)) ? i : null);
 }
 
 const getter = Symbol('getter');

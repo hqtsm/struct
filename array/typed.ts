@@ -10,11 +10,7 @@ import { dataView } from '../util.ts';
 
 function index(key: PropertyKey): number | null {
 	let i;
-	return key === '-0' ? NaN : (
-		key === '' + (i = +String(key))
-			? (i >= 0 && i === (i - i % 1) ? i : NaN)
-			: null
-	);
+	return key === '-0' ? NaN : (key === '' + (i = +String(key)) ? i : null);
 }
 
 const getter = Symbol('getter');
@@ -155,21 +151,25 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 			let i;
 			return Reflect.has(target, key) || (i = index(key)) === null
 				? Reflect.deleteProperty(target, key)
-				: !(i < target.#length);
+				: !(i >= 0 && i === i - i % 1 && i < target.#length);
 		},
 		get(target, key, receiver: ArrayTyped<unknown>): unknown | undefined {
 			let i;
 			if (Reflect.has(target, key) || (i = index(key)) === null) {
 				return Reflect.get(target, key);
 			}
-			if (i < target.#length) {
+			if (i >= 0 && i === i - i % 1 && i < target.#length) {
 				return receiver[getter](i);
 			}
 		},
 		has(target, key): boolean {
+			let i;
 			return (
 				Reflect.has(target, key) ||
-				(index(key) ?? NaN) < target.#length
+				(
+					(i = index(key)) !== null &&
+					i >= 0 && i === i - i % 1 && i < target.#length
+				)
 			);
 		},
 		set(target, key, value, receiver: ArrayTyped<unknown>): boolean {
@@ -177,7 +177,7 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 			if (Reflect.has(target, key) || (i = index(key)) === null) {
 				return Reflect.set(target, key, value);
 			}
-			if (i < target.#length) {
+			if (i >= 0 && i === i - i % 1 && i < target.#length) {
 				receiver[setter](i, value);
 			}
 			return true;
@@ -204,7 +204,7 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 							if (i === null) {
 								return Reflect.get(target, key);
 							}
-							if (i >= 0) {
+							if (i >= 0 && i === i - i % 1) {
 								const b = ArrayTyped.BYTES_PER_ELEMENT;
 								return {
 									byteOffset: i * b,
