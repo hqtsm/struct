@@ -240,7 +240,7 @@ export function view<M extends ArrayBufferView, T extends Type>(
 	let m: WeakMap<T, M>;
 	return defineMember(Type, name, {
 		byteOffset,
-		byteLength: byteLength,
+		byteLength,
 		littleEndian,
 		type: Member,
 		get(): M {
