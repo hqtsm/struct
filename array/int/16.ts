@@ -15,7 +15,7 @@ export class ArrayInt16 extends ArrayTyped<number> {
 	 */
 	protected override [ArrayTyped.getter](index: number): number {
 		return dataView(this.buffer).getInt16(
-			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
+			this.byteOffset + index * 2,
 			this.littleEndian,
 		);
 	}
@@ -25,7 +25,7 @@ export class ArrayInt16 extends ArrayTyped<number> {
 	 */
 	protected override [ArrayTyped.setter](index: number, value: number): void {
 		dataView(this.buffer).setInt16(
-			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
+			this.byteOffset + index * 2,
 			value,
 			this.littleEndian,
 		);
@@ -51,7 +51,7 @@ export class ArrayUint16 extends ArrayTyped<number> {
 	 */
 	protected override [ArrayTyped.getter](index: number): number {
 		return dataView(this.buffer).getUint16(
-			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
+			this.byteOffset + index * 2,
 			this.littleEndian,
 		);
 	}
@@ -61,7 +61,7 @@ export class ArrayUint16 extends ArrayTyped<number> {
 	 */
 	protected override [ArrayTyped.setter](index: number, value: number): void {
 		dataView(this.buffer).setUint16(
-			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
+			this.byteOffset + index * 2,
 			value,
 			this.littleEndian,
 		);

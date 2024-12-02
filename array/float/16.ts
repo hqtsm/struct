@@ -24,12 +24,12 @@ export class ArrayFloat16 extends ArrayTyped<number> {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		return d.getFloat16
 			? d.getFloat16(
-				this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
+				this.byteOffset + index * 2,
 				this.littleEndian,
 			)
 			: getFloat16(
 				d as DataView,
-				this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
+				this.byteOffset + index * 2,
 				this.littleEndian,
 			);
 	}
@@ -41,14 +41,14 @@ export class ArrayFloat16 extends ArrayTyped<number> {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		if (d.setFloat16) {
 			d.setFloat16(
-				this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
+				this.byteOffset + index * 2,
 				value,
 				this.littleEndian,
 			);
 		} else {
 			setFloat16(
 				d as DataView,
-				this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
+				this.byteOffset + index * 2,
 				value,
 				this.littleEndian,
 			);

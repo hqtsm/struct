@@ -15,7 +15,7 @@ export class ArrayBool32 extends ArrayTyped<boolean> {
 	 */
 	protected override [ArrayTyped.getter](index: number): boolean {
 		return !!dataView(this.buffer).getInt32(
-			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
+			this.byteOffset + index * 4,
 			this.littleEndian,
 		);
 	}
@@ -28,7 +28,7 @@ export class ArrayBool32 extends ArrayTyped<boolean> {
 		value: boolean,
 	): void {
 		dataView(this.buffer).setInt32(
-			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
+			this.byteOffset + index * 4,
 			value ? 1 : 0,
 			this.littleEndian,
 		);

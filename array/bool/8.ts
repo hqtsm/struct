@@ -14,9 +14,7 @@ export class ArrayBool8 extends ArrayTyped<boolean> {
 	 * @inheritdoc
 	 */
 	protected override [ArrayTyped.getter](index: number): boolean {
-		return !!dataView(this.buffer).getInt8(
-			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
-		);
+		return !!dataView(this.buffer).getInt8(this.byteOffset + index);
 	}
 
 	/**
@@ -26,10 +24,7 @@ export class ArrayBool8 extends ArrayTyped<boolean> {
 		index: number,
 		value: boolean,
 	): void {
-		dataView(this.buffer).setInt8(
-			this.byteOffset + index * this.constructor.BYTES_PER_ELEMENT,
-			value ? 1 : 0,
-		);
+		dataView(this.buffer).setInt8(this.byteOffset + index, value ? 1 : 0);
 	}
 
 	/**
