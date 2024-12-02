@@ -49,3 +49,35 @@ Deno.test('Ptr: byteOffset', () => {
 	assertThrows(() => new Uint8Ptr(buffer, 32)[0], RangeError);
 	assertThrows(() => new Uint8Ptr(buffer, 33)[0], RangeError);
 });
+
+Deno.test('Ptr: [[get]]', () => {
+	const test = new Uint8Ptr(new Uint8Array([1, 2, 3, 4]).buffer, 2);
+
+	assertEquals(test[-2], 1);
+	assertEquals(test[-1], 2);
+	assertEquals(test[0], 3);
+	assertEquals(test[1], 4);
+
+	assertEquals(test['-0' as unknown as number], undefined);
+	assertEquals(test['1e3' as unknown as number], undefined);
+});
+
+Deno.test('Ptr: [[set]]', () => {
+	const data = new Uint8Array(4);
+	const test = new Uint8Ptr(data.buffer, 2);
+	test[-2] = 1;
+	test[-1] = 2;
+	test[0] = 3;
+	test[1] = 4;
+
+	assertEquals(test[-2], 1);
+	assertEquals(test[-1], 2);
+	assertEquals(test[0], 3);
+	assertEquals(test[1], 4);
+
+	assertEquals(data, new Uint8Array([1, 2, 3, 4]));
+
+	const unk = 'unknown' as unknown as number;
+	test[unk] = 123;
+	assertEquals(test[unk], 123);
+});
