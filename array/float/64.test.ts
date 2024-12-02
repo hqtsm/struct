@@ -6,12 +6,10 @@ Deno.test('ArrayFloat64', () => {
 	const count = 3;
 	const bpe = ArrayFloat64.BYTES_PER_ELEMENT;
 	assertEquals(bpe, 8);
-	assertEquals(ArrayFloat64.TYPE, 'float64');
 	assertEquals(ArrayFloat64.MEMBERS[2], {
 		byteOffset: 16,
 		byteLength: 8,
 		littleEndian: null,
-		type: 'float64',
 	});
 
 	const fA = Math.PI;

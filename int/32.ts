@@ -22,7 +22,6 @@ export function int32<T extends Type>(
 		byteOffset,
 		byteLength: 4,
 		littleEndian,
-		type: 'int32',
 		get(): number {
 			return dataView(this.buffer).getInt32(
 				this.byteOffset + byteOffset,
@@ -58,7 +57,6 @@ export function uint32<T extends Type>(
 		byteOffset,
 		byteLength: 4,
 		littleEndian,
-		type: 'uint32',
 		get(): number {
 			return dataView(this.buffer).getUint32(
 				this.byteOffset + byteOffset,

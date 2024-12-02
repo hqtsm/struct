@@ -53,7 +53,6 @@ export function defineMember<T extends Type, M>(
 			byteOffset: desc.byteOffset,
 			byteLength,
 			littleEndian: desc.littleEndian,
-			type: desc.type,
 		} satisfies MemberInfo,
 		configurable: true,
 		enumerable: false,
@@ -110,7 +109,6 @@ export function member<M extends BufferView, T extends Type>(
 		byteOffset,
 		byteLength: Member.BYTE_LENGTH,
 		littleEndian,
-		type: Member,
 		get(): M {
 			let r = (m ??= new WeakMap()).get(this);
 			if (!r) {
@@ -181,7 +179,6 @@ export function view<M extends BufferView, T extends Type>(
 		byteOffset,
 		byteLength: (length * (Member.BYTES_PER_ELEMENT ?? 1)),
 		littleEndian,
-		type: Member,
 		get(): M {
 			let r = (m ??= new WeakMap()).get(this);
 			if (!r) {
@@ -223,7 +220,6 @@ export function pad<T extends Type>(
 		byteOffset,
 		byteLength,
 		littleEndian: null,
-		type: null,
 		get(): unknown {
 			throw new TypeError(`Read from padding member: ${String(name)}`);
 		},

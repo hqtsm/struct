@@ -1,10 +1,4 @@
-import type {
-	BufferView,
-	MemberInfoType,
-	Members,
-	Type,
-	TypeClass,
-} from './type.ts';
+import type { BufferView, Members, Type, TypeClass } from './type.ts';
 
 let dataViews: WeakMap<ArrayBufferLike, DataView>;
 
@@ -62,20 +56,6 @@ export function getLittleEndian<T extends Type>(
 	name: Members<T>,
 ): boolean | null {
 	return Type.MEMBERS[name].littleEndian;
-}
-
-/**
- * Get type of member.
- *
- * @param Type Type constructor.
- * @param name Member name.
- * @returns Type.
- */
-export function getType<T extends Type>(
-	Type: TypeClass<T>,
-	name: Members<T>,
-): MemberInfoType {
-	return Type.MEMBERS[name].type;
 }
 
 /**

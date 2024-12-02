@@ -1,4 +1,3 @@
-import type { MemberInfoType } from '../../type.ts';
 import { dataView } from '../../util.ts';
 import { ArrayTyped } from '../typed.ts';
 
@@ -34,11 +33,6 @@ export class ArrayInt8 extends ArrayTyped<number> {
 	 * @inheritdoc
 	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = 'int8';
 }
 
 /**
@@ -73,9 +67,4 @@ export class ArrayUint8 extends ArrayTyped<number> {
 	 * @inheritdoc
 	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = 'uint8';
 }

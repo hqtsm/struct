@@ -54,15 +54,6 @@ export interface EndianBufferView extends BufferView, Endian {}
 export type MemberInfoSigned = boolean | null;
 
 /**
- * Types of member type.
- */
-export type MemberInfoType =
-	| string
-	// deno-lint-ignore ban-types
-	| Function
-	| null;
-
-/**
  * Member info.
  */
 export interface MemberInfo {
@@ -80,11 +71,6 @@ export interface MemberInfo {
 	 * Little endian, big endian, or default.
 	 */
 	littleEndian: boolean | null;
-
-	/**
-	 * Type of member.
-	 */
-	type: MemberInfoType;
 }
 
 /**

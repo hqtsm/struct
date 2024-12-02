@@ -22,7 +22,6 @@ export function float64<T extends Type>(
 		byteOffset,
 		byteLength: 8,
 		littleEndian,
-		type: 'float64',
 		get(): number {
 			return dataView(this.buffer).getFloat64(
 				this.byteOffset + byteOffset,

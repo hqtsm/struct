@@ -6,12 +6,10 @@ Deno.test('ArrayBool32', () => {
 	const count = 3;
 	const bpe = ArrayBool32.BYTES_PER_ELEMENT;
 	assertEquals(bpe, 4);
-	assertEquals(ArrayBool32.TYPE, 'bool32');
 	assertEquals(ArrayBool32.MEMBERS[2], {
 		byteOffset: 8,
 		byteLength: 4,
 		littleEndian: null,
-		type: 'bool32',
 	});
 
 	for (const littleEndian of [undefined, true, false]) {

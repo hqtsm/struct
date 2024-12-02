@@ -6,16 +6,12 @@ import { ArrayInt24, ArrayUint24 } from './24.ts';
 Deno.test('ArrayInt24 + ArrayUint24', () => {
 	const count = 3;
 	for (const ArrayInt of [ArrayInt24, ArrayUint24]) {
-		const signed = ArrayInt === ArrayInt24;
-		const type = signed ? 'int24' : 'uint24';
 		const bpe = ArrayInt.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 3);
-		assertEquals(ArrayInt.TYPE, type);
 		assertEquals(ArrayInt.MEMBERS[2], {
 			byteOffset: 6,
 			byteLength: 3,
 			littleEndian: null,
-			type,
 		});
 
 		for (const littleEndian of [undefined, true, false]) {

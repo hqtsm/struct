@@ -20,7 +20,6 @@ export function int8<T extends Type>(
 		byteOffset,
 		byteLength: 1,
 		littleEndian: null,
-		type: 'int8',
 		get(): number {
 			return dataView(this.buffer).getInt8(this.byteOffset + byteOffset);
 		},
@@ -47,7 +46,6 @@ export function uint8<T extends Type>(
 		byteOffset,
 		byteLength: 1,
 		littleEndian: null,
-		type: 'uint8',
 		get(): number {
 			return dataView(this.buffer).getUint8(this.byteOffset + byteOffset);
 		},

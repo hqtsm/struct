@@ -22,7 +22,6 @@ export function int64<T extends Type>(
 		byteOffset,
 		byteLength: 8,
 		littleEndian,
-		type: 'int64',
 		get(): bigint {
 			return dataView(this.buffer).getBigInt64(
 				this.byteOffset + byteOffset,
@@ -58,7 +57,6 @@ export function uint64<T extends Type>(
 		byteOffset,
 		byteLength: 8,
 		littleEndian,
-		type: 'uint64',
 		get(): bigint {
 			return dataView(this.buffer).getBigUint64(
 				this.byteOffset + byteOffset,

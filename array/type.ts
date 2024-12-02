@@ -61,7 +61,7 @@ export abstract class ArrayType<T extends Type = Type> extends ArrayTyped<T> {
 	/**
 	 * Type constructor.
 	 */
-	public static override readonly TYPE: TypeConstructor;
+	public static readonly TYPE: TypeConstructor;
 
 	/**
 	 * Get the ArrayType of Type constructor.

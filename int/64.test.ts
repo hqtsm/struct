@@ -1,12 +1,7 @@
 import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
-import {
-	getByteLength,
-	getByteOffset,
-	getLittleEndian,
-	getType,
-} from '../util.ts';
+import { getByteLength, getByteOffset, getLittleEndian } from '../util.ts';
 import { int64, Int64Ptr, uint64, Uint64Ptr } from './64.ts';
 
 Deno.test('int64', () => {
@@ -44,10 +39,6 @@ Deno.test('int64', () => {
 	assertEquals(getLittleEndian(Test, 'beta'), null);
 	assertEquals(getLittleEndian(Test, 'gamma'), true);
 	assertEquals(getLittleEndian(Test, 'delta'), false);
-	assertEquals(getType(Test, 'alpha'), 'int64');
-	assertEquals(getType(Test, 'beta'), 'int64');
-	assertEquals(getType(Test, 'gamma'), 'int64');
-	assertEquals(getType(Test, 'delta'), 'int64');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
@@ -122,10 +113,6 @@ Deno.test('uint64', () => {
 	assertEquals(getLittleEndian(Test, 'beta'), null);
 	assertEquals(getLittleEndian(Test, 'gamma'), true);
 	assertEquals(getLittleEndian(Test, 'delta'), false);
-	assertEquals(getType(Test, 'alpha'), 'uint64');
-	assertEquals(getType(Test, 'beta'), 'uint64');
-	assertEquals(getType(Test, 'gamma'), 'uint64');
-	assertEquals(getType(Test, 'delta'), 'uint64');
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);

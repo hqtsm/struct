@@ -1,4 +1,3 @@
-import type { MemberInfoType } from '../../type.ts';
 import { dataView } from '../../util.ts';
 import { ArrayTyped } from '../typed.ts';
 
@@ -39,9 +38,4 @@ export class ArrayBool32 extends ArrayTyped<boolean> {
 	 * @inheritdoc
 	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = 'bool32';
 }

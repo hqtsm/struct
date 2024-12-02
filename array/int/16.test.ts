@@ -5,16 +5,12 @@ import { ArrayInt16, ArrayUint16 } from './16.ts';
 Deno.test('ArrayInt16 + ArrayUint16', () => {
 	const count = 3;
 	for (const ArrayInt of [ArrayInt16, ArrayUint16]) {
-		const signed = ArrayInt === ArrayInt16;
-		const type = signed ? 'int16' : 'uint16';
 		const bpe = ArrayInt.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 2);
-		assertEquals(ArrayInt.TYPE, type);
 		assertEquals(ArrayInt.MEMBERS[2], {
 			byteOffset: 4,
 			byteLength: 2,
 			littleEndian: null,
-			type,
 		});
 
 		for (const littleEndian of [undefined, true, false]) {

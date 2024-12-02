@@ -1,12 +1,7 @@
 import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
-import {
-	getByteLength,
-	getByteOffset,
-	getLittleEndian,
-	getType,
-} from '../util.ts';
+import { getByteLength, getByteOffset, getLittleEndian } from '../util.ts';
 import { float32, Float32Ptr } from './32.ts';
 
 function round(n: number): number {
@@ -44,9 +39,6 @@ Deno.test('float32', () => {
 	assertEquals(getLittleEndian(Test, 'alpha'), true);
 	assertEquals(getLittleEndian(Test, 'beta'), false);
 	assertEquals(getLittleEndian(Test, 'gamma'), null);
-	assertEquals(getType(Test, 'alpha'), 'float32');
-	assertEquals(getType(Test, 'beta'), 'float32');
-	assertEquals(getType(Test, 'gamma'), 'float32');
 
 	const v = new DataView(new ArrayBuffer(4));
 	for (

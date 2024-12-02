@@ -1,4 +1,3 @@
-import type { MemberInfoType } from '../../type.ts';
 import { dataView } from '../../util.ts';
 import { ArrayTyped } from '../typed.ts';
 
@@ -36,11 +35,6 @@ export class ArrayInt64 extends ArrayTyped<bigint> {
 	 * @inheritdoc
 	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = 'int64';
 }
 
 /**
@@ -77,9 +71,4 @@ export class ArrayUint64 extends ArrayTyped<bigint> {
 	 * @inheritdoc
 	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
-
-	/**
-	 * @inheritdoc
-	 */
-	public static override readonly TYPE: MemberInfoType = 'uint64';
 }
