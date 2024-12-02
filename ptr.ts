@@ -16,7 +16,7 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 		let i;
 		return Reflect.has(target, key) || (i = index(key)) === null
 			? Reflect.deleteProperty(target, key)
-			: Number.isSafeInteger(i);
+			: !Number.isSafeInteger(i);
 	},
 	get(target, key, receiver: Ptr<unknown>): unknown | undefined {
 		let i;
