@@ -70,6 +70,20 @@ Deno.test('Ptr: byteOffset', () => {
 	assertThrows(() => new Uint8Ptr(buffer, 33)[0], RangeError);
 });
 
+Deno.test('Ptr: getter + setter', () => {
+	const test = new Ptr(new ArrayBuffer(4), 1);
+	for (let i = -2; i <= 5; i++) {
+		assertThrows(() => test[i], TypeError, `Read from void pointer: ${i}`);
+		assertThrows(
+			() => {
+				(test as unknown as Uint8Ptr)[i] = 0;
+			},
+			TypeError,
+			`Write to void pointer: ${i}`,
+		);
+	}
+});
+
 Deno.test('Ptr: [[get]]', () => {
 	const test = new Uint8Ptr(new Uint8Array([1, 2, 3, 4]).buffer, 2);
 

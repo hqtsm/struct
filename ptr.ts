@@ -58,7 +58,7 @@ let members: WeakMap<typeof Ptr, Readonly<MemberInfos>>;
 /**
  * Pointer to a type.
  */
-export abstract class Ptr<T> implements EndianBufferPointer {
+export class Ptr<T = never> implements EndianBufferPointer {
 	/**
 	 * Ptr class.
 	 */
@@ -129,16 +129,23 @@ export abstract class Ptr<T> implements EndianBufferPointer {
 	/**
 	 * Getter accessor.
 	 *
-	 * @returns Element value.
+	 * @param index Pointer index.
+	 * @returns Pointer value.
 	 */
-	protected abstract [getter](index: number): T;
+	protected [getter](index: number): T {
+		throw new TypeError(`Read from void pointer: ${index}`);
+	}
 
 	/**
 	 * Setter accessor.
 	 *
-	 * @param value Element value.
+	 * @param index Pointer index.
+	 * @param value Pointer value.
 	 */
-	protected abstract [setter](index: number, value: T): void;
+	protected [setter](index: number, value: T): void {
+		void value;
+		throw new TypeError(`Write to void pointer: ${index}`);
+	}
 
 	/**
 	 * Getter symbol.
@@ -153,7 +160,7 @@ export abstract class Ptr<T> implements EndianBufferPointer {
 	/**
 	 * Size of each element.
 	 */
-	public static readonly BYTES_PER_ELEMENT: number;
+	public static readonly BYTES_PER_ELEMENT: number = 0;
 
 	/**
 	 * Members infos.
@@ -198,7 +205,7 @@ export abstract class Ptr<T> implements EndianBufferPointer {
 /**
  * Ptr class.
  */
-export interface PtrClass<T> extends Omit<typeof Ptr<T>, 'new'> {
+export interface PtrClass<T = never> extends Omit<typeof Ptr<T>, 'new'> {
 	/**
 	 * Ptr prototype.
 	 */
@@ -208,7 +215,7 @@ export interface PtrClass<T> extends Omit<typeof Ptr<T>, 'new'> {
 /**
  * Ptr constructor.
  */
-export interface PtrConstructor<T> extends PtrClass<T> {
+export interface PtrConstructor<T = never> extends PtrClass<T> {
 	/**
 	 * Ptr constructor.
 	 *
@@ -226,7 +233,7 @@ export interface PtrConstructor<T> extends PtrClass<T> {
 /**
  * Ptr Type.
  */
-export interface PtrType<T> extends Ptr<T>, Type {
+export interface PtrType<T = never> extends Ptr<T>, Type {
 	/**
 	 * Ptr Type constructor.
 	 */
@@ -236,7 +243,7 @@ export interface PtrType<T> extends Ptr<T>, Type {
 /**
  * Ptr Type class.
  */
-export interface PtrTypeClass<T> extends PtrClass<T>, TypeClass {
+export interface PtrTypeClass<T = never> extends PtrClass<T>, TypeClass {
 	/**
 	 * Ptr Type prototype.
 	 */
@@ -246,7 +253,7 @@ export interface PtrTypeClass<T> extends PtrClass<T>, TypeClass {
 /**
  * Ptr Type constructor.
  */
-export interface PtrTypeConstructor<T> extends PtrTypeClass<T> {
+export interface PtrTypeConstructor<T = never> extends PtrTypeClass<T> {
 	/**
 	 * Ptr Type constructor.
 	 *
