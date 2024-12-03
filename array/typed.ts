@@ -122,6 +122,7 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 	/**
 	 * Getter accessor.
 	 *
+	 * @param index Element index.
 	 * @returns Element value.
 	 */
 	protected abstract [getter](index: number): T;
@@ -129,6 +130,7 @@ export abstract class ArrayTyped<T> implements EndianBufferView {
 	/**
 	 * Setter accessor.
 	 *
+	 * @param index Element index.
 	 * @param value Element value.
 	 */
 	protected abstract [setter](index: number, value: T): void;
