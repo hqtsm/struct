@@ -1,5 +1,6 @@
 import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 
+import { LITTLE_ENDIAN } from './endian.ts';
 import { Uint8Ptr } from './int/8.ts';
 import { Ptr } from './ptr.ts';
 import type { MemberInfos } from './type.ts';
@@ -68,6 +69,13 @@ Deno.test('Ptr: byteOffset', () => {
 	// Offset over buffer size throws lazy.
 	assertThrows(() => new Uint8Ptr(buffer, 32)[0], RangeError);
 	assertThrows(() => new Uint8Ptr(buffer, 33)[0], RangeError);
+});
+
+Deno.test('Ptr: littleEndian', () => {
+	const buffer = new ArrayBuffer(32);
+	assertEquals(new DummyPtr(buffer).littleEndian, LITTLE_ENDIAN);
+	assertEquals(new DummyPtr(buffer, 0, true).littleEndian, true);
+	assertEquals(new DummyPtr(buffer, 0, false).littleEndian, false);
 });
 
 Deno.test('Ptr: getter + setter', () => {
