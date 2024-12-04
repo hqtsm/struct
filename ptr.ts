@@ -6,8 +6,9 @@ import type {
 	MemberInfos,
 	Type,
 	TypeClass,
+	TypeConstructor,
 } from './type.ts';
-import { dataView } from './util.ts';
+import { assignType, dataView } from './util.ts';
 
 function index(key: PropertyKey): number | null {
 	let i;
@@ -266,4 +267,82 @@ export interface PtrTypeConstructor<T = never> extends PtrTypeClass<T> {
 		byteOffset?: number,
 		littleEndian?: boolean,
 	): PtrType<T>;
+}
+
+let ptrs: WeakMap<TypeConstructor<Type>, PtrConstructor<Type>>;
+
+/**
+ * Get Ptr of Type.
+ *
+ * @param Type Type constructor.
+ * @returns Ptr constructor.
+ */
+export function typePtr<T extends Type>(
+	Type: TypeConstructor<T>,
+): PtrConstructor<T> {
+	let r = (ptrs ??= new WeakMap()).get(Type) as PtrConstructor<T> | undefined;
+	if (!r) {
+		const name = `${Ptr.name}<${Type.name}>`;
+		const bpe = Type.BYTE_LENGTH;
+		ptrs.set(
+			Type,
+			r = {
+				[name]: class extends Ptr<T> {
+					/**
+					 * @inheritdoc
+					 */
+					declare public readonly ['constructor']: PtrClass<T>;
+
+					/**
+					 * Instances mapped over indexes.
+					 */
+					#values = new Map<number, T>();
+
+					/**
+					 * @inheritdoc
+					 */
+					public override [getter](index: number): T {
+						const values = this.#values;
+						let r = values.get(index);
+						if (!r) {
+							values.set(
+								index,
+								r = new Type(
+									this.buffer,
+									this.byteOffset + index * bpe,
+									this.littleEndian,
+								),
+							);
+						}
+						return r;
+					}
+
+					/**
+					 * @inheritdoc
+					 */
+					public override [setter](index: number, value: T): void {
+						const values = this.#values;
+						let r = values.get(index);
+						if (!r) {
+							values.set(
+								index,
+								r = new Type(
+									this.buffer,
+									this.byteOffset + index * bpe,
+									this.littleEndian,
+								),
+							);
+						}
+						assignType(r, value);
+					}
+
+					/**
+					 * @inheritdoc
+					 */
+					public static override readonly BYTES_PER_ELEMENT = bpe;
+				},
+			}[name],
+		);
+	}
+	return r;
 }
