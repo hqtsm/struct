@@ -1,4 +1,3 @@
-export * from './array/mod.ts';
 export * from './bool/mod.ts';
 export * from './endian.ts';
 export * from './float/mod.ts';
