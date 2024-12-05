@@ -233,7 +233,7 @@ export interface PtrConstructor<T = never> extends PtrClass<T> {
 let pointers: WeakMap<TypeConstructor<Type>, PtrConstructor<Type>>;
 
 /**
- * Get Pointer of Type.
+ * Get pointer of type.
  *
  * @param Type Type constructor.
  * @returns Ptr constructor.
