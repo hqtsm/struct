@@ -1,12 +1,22 @@
-import type { Ptr, PtrClass } from './ptr.ts';
-import type { ArrayBufferReal, Type, TypeClass } from './type.ts';
+import {
+	pointer,
+	type Ptr,
+	type PtrClass,
+	type PtrConstructor,
+} from './ptr.ts';
+import type {
+	ArrayBufferReal,
+	Type,
+	TypeClass,
+	TypeConstructor,
+} from './type.ts';
 
 /**
  * Array.
  */
 export interface Arr<T = never> extends Ptr<T>, Type {
 	/**
-	 * Ptr Type constructor.
+	 * Array constructor.
 	 */
 	readonly constructor: PtrClass<T> & TypeClass;
 }
@@ -16,7 +26,7 @@ export interface Arr<T = never> extends Ptr<T>, Type {
  */
 export interface ArrClass<T = never> extends PtrClass<T>, TypeClass {
 	/**
-	 * Ptr Type prototype.
+	 * Array prototype.
 	 */
 	readonly prototype: Arr<T>;
 }
@@ -26,7 +36,7 @@ export interface ArrClass<T = never> extends PtrClass<T>, TypeClass {
  */
 export interface ArrConstructor<T = never> extends ArrClass<T> {
 	/**
-	 * Ptr Type constructor.
+	 * Array constructor.
 	 *
 	 * @param buffer Buffer data.
 	 * @param byteOffset Byte offset into buffer.
@@ -37,4 +47,51 @@ export interface ArrConstructor<T = never> extends ArrClass<T> {
 		byteOffset?: number,
 		littleEndian?: boolean,
 	): Arr<T>;
+}
+
+/**
+ * Create array of length from type/array or pointer.
+ *
+ * @param Type Type or pointer constructor.
+ * @param length Array length.
+ * @returns Array constructor.
+ */
+export function array<T extends Type>(
+	Type: TypeConstructor<T>,
+	length: number,
+): ArrConstructor<T>;
+export function array<T extends Type>(
+	Ptr: PtrConstructor<T> & { BYTE_LENGTH?: never },
+	length: number,
+): ArrConstructor<T>;
+export function array<T extends Type>(
+	TypePtr: TypeConstructor<T> | PtrConstructor<T>,
+	length: number,
+): ArrConstructor<T> {
+	if (length < 0 || length > 0x1fffffffffffff) {
+		throw new RangeError(`Invalid length: ${length}`);
+	}
+	length = length - length % 1 || 0;
+	const Ptr = 'BYTE_LENGTH' in TypePtr ? pointer(TypePtr) : TypePtr;
+	const name = `${Ptr.name}[${length}]`;
+	return {
+		[name]: class extends Ptr implements Arr<T> {
+			/**
+			 * Array constructor.
+			 */
+			declare public readonly ['constructor']: ArrClass<T>;
+
+			/**
+			 * @inheritdoc
+			 */
+			public get byteLength(): number {
+				return this.constructor.BYTE_LENGTH;
+			}
+
+			/**
+			 * Byte length of struct.
+			 */
+			public static readonly BYTE_LENGTH = Ptr.BYTES_PER_ELEMENT * length;
+		},
+	}[name];
 }
