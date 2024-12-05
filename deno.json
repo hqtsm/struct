@@ -4,6 +4,7 @@
 	"license": "MIT",
 	"exports": {
 		".": "./mod.ts",
+		"./arr": "./arr.ts",
 		"./bool": "./bool/mod.ts",
 		"./bool/8": "./bool/8.ts",
 		"./bool/16": "./bool/16.ts",
@@ -20,6 +21,7 @@
 		"./int/32": "./int/32.ts",
 		"./int/64": "./int/64.ts",
 		"./member": "./member.ts",
+		"./ptr": "./ptr.ts",
 		"./struct": "./struct.ts",
 		"./type": "./type.ts",
 		"./util": "./util.ts"
