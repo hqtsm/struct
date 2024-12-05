@@ -105,23 +105,14 @@ export class Ptr<T = never> implements EndianBufferPointer {
 		return new Proxy(this, handler as ProxyHandler<Ptr<T>>);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public get buffer(): ArrayBufferLike {
 		return this.#buffer;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public get byteOffset(): number {
 		return this.#byteOffset;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public get littleEndian(): boolean {
 		return this.#littleEndian;
 	}
@@ -251,9 +242,6 @@ export function pointer<T extends Type>(
 			Type,
 			r = {
 				[name]: class extends Ptr<T> {
-					/**
-					 * @inheritdoc
-					 */
 					declare public readonly ['constructor']: PtrClass<T>;
 
 					/**
@@ -261,9 +249,6 @@ export function pointer<T extends Type>(
 					 */
 					#values = new Map<number, T>();
 
-					/**
-					 * @inheritdoc
-					 */
 					public override [getter](index: number): T {
 						const values = this.#values;
 						let r = values.get(index);
@@ -280,9 +265,6 @@ export function pointer<T extends Type>(
 						return r;
 					}
 
-					/**
-					 * @inheritdoc
-					 */
 					public override [setter](index: number, value: T): void {
 						const values = this.#values;
 						let r = values.get(index);
@@ -299,9 +281,6 @@ export function pointer<T extends Type>(
 						assignType(r, value);
 					}
 
-					/**
-					 * @inheritdoc
-					 */
 					public static override readonly BYTES_PER_ELEMENT = bpe;
 				},
 			}[name],

@@ -8,9 +8,6 @@ let members: WeakMap<typeof Struct, MemberInfos>;
  * Binary structure buffer view.
  */
 export class Struct implements Type {
-	/**
-	 * @inheritdoc
-	 */
 	declare public readonly ['constructor']: Omit<typeof Struct, 'new'>;
 
 	/**
@@ -29,7 +26,11 @@ export class Struct implements Type {
 	readonly #littleEndian: boolean;
 
 	/**
-	 * @inheritdoc
+	 * Struct constructor.
+	 *
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset into buffer.
+	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	constructor(
 		buffer: ArrayBufferReal,
@@ -44,30 +45,18 @@ export class Struct implements Type {
 		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public get buffer(): ArrayBufferLike {
 		return this.#buffer;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public get byteLength(): number {
 		return this.constructor.BYTE_LENGTH;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public get byteOffset(): number {
 		return this.#byteOffset;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public get littleEndian(): boolean {
 		return this.#littleEndian;
 	}

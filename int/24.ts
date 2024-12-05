@@ -86,14 +86,8 @@ export function uint24<T extends Type>(
  * Pointer: int24.
  */
 export class Int24Ptr extends Ptr<number> {
-	/**
-	 * @inheritdoc
-	 */
 	declare public readonly ['constructor']: Omit<typeof Int24Ptr, 'new'>;
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.getter](index: number): number {
 		return getInt24(
 			dataView(this.buffer),
@@ -102,9 +96,6 @@ export class Int24Ptr extends Ptr<number> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.setter](index: number, value: number): void {
 		setInt24(
 			dataView(this.buffer),
@@ -114,9 +105,6 @@ export class Int24Ptr extends Ptr<number> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
 }
 
@@ -124,14 +112,8 @@ export class Int24Ptr extends Ptr<number> {
  * Pointer: uint24.
  */
 export class Uint24Ptr extends Ptr<number> {
-	/**
-	 * @inheritdoc
-	 */
 	declare public readonly ['constructor']: Omit<typeof Uint24Ptr, 'new'>;
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.getter](index: number): number {
 		return getUint24(
 			dataView(this.buffer),
@@ -140,9 +122,6 @@ export class Uint24Ptr extends Ptr<number> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.setter](index: number, value: number): void {
 		setUint24(
 			dataView(this.buffer),
@@ -152,8 +131,5 @@ export class Uint24Ptr extends Ptr<number> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
 }

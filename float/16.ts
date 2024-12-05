@@ -65,14 +65,8 @@ export function float16<T extends Type>(
  * Pointer: float16.
  */
 export class Float16Ptr extends Ptr<number> {
-	/**
-	 * @inheritdoc
-	 */
 	declare public readonly ['constructor']: Omit<typeof Float16Ptr, 'new'>;
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.getter](index: number): number {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		return d.getFloat16
@@ -87,9 +81,6 @@ export class Float16Ptr extends Ptr<number> {
 			);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.setter](index: number, value: number): void {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		if (d.setFloat16) {
@@ -108,8 +99,5 @@ export class Float16Ptr extends Ptr<number> {
 		}
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 }

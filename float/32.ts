@@ -41,14 +41,8 @@ export function float32<T extends Type>(
  * Pointer: float32.
  */
 export class Float32Ptr extends Ptr<number> {
-	/**
-	 * @inheritdoc
-	 */
 	declare public readonly ['constructor']: Omit<typeof Float32Ptr, 'new'>;
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.getter](index: number): number {
 		return dataView(this.buffer).getFloat32(
 			this.byteOffset + index * 4,
@@ -56,9 +50,6 @@ export class Float32Ptr extends Ptr<number> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.setter](index: number, value: number): void {
 		dataView(this.buffer).setFloat32(
 			this.byteOffset + index * 4,
@@ -67,8 +58,5 @@ export class Float32Ptr extends Ptr<number> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 }

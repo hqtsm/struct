@@ -41,14 +41,8 @@ export function bool32<T extends Type>(
  * Pointer: bool32.
  */
 export class Bool32Ptr extends Ptr<boolean> {
-	/**
-	 * @inheritdoc
-	 */
 	declare public readonly ['constructor']: Omit<typeof Bool32Ptr, 'new'>;
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.getter](index: number): boolean {
 		return !!dataView(this.buffer).getInt32(
 			this.byteOffset + index * 4,
@@ -56,9 +50,6 @@ export class Bool32Ptr extends Ptr<boolean> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.setter](index: number, value: boolean): void {
 		dataView(this.buffer).setInt32(
 			this.byteOffset + index * 4,
@@ -67,8 +58,5 @@ export class Bool32Ptr extends Ptr<boolean> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 }

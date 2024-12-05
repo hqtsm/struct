@@ -75,14 +75,8 @@ export function uint32<T extends Type>(
  * Pointer: int32.
  */
 export class Int32Ptr extends Ptr<number> {
-	/**
-	 * @inheritdoc
-	 */
 	declare public readonly ['constructor']: Omit<typeof Int32Ptr, 'new'>;
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.getter](index: number): number {
 		return dataView(this.buffer).getInt32(
 			this.byteOffset + index * 4,
@@ -90,9 +84,6 @@ export class Int32Ptr extends Ptr<number> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.setter](index: number, value: number): void {
 		dataView(this.buffer).setInt32(
 			this.byteOffset + index * 4,
@@ -101,9 +92,6 @@ export class Int32Ptr extends Ptr<number> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 }
 
@@ -111,14 +99,8 @@ export class Int32Ptr extends Ptr<number> {
  * Pointer: uint32.
  */
 export class Uint32Ptr extends Ptr<number> {
-	/**
-	 * @inheritdoc
-	 */
 	declare public readonly ['constructor']: Omit<typeof Uint32Ptr, 'new'>;
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.getter](index: number): number {
 		return dataView(this.buffer).getUint32(
 			this.byteOffset + index * 4,
@@ -126,9 +108,6 @@ export class Uint32Ptr extends Ptr<number> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.setter](index: number, value: number): void {
 		dataView(this.buffer).setUint32(
 			this.byteOffset + index * 4,
@@ -137,8 +116,5 @@ export class Uint32Ptr extends Ptr<number> {
 		);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 }

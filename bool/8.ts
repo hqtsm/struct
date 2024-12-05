@@ -37,27 +37,15 @@ export function bool8<T extends Type>(
  * Pointer: bool8.
  */
 export class Bool8Ptr extends Ptr<boolean> {
-	/**
-	 * @inheritdoc
-	 */
 	declare public readonly ['constructor']: Omit<typeof Bool8Ptr, 'new'>;
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.getter](index: number): boolean {
 		return !!dataView(this.buffer).getInt8(this.byteOffset + index);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	protected override [Ptr.setter](index: number, value: boolean): void {
 		dataView(this.buffer).setInt8(this.byteOffset + index, value ? 1 : 0);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
 }

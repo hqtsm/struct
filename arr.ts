@@ -83,9 +83,6 @@ export function array<T extends Type>(
 			 */
 			declare public readonly ['constructor']: ArrClass<T>;
 
-			/**
-			 * @inheritdoc
-			 */
 			public get byteLength(): number {
 				return this.constructor.BYTE_LENGTH;
 			}
@@ -95,9 +92,6 @@ export function array<T extends Type>(
 			 */
 			public static readonly BYTE_LENGTH = Ptr.BYTES_PER_ELEMENT * length;
 
-			/**
-			 * @inheritdoc
-			 */
 			public static override get MEMBERS(): Readonly<MemberInfos> {
 				let r = (members ??= new WeakMap()).get(this as ArrConstructor);
 				if (!r) {
