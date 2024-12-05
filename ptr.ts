@@ -238,7 +238,7 @@ let ptrs: WeakMap<TypeConstructor<Type>, PtrConstructor<Type>>;
  * @param Type Type constructor.
  * @returns Ptr constructor.
  */
-export function typePtr<T extends Type>(
+export function pointer<T extends Type>(
 	Type: TypeConstructor<T>,
 ): PtrConstructor<T> {
 	let r = (ptrs ??= new WeakMap()).get(Type) as PtrConstructor<T> | undefined;
