@@ -230,7 +230,7 @@ export interface PtrConstructor<T = never> extends PtrClass<T> {
 	): Ptr<T>;
 }
 
-let ptrs: WeakMap<TypeConstructor<Type>, PtrConstructor<Type>>;
+let pointers: WeakMap<TypeConstructor<Type>, PtrConstructor<Type>>;
 
 /**
  * Get Pointer of Type.
@@ -241,11 +241,13 @@ let ptrs: WeakMap<TypeConstructor<Type>, PtrConstructor<Type>>;
 export function pointer<T extends Type>(
 	Type: TypeConstructor<T>,
 ): PtrConstructor<T> {
-	let r = (ptrs ??= new WeakMap()).get(Type) as PtrConstructor<T> | undefined;
+	let r = (pointers ??= new WeakMap()).get(Type) as
+		| PtrConstructor<T>
+		| undefined;
 	if (!r) {
 		const name = `${Ptr.name}<${Type.name}>`;
 		const bpe = Type.BYTE_LENGTH;
-		ptrs.set(
+		pointers.set(
 			Type,
 			r = {
 				[name]: class extends Ptr<T> {
