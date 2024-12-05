@@ -6,6 +6,7 @@ import {
 } from './ptr.ts';
 import type {
 	ArrayBufferReal,
+	MemberInfos,
 	Type,
 	TypeClass,
 	TypeConstructor,
@@ -74,6 +75,7 @@ export function array<T extends Type>(
 	length = length - length % 1 || 0;
 	const Ptr = 'BYTE_LENGTH' in TypePtr ? pointer(TypePtr) : TypePtr;
 	const name = `${Ptr.name}[${length}]`;
+	let members: WeakMap<ArrConstructor, MemberInfos>;
 	return {
 		[name]: class extends Ptr implements Arr<T> {
 			/**
@@ -92,6 +94,22 @@ export function array<T extends Type>(
 			 * Byte length of struct.
 			 */
 			public static readonly BYTE_LENGTH = Ptr.BYTES_PER_ELEMENT * length;
+
+			/**
+			 * @inheritdoc
+			 */
+			public static override get MEMBERS(): Readonly<MemberInfos> {
+				let r = (members ??= new WeakMap()).get(this as ArrConstructor);
+				if (!r) {
+					members.set(
+						this as ArrConstructor,
+						r = Object.create(
+							Object.getPrototypeOf(this).MEMBERS ?? null,
+						) as Readonly<MemberInfos>,
+					);
+				}
+				return r;
+			}
 		},
 	}[name];
 }
