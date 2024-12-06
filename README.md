@@ -41,7 +41,7 @@ const example = new Example(data.buffer);
 example.alpha = 0xABCD;
 example.beta = 0xBCDE;
 example.gamma = -123;
-console.assert(data.join(', ') === '205, 171, 188, 222, 133');
+console.assert(data.join(' ') === '205 171 188 222 133');
 ```
 
 ## Dynamic Endianness
@@ -68,12 +68,12 @@ const data = new Uint8Array(Example.BYTE_LENGTH);
 const exampleLE = new Example(data.buffer, 0, true);
 exampleLE.alpha = 0xABCD;
 exampleLE.beta = 0xBCDE;
-console.assert(data.join(', ') === '205, 171, 222, 188');
+console.assert(data.join(' ') === '205 171 222 188');
 
 const exampleBE = new Example(data.buffer, 0, false);
 exampleBE.alpha = 0xABCD;
 exampleBE.beta = 0xBCDE;
-console.assert(data.join(', ') === '171, 205, 188, 222');
+console.assert(data.join(' ') === '171 205 188 222');
 ```
 
 ## Extending / Inheritance
@@ -105,7 +105,7 @@ const data = new Uint8Array(VariableFloat.BYTE_LENGTH);
 const varFloat = new VariableFloat(data.buffer, 0, true);
 varFloat.type = 0xF;
 varFloat.value = 3.1415;
-console.assert(data.join(', ') === '15, 0, 0, 0, 86, 14, 73, 64');
+console.assert(data.join(' ') === '15 0 0 0 86 14 73 64');
 ```
 
 ## Child Structures
@@ -145,7 +145,7 @@ stru.child1.alpha = 97;
 stru.child1.beta = 98;
 stru.child2.alpha = 65;
 stru.child2.beta = 66;
-console.assert(data.join(', ') === '0, 97, 0, 98, 0, 65, 0, 66');
+console.assert(data.join(' ') === '0 97 0 98 0 65 0 66');
 ```
 
 ## Private / Protected
@@ -185,5 +185,5 @@ const example = new Example(data.buffer);
 example.setAlpha(65);
 example.setBeta(66);
 example.gamma = 71;
-console.assert(data.join(', ') === '65, 66, 71');
+console.assert(data.join(' ') === '65 66 71');
 ```
