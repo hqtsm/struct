@@ -123,6 +123,6 @@ export function array<T extends Type>(
  * @param Ptr Array class.
  * @returns Array length.
  */
-export function length(Ptr: ArrClass): number {
+export function length<T>(Ptr: ArrClass<T>): number {
 	return Ptr.BYTE_LENGTH / Ptr.BYTES_PER_ELEMENT;
 }
