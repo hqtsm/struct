@@ -1,4 +1,5 @@
-import type { BufferView, Members, Type, TypeClass } from './type.ts';
+import type { Ptr, PtrClass } from './ptr.ts';
+import type { BufferView, Membered, Members, Type, TypeClass } from './type.ts';
 
 let dataViews: WeakMap<ArrayBufferLike, DataView>;
 
@@ -19,13 +20,30 @@ export function dataView(buffer: ArrayBufferLike): DataView {
 /**
  * Get byte offset of member.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @returns Byte offset.
  */
 export function getByteOffset<T extends Type>(
 	Type: TypeClass<T>,
 	name: Members<T>,
+): number;
+
+/**
+ * Get byte offset of index.
+ *
+ * @param Ptr Ptr class.
+ * @param index Member index.
+ * @returns Byte offset.
+ */
+export function getByteOffset<T extends Ptr>(
+	Ptr: PtrClass<T>,
+	index: number,
+): number;
+
+export function getByteOffset(
+	Type: Membered,
+	name: PropertyKey,
 ): number {
 	return Type.MEMBERS[name].byteOffset;
 }
@@ -33,13 +51,30 @@ export function getByteOffset<T extends Type>(
 /**
  * Get byte length of member.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @returns Byte length.
  */
 export function getByteLength<T extends Type>(
 	Type: TypeClass<T>,
 	name: Members<T>,
+): number;
+
+/**
+ * Get byte length of member.
+ *
+ * @param Ptr Ptr class.
+ * @param index Member index.
+ * @returns Byte length.
+ */
+export function getByteLength<T extends Ptr>(
+	Ptr: PtrClass<T>,
+	index: number,
+): number;
+
+export function getByteLength(
+	Type: Membered,
+	name: PropertyKey,
 ): number {
 	return Type.MEMBERS[name].byteLength;
 }
