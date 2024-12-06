@@ -61,7 +61,7 @@ export function array<T extends Type>(
 	Type: TypeConstructor<T>,
 	length: number,
 ): ArrConstructor<T>;
-export function array<T extends Type>(
+export function array<T>(
 	Ptr: PtrConstructor<T> & { BYTE_LENGTH?: never },
 	length: number,
 ): ArrConstructor<T>;
