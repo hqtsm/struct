@@ -121,7 +121,7 @@ export function uint32BE<T extends Type>(
 }
 
 /**
- * Member: uint32.
+ * Member: uint32, little endian.
  *
  * @param Type Type constructor.
  * @param name Member name.
