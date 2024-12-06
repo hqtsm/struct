@@ -2,7 +2,14 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
-import { bool16, Bool16BEPtr, Bool16LEPtr, Bool16Ptr } from './16.ts';
+import {
+	bool16,
+	bool16BE,
+	Bool16BEPtr,
+	bool16LE,
+	Bool16LEPtr,
+	Bool16Ptr,
+} from './16.ts';
 
 Deno.test('bool16', () => {
 	class Test extends Struct {
@@ -17,8 +24,8 @@ Deno.test('bool16', () => {
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += bool16(this, 'alpha', o);
 			o += bool16(this, 'beta', o);
-			o += bool16(this, 'gamma', o, true);
-			o += bool16(this, 'delta', o, false);
+			o += bool16LE(this, 'gamma', o);
+			o += bool16BE(this, 'delta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

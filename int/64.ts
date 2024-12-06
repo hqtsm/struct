@@ -38,6 +38,38 @@ export function int64<T extends Type>(
 }
 
 /**
+ * Member: int64, big endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function int64BE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, bigint>,
+	byteOffset: number,
+): number {
+	return int64(Type, name, byteOffset, false);
+}
+
+/**
+ * Member: int64, little endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function int64LE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, bigint>,
+	byteOffset: number,
+): number {
+	return int64(Type, name, byteOffset, true);
+}
+
+/**
  * Member: uint64.
  *
  * @param Type Type constructor.
@@ -69,6 +101,38 @@ export function uint64<T extends Type>(
 			);
 		},
 	});
+}
+
+/**
+ * Member: uint64, big endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function uint64BE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, bigint>,
+	byteOffset: number,
+): number {
+	return uint64(Type, name, byteOffset, false);
+}
+
+/**
+ * Member: uint64, little endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function uint64LE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, bigint>,
+	byteOffset: number,
+): number {
+	return uint64(Type, name, byteOffset, true);
 }
 
 /**

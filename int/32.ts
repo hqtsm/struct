@@ -38,6 +38,38 @@ export function int32<T extends Type>(
 }
 
 /**
+ * Member: int32, big endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function int32BE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
+	byteOffset: number,
+): number {
+	return int32(Type, name, byteOffset, false);
+}
+
+/**
+ * Member: int32, little endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function int32LE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
+	byteOffset: number,
+): number {
+	return int32(Type, name, byteOffset, true);
+}
+
+/**
  * Member: uint32.
  *
  * @param Type Type constructor.
@@ -69,6 +101,40 @@ export function uint32<T extends Type>(
 			);
 		},
 	});
+}
+
+/**
+ * Member: uint32, big endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @param littleEndian Little endian, big endian, or default.
+ * @returns Byte length.
+ */
+export function uint32BE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
+	byteOffset: number,
+): number {
+	return uint32(Type, name, byteOffset, false);
+}
+
+/**
+ * Member: uint32.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @param littleEndian Little endian, big endian, or default.
+ * @returns Byte length.
+ */
+export function uint32LE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
+	byteOffset: number,
+): number {
+	return uint32(Type, name, byteOffset, true);
 }
 
 /**

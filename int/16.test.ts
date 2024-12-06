@@ -4,11 +4,15 @@ import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
 import {
 	int16,
+	int16BE,
 	Int16BEPtr,
+	int16LE,
 	Int16LEPtr,
 	Int16Ptr,
 	uint16,
+	uint16BE,
 	Uint16BEPtr,
+	uint16LE,
 	Uint16LEPtr,
 	Uint16Ptr,
 } from './16.ts';
@@ -26,8 +30,8 @@ Deno.test('int16', () => {
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += int16(this, 'alpha', o);
 			o += int16(this, 'beta', o);
-			o += int16(this, 'gamma', o, true);
-			o += int16(this, 'delta', o, false);
+			o += int16LE(this, 'gamma', o);
+			o += int16BE(this, 'delta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -96,8 +100,8 @@ Deno.test('uint16', () => {
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o += uint16(this, 'alpha', o);
 			o += uint16(this, 'beta', o);
-			o += uint16(this, 'gamma', o, true);
-			o += uint16(this, 'delta', o, false);
+			o += uint16LE(this, 'gamma', o);
+			o += uint16BE(this, 'delta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

@@ -62,6 +62,38 @@ export function float16<T extends Type>(
 }
 
 /**
+ * Member: float16, big endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function float16BE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
+	byteOffset: number,
+): number {
+	return float16(Type, name, byteOffset, false);
+}
+
+/**
+ * Member: float16, little endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function float16LE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
+	byteOffset: number,
+): number {
+	return float16(Type, name, byteOffset, true);
+}
+
+/**
  * Pointer: float16.
  */
 export class Float16Ptr extends Ptr<number> {

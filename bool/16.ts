@@ -38,6 +38,38 @@ export function bool16<T extends Type>(
 }
 
 /**
+ * Member: bool16, big endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function bool16BE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, boolean>,
+	byteOffset: number,
+): number {
+	return bool16(Type, name, byteOffset, false);
+}
+
+/**
+ * Member: bool16, little endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function bool16LE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, boolean>,
+	byteOffset: number,
+): number {
+	return bool16(Type, name, byteOffset, true);
+}
+
+/**
  * Pointer: bool16.
  */
 export class Bool16Ptr extends Ptr<boolean> {

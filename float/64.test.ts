@@ -2,7 +2,14 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
-import { float64, Float64BEPtr, Float64LEPtr, Float64Ptr } from './64.ts';
+import {
+	float64,
+	float64BE,
+	Float64BEPtr,
+	float64LE,
+	Float64LEPtr,
+	Float64Ptr,
+} from './64.ts';
 
 Deno.test('float64', () => {
 	class Test extends Struct {
@@ -13,8 +20,8 @@ Deno.test('float64', () => {
 		declare public gamma: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += float64(this, 'alpha', o, true);
-			o += float64(this, 'beta', o, false);
+			o += float64LE(this, 'alpha', o);
+			o += float64BE(this, 'beta', o);
 			o += float64(this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);

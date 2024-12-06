@@ -4,7 +4,14 @@ import { assertEquals } from '@std/assert';
 import { Struct } from '../struct.ts';
 import type { ArrayBufferReal } from '../type.ts';
 import { dataView, getByteLength, getByteOffset } from '../util.ts';
-import { float16, Float16BEPtr, Float16LEPtr, Float16Ptr } from './16.ts';
+import {
+	float16,
+	float16BE,
+	Float16BEPtr,
+	float16LE,
+	Float16LEPtr,
+	Float16Ptr,
+} from './16.ts';
 
 function round(n: number): number {
 	const dataView = new DataView(new ArrayBuffer(2));
@@ -21,8 +28,8 @@ Deno.test('float16', () => {
 		declare public gamma: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += float16(this, 'alpha', o, true);
-			o += float16(this, 'beta', o, false);
+			o += float16LE(this, 'alpha', o);
+			o += float16BE(this, 'beta', o);
 			o += float16(this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);

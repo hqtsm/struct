@@ -38,6 +38,38 @@ export function float32<T extends Type>(
 }
 
 /**
+ * Member: float32, big endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function float32BE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
+	byteOffset: number,
+): number {
+	return float32(Type, name, byteOffset, false);
+}
+
+/**
+ * Member: float32, little endian.
+ *
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function float32LE<T extends Type>(
+	Type: TypeClass<T>,
+	name: MembersExtends<T, number>,
+	byteOffset: number,
+): number {
+	return float32(Type, name, byteOffset, true);
+}
+
+/**
  * Pointer: float32.
  */
 export class Float32Ptr extends Ptr<number> {
