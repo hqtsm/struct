@@ -116,3 +116,13 @@ export function array<T extends Type>(
 		},
 	}[name];
 }
+
+/**
+ * Get length of array.
+ *
+ * @param Ptr Array class.
+ * @returns Array length.
+ */
+export function length(Ptr: ArrClass): number {
+	return Ptr.BYTE_LENGTH / Ptr.BYTES_PER_ELEMENT;
+}
