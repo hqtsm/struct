@@ -4,7 +4,7 @@ import { assertEquals } from '@std/assert';
 import { Struct } from '../struct.ts';
 import type { ArrayBufferReal } from '../type.ts';
 import { dataView, getByteLength, getByteOffset } from '../util.ts';
-import { float16, Float16Ptr } from './16.ts';
+import { float16, Float16BEPtr, Float16LEPtr, Float16Ptr } from './16.ts';
 
 function round(n: number): number {
 	const dataView = new DataView(new ArrayBuffer(2));
@@ -153,82 +153,93 @@ Deno.test('float16', () => {
 	}
 });
 
-class Float16PtrM extends Float16Ptr {
-	constructor(
-		buffer: ArrayBufferReal,
-		byteOffset = 0,
-		littleEndian: boolean | null = null,
-	) {
-		super(buffer, byteOffset, littleEndian);
-		Object.defineProperty(dataView(this.buffer), 'getFloat16', {
-			configurable: true,
-			enumerable: false,
-			value: function (
-				this: DataView,
-				offset: number,
-				littleEndian?: boolean,
-			): number {
-				return getFloat16(this, offset, littleEndian);
-			},
-			writable: true,
-		});
-		Object.defineProperty(dataView(this.buffer), 'setFloat16', {
-			configurable: true,
-			enumerable: false,
-			value: function (
-				this: DataView,
-				offset: number,
-				value: number,
-				littleEndian?: boolean,
-			): void {
-				setFloat16(this, offset, value, littleEndian);
-			},
-			writable: true,
-		});
-	}
-}
-
-class Float16PtrF extends Float16Ptr {
-	constructor(
-		buffer: ArrayBufferReal,
-		byteOffset = 0,
-		littleEndian: boolean | null = null,
-	) {
-		super(buffer, byteOffset, littleEndian);
-		Object.defineProperty(dataView(this.buffer), 'getFloat16', {
-			configurable: true,
-			enumerable: false,
-			value: null,
-			writable: true,
-		});
-		Object.defineProperty(dataView(this.buffer), 'setFloat16', {
-			configurable: true,
-			enumerable: false,
-			value: null,
-			writable: true,
-		});
-	}
-}
-
 Deno.test('Float16Ptr', () => {
-	const bpe = Float16Ptr.BYTES_PER_ELEMENT;
-	assertEquals(bpe, 2);
+	for (
+		const [Ptr, le] of [
+			[Float16Ptr, null],
+			[Float16BEPtr, false],
+			[Float16LEPtr, true],
+		] as [typeof Float16Ptr, boolean | null][]
+	) {
+		class PtrM extends Ptr {
+			constructor(
+				buffer: ArrayBufferReal,
+				byteOffset = 0,
+				littleEndian: boolean | null = null,
+			) {
+				super(buffer, byteOffset, littleEndian);
+				Object.defineProperty(dataView(this.buffer), 'getFloat16', {
+					configurable: true,
+					enumerable: false,
+					value: function (
+						this: DataView,
+						offset: number,
+						littleEndian?: boolean,
+					): number {
+						return getFloat16(this, offset, littleEndian);
+					},
+					writable: true,
+				});
+				Object.defineProperty(dataView(this.buffer), 'setFloat16', {
+					configurable: true,
+					enumerable: false,
+					value: function (
+						this: DataView,
+						offset: number,
+						value: number,
+						littleEndian?: boolean,
+					): void {
+						setFloat16(this, offset, value, littleEndian);
+					},
+					writable: true,
+				});
+			}
+		}
 
-	const fA = round(Math.PI);
-	const fB = round(-Math.E);
+		class PtrF extends Ptr {
+			constructor(
+				buffer: ArrayBufferReal,
+				byteOffset = 0,
+				littleEndian: boolean | null = null,
+			) {
+				super(buffer, byteOffset, littleEndian);
+				Object.defineProperty(dataView(this.buffer), 'getFloat16', {
+					configurable: true,
+					enumerable: false,
+					value: null,
+					writable: true,
+				});
+				Object.defineProperty(dataView(this.buffer), 'setFloat16', {
+					configurable: true,
+					enumerable: false,
+					value: null,
+					writable: true,
+				});
+			}
+		}
 
-	const count = 3;
-	for (const Float16Ptr of [Float16PtrM, Float16PtrF]) {
-		for (const littleEndian of [undefined, true, false]) {
-			const buffer = new ArrayBuffer(bpe * count + bpe);
-			const view = new DataView(buffer);
-			const ptr = new Float16Ptr(buffer, bpe, littleEndian);
-			for (let i = -1; i < count; i++) {
-				const o = bpe * i + bpe;
-				ptr[i] = fA;
-				assertEquals(getFloat16(view, o, ptr.littleEndian), fA);
-				setFloat16(view, o, fB, ptr.littleEndian);
-				assertEquals(ptr[i], fB);
+		const bpe = Ptr.BYTES_PER_ELEMENT;
+		assertEquals(bpe, 2);
+
+		const fA = round(Math.PI);
+		const fB = round(-Math.E);
+
+		const count = 3;
+		for (const Ptr of [PtrM, PtrF]) {
+			for (const littleEndian of [undefined, true, false]) {
+				const buffer = new ArrayBuffer(bpe * count + bpe);
+				const view = new DataView(buffer);
+				const ptr = new Ptr(buffer, bpe, littleEndian);
+				for (let i = -1; i < count; i++) {
+					const o = bpe * i + bpe;
+					ptr[i] = fA;
+					assertEquals(
+						getFloat16(view, o, le ?? ptr.littleEndian),
+						fA,
+					);
+					setFloat16(view, o, fB, le ?? ptr.littleEndian);
+					assertEquals(ptr[i], fB);
+				}
 			}
 		}
 	}

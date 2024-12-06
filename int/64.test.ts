@@ -2,7 +2,16 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
-import { int64, Int64Ptr, uint64, Uint64Ptr } from './64.ts';
+import {
+	int64,
+	Int64BEPtr,
+	Int64LEPtr,
+	Int64Ptr,
+	uint64,
+	Uint64BEPtr,
+	Uint64LEPtr,
+	Uint64Ptr,
+} from './64.ts';
 
 Deno.test('int64', () => {
 	class Test extends Struct {
@@ -145,42 +154,58 @@ Deno.test('uint64', () => {
 });
 
 Deno.test('Int64Ptr', () => {
-	const bpe = Int64Ptr.BYTES_PER_ELEMENT;
-	assertEquals(bpe, 8);
+	for (
+		const [Ptr, le] of [
+			[Int64Ptr, null],
+			[Int64LEPtr, true],
+			[Int64BEPtr, false],
+		] as [typeof Int64Ptr, boolean | null][]
+	) {
+		const bpe = Ptr.BYTES_PER_ELEMENT;
+		assertEquals(bpe, 8);
 
-	const count = 3;
-	for (const littleEndian of [undefined, true, false]) {
-		const buffer = new ArrayBuffer(bpe * count + bpe);
-		const view = new DataView(buffer);
-		const ptr = new Int64Ptr(buffer, bpe, littleEndian);
-		for (let i = -1; i < count; i++) {
-			const o = bpe * i + bpe;
-			ptr[i] = -1n;
-			assertEquals(view.getBigInt64(o, ptr.littleEndian), -1n);
-			view.setBigInt64(o, 1n, ptr.littleEndian);
-			assertEquals(ptr[i], 1n);
+		const count = 3;
+		for (const littleEndian of [undefined, true, false]) {
+			const buffer = new ArrayBuffer(bpe * count + bpe);
+			const view = new DataView(buffer);
+			const ptr = new Ptr(buffer, bpe, littleEndian);
+			for (let i = -1; i < count; i++) {
+				const o = bpe * i + bpe;
+				ptr[i] = -1n;
+				assertEquals(view.getBigInt64(o, le ?? ptr.littleEndian), -1n);
+				view.setBigInt64(o, 1n, le ?? ptr.littleEndian);
+				assertEquals(ptr[i], 1n);
+			}
 		}
 	}
 });
 
 Deno.test('Uint64Ptr', () => {
-	const bpe = Uint64Ptr.BYTES_PER_ELEMENT;
-	assertEquals(bpe, 8);
+	for (
+		const [Ptr, le] of [
+			[Uint64Ptr, null],
+			[Uint64BEPtr, false],
+			[Uint64LEPtr, true],
+		] as [typeof Uint64Ptr, boolean | null][]
+	) {
+		const bpe = Ptr.BYTES_PER_ELEMENT;
+		assertEquals(bpe, 8);
 
-	const count = 3;
-	for (const littleEndian of [undefined, true, false]) {
-		const buffer = new ArrayBuffer(bpe * count + bpe);
-		const view = new DataView(buffer);
-		const ptr = new Uint64Ptr(buffer, bpe, littleEndian);
-		for (let i = -1; i < count; i++) {
-			const o = bpe * i + bpe;
-			ptr[i] = -1n;
-			assertEquals(
-				view.getBigUint64(o, ptr.littleEndian),
-				0xffffffffffffffffn,
-			);
-			view.setBigUint64(o, 1n, ptr.littleEndian);
-			assertEquals(ptr[i], 1n);
+		const count = 3;
+		for (const littleEndian of [undefined, true, false]) {
+			const buffer = new ArrayBuffer(bpe * count + bpe);
+			const view = new DataView(buffer);
+			const ptr = new Ptr(buffer, bpe, littleEndian);
+			for (let i = -1; i < count; i++) {
+				const o = bpe * i + bpe;
+				ptr[i] = -1n;
+				assertEquals(
+					view.getBigUint64(o, le ?? ptr.littleEndian),
+					0xffffffffffffffffn,
+				);
+				view.setBigUint64(o, 1n, le ?? ptr.littleEndian);
+				assertEquals(ptr[i], 1n);
+			}
 		}
 	}
 });

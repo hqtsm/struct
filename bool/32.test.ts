@@ -2,7 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
-import { bool32, Bool32Ptr } from './32.ts';
+import { bool32, Bool32BEPtr, Bool32LEPtr, Bool32Ptr } from './32.ts';
 
 Deno.test('bool32', () => {
 	class Test extends Struct {
@@ -113,22 +113,30 @@ Deno.test('bool32', () => {
 });
 
 Deno.test('Bool32Ptr', () => {
-	const bpe = Bool32Ptr.BYTES_PER_ELEMENT;
-	assertEquals(bpe, 4);
+	for (
+		const [Ptr, le] of [
+			[Bool32Ptr, null],
+			[Bool32LEPtr, true],
+			[Bool32BEPtr, false],
+		] as [typeof Bool32Ptr, boolean | null][]
+	) {
+		const bpe = Ptr.BYTES_PER_ELEMENT;
+		assertEquals(bpe, 4);
 
-	const count = 3;
-	for (const littleEndian of [undefined, true, false]) {
-		const buffer = new ArrayBuffer(bpe * count + bpe);
-		const view = new DataView(buffer);
-		const ptr = new Bool32Ptr(buffer, bpe, littleEndian);
-		for (let i = -1; i < count; i++) {
-			const o = bpe * i + bpe;
-			ptr[i] = true;
-			assertEquals(view.getInt32(o, ptr.littleEndian), 1);
-			ptr[i] = false;
-			assertEquals(view.getInt32(o, ptr.littleEndian), 0);
-			view.setInt32(o, -1, ptr.littleEndian);
-			assertEquals(ptr[i], true);
+		const count = 3;
+		for (const littleEndian of [undefined, true, false]) {
+			const buffer = new ArrayBuffer(bpe * count + bpe);
+			const view = new DataView(buffer);
+			const ptr = new Ptr(buffer, bpe, littleEndian);
+			for (let i = -1; i < count; i++) {
+				const o = bpe * i + bpe;
+				ptr[i] = true;
+				assertEquals(view.getInt32(o, le ?? ptr.littleEndian), 1);
+				ptr[i] = false;
+				assertEquals(view.getInt32(o, le ?? ptr.littleEndian), 0);
+				view.setInt32(o, -1, le ?? ptr.littleEndian);
+				assertEquals(ptr[i], true);
+			}
 		}
 	}
 });

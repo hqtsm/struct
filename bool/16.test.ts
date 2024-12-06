@@ -2,7 +2,7 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
-import { bool16, Bool16Ptr } from './16.ts';
+import { bool16, Bool16BEPtr, Bool16LEPtr, Bool16Ptr } from './16.ts';
 
 Deno.test('bool16', () => {
 	class Test extends Struct {
@@ -113,22 +113,30 @@ Deno.test('bool16', () => {
 });
 
 Deno.test('Bool16Ptr', () => {
-	const bpe = Bool16Ptr.BYTES_PER_ELEMENT;
-	assertEquals(bpe, 2);
+	for (
+		const [Ptr, le] of [
+			[Bool16Ptr, null],
+			[Bool16LEPtr, true],
+			[Bool16BEPtr, false],
+		] as [typeof Bool16Ptr, boolean | null][]
+	) {
+		const bpe = Ptr.BYTES_PER_ELEMENT;
+		assertEquals(bpe, 2);
 
-	const count = 3;
-	for (const littleEndian of [undefined, true, false]) {
-		const buffer = new ArrayBuffer(bpe * count + bpe);
-		const view = new DataView(buffer);
-		const ptr = new Bool16Ptr(buffer, bpe, littleEndian);
-		for (let i = -1; i < count; i++) {
-			const o = bpe * i + bpe;
-			ptr[i] = true;
-			assertEquals(view.getInt16(o, ptr.littleEndian), 1);
-			ptr[i] = false;
-			assertEquals(view.getInt16(o, ptr.littleEndian), 0);
-			view.setInt16(o, -1, ptr.littleEndian);
-			assertEquals(ptr[i], true);
+		const count = 3;
+		for (const littleEndian of [undefined, true, false]) {
+			const buffer = new ArrayBuffer(bpe * count + bpe);
+			const view = new DataView(buffer);
+			const ptr = new Ptr(buffer, bpe, littleEndian);
+			for (let i = -1; i < count; i++) {
+				const o = bpe * i + bpe;
+				ptr[i] = true;
+				assertEquals(view.getInt16(o, le ?? ptr.littleEndian), 1);
+				ptr[i] = false;
+				assertEquals(view.getInt16(o, le ?? ptr.littleEndian), 0);
+				view.setInt16(o, -1, le ?? ptr.littleEndian);
+				assertEquals(ptr[i], true);
+			}
 		}
 	}
 });

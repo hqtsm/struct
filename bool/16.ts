@@ -60,3 +60,49 @@ export class Bool16Ptr extends Ptr<boolean> {
 
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 }
+
+/**
+ * Pointer: bool16, big endian.
+ */
+export class Bool16BEPtr extends Ptr<boolean> {
+	declare public readonly ['constructor']: Omit<typeof Bool16BEPtr, 'new'>;
+
+	protected override [Ptr.getter](index: number): boolean {
+		return !!dataView(this.buffer).getInt16(
+			this.byteOffset + index * 2,
+		);
+	}
+
+	protected override [Ptr.setter](index: number, value: boolean): void {
+		dataView(this.buffer).setInt16(
+			this.byteOffset + index * 2,
+			value ? 1 : 0,
+		);
+	}
+
+	public static override readonly BYTES_PER_ELEMENT: number = 2;
+}
+
+/**
+ * Pointer: bool16, little endian.
+ */
+export class Bool16LEPtr extends Ptr<boolean> {
+	declare public readonly ['constructor']: Omit<typeof Bool16LEPtr, 'new'>;
+
+	protected override [Ptr.getter](index: number): boolean {
+		return !!dataView(this.buffer).getInt16(
+			this.byteOffset + index * 2,
+			true,
+		);
+	}
+
+	protected override [Ptr.setter](index: number, value: boolean): void {
+		dataView(this.buffer).setInt16(
+			this.byteOffset + index * 2,
+			value ? 1 : 0,
+			true,
+		);
+	}
+
+	public static override readonly BYTES_PER_ELEMENT: number = 2;
+}

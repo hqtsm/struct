@@ -109,6 +109,56 @@ export class Int24Ptr extends Ptr<number> {
 }
 
 /**
+ * Pointer: int24, big endian.
+ */
+export class Int24BEPtr extends Ptr<number> {
+	declare public readonly ['constructor']: Omit<typeof Int24BEPtr, 'new'>;
+
+	protected override [Ptr.getter](index: number): number {
+		return getInt24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+		);
+	}
+
+	protected override [Ptr.setter](index: number, value: number): void {
+		setInt24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+			value,
+		);
+	}
+
+	public static override readonly BYTES_PER_ELEMENT: number = 3;
+}
+
+/**
+ * Pointer: int24, little endian.
+ */
+export class Int24LEPtr extends Ptr<number> {
+	declare public readonly ['constructor']: Omit<typeof Int24LEPtr, 'new'>;
+
+	protected override [Ptr.getter](index: number): number {
+		return getInt24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+			true,
+		);
+	}
+
+	protected override [Ptr.setter](index: number, value: number): void {
+		setInt24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+			value,
+			true,
+		);
+	}
+
+	public static override readonly BYTES_PER_ELEMENT: number = 3;
+}
+
+/**
  * Pointer: uint24.
  */
 export class Uint24Ptr extends Ptr<number> {
@@ -128,6 +178,56 @@ export class Uint24Ptr extends Ptr<number> {
 			this.byteOffset + index * 3,
 			value,
 			this.littleEndian,
+		);
+	}
+
+	public static override readonly BYTES_PER_ELEMENT: number = 3;
+}
+
+/**
+ * Pointer: uint24, big endian.
+ */
+export class Uint24BEPtr extends Ptr<number> {
+	declare public readonly ['constructor']: Omit<typeof Uint24BEPtr, 'new'>;
+
+	protected override [Ptr.getter](index: number): number {
+		return getUint24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+		);
+	}
+
+	protected override [Ptr.setter](index: number, value: number): void {
+		setUint24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+			value,
+		);
+	}
+
+	public static override readonly BYTES_PER_ELEMENT: number = 3;
+}
+
+/**
+ * Pointer: uint24, little endian.
+ */
+export class Uint24LEPtr extends Ptr<number> {
+	declare public readonly ['constructor']: Omit<typeof Uint24LEPtr, 'new'>;
+
+	protected override [Ptr.getter](index: number): number {
+		return getUint24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+			true,
+		);
+	}
+
+	protected override [Ptr.setter](index: number, value: number): void {
+		setUint24(
+			dataView(this.buffer),
+			this.byteOffset + index * 3,
+			value,
+			true,
 		);
 	}
 

@@ -8,7 +8,16 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
-import { int24, Int24Ptr, uint24, Uint24Ptr } from './24.ts';
+import {
+	int24,
+	Int24BEPtr,
+	Int24LEPtr,
+	Int24Ptr,
+	uint24,
+	Uint24BEPtr,
+	Uint24LEPtr,
+	Uint24Ptr,
+} from './24.ts';
 
 Deno.test('int24', () => {
 	class Test extends Struct {
@@ -151,39 +160,58 @@ Deno.test('uint24', () => {
 });
 
 Deno.test('Int24Ptr', () => {
-	const bpe = Int24Ptr.BYTES_PER_ELEMENT;
-	assertEquals(bpe, 3);
+	for (
+		const [Ptr, le] of [
+			[Int24Ptr, null],
+			[Int24BEPtr, false],
+			[Int24LEPtr, true],
+		] as [typeof Int24Ptr, boolean | null][]
+	) {
+		const bpe = Ptr.BYTES_PER_ELEMENT;
+		assertEquals(bpe, 3);
 
-	const count = 3;
-	for (const littleEndian of [undefined, true, false]) {
-		const buffer = new ArrayBuffer(bpe * count + bpe);
-		const view = new DataView(buffer);
-		const ptr = new Int24Ptr(buffer, bpe, littleEndian);
-		for (let i = -1; i < count; i++) {
-			const o = bpe * i + bpe;
-			ptr[i] = -1;
-			assertEquals(getInt24(view, o, ptr.littleEndian), -1);
-			setInt24(view, o, 1, ptr.littleEndian);
-			assertEquals(ptr[i], 1);
+		const count = 3;
+		for (const littleEndian of [undefined, true, false]) {
+			const buffer = new ArrayBuffer(bpe * count + bpe);
+			const view = new DataView(buffer);
+			const ptr = new Ptr(buffer, bpe, littleEndian);
+			for (let i = -1; i < count; i++) {
+				const o = bpe * i + bpe;
+				ptr[i] = -1;
+				assertEquals(getInt24(view, o, le ?? ptr.littleEndian), -1);
+				setInt24(view, o, 1, le ?? ptr.littleEndian);
+				assertEquals(ptr[i], 1);
+			}
 		}
 	}
 });
 
 Deno.test('Uint24Ptr', () => {
-	const bpe = Uint24Ptr.BYTES_PER_ELEMENT;
-	assertEquals(bpe, 3);
+	for (
+		const [Ptr, le] of [
+			[Uint24Ptr, null],
+			[Uint24BEPtr, false],
+			[Uint24LEPtr, true],
+		] as [typeof Uint24Ptr, boolean | null][]
+	) {
+		const bpe = Ptr.BYTES_PER_ELEMENT;
+		assertEquals(bpe, 3);
 
-	const count = 3;
-	for (const littleEndian of [undefined, true, false]) {
-		const buffer = new ArrayBuffer(bpe * count + bpe);
-		const view = new DataView(buffer);
-		const ptr = new Uint24Ptr(buffer, bpe, littleEndian);
-		for (let i = -1; i < count; i++) {
-			const o = bpe * i + bpe;
-			ptr[i] = -1;
-			assertEquals(getUint24(view, o, ptr.littleEndian), 0xffffff);
-			setUint24(view, o, 1, ptr.littleEndian);
-			assertEquals(ptr[i], 1);
+		const count = 3;
+		for (const littleEndian of [undefined, true, false]) {
+			const buffer = new ArrayBuffer(bpe * count + bpe);
+			const view = new DataView(buffer);
+			const ptr = new Ptr(buffer, bpe, littleEndian);
+			for (let i = -1; i < count; i++) {
+				const o = bpe * i + bpe;
+				ptr[i] = -1;
+				assertEquals(
+					getUint24(view, o, le ?? ptr.littleEndian),
+					0xffffff,
+				);
+				setUint24(view, o, 1, le ?? ptr.littleEndian);
+				assertEquals(ptr[i], 1);
+			}
 		}
 	}
 });

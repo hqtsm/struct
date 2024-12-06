@@ -101,3 +101,81 @@ export class Float16Ptr extends Ptr<number> {
 
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 }
+
+/**
+ * Pointer: float16, big endian.
+ */
+export class Float16BEPtr extends Ptr<number> {
+	declare public readonly ['constructor']: Omit<typeof Float16BEPtr, 'new'>;
+
+	protected override [Ptr.getter](index: number): number {
+		const d = dataView(this.buffer) as MaybeNativeFloat16;
+		return d.getFloat16
+			? d.getFloat16(
+				this.byteOffset + index * 2,
+			)
+			: getFloat16(
+				d as DataView,
+				this.byteOffset + index * 2,
+			);
+	}
+
+	protected override [Ptr.setter](index: number, value: number): void {
+		const d = dataView(this.buffer) as MaybeNativeFloat16;
+		if (d.setFloat16) {
+			d.setFloat16(
+				this.byteOffset + index * 2,
+				value,
+			);
+		} else {
+			setFloat16(
+				d as DataView,
+				this.byteOffset + index * 2,
+				value,
+			);
+		}
+	}
+
+	public static override readonly BYTES_PER_ELEMENT: number = 2;
+}
+
+/**
+ * Pointer: float16, little endian.
+ */
+export class Float16LEPtr extends Ptr<number> {
+	declare public readonly ['constructor']: Omit<typeof Float16LEPtr, 'new'>;
+
+	protected override [Ptr.getter](index: number): number {
+		const d = dataView(this.buffer) as MaybeNativeFloat16;
+		return d.getFloat16
+			? d.getFloat16(
+				this.byteOffset + index * 2,
+				true,
+			)
+			: getFloat16(
+				d as DataView,
+				this.byteOffset + index * 2,
+				true,
+			);
+	}
+
+	protected override [Ptr.setter](index: number, value: number): void {
+		const d = dataView(this.buffer) as MaybeNativeFloat16;
+		if (d.setFloat16) {
+			d.setFloat16(
+				this.byteOffset + index * 2,
+				value,
+				true,
+			);
+		} else {
+			setFloat16(
+				d as DataView,
+				this.byteOffset + index * 2,
+				value,
+				true,
+			);
+		}
+	}
+
+	public static override readonly BYTES_PER_ELEMENT: number = 2;
+}

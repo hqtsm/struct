@@ -2,7 +2,16 @@ import { assertEquals } from '@std/assert';
 
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
-import { int16, Int16Ptr, uint16, Uint16Ptr } from './16.ts';
+import {
+	int16,
+	Int16BEPtr,
+	Int16LEPtr,
+	Int16Ptr,
+	uint16,
+	Uint16BEPtr,
+	Uint16LEPtr,
+	Uint16Ptr,
+} from './16.ts';
 
 Deno.test('int16', () => {
 	class Test extends Struct {
@@ -145,39 +154,55 @@ Deno.test('uint16', () => {
 });
 
 Deno.test('Int16Ptr', () => {
-	const bpe = Int16Ptr.BYTES_PER_ELEMENT;
-	assertEquals(bpe, 2);
+	for (
+		const [Ptr, le] of [
+			[Int16Ptr, null],
+			[Int16BEPtr, false],
+			[Int16LEPtr, true],
+		] as [typeof Int16Ptr, boolean | null][]
+	) {
+		const bpe = Ptr.BYTES_PER_ELEMENT;
+		assertEquals(bpe, 2);
 
-	const count = 3;
-	for (const littleEndian of [undefined, true, false]) {
-		const buffer = new ArrayBuffer(bpe * count + bpe);
-		const view = new DataView(buffer);
-		const ptr = new Int16Ptr(buffer, bpe, littleEndian);
-		for (let i = -1; i < count; i++) {
-			const o = bpe * i + bpe;
-			ptr[i] = -1;
-			assertEquals(view.getInt16(o, ptr.littleEndian), -1);
-			view.setInt16(o, 1, ptr.littleEndian);
-			assertEquals(ptr[i], 1);
+		const count = 3;
+		for (const littleEndian of [undefined, true, false]) {
+			const buffer = new ArrayBuffer(bpe * count + bpe);
+			const view = new DataView(buffer);
+			const ptr = new Ptr(buffer, bpe, littleEndian);
+			for (let i = -1; i < count; i++) {
+				const o = bpe * i + bpe;
+				ptr[i] = -1;
+				assertEquals(view.getInt16(o, le ?? ptr.littleEndian), -1);
+				view.setInt16(o, 1, le ?? ptr.littleEndian);
+				assertEquals(ptr[i], 1);
+			}
 		}
 	}
 });
 
 Deno.test('Uint16Ptr', () => {
-	const bpe = Uint16Ptr.BYTES_PER_ELEMENT;
-	assertEquals(bpe, 2);
+	for (
+		const [Ptr, le] of [
+			[Uint16Ptr, null],
+			[Uint16BEPtr, false],
+			[Uint16LEPtr, true],
+		] as [typeof Uint16Ptr, boolean | null][]
+	) {
+		const bpe = Ptr.BYTES_PER_ELEMENT;
+		assertEquals(bpe, 2);
 
-	const count = 3;
-	for (const littleEndian of [undefined, true, false]) {
-		const buffer = new ArrayBuffer(bpe * count + bpe);
-		const view = new DataView(buffer);
-		const ptr = new Uint16Ptr(buffer, bpe, littleEndian);
-		for (let i = -1; i < count; i++) {
-			const o = bpe * i + bpe;
-			ptr[i] = -1;
-			assertEquals(view.getUint16(o, ptr.littleEndian), 0xffff);
-			view.setUint16(o, 1, ptr.littleEndian);
-			assertEquals(ptr[i], 1);
+		const count = 3;
+		for (const littleEndian of [undefined, true, false]) {
+			const buffer = new ArrayBuffer(bpe * count + bpe);
+			const view = new DataView(buffer);
+			const ptr = new Ptr(buffer, bpe, littleEndian);
+			for (let i = -1; i < count; i++) {
+				const o = bpe * i + bpe;
+				ptr[i] = -1;
+				assertEquals(view.getUint16(o, le ?? ptr.littleEndian), 0xffff);
+				view.setUint16(o, 1, le ?? ptr.littleEndian);
+				assertEquals(ptr[i], 1);
+			}
 		}
 	}
 });
