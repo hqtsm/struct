@@ -18,7 +18,7 @@ Binary structures
 Endianness can be defined for each individual member.
 
 ```ts
-import { int8, Struct, uint16 } from '@hqtsm/struct';
+import { int8, Struct, uint16BE, uint16LE } from '@hqtsm/struct';
 
 class Example extends Struct {
 	declare public alpha: number;
@@ -28,8 +28,8 @@ class Example extends Struct {
 	declare public gamma: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += uint16(this, 'alpha', o, true);
-		o += uint16(this, 'beta', o, false);
+		o += uint16LE(this, 'alpha', o);
+		o += uint16BE(this, 'beta', o);
 		o += int8(this, 'gamma', o);
 		return o;
 	})(super.BYTE_LENGTH);
@@ -113,7 +113,7 @@ console.assert(data.join(', ') === '15, 0, 0, 0, 86, 14, 73, 64');
 Defining a child structure is easy.
 
 ```ts
-import { member, Struct, uint32, view } from '@hqtsm/struct';
+import { Arr, array, member, Struct, uint16BE, Uint8Ptr } from '@hqtsm/struct';
 
 class Child extends Struct {
 	declare public alpha: number;
@@ -121,30 +121,31 @@ class Child extends Struct {
 	declare public beta: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += uint32(this, 'alpha', o, false);
-		o += uint32(this, 'beta', o, false);
+		o += uint16BE(this, 'alpha', o);
+		o += uint16BE(this, 'beta', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
 
 class Parent extends Struct {
-	declare public array: Uint8Array;
+	declare public child1: Child;
 
-	declare public child: Child;
+	declare public child2: Child;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += view(Uint8Array, 4, this, 'array', o);
-		o += member(Child, this, 'child', o);
+		o += member(Child, this, 'child1', o);
+		o += member(Child, this, 'child2', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
 
 const data = new Uint8Array(Parent.BYTE_LENGTH);
 const stru = new Parent(data.buffer);
-stru.array.fill(4);
-stru.child.alpha = 65;
-stru.child.beta = 66;
-console.assert(data.join(', ') === '4, 4, 4, 4, 0, 0, 0, 65, 0, 0, 0, 66');
+stru.child1.alpha = 97;
+stru.child1.beta = 98;
+stru.child2.alpha = 65;
+stru.child2.beta = 66;
+console.assert(data.join(', ') === '0, 97, 0, 98, 0, 65, 0, 66');
 ```
 
 ## Private / Protected
