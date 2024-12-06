@@ -51,9 +51,9 @@ export interface ArrConstructor<T = never> extends ArrClass<T> {
 }
 
 /**
- * Create array of length from type/array or pointer.
+ * Create array of length from type/array.
  *
- * @param Type Type or pointer constructor.
+ * @param Type Type constructor.
  * @param length Array length.
  * @returns Array constructor.
  */
@@ -61,10 +61,19 @@ export function array<T extends Type>(
 	Type: TypeConstructor<T>,
 	length: number,
 ): ArrConstructor<T>;
+
+/**
+ * Create array of length from pointer.
+ *
+ * @param Ptr Pointer constructor.
+ * @param length Array length.
+ * @returns Array constructor.
+ */
 export function array<T>(
 	Ptr: PtrConstructor<T> & { BYTE_LENGTH?: never },
 	length: number,
 ): ArrConstructor<T>;
+
 export function array<T extends Type>(
 	TypePtr: TypeConstructor<T> | PtrConstructor<T>,
 	length: number,
