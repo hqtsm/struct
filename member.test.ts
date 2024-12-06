@@ -6,7 +6,7 @@ import {
 } from '@std/assert';
 
 import { uint32 } from './int/32.ts';
-import { member, pad } from './member.ts';
+import { member, memberBE, memberLE, pad } from './member.ts';
 import { Struct } from './struct.ts';
 import { getByteLength, getByteOffset } from './util.ts';
 
@@ -41,8 +41,8 @@ Deno.test('member', () => {
 		declare public gamma: TestChild;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += member(TestChild, this, 'alpha', o, true);
-			o += member(TestChild, this, 'beta', o, false);
+			o += memberLE(TestChild, this, 'alpha', o);
+			o += memberBE(TestChild, this, 'beta', o);
 			o += member(TestChild, this, 'gamma', o);
 			// Expected type checking error:
 			// o += member(Struct, this, 'gamma', o);

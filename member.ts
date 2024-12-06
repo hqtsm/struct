@@ -128,6 +128,42 @@ export function member<M extends BufferView, T extends Type>(
 }
 
 /**
+ * Member: generic, big endian.
+ *
+ * @param Member Member constructor.
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function memberBE<M extends BufferView, T extends Type>(
+	Member: MemberConstructor<M>,
+	Type: TypeClass<T>,
+	name: MembersExtends<T, M>,
+	byteOffset: number,
+): number {
+	return member(Member, Type, name, byteOffset, false);
+}
+
+/**
+ * Member: generic, little endian.
+ *
+ * @param Member Member constructor.
+ * @param Type Type constructor.
+ * @param name Member name.
+ * @param byteOffset Byte offset.
+ * @returns Byte length.
+ */
+export function memberLE<M extends BufferView, T extends Type>(
+	Member: MemberConstructor<M>,
+	Type: TypeClass<T>,
+	name: MembersExtends<T, M>,
+	byteOffset: number,
+): number {
+	return member(Member, Type, name, byteOffset, true);
+}
+
+/**
  * Member: pad.
  *
  * @param byteLength Padding size.
