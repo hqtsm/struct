@@ -213,9 +213,6 @@ export function pointer<T extends Type>(
 				[name]: class extends Ptr<T> {
 					declare public readonly ['constructor']: PtrClass<T>;
 
-					/**
-					 * Instances mapped over indexes.
-					 */
 					readonly #values = new MeekValueMap<number, T>();
 
 					public override [getter](index: number): T {

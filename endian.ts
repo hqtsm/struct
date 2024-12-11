@@ -17,6 +17,9 @@ export const LITTLE_ENDIAN = !BIG_ENDIAN;
  * Endian aware buffer pointer.
  */
 export class Endian implements BufferPointer, EndianAware {
+	/**
+	 * Endian class.
+	 */
 	declare public readonly ['constructor']: Omit<typeof Endian, 'new'>;
 
 	/**

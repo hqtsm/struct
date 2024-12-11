@@ -7,6 +7,9 @@ let members: WeakMap<typeof Struct, MemberInfos>;
  * Binary structure buffer view.
  */
 export class Struct extends Endian implements Type {
+	/**
+	 * Struct class.
+	 */
 	declare public readonly ['constructor']: Omit<typeof Struct, 'new'>;
 
 	public get byteLength(): number {

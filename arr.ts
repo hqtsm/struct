@@ -104,18 +104,12 @@ export function array<T extends Type>(
 			length,
 			r = {
 				[name]: class extends Ptr implements Arr<T> {
-					/**
-					 * Array constructor.
-					 */
 					declare public readonly ['constructor']: ArrClass<T>;
 
 					public get byteLength(): number {
 						return this.constructor.BYTE_LENGTH;
 					}
 
-					/**
-					 * Byte length of struct.
-					 */
 					public static readonly BYTE_LENGTH = Ptr.BYTES_PER_ELEMENT *
 						length;
 
