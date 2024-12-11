@@ -38,7 +38,7 @@ export class Endian implements BufferPointer, EndianAware {
 	readonly #littleEndian: boolean;
 
 	/**
-	 * EndianPointer constructor.
+	 * Endian constructor.
 	 *
 	 * @param buffer Buffer data.
 	 * @param byteOffset Byte offset into buffer.
