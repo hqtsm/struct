@@ -84,7 +84,8 @@ export function array<T extends Type>(
 	length = length - length % 1 || 0;
 	const Ptr = 'BYTE_LENGTH' in TypePtr ? pointer(TypePtr) : TypePtr;
 	const name = `${Ptr.name}[${length}]`;
-	let members: WeakMap<ArrConstructor, MemberInfos>;
+	// deno-lint-ignore no-explicit-any
+	let members: WeakMap<ArrConstructor<any>, MemberInfos>;
 	return {
 		[name]: class extends Ptr implements Arr<T> {
 			/**
@@ -102,7 +103,7 @@ export function array<T extends Type>(
 			public static readonly BYTE_LENGTH = Ptr.BYTES_PER_ELEMENT * length;
 
 			public static override get MEMBERS(): Readonly<MemberInfos> {
-				let r = (members ??= new WeakMap()).get(this as ArrConstructor);
+				let r = (members ??= new WeakMap()).get(this);
 				if (!r) {
 					members.set(
 						this as ArrConstructor,
