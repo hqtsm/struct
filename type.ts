@@ -31,22 +31,12 @@ export interface BufferView extends BufferPointer {
 /**
  * Endian aware.
  */
-export interface Endian {
+export interface EndianAware {
 	/**
 	 * True for little endian, false for big endian.
 	 */
 	readonly littleEndian: boolean;
 }
-
-/**
- * Endian aware buffer pointer.
- */
-export interface EndianBufferPointer extends BufferPointer, Endian {}
-
-/**
- * Endian aware buffer view.
- */
-export interface EndianBufferView extends BufferView, Endian {}
 
 /**
  * Signed of member type.
@@ -91,7 +81,7 @@ export interface Membered {
 /**
  * Type.
  */
-export interface Type extends EndianBufferView {
+export interface Type extends BufferView, EndianAware {
 	/**
 	 * Type class.
 	 */

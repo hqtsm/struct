@@ -1,15 +1,14 @@
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 
-import { LITTLE_ENDIAN } from './endian.ts';
+import { Endian } from './endian.ts';
 import type {
 	ArrayBufferReal,
-	EndianBufferPointer,
 	MemberInfo,
 	MemberInfos,
 	Type,
 	TypeConstructor,
 } from './type.ts';
-import { assignType, dataView } from './util.ts';
+import { assignType } from './util.ts';
 
 function index(key: PropertyKey): number | null {
 	let i;
@@ -60,7 +59,7 @@ let members: WeakMap<typeof Ptr, Readonly<MemberInfos>>;
 /**
  * Pointer to a type.
  */
-export class Ptr<T = never> implements EndianBufferPointer {
+export class Ptr<T = never> extends Endian {
 	/**
 	 * Ptr class.
 	 */
@@ -70,21 +69,6 @@ export class Ptr<T = never> implements EndianBufferPointer {
 	 * Pointer elements.
 	 */
 	[index: number]: T;
-
-	/**
-	 * Buffer data.
-	 */
-	readonly #buffer: ArrayBufferLike;
-
-	/**
-	 * Byte offset into buffer.
-	 */
-	readonly #byteOffset: number;
-
-	/**
-	 * Little endian, or big.
-	 */
-	readonly #littleEndian: boolean;
 
 	/**
 	 * ArrayTyped constructor.
@@ -98,25 +82,8 @@ export class Ptr<T = never> implements EndianBufferPointer {
 		byteOffset = 0,
 		littleEndian: boolean | null = null,
 	) {
-		dataView(this.#buffer = buffer);
-		if (byteOffset < -0x1fffffffffffff || byteOffset > 0x1fffffffffffff) {
-			throw new RangeError(`Invalid offset: ${byteOffset}`);
-		}
-		this.#byteOffset = byteOffset - byteOffset % 1 || 0;
-		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
+		super(buffer, byteOffset, littleEndian);
 		return new Proxy(this, handler as ProxyHandler<Ptr<T>>);
-	}
-
-	public get buffer(): ArrayBufferLike {
-		return this.#buffer;
-	}
-
-	public get byteOffset(): number {
-		return this.#byteOffset;
-	}
-
-	public get littleEndian(): boolean {
-		return this.#littleEndian;
 	}
 
 	/**
