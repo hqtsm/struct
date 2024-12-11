@@ -122,9 +122,9 @@ await build({
 	},
 	typeCheck: 'both',
 	compilerOptions: {
+		target: 'Latest',
 		lib: ['ESNext'],
 		sourceMap: true,
-		target: 'ES2023',
 	},
 	async postBuild(): Promise<void> {
 		await Promise.all([
