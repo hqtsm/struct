@@ -14,6 +14,7 @@ const [env] = Deno.args;
 const mappings: BuildOptions['mappings'] = {
 	'jsr:@hqtsm/dataview/float/16': '@hqtsm/dataview',
 	'jsr:@hqtsm/dataview/int/24': '@hqtsm/dataview',
+	'jsr:@hqtsm/meek/valuemap': '@hqtsm/meek',
 };
 
 const GITHUB_REPOSITORY = Deno.env.get('GITHUB_REPOSITORY');

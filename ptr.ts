@@ -1,3 +1,5 @@
+import { MeekValueMap } from '@hqtsm/meek/valuemap';
+
 import { LITTLE_ENDIAN } from './endian.ts';
 import type {
 	ArrayBufferReal,
@@ -247,10 +249,10 @@ export function pointer<T extends Type>(
 					/**
 					 * Instances mapped over indexes.
 					 */
-					#values = new Map<number, T>();
+					#values: MeekValueMap<number, T> | null = null;
 
 					public override [getter](index: number): T {
-						const values = this.#values;
+						const values = (this.#values ??= new MeekValueMap());
 						let r = values.get(index);
 						if (!r) {
 							values.set(
@@ -266,7 +268,7 @@ export function pointer<T extends Type>(
 					}
 
 					public override [setter](index: number, value: T): void {
-						const values = this.#values;
+						const values = (this.#values ??= new MeekValueMap());
 						let r = values.get(index);
 						if (!r) {
 							values.set(

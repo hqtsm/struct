@@ -5,6 +5,7 @@
     "jsr:@deno/cache-dir@~0.10.3": "0.10.3",
     "jsr:@deno/dnt@~0.41.3": "0.41.3",
     "jsr:@hqtsm/dataview@^1.0.5": "1.0.5",
+    "jsr:@hqtsm/meek@1": "1.0.0",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@0.226": "0.226.0",
     "jsr:@std/assert@^1.0.9": "1.0.9",
@@ -50,6 +51,9 @@
     },
     "@hqtsm/dataview@1.0.5": {
       "integrity": "168402960eceb3eb604790532696e820c0d981340d24eff82394d388ba0814f5"
+    },
+    "@hqtsm/meek@1.0.0": {
+      "integrity": "de8168402f490adb816f71e2f49aa4d7abd041f8379fb3256104405bd4fbaaf5"
     },
     "@std/assert@0.223.0": {
       "integrity": "eb8d6d879d76e1cc431205bd346ed4d88dc051c6366365b1af47034b0670be24"
@@ -133,6 +137,7 @@
     "dependencies": [
       "jsr:@deno/dnt@~0.41.3",
       "jsr:@hqtsm/dataview@^1.0.5",
+      "jsr:@hqtsm/meek@1",
       "jsr:@std/assert@^1.0.9"
     ]
   }
