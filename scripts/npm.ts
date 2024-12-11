@@ -124,6 +124,7 @@ await build({
 	compilerOptions: {
 		lib: ['ESNext'],
 		sourceMap: true,
+		target: 'ES2023',
 	},
 	async postBuild(): Promise<void> {
 		await Promise.all([
