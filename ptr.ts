@@ -249,13 +249,12 @@ export function pointer<T extends Type>(
 					/**
 					 * Instances mapped over indexes.
 					 */
-					#values: MeekValueMap<number, T> | null = null;
+					readonly #values = new MeekValueMap<number, T>();
 
 					public override [getter](index: number): T {
-						const values = (this.#values ??= new MeekValueMap());
-						let r = values.get(index);
+						let r = this.#values.get(index);
 						if (!r) {
-							values.set(
+							this.#values.set(
 								index,
 								r = new Type(
 									this.buffer,
@@ -268,10 +267,9 @@ export function pointer<T extends Type>(
 					}
 
 					public override [setter](index: number, value: T): void {
-						const values = (this.#values ??= new MeekValueMap());
-						let r = values.get(index);
+						let r = this.#values.get(index);
 						if (!r) {
-							values.set(
+							this.#values.set(
 								index,
 								r = new Type(
 									this.buffer,
