@@ -1,3 +1,5 @@
+import { MeekValueMap } from '@hqtsm/meek/valuemap';
+
 import {
 	pointer,
 	type Ptr,
@@ -50,6 +52,13 @@ export interface ArrConstructor<T = never> extends ArrClass<T> {
 	): Arr<T>;
 }
 
+let arrays: WeakMap<
+	// deno-lint-ignore no-explicit-any
+	PtrConstructor<any>,
+	// deno-lint-ignore no-explicit-any
+	MeekValueMap<number, ArrConstructor<any>>
+>;
+
 /**
  * Create array of length from type/array.
  *
@@ -83,39 +92,52 @@ export function array<T extends Type>(
 	}
 	length = length - length % 1 || 0;
 	const Ptr = 'BYTE_LENGTH' in TypePtr ? pointer(TypePtr) : TypePtr;
-	const name = `${Ptr.name}[${length}]`;
-	// deno-lint-ignore no-explicit-any
-	let members: WeakMap<ArrConstructor<any>, MemberInfos>;
-	return {
-		[name]: class extends Ptr implements Arr<T> {
-			/**
-			 * Array constructor.
-			 */
-			declare public readonly ['constructor']: ArrClass<T>;
+	let lengths = (arrays ??= new WeakMap()).get(Ptr);
+	if (!lengths) {
+		arrays.set(Ptr, lengths = new MeekValueMap());
+	}
+	let r = lengths.get(length);
+	if (!r) {
+		const name = `${Ptr.name}[${length}]`;
+		let members: WeakMap<ArrConstructor<T>, MemberInfos>;
+		lengths.set(
+			length,
+			r = {
+				[name]: class extends Ptr implements Arr<T> {
+					/**
+					 * Array constructor.
+					 */
+					declare public readonly ['constructor']: ArrClass<T>;
 
-			public get byteLength(): number {
-				return this.constructor.BYTE_LENGTH;
-			}
+					public get byteLength(): number {
+						return this.constructor.BYTE_LENGTH;
+					}
 
-			/**
-			 * Byte length of struct.
-			 */
-			public static readonly BYTE_LENGTH = Ptr.BYTES_PER_ELEMENT * length;
+					/**
+					 * Byte length of struct.
+					 */
+					public static readonly BYTE_LENGTH = Ptr.BYTES_PER_ELEMENT *
+						length;
 
-			public static override get MEMBERS(): Readonly<MemberInfos> {
-				let r = (members ??= new WeakMap()).get(this);
-				if (!r) {
-					members.set(
-						this as ArrConstructor,
-						r = Object.create(
-							Object.getPrototypeOf(this).MEMBERS ?? null,
-						) as Readonly<MemberInfos>,
-					);
-				}
-				return r;
-			}
-		},
-	}[name];
+					public static override get MEMBERS(): Readonly<
+						MemberInfos
+					> {
+						let r = (members ??= new WeakMap()).get(this);
+						if (!r) {
+							members.set(
+								this as ArrConstructor,
+								r = Object.create(
+									Object.getPrototypeOf(this).MEMBERS ?? null,
+								) as Readonly<MemberInfos>,
+							);
+						}
+						return r;
+					}
+				},
+			}[name],
+		);
+	}
+	return r;
 }
 
 /**
