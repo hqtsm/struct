@@ -220,4 +220,14 @@ Deno.test('pointer', () => {
 		assertNotStrictEquals(f[1], tmp);
 	}
 	assertEquals(data, new Int8Array([-2, -1, 1, 2, 3, 4]));
+
+	{
+		const foo = f[2];
+		assertThrows(() => foo.bar, RangeError);
+	}
+
+	{
+		const foo = f[-2];
+		assertThrows(() => foo.bar, RangeError);
+	}
 });
