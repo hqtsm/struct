@@ -22,6 +22,11 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	 * Array constructor.
 	 */
 	readonly constructor: PtrClass<T> & TypeClass;
+
+	/**
+	 * Array length.
+	 */
+	readonly length: number;
 }
 
 /**
@@ -115,8 +120,13 @@ export function array<T extends Type>(
 						return this.constructor.BYTE_LENGTH;
 					}
 
-					public static readonly BYTE_LENGTH = Ptr.BYTES_PER_ELEMENT *
-						length;
+					public get length(): number {
+						return length;
+					}
+
+					public static readonly BYTE_LENGTH = (
+						Ptr.BYTES_PER_ELEMENT * length
+					);
 
 					public static readonly LENGTH = length;
 
