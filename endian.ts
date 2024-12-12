@@ -13,6 +13,8 @@ export const BIG_ENDIAN: boolean = !new Uint8Array(
  */
 export const LITTLE_ENDIAN = !BIG_ENDIAN;
 
+let pri: WeakMap<Endian, BufferPointer & EndianAware>;
+
 /**
  * Endian aware buffer pointer.
  */
@@ -21,21 +23,6 @@ export class Endian implements BufferPointer, EndianAware {
 	 * Endian class.
 	 */
 	declare public readonly ['constructor']: Omit<typeof Endian, 'new'>;
-
-	/**
-	 * Buffer data.
-	 */
-	readonly #buffer: ArrayBufferLike;
-
-	/**
-	 * Byte offset into buffer.
-	 */
-	readonly #byteOffset: number;
-
-	/**
-	 * Little endian, or big.
-	 */
-	readonly #littleEndian: boolean;
 
 	/**
 	 * Endian constructor.
@@ -49,23 +36,26 @@ export class Endian implements BufferPointer, EndianAware {
 		byteOffset = 0,
 		littleEndian: boolean | null = null,
 	) {
-		dataView(this.#buffer = buffer);
+		dataView(buffer);
 		if (byteOffset < -0x1fffffffffffff || byteOffset > 0x1fffffffffffff) {
 			throw new RangeError(`Invalid offset: ${byteOffset}`);
 		}
-		this.#byteOffset = byteOffset - byteOffset % 1 || 0;
-		this.#littleEndian = !!(littleEndian ?? LITTLE_ENDIAN);
+		(pri ??= new WeakMap()).set(this, {
+			buffer,
+			byteOffset: byteOffset - byteOffset % 1 || 0,
+			littleEndian: !!(littleEndian ?? LITTLE_ENDIAN),
+		});
 	}
 
 	public get buffer(): ArrayBufferLike {
-		return this.#buffer;
+		return pri.get(this)!.buffer;
 	}
 
 	public get byteOffset(): number {
-		return this.#byteOffset;
+		return pri.get(this)!.byteOffset;
 	}
 
 	public get littleEndian(): boolean {
-		return this.#littleEndian;
+		return pri.get(this)!.littleEndian;
 	}
 }
