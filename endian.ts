@@ -56,6 +56,11 @@ export class Endian implements BufferPointer, EndianAware {
 	}
 
 	public get littleEndian(): boolean {
-		return pri.get(this)!.littleEndian;
+		return this.constructor.LITTLE_ENDIAN ?? pri.get(this)!.littleEndian;
 	}
+
+	/**
+	 * Type level endian override.
+	 */
+	public static LITTLE_ENDIAN: boolean | null = null;
 }
