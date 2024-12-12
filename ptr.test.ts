@@ -1,8 +1,14 @@
-import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
+import {
+	assertEquals,
+	assertNotStrictEquals,
+	assertStrictEquals,
+	assertThrows,
+} from '@std/assert';
 
 import { LITTLE_ENDIAN } from './endian.ts';
-import { Uint8Ptr } from './int/8.ts';
-import { Ptr } from './ptr.ts';
+import { int8, Uint8Ptr } from './int/8.ts';
+import { pointer, Ptr } from './ptr.ts';
+import { Struct } from './struct.ts';
 import type { MemberInfos } from './type.ts';
 
 class DummyPtr extends Ptr<number> {
@@ -169,4 +175,43 @@ Deno.test('Ptr: [[deleteProperty]]', () => {
 	assertEquals(unk in test, true);
 	assertEquals(delete o[unk], true);
 	assertEquals(unk in test, false);
+});
+
+Deno.test('pointer', () => {
+	class Foo extends Struct {
+		declare public bar: number;
+
+		declare public baz: number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += int8(this, 'bar', o);
+			o += int8(this, 'baz', o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+
+	const FooPtr = pointer(Foo);
+	assertEquals(FooPtr.BYTES_PER_ELEMENT, Foo.BYTE_LENGTH);
+	assertStrictEquals(pointer(Foo), FooPtr);
+
+	const data = new Int8Array(Foo.BYTE_LENGTH * 3);
+	const f = new FooPtr(data.buffer, Foo.BYTE_LENGTH);
+	{
+		f[-1].bar = -2;
+		f[-1].baz = -1;
+		assertStrictEquals(f[-1], f[-1]);
+	}
+	{
+		f[0].bar = 1;
+		f[0].baz = 2;
+		assertStrictEquals(f[0], f[0]);
+	}
+	{
+		const tmp = new Foo(new ArrayBuffer(Foo.BYTE_LENGTH));
+		tmp.bar = 3;
+		tmp.baz = 4;
+		f[1] = tmp;
+		assertNotStrictEquals(f[1], tmp);
+	}
+	assertEquals(data, new Int8Array([-2, -1, 1, 2, 3, 4]));
 });
