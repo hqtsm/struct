@@ -39,7 +39,7 @@ export interface ArrClass<T = never> extends PtrClass<T>, TypeClass {
  */
 export interface ArrConstructor<T = never> extends ArrClass<T> {
 	/**
-	 * Array constructor.
+	 * Create instance for buffer.
 	 *
 	 * @param buffer Buffer data.
 	 * @param byteOffset Byte offset into buffer.

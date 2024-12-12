@@ -108,7 +108,7 @@ export interface TypeClass<T extends Type = Type> extends Membered {
  */
 export interface TypeConstructor<T extends Type = Type> extends TypeClass<T> {
 	/**
-	 * Type constructor.
+	 * Create instance for buffer.
 	 *
 	 * @param buffer Buffer data.
 	 * @param byteOffset Byte offset into buffer.

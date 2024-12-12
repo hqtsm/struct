@@ -25,7 +25,7 @@ export class Endian implements BufferPointer, EndianAware {
 	declare public readonly ['constructor']: Omit<typeof Endian, 'new'>;
 
 	/**
-	 * Endian constructor.
+	 * Create instance for buffer.
 	 *
 	 * @param buffer Buffer data.
 	 * @param byteOffset Byte offset into buffer.

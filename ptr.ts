@@ -71,7 +71,7 @@ export class Ptr<T = never> extends Endian {
 	[index: number]: T;
 
 	/**
-	 * ArrayTyped constructor.
+	 * Create instance for buffer.
 	 *
 	 * @param buffer Buffer data.
 	 * @param byteOffset Byte offset into buffer.
