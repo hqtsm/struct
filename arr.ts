@@ -32,6 +32,11 @@ export interface ArrClass<T = never> extends PtrClass<T>, TypeClass {
 	 * Array prototype.
 	 */
 	readonly prototype: Arr<T>;
+
+	/**
+	 * Array length.
+	 */
+	readonly LENGTH: number;
 }
 
 /**
@@ -113,6 +118,8 @@ export function array<T extends Type>(
 					public static readonly BYTE_LENGTH = Ptr.BYTES_PER_ELEMENT *
 						length;
 
+					public static readonly LENGTH = length;
+
 					public static override get MEMBERS(): Readonly<
 						MemberInfos
 					> {
@@ -132,14 +139,4 @@ export function array<T extends Type>(
 		);
 	}
 	return r;
-}
-
-/**
- * Get length of array.
- *
- * @param Ptr Array class.
- * @returns Array length.
- */
-export function length<T>(Ptr: ArrClass<T>): number {
-	return Ptr.BYTE_LENGTH / Ptr.BYTES_PER_ELEMENT;
 }
