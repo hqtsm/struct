@@ -73,8 +73,14 @@ Deno.test('Ptr: byteOffset', () => {
 	assertThrows(() => new DummyPtr(buffer, -Infinity), RangeError);
 
 	// Offset over buffer size throws lazy.
-	assertThrows(() => new Uint8Ptr(buffer, 32)[0], RangeError);
-	assertThrows(() => new Uint8Ptr(buffer, 33)[0], RangeError);
+	{
+		const p = new Uint8Ptr(buffer, 32);
+		assertThrows(() => p[0], RangeError);
+	}
+	{
+		const p = new Uint8Ptr(buffer, 33);
+		assertThrows(() => p[0], RangeError);
+	}
 });
 
 Deno.test('Ptr: littleEndian', () => {

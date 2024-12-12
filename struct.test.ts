@@ -56,8 +56,14 @@ Deno.test('Struct: byteOffset', () => {
 	assertThrows(() => new Test(buffer, -Infinity), RangeError);
 
 	// Offset over buffer size throws lazy.
-	assertThrows(() => new Test(buffer, 32).alpha, RangeError);
-	assertThrows(() => new Test(buffer, 33).alpha, RangeError);
+	{
+		const test = new Test(buffer, 32);
+		assertThrows(() => test.alpha, RangeError);
+	}
+	{
+		const test = new Test(buffer, 33);
+		assertThrows(() => test.alpha, RangeError);
+	}
 });
 
 Deno.test('Struct: littleEndian', () => {
