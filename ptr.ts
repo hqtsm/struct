@@ -15,10 +15,6 @@ function index(key: PropertyKey): number | null {
 	return key === '-0' ? NaN : (key === '' + (i = +String(key)) ? i : null);
 }
 
-const getter = Symbol('getter');
-
-const setter = Symbol('setter');
-
 const handler: ProxyHandler<Ptr<unknown>> = {
 	deleteProperty(target, key): boolean {
 		let i;
@@ -32,7 +28,7 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 			return Reflect.get(target, key);
 		}
 		if ((i === i - i % 1)) {
-			return receiver[getter](i);
+			return receiver.get(i);
 		}
 	},
 	has(target, key): boolean {
@@ -48,7 +44,7 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 			return Reflect.set(target, key, value);
 		}
 		if (i === i - i % 1) {
-			receiver[setter](i, value);
+			receiver.set(i, value);
 		}
 		return true;
 	},
@@ -92,7 +88,7 @@ export class Ptr<T = never> extends Endian {
 	 * @param index Pointer index.
 	 * @returns Pointer value.
 	 */
-	protected [getter](index: number): T {
+	public get(index: number): T {
 		throw new TypeError(`Read from void pointer: ${index}`);
 	}
 
@@ -102,20 +98,10 @@ export class Ptr<T = never> extends Endian {
 	 * @param index Pointer index.
 	 * @param value Pointer value.
 	 */
-	protected [setter](index: number, value: T): void {
+	public set(index: number, value: T): void {
 		void value;
 		throw new TypeError(`Write to void pointer: ${index}`);
 	}
-
-	/**
-	 * Getter symbol.
-	 */
-	protected static readonly getter: typeof getter = getter;
-
-	/**
-	 * Setter symbol.
-	 */
-	protected static readonly setter: typeof setter = setter;
 
 	/**
 	 * Size of each element.
@@ -215,7 +201,7 @@ export function pointer<T extends Type>(
 
 					readonly #values = new MeekValueMap<number, T>();
 
-					protected override [getter](index: number): T {
+					public override get(index: number): T {
 						let r = this.#values.get(index);
 						if (!r) {
 							this.#values.set(
@@ -230,7 +216,7 @@ export function pointer<T extends Type>(
 						return r;
 					}
 
-					protected override [setter](index: number, value: T): void {
+					public override set(index: number, value: T): void {
 						let r = this.#values.get(index);
 						if (!r) {
 							this.#values.set(

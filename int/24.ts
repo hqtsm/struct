@@ -152,7 +152,7 @@ export function uint24LE<T extends Type>(
 export class Int24Ptr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Int24Ptr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return getInt24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
@@ -160,7 +160,7 @@ export class Int24Ptr extends Ptr<number> {
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		setInt24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
@@ -178,14 +178,14 @@ export class Int24Ptr extends Ptr<number> {
 export class Int24BEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Int24BEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return getInt24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		setInt24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
@@ -202,7 +202,7 @@ export class Int24BEPtr extends Ptr<number> {
 export class Int24LEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Int24LEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return getInt24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
@@ -210,7 +210,7 @@ export class Int24LEPtr extends Ptr<number> {
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		setInt24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
@@ -228,7 +228,7 @@ export class Int24LEPtr extends Ptr<number> {
 export class Uint24Ptr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Uint24Ptr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return getUint24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
@@ -236,7 +236,7 @@ export class Uint24Ptr extends Ptr<number> {
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		setUint24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
@@ -254,14 +254,14 @@ export class Uint24Ptr extends Ptr<number> {
 export class Uint24BEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Uint24BEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return getUint24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		setUint24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
@@ -278,7 +278,7 @@ export class Uint24BEPtr extends Ptr<number> {
 export class Uint24LEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Uint24LEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return getUint24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,
@@ -286,7 +286,7 @@ export class Uint24LEPtr extends Ptr<number> {
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		setUint24(
 			dataView(this.buffer),
 			this.byteOffset + index * 3,

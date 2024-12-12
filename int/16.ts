@@ -141,14 +141,14 @@ export function uint16LE<T extends Type>(
 export class Int16Ptr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Int16Ptr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return dataView(this.buffer).getInt16(
 			this.byteOffset + index * 2,
 			this.littleEndian,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		dataView(this.buffer).setInt16(
 			this.byteOffset + index * 2,
 			value,
@@ -165,13 +165,13 @@ export class Int16Ptr extends Ptr<number> {
 export class Int16BEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Int16BEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return dataView(this.buffer).getInt16(
 			this.byteOffset + index * 2,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		dataView(this.buffer).setInt16(
 			this.byteOffset + index * 2,
 			value,
@@ -187,14 +187,14 @@ export class Int16BEPtr extends Ptr<number> {
 export class Int16LEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Int16LEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return dataView(this.buffer).getInt16(
 			this.byteOffset + index * 2,
 			true,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		dataView(this.buffer).setInt16(
 			this.byteOffset + index * 2,
 			value,
@@ -211,14 +211,14 @@ export class Int16LEPtr extends Ptr<number> {
 export class Uint16Ptr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Uint16Ptr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return dataView(this.buffer).getUint16(
 			this.byteOffset + index * 2,
 			this.littleEndian,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		dataView(this.buffer).setUint16(
 			this.byteOffset + index * 2,
 			value,
@@ -235,13 +235,13 @@ export class Uint16Ptr extends Ptr<number> {
 export class Uint16BEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Uint16BEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return dataView(this.buffer).getUint16(
 			this.byteOffset + index * 2,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		dataView(this.buffer).setUint16(
 			this.byteOffset + index * 2,
 			value,
@@ -257,14 +257,14 @@ export class Uint16BEPtr extends Ptr<number> {
 export class Uint16LEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Uint16LEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		return dataView(this.buffer).getUint16(
 			this.byteOffset + index * 2,
 			true,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		dataView(this.buffer).setUint16(
 			this.byteOffset + index * 2,
 			value,

@@ -39,11 +39,11 @@ export function bool8<T extends Type>(
 export class Bool8Ptr extends Ptr<boolean> {
 	declare public readonly ['constructor']: Omit<typeof Bool8Ptr, 'new'>;
 
-	protected override [Ptr.getter](index: number): boolean {
+	public override get(index: number): boolean {
 		return !!dataView(this.buffer).getInt8(this.byteOffset + index);
 	}
 
-	protected override [Ptr.setter](index: number, value: boolean): void {
+	public override set(index: number, value: boolean): void {
 		dataView(this.buffer).setInt8(this.byteOffset + index, value ? 1 : 0);
 	}
 

@@ -6,11 +6,11 @@ import { Ptr } from './ptr.ts';
 import type { MemberInfos } from './type.ts';
 
 class DummyPtr extends Ptr<number> {
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		throw new Error(`Getter: [${index}]`);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		throw new Error(`Setter: [${index}] = ${String(value)}`);
 	}
 

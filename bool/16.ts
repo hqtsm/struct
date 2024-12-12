@@ -75,14 +75,14 @@ export function bool16LE<T extends Type>(
 export class Bool16Ptr extends Ptr<boolean> {
 	declare public readonly ['constructor']: Omit<typeof Bool16Ptr, 'new'>;
 
-	protected override [Ptr.getter](index: number): boolean {
+	public override get(index: number): boolean {
 		return !!dataView(this.buffer).getInt16(
 			this.byteOffset + index * 2,
 			this.littleEndian,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: boolean): void {
+	public override set(index: number, value: boolean): void {
 		dataView(this.buffer).setInt16(
 			this.byteOffset + index * 2,
 			value ? 1 : 0,
@@ -99,13 +99,13 @@ export class Bool16Ptr extends Ptr<boolean> {
 export class Bool16BEPtr extends Ptr<boolean> {
 	declare public readonly ['constructor']: Omit<typeof Bool16BEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): boolean {
+	public override get(index: number): boolean {
 		return !!dataView(this.buffer).getInt16(
 			this.byteOffset + index * 2,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: boolean): void {
+	public override set(index: number, value: boolean): void {
 		dataView(this.buffer).setInt16(
 			this.byteOffset + index * 2,
 			value ? 1 : 0,
@@ -121,14 +121,14 @@ export class Bool16BEPtr extends Ptr<boolean> {
 export class Bool16LEPtr extends Ptr<boolean> {
 	declare public readonly ['constructor']: Omit<typeof Bool16LEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): boolean {
+	public override get(index: number): boolean {
 		return !!dataView(this.buffer).getInt16(
 			this.byteOffset + index * 2,
 			true,
 		);
 	}
 
-	protected override [Ptr.setter](index: number, value: boolean): void {
+	public override set(index: number, value: boolean): void {
 		dataView(this.buffer).setInt16(
 			this.byteOffset + index * 2,
 			value ? 1 : 0,

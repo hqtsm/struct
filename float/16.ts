@@ -99,7 +99,7 @@ export function float16LE<T extends Type>(
 export class Float16Ptr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Float16Ptr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		return d.getFloat16
 			? d.getFloat16(
@@ -113,7 +113,7 @@ export class Float16Ptr extends Ptr<number> {
 			);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		if (d.setFloat16) {
 			d.setFloat16(
@@ -140,7 +140,7 @@ export class Float16Ptr extends Ptr<number> {
 export class Float16BEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Float16BEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		return d.getFloat16
 			? d.getFloat16(
@@ -152,7 +152,7 @@ export class Float16BEPtr extends Ptr<number> {
 			);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		if (d.setFloat16) {
 			d.setFloat16(
@@ -177,7 +177,7 @@ export class Float16BEPtr extends Ptr<number> {
 export class Float16LEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Float16LEPtr, 'new'>;
 
-	protected override [Ptr.getter](index: number): number {
+	public override get(index: number): number {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		return d.getFloat16
 			? d.getFloat16(
@@ -191,7 +191,7 @@ export class Float16LEPtr extends Ptr<number> {
 			);
 	}
 
-	protected override [Ptr.setter](index: number, value: number): void {
+	public override set(index: number, value: number): void {
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		if (d.setFloat16) {
 			d.setFloat16(
