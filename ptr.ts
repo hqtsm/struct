@@ -83,7 +83,7 @@ export class Ptr<T = never> extends Endian {
 	}
 
 	/**
-	 * Getter accessor.
+	 * Get accessor.
 	 *
 	 * @param index Pointer index.
 	 * @returns Pointer value.
@@ -93,7 +93,7 @@ export class Ptr<T = never> extends Endian {
 	}
 
 	/**
-	 * Setter accessor.
+	 * Set accessor.
 	 *
 	 * @param index Pointer index.
 	 * @param value Pointer value.
