@@ -215,7 +215,7 @@ export function pointer<T extends Type>(
 
 					readonly #values = new MeekValueMap<number, T>();
 
-					public override [getter](index: number): T {
+					protected override [getter](index: number): T {
 						let r = this.#values.get(index);
 						if (!r) {
 							this.#values.set(
@@ -230,7 +230,7 @@ export function pointer<T extends Type>(
 						return r;
 					}
 
-					public override [setter](index: number, value: T): void {
+					protected override [setter](index: number, value: T): void {
 						let r = this.#values.get(index);
 						if (!r) {
 							this.#values.set(
