@@ -119,7 +119,7 @@ export function array<T extends Type>(
 						let r = (members ??= new WeakMap()).get(this);
 						if (!r) {
 							members.set(
-								this as ArrConstructor,
+								this satisfies ArrConstructor<T>,
 								r = Object.create(
 									Object.getPrototypeOf(this).MEMBERS ?? null,
 								) as Readonly<MemberInfos>,
