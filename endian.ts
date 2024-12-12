@@ -62,5 +62,5 @@ export class Endian implements BufferPointer, EndianAware {
 	/**
 	 * Type level endian override.
 	 */
-	public static LITTLE_ENDIAN: boolean | null = null;
+	public static readonly LITTLE_ENDIAN: boolean | null = null;
 }
