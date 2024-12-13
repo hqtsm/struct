@@ -138,7 +138,7 @@ export function array<T extends Type>(
 							members.set(
 								this satisfies ArrConstructor<T>,
 								r = Object.create(
-									Object.getPrototypeOf(this).MEMBERS ?? null,
+									Object.getPrototypeOf(this).MEMBERS,
 								) as Readonly<MemberInfos>,
 							);
 						}
