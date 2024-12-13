@@ -21,6 +21,7 @@
 		"./int/32": "./int/32.ts",
 		"./int/64": "./int/64.ts",
 		"./member": "./member.ts",
+		"./native": "./native.ts",
 		"./ptr": "./ptr.ts",
 		"./struct": "./struct.ts",
 		"./type": "./type.ts",
