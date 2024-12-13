@@ -83,3 +83,66 @@ export interface EndianConstructor extends EndianClass {
 		littleEndian?: boolean,
 	): Endian;
 }
+
+let littleEndians: WeakMap<EndianClass, EndianClass>;
+
+export function littleEndian<T extends EndianClass>(
+	// deno-lint-ignore ban-types
+	Endian: T & Function,
+): T {
+	let r = (littleEndians ??= new WeakMap()).get(Endian);
+	if (!r) {
+		const name = `LittleEndian<${Endian.name}>`;
+		littleEndians.set(
+			Endian,
+			r = {
+				[name]: class extends (Endian as unknown as EndianConstructor) {
+					public static override readonly LITTLE_ENDIAN = true;
+				},
+			}[name],
+		);
+	}
+	return r as T;
+}
+
+let bigEndians: WeakMap<EndianClass, EndianClass>;
+
+export function bigEndian<T extends EndianClass>(
+	// deno-lint-ignore ban-types
+	Endian: T & Function,
+): T {
+	let r = (bigEndians ??= new WeakMap()).get(Endian);
+	if (!r) {
+		const name = `BigEndian<${Endian.name}>`;
+		bigEndians.set(
+			Endian,
+			r = {
+				[name]: class extends (Endian as unknown as EndianConstructor) {
+					public static override readonly LITTLE_ENDIAN = false;
+				},
+			}[name],
+		);
+	}
+	return r as T;
+}
+
+let nativeEndians: WeakMap<EndianClass, EndianClass>;
+
+export function nativeEndian<T extends EndianClass>(
+	// deno-lint-ignore ban-types
+	Endian: T & Function,
+): T {
+	let r = (nativeEndians ??= new WeakMap()).get(Endian);
+	if (!r) {
+		const name = `NativeEndian<${Endian.name}>`;
+		nativeEndians.set(
+			Endian,
+			r = {
+				[name]: class extends (Endian as unknown as EndianConstructor) {
+					public static override readonly LITTLE_ENDIAN = null;
+				},
+			}[name],
+		);
+	}
+	return r as T;
+}

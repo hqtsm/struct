@@ -10,6 +10,7 @@ import { Struct } from './struct.ts';
 import { array } from './arr.ts';
 import { pointer } from './ptr.ts';
 import { getByteLength, getByteOffset } from './util.ts';
+import { bigEndian, littleEndian } from './endian.ts';
 
 Deno.test('pointer', () => {
 	class Foo extends Struct {
@@ -39,7 +40,6 @@ Deno.test('pointer', () => {
 	assertStrictEquals(array(Foo, 4), Foo4);
 	assertStrictEquals(Object.getPrototypeOf(Foo4), pointer(Foo));
 	assertStrictEquals(Foo4, array(pointer(Foo), 4));
-
 	assertEquals(new Foo4(new ArrayBuffer(0)).length, 4);
 	assertEquals(new Foo4(new ArrayBuffer(0)).byteLength, Foo4.BYTE_LENGTH);
 
@@ -69,12 +69,8 @@ Deno.test('pointer', () => {
 	assertEquals(getByteOffset(Foo4, 2), Foo.BYTE_LENGTH * 2);
 	assertEquals(getByteOffset(Foo4, -1), -Foo.BYTE_LENGTH);
 
-	class Foo4BE extends Foo4 {
-		public static override readonly LITTLE_ENDIAN: boolean = false;
-	}
-	class Foo4LE extends Foo4 {
-		public static override readonly LITTLE_ENDIAN: boolean = true;
-	}
+	const Foo4BE = bigEndian(Foo4);
+	const Foo4LE = littleEndian(Foo4BE);
 	assertEquals(getByteLength(Foo4BE, 0), Foo.BYTE_LENGTH);
 	assertEquals(getByteOffset(Foo4BE, 1), Foo.BYTE_LENGTH);
 	assertEquals(getByteOffset(Foo4BE, 2), Foo.BYTE_LENGTH * 2);
