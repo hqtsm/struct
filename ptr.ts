@@ -54,7 +54,7 @@ export class Ptr<T = never> extends Endian {
 	/**
 	 * Ptr class.
 	 */
-	declare public readonly ['constructor']: PtrClass<T>;
+	declare public readonly ['constructor']: PtrClass<Ptr<T>>;
 
 	/**
 	 * Pointer elements.
@@ -146,17 +146,19 @@ export class Ptr<T = never> extends Endian {
 /**
  * Pointer class.
  */
-export interface PtrClass<T = never> extends Omit<typeof Ptr<T>, 'new'> {
+export interface PtrClass<T extends Ptr<unknown> = Ptr>
+	extends Omit<typeof Ptr, 'new'> {
 	/**
 	 * Ptr prototype.
 	 */
-	readonly prototype: Ptr<T>;
+	readonly prototype: T;
 }
 
 /**
  * Pointer constructor.
  */
-export interface PtrConstructor<T = never> extends PtrClass<T> {
+export interface PtrConstructor<T extends Ptr<unknown> = Ptr>
+	extends PtrClass<T> {
 	/**
 	 * Ptr constructor.
 	 *
@@ -168,10 +170,10 @@ export interface PtrConstructor<T = never> extends PtrClass<T> {
 		buffer: ArrayBufferReal,
 		byteOffset?: number,
 		littleEndian?: boolean,
-	): Ptr<T>;
+	): T;
 }
 
-let pointers: WeakMap<TypeConstructor<Type>, PtrConstructor<Type>>;
+let pointers: WeakMap<TypeConstructor<Type>, PtrConstructor<Ptr<Type>>>;
 
 /**
  * Get pointer of type.
@@ -181,9 +183,9 @@ let pointers: WeakMap<TypeConstructor<Type>, PtrConstructor<Type>>;
  */
 export function pointer<T extends Type>(
 	Type: TypeConstructor<T>,
-): PtrConstructor<T> {
+): PtrConstructor<Ptr<T>> {
 	let r = (pointers ??= new WeakMap()).get(Type) as
-		| PtrConstructor<T>
+		| PtrConstructor<Ptr<T>>
 		| undefined;
 	if (!r) {
 		const name = `${Ptr.name}<${Type.name}>`;
@@ -192,7 +194,7 @@ export function pointer<T extends Type>(
 			Type,
 			r = {
 				[name]: class extends Ptr<T> {
-					declare public readonly ['constructor']: PtrClass<T>;
+					declare public readonly ['constructor']: PtrClass<Ptr<T>>;
 
 					readonly #values = new MeekValueMap<number, T>();
 

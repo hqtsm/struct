@@ -16,7 +16,7 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	/**
 	 * Array constructor.
 	 */
-	readonly constructor: PtrClass<T> & TypeClass;
+	readonly constructor: PtrClass<Ptr<T>> & TypeClass;
 
 	/**
 	 * Array length.
@@ -27,11 +27,12 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 /**
  * Array class.
  */
-export interface ArrClass<T = never> extends PtrClass<T>, TypeClass {
+export interface ArrClass<T extends Arr<unknown> = Arr>
+	extends PtrClass<T>, TypeClass {
 	/**
 	 * Array prototype.
 	 */
-	readonly prototype: Arr<T>;
+	readonly prototype: T;
 
 	/**
 	 * Array length.
@@ -42,7 +43,8 @@ export interface ArrClass<T = never> extends PtrClass<T>, TypeClass {
 /**
  * Array constructor.
  */
-export interface ArrConstructor<T = never> extends ArrClass<T> {
+export interface ArrConstructor<T extends Arr<unknown> = Arr>
+	extends ArrClass<T> {
 	/**
 	 * Create instance for buffer.
 	 *
@@ -54,14 +56,14 @@ export interface ArrConstructor<T = never> extends ArrClass<T> {
 		buffer: ArrayBufferReal,
 		byteOffset?: number,
 		littleEndian?: boolean,
-	): Arr<T>;
+	): T;
 }
 
 let arrays: WeakMap<
 	// deno-lint-ignore no-explicit-any
-	PtrConstructor<any>,
+	PtrConstructor<Ptr<any>>,
 	// deno-lint-ignore no-explicit-any
-	MeekValueMap<number, ArrConstructor<any>>
+	MeekValueMap<number, ArrConstructor<Arr<any>>>
 >;
 
 /**
@@ -74,7 +76,7 @@ let arrays: WeakMap<
 export function array<T extends Type>(
 	Type: TypeConstructor<T>,
 	length: number,
-): ArrConstructor<T>;
+): ArrConstructor<Arr<T>>;
 
 /**
  * Create array of length from pointer.
@@ -84,14 +86,14 @@ export function array<T extends Type>(
  * @returns Array constructor.
  */
 export function array<T>(
-	Ptr: PtrConstructor<T> & { BYTE_LENGTH?: never },
+	Ptr: PtrConstructor<Ptr<T>> & { BYTE_LENGTH?: never },
 	length: number,
-): ArrConstructor<T>;
+): ArrConstructor<Arr<T>>;
 
 export function array<T extends Type>(
-	TypePtr: TypeConstructor<T> | PtrConstructor<T>,
+	TypePtr: TypeConstructor<T> | PtrConstructor<Ptr<T>>,
 	length: number,
-): ArrConstructor<T> {
+): ArrConstructor<Arr<T>> {
 	if (length < 0 || length > 0x1fffffffffffff) {
 		throw new RangeError(`Invalid length: ${length}`);
 	}
@@ -104,12 +106,12 @@ export function array<T extends Type>(
 	let r = lengths.get(length);
 	if (!r) {
 		const name = `${Ptr.name}[${length}]`;
-		let members: WeakMap<ArrConstructor<T>, MemberInfos>;
+		let members: WeakMap<ArrConstructor<Arr<T>>, MemberInfos>;
 		lengths.set(
 			length,
 			r = {
 				[name]: class extends Ptr implements Arr<T> {
-					declare public readonly ['constructor']: ArrClass<T>;
+					declare public readonly ['constructor']: ArrClass<Arr<T>>;
 
 					public get byteLength(): number {
 						return this.constructor.BYTE_LENGTH;
@@ -129,7 +131,7 @@ export function array<T extends Type>(
 						let r = (members ??= new WeakMap()).get(this);
 						if (!r) {
 							members.set(
-								this satisfies ArrConstructor<T>,
+								this satisfies ArrConstructor<Arr<T>>,
 								r = Object.create(
 									Object.getPrototypeOf(this).MEMBERS,
 								) as MemberInfos,
