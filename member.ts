@@ -17,7 +17,7 @@ export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
 	 * @param this Type instance.
 	 * @returns Member value.
 	 */
-	get: (this: T) => M;
+	readonly get: (this: T) => M;
 
 	/**
 	 * Setter function.
@@ -25,7 +25,7 @@ export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
 	 * @param this Type instance.
 	 * @param value Member value.
 	 */
-	set: (this: T, value: M) => void;
+	readonly set: (this: T, value: M) => void;
 }
 
 /**
