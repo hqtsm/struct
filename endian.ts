@@ -1,5 +1,15 @@
-import type { ArrayBufferReal, BufferPointer, EndianAware } from './type.ts';
+import type { ArrayBufferReal, BufferPointer } from './type.ts';
 import { dataView } from './util.ts';
+
+/**
+ * Endian aware.
+ */
+export interface EndianAware {
+	/**
+	 * True for little endian, false for big endian.
+	 */
+	readonly littleEndian: boolean;
+}
 
 /**
  * Is host big endian.

@@ -1,3 +1,5 @@
+import type { EndianAware } from './endian.ts';
+
 /**
  * ArrayBufferLike, not similar but incompatible types.
  */
@@ -27,21 +29,6 @@ export interface BufferView extends BufferPointer {
 	 */
 	readonly byteLength: number;
 }
-
-/**
- * Endian aware.
- */
-export interface EndianAware {
-	/**
-	 * True for little endian, false for big endian.
-	 */
-	readonly littleEndian: boolean;
-}
-
-/**
- * Signed of member type.
- */
-export type MemberInfoSigned = boolean | null;
 
 /**
  * Member info.
