@@ -63,6 +63,7 @@ Deno.test('pointer', () => {
 		assertNotStrictEquals(foo4[1], tmp);
 	}
 	assertEquals(data, new Uint8Array([-2, -1, 1, 2, 3, 4]));
+
 	assertEquals(getByteLength(Foo4, 0), Foo.BYTE_LENGTH);
 	assertEquals(getByteOffset(Foo4, 1), Foo.BYTE_LENGTH);
 	assertEquals(getByteOffset(Foo4, 2), Foo.BYTE_LENGTH * 2);
@@ -74,4 +75,5 @@ Deno.test('pointer', () => {
 	assertEquals(getByteOffset(Foo4Ex, 1), Foo.BYTE_LENGTH);
 	assertEquals(getByteOffset(Foo4Ex, 2), Foo.BYTE_LENGTH * 2);
 	assertEquals(getByteOffset(Foo4Ex, -1), -Foo.BYTE_LENGTH);
+	assertNotStrictEquals(Foo4.MEMBERS, Foo4Ex.MEMBERS);
 });
