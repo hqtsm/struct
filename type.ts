@@ -85,7 +85,7 @@ export interface Type extends BufferView, EndianAware {
 	/**
 	 * Type class.
 	 */
-	readonly ['constructor']: TypeClass;
+	readonly constructor: TypeClass;
 }
 
 /**
