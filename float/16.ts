@@ -1,8 +1,9 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
 import { defineMember } from '../member.ts';
+import type { MembersExtends } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import type { MembersExtends, Type, TypeClass } from '../type.ts';
+import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 type MaybeNativeFloat16 = Partial<{

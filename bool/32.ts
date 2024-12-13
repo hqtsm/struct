@@ -1,6 +1,7 @@
 import { defineMember } from '../member.ts';
+import type { MembersExtends } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import type { MembersExtends, Type, TypeClass } from '../type.ts';
+import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
