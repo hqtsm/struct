@@ -78,4 +78,17 @@ Deno.test('pointer', () => {
 	assertNotStrictEquals(Foo4.MEMBERS, Foo4BE.MEMBERS);
 	assertEquals(new Foo4BE(new ArrayBuffer(0)).littleEndian, false);
 	assertEquals(new Foo4LE(new ArrayBuffer(0)).littleEndian, true);
+
+	// Weird but not invalid.
+	class FooEx extends Foo4 {
+		declare public extra: number;
+
+		public static override readonly BYTE_LENGTH: number = ((o) => {
+			o += int8(this, 'extra', o);
+			// Expected type checking errors:
+			// o += int8(this, 0, o);
+			return o;
+		})(super.BYTE_LENGTH);
+	}
+	assertEquals(FooEx.BYTE_LENGTH, Foo4.BYTE_LENGTH + 1);
 });
