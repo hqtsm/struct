@@ -94,8 +94,8 @@ export function member<M extends BufferView, T extends Type>(
 ): number {
 	let m: WeakMap<T, M>;
 	return defineMember(Type, name, {
-		byteOffset,
 		byteLength: Member.BYTE_LENGTH,
+		byteOffset,
 		get(): M {
 			let r = (m ??= new WeakMap()).get(this);
 			if (!r) {
@@ -169,8 +169,8 @@ export function pad<T extends Type>(
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {
-		byteOffset,
 		byteLength,
+		byteOffset,
 		get(): unknown {
 			throw new TypeError(`Read from padding member: ${String(name)}`);
 		},

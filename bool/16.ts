@@ -19,8 +19,8 @@ export function bool16<T extends Type>(
 	littleEndian: boolean | null = null,
 ): number {
 	return defineMember(Type, name, {
-		byteOffset,
 		byteLength: 2,
+		byteOffset,
 		get(): boolean {
 			return !!dataView(this.buffer).getInt16(
 				this.byteOffset + byteOffset,

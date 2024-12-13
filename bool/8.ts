@@ -17,8 +17,8 @@ export function bool8<T extends Type>(
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {
-		byteOffset,
 		byteLength: 1,
+		byteOffset,
 		get(): boolean {
 			return !!dataView(this.buffer).getInt8(
 				this.byteOffset + byteOffset,

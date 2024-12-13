@@ -19,8 +19,8 @@ export function float32<T extends Type>(
 	littleEndian: boolean | null = null,
 ): number {
 	return defineMember(Type, name, {
-		byteOffset,
 		byteLength: 4,
+		byteOffset,
 		get(): number {
 			return dataView(this.buffer).getFloat32(
 				this.byteOffset + byteOffset,

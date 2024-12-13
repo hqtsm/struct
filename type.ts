@@ -6,14 +6,14 @@ import type { ArrayBufferReal, BufferView } from './native.ts';
  */
 export interface MemberInfo {
 	/**
-	 * Byte offset.
-	 */
-	byteOffset: number;
-
-	/**
 	 * Byte length.
 	 */
 	byteLength: number;
+
+	/**
+	 * Byte offset.
+	 */
+	byteOffset: number;
 }
 
 /**

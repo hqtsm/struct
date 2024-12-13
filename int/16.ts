@@ -19,8 +19,8 @@ export function int16<T extends Type>(
 	littleEndian: boolean | null = null,
 ): number {
 	return defineMember(Type, name, {
-		byteOffset,
 		byteLength: 2,
+		byteOffset,
 		get(): number {
 			return dataView(this.buffer).getInt16(
 				this.byteOffset + byteOffset,
@@ -85,8 +85,8 @@ export function uint16<T extends Type>(
 	littleEndian: boolean | null = null,
 ): number {
 	return defineMember(Type, name, {
-		byteOffset,
 		byteLength: 2,
+		byteOffset,
 		get(): number {
 			return dataView(this.buffer).getUint16(
 				this.byteOffset + byteOffset,

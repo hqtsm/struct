@@ -124,8 +124,8 @@ export class Ptr<T = never> extends Endian {
 							}
 							if (i === i - i % 1) {
 								return {
-									byteOffset: i * bpe,
 									byteLength: bpe,
+									byteOffset: i * bpe,
 								};
 							}
 						},

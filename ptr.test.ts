@@ -29,9 +29,9 @@ Deno.test('Ptr: MEMBERS', () => {
 	assertEquals(typeof Ptr.MEMBERS[Infinity], 'undefined');
 
 	class Test extends DummyPtr {}
-	assertEquals(Test.MEMBERS[0], { byteOffset: 0, byteLength: 1 });
-	assertEquals(Test.MEMBERS[1], { byteOffset: 1, byteLength: 1 });
-	assertEquals(Test.MEMBERS[-1], { byteOffset: -1, byteLength: 1 });
+	assertEquals(Test.MEMBERS[0], { byteLength: 1, byteOffset: 0 });
+	assertEquals(Test.MEMBERS[1], { byteLength: 1, byteOffset: 1 });
+	assertEquals(Test.MEMBERS[-1], { byteLength: 1, byteOffset: -1 });
 
 	const value = { ...Test.MEMBERS[0] };
 	(Test.MEMBERS as unknown as { weird: unknown })['weird'] = value;
