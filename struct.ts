@@ -1,5 +1,6 @@
 import { Endian } from './endian.ts';
-import type { MemberInfos, Type } from './type.ts';
+import type { MemberInfos } from './members.ts';
+import type { Type } from './type.ts';
 
 let members: WeakMap<typeof Struct, MemberInfos>;
 

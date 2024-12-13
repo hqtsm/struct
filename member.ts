@@ -1,6 +1,6 @@
-import type { MembersExtends } from './members.ts';
+import type { MemberInfo, MembersExtends } from './members.ts';
 import type { BufferView } from './native.ts';
-import type { MemberInfo, Type, TypeClass } from './type.ts';
+import type { Type, TypeClass } from './type.ts';
 import { assignView } from './util.ts';
 
 /**

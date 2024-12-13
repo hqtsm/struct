@@ -1,40 +1,6 @@
 import type { EndianAware } from './endian.ts';
+import type { Membered } from './members.ts';
 import type { ArrayBufferReal, BufferView } from './native.ts';
-
-/**
- * Member info.
- */
-export interface MemberInfo {
-	/**
-	 * Byte length.
-	 */
-	byteLength: number;
-
-	/**
-	 * Byte offset.
-	 */
-	byteOffset: number;
-}
-
-/**
- * Member infos.
- */
-export interface MemberInfos {
-	/**
-	 * Member infos.
-	 */
-	readonly [member: PropertyKey]: Readonly<MemberInfo>;
-}
-
-/**
- * Membered type.
- */
-export interface Membered {
-	/**
-	 * Member infos of members.
-	 */
-	readonly MEMBERS: MemberInfos;
-}
 
 /**
  * Type.
