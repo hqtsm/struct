@@ -1,4 +1,4 @@
-import type { ArrayBufferReal, BufferPointer } from './type.ts';
+import type { ArrayBufferReal, BufferPointer } from './native.ts';
 import { dataView } from './util.ts';
 
 /**

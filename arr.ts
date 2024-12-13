@@ -1,18 +1,13 @@
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 
+import type { ArrayBufferReal } from './native.ts';
 import {
 	pointer,
 	type Ptr,
 	type PtrClass,
 	type PtrConstructor,
 } from './ptr.ts';
-import type {
-	ArrayBufferReal,
-	MemberInfos,
-	Type,
-	TypeClass,
-	TypeConstructor,
-} from './type.ts';
+import type { MemberInfos, Type, TypeClass, TypeConstructor } from './type.ts';
 
 /**
  * Array.

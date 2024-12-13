@@ -1,10 +1,5 @@
-import type {
-	BufferView,
-	MemberInfo,
-	MembersExtends,
-	Type,
-	TypeClass,
-} from './type.ts';
+import type { BufferView } from './native.ts';
+import type { MemberInfo, MembersExtends, Type, TypeClass } from './type.ts';
 import { assignView } from './util.ts';
 
 /**

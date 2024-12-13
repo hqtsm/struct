@@ -1,13 +1,8 @@
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 
 import { Endian } from './endian.ts';
-import type {
-	ArrayBufferReal,
-	MemberInfo,
-	MemberInfos,
-	Type,
-	TypeConstructor,
-} from './type.ts';
+import type { ArrayBufferReal } from './native.ts';
+import type { MemberInfo, MemberInfos, Type, TypeConstructor } from './type.ts';
 import { assignType } from './util.ts';
 
 function index(key: PropertyKey): number | null {

@@ -1,5 +1,6 @@
+import type { BufferView } from './native.ts';
 import type { PtrClass } from './ptr.ts';
-import type { BufferView, Membered, Members, Type, TypeClass } from './type.ts';
+import type { Membered, Members, Type, TypeClass } from './type.ts';
 
 let dataViews: WeakMap<ArrayBufferLike, DataView>;
 
