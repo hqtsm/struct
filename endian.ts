@@ -86,6 +86,12 @@ export interface EndianConstructor extends EndianClass {
 
 let littleEndians: WeakMap<EndianClass, EndianClass>;
 
+/**
+ * Extend endian class as little endian.
+ *
+ * @param Endian Endian class.
+ * @returns Extended class.
+ */
 export function littleEndian<T extends EndianClass>(
 	// deno-lint-ignore ban-types
 	Endian: T & Function,
@@ -107,6 +113,12 @@ export function littleEndian<T extends EndianClass>(
 
 let bigEndians: WeakMap<EndianClass, EndianClass>;
 
+/**
+ * Extend endian class as big endian.
+ *
+ * @param Endian Endian class.
+ * @returns Extended class.
+ */
 export function bigEndian<T extends EndianClass>(
 	// deno-lint-ignore ban-types
 	Endian: T & Function,
@@ -126,16 +138,22 @@ export function bigEndian<T extends EndianClass>(
 	return r as T;
 }
 
-let nativeEndians: WeakMap<EndianClass, EndianClass>;
+let defaultEndians: WeakMap<EndianClass, EndianClass>;
 
-export function nativeEndian<T extends EndianClass>(
+/**
+ * Extend endian class as default endian.
+ *
+ * @param Endian Endian class.
+ * @returns Extended class.
+ */
+export function defaultEndian<T extends EndianClass>(
 	// deno-lint-ignore ban-types
 	Endian: T & Function,
 ): T {
-	let r = (nativeEndians ??= new WeakMap()).get(Endian);
+	let r = (defaultEndians ??= new WeakMap()).get(Endian);
 	if (!r) {
-		const name = `NativeEndian<${Endian.name}>`;
-		nativeEndians.set(
+		const name = `defaultEndian<${Endian.name}>`;
+		defaultEndians.set(
 			Endian,
 			r = {
 				[name]: class extends (Endian as unknown as EndianConstructor) {

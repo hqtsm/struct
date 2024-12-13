@@ -3,10 +3,10 @@ import { assertEquals, assertNotEquals, assertStrictEquals } from '@std/assert';
 import {
 	BIG_ENDIAN,
 	bigEndian,
+	defaultEndian,
 	Endian,
 	LITTLE_ENDIAN,
 	littleEndian,
-	nativeEndian,
 } from './endian.ts';
 
 Deno.test('BIG_ENDIAN != LITTLE_ENDIAN', () => {
@@ -25,8 +25,8 @@ Deno.test('littleEndian', () => {
 	assertStrictEquals(littleEndian(Endian), LE);
 });
 
-Deno.test('nativeEndian', () => {
-	const NE = nativeEndian(Endian);
-	assertEquals(NE.LITTLE_ENDIAN, null);
-	assertStrictEquals(nativeEndian(Endian), NE);
+Deno.test('defaultEndian', () => {
+	const DE = defaultEndian(Endian);
+	assertEquals(DE.LITTLE_ENDIAN, null);
+	assertStrictEquals(defaultEndian(Endian), DE);
 });
