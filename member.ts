@@ -87,7 +87,6 @@ export interface MemberConstructor<
 
 /**
  * Member: generic.
- * For MemberConstructor compatible types.
  *
  * @param Member Member constructor.
  * @param Type Type constructor.
