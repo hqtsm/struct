@@ -22,7 +22,7 @@ export class Endian implements BufferPointer, EndianAware {
 	/**
 	 * Endian class.
 	 */
-	declare public readonly ['constructor']: Omit<typeof Endian, 'new'>;
+	declare public readonly ['constructor']: EndianClass;
 
 	/**
 	 * Create instance for buffer.
@@ -63,4 +63,23 @@ export class Endian implements BufferPointer, EndianAware {
 	 * Type level endian override.
 	 */
 	public static readonly LITTLE_ENDIAN: boolean | null = null;
+}
+
+/**
+ * Endian class.
+ */
+export interface EndianClass extends Omit<typeof Endian, 'new'> {}
+
+/**
+ * Endian constructor.
+ */
+export interface EndianConstructor extends EndianClass {
+	/**
+	 * Endian constructor.
+	 */
+	new (
+		buffer: ArrayBufferReal,
+		byteOffset?: number,
+		littleEndian?: boolean,
+	): Endian;
 }
