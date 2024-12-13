@@ -84,26 +84,26 @@ export interface EndianConstructor extends EndianClass {
 	): Endian;
 }
 
-let littleEndians: WeakMap<EndianClass, EndianClass>;
+let defaultEndians: WeakMap<EndianClass, EndianClass>;
 
 /**
- * Extend endian class as little endian.
+ * Extend endian class as default endian.
  *
  * @param Endian Endian class.
  * @returns Extended class.
  */
-export function littleEndian<T extends EndianClass>(
+export function defaultEndian<T extends EndianClass>(
 	// deno-lint-ignore ban-types
 	Endian: T & Function,
 ): T {
-	let r = (littleEndians ??= new WeakMap()).get(Endian);
+	let r = (defaultEndians ??= new WeakMap()).get(Endian);
 	if (!r) {
-		const name = `LittleEndian<${Endian.name}>`;
-		littleEndians.set(
+		const name = `defaultEndian<${Endian.name}>`;
+		defaultEndians.set(
 			Endian,
 			r = {
 				[name]: class extends (Endian as unknown as EndianConstructor) {
-					public static override readonly LITTLE_ENDIAN = true;
+					public static override readonly LITTLE_ENDIAN = null;
 				},
 			}[name],
 		);
@@ -138,26 +138,26 @@ export function bigEndian<T extends EndianClass>(
 	return r as T;
 }
 
-let defaultEndians: WeakMap<EndianClass, EndianClass>;
+let littleEndians: WeakMap<EndianClass, EndianClass>;
 
 /**
- * Extend endian class as default endian.
+ * Extend endian class as little endian.
  *
  * @param Endian Endian class.
  * @returns Extended class.
  */
-export function defaultEndian<T extends EndianClass>(
+export function littleEndian<T extends EndianClass>(
 	// deno-lint-ignore ban-types
 	Endian: T & Function,
 ): T {
-	let r = (defaultEndians ??= new WeakMap()).get(Endian);
+	let r = (littleEndians ??= new WeakMap()).get(Endian);
 	if (!r) {
-		const name = `defaultEndian<${Endian.name}>`;
-		defaultEndians.set(
+		const name = `LittleEndian<${Endian.name}>`;
+		littleEndians.set(
 			Endian,
 			r = {
 				[name]: class extends (Endian as unknown as EndianConstructor) {
-					public static override readonly LITTLE_ENDIAN = null;
+					public static override readonly LITTLE_ENDIAN = true;
 				},
 			}[name],
 		);
