@@ -69,11 +69,17 @@ Deno.test('pointer', () => {
 	assertEquals(getByteOffset(Foo4, 2), Foo.BYTE_LENGTH * 2);
 	assertEquals(getByteOffset(Foo4, -1), -Foo.BYTE_LENGTH);
 
-	// Weird but technically possible.
-	class Foo4Ex extends Foo4 {}
-	assertEquals(getByteLength(Foo4Ex, 0), Foo.BYTE_LENGTH);
-	assertEquals(getByteOffset(Foo4Ex, 1), Foo.BYTE_LENGTH);
-	assertEquals(getByteOffset(Foo4Ex, 2), Foo.BYTE_LENGTH * 2);
-	assertEquals(getByteOffset(Foo4Ex, -1), -Foo.BYTE_LENGTH);
-	assertNotStrictEquals(Foo4.MEMBERS, Foo4Ex.MEMBERS);
+	class Foo4BE extends Foo4 {
+		public static override readonly LITTLE_ENDIAN: boolean = false;
+	}
+	class Foo4LE extends Foo4 {
+		public static override readonly LITTLE_ENDIAN: boolean = true;
+	}
+	assertEquals(getByteLength(Foo4BE, 0), Foo.BYTE_LENGTH);
+	assertEquals(getByteOffset(Foo4BE, 1), Foo.BYTE_LENGTH);
+	assertEquals(getByteOffset(Foo4BE, 2), Foo.BYTE_LENGTH * 2);
+	assertEquals(getByteOffset(Foo4BE, -1), -Foo.BYTE_LENGTH);
+	assertNotStrictEquals(Foo4.MEMBERS, Foo4BE.MEMBERS);
+	assertEquals(new Foo4BE(new ArrayBuffer(0)).littleEndian, false);
+	assertEquals(new Foo4LE(new ArrayBuffer(0)).littleEndian, true);
 });
