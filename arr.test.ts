@@ -66,6 +66,7 @@ Deno.test('pointer', () => {
 	assertEquals(getByteLength(Foo4, 0), Foo.BYTE_LENGTH);
 	assertEquals(getByteOffset(Foo4, 1), Foo.BYTE_LENGTH);
 
+	// Weird but technically possible.
 	class Foo4Ex extends Foo4 {}
 	assertEquals(getByteLength(Foo4Ex, 0), Foo.BYTE_LENGTH);
 	assertEquals(getByteOffset(Foo4Ex, 1), Foo.BYTE_LENGTH);
