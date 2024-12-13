@@ -9,7 +9,6 @@ import { LITTLE_ENDIAN } from './endian.ts';
 import { int8, Uint8Ptr } from './int/8.ts';
 import { pointer, Ptr } from './ptr.ts';
 import { Struct } from './struct.ts';
-import type { MemberInfos } from './type.ts';
 
 class DummyPtr extends Ptr<number> {
 	public override get(index: number): number {
@@ -35,9 +34,9 @@ Deno.test('Ptr: MEMBERS', () => {
 	assertEquals(Test.MEMBERS[-1], { byteOffset: -1, byteLength: 1 });
 
 	const value = { ...Test.MEMBERS[0] };
-	(Test.MEMBERS as MemberInfos)['weird'] = value;
+	(Test.MEMBERS as unknown as { weird: unknown })['weird'] = value;
 	assertThrows(() => {
-		(Test.MEMBERS as MemberInfos)[0] = value;
+		(Test.MEMBERS as unknown as { [key: number]: unknown })[0] = value;
 	});
 });
 
@@ -225,7 +224,6 @@ Deno.test('pointer', () => {
 		const foo = f[2];
 		assertThrows(() => foo.bar, RangeError);
 	}
-
 	{
 		const foo = f[-2];
 		assertThrows(() => foo.bar, RangeError);

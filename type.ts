@@ -50,12 +50,12 @@ export interface MemberInfo {
 	/**
 	 * Byte offset.
 	 */
-	byteOffset: number;
+	readonly byteOffset: number;
 
 	/**
 	 * Byte length.
 	 */
-	byteLength: number;
+	readonly byteLength: number;
 }
 
 /**
@@ -65,7 +65,7 @@ export interface MemberInfos {
 	/**
 	 * Member infos.
 	 */
-	[member: PropertyKey]: Readonly<MemberInfo>;
+	readonly [member: PropertyKey]: MemberInfo;
 }
 
 /**
@@ -75,7 +75,7 @@ export interface Membered {
 	/**
 	 * Member infos of members.
 	 */
-	readonly MEMBERS: Readonly<MemberInfos>;
+	readonly MEMBERS: MemberInfos;
 }
 
 /**

@@ -50,7 +50,7 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 	},
 };
 
-let members: WeakMap<typeof Ptr, Readonly<MemberInfos>>;
+let members: WeakMap<typeof Ptr, MemberInfos>;
 
 /**
  * Pointer to a type.
@@ -111,7 +111,7 @@ export class Ptr<T = never> extends Endian {
 	/**
 	 * Members infos.
 	 */
-	public static get MEMBERS(): Readonly<MemberInfos> {
+	public static get MEMBERS(): MemberInfos {
 		let r = (members ??= new WeakMap()).get(this);
 		if (!r) {
 			const bpe = this.BYTES_PER_ELEMENT;
