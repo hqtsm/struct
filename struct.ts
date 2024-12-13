@@ -24,14 +24,14 @@ export class Struct extends Endian implements Type {
 	/**
 	 * Members infos.
 	 */
-	public static get MEMBERS(): Readonly<MemberInfos> {
+	public static get MEMBERS(): MemberInfos {
 		let r = (members ??= new WeakMap()).get(this);
 		if (!r) {
 			members.set(
 				this,
 				r = Object.create(
 					Object.getPrototypeOf(this).MEMBERS ?? null,
-				) as Readonly<MemberInfos>,
+				) as MemberInfos,
 			);
 		}
 		return r;

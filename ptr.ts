@@ -120,7 +120,7 @@ export class Ptr<T = never> extends Endian {
 				r = new Proxy(
 					Object.create(
 						Object.getPrototypeOf(this).MEMBERS ?? null,
-					) as Readonly<MemberInfos>,
+					) as MemberInfos,
 					{
 						get(target, key): Readonly<MemberInfo> | undefined {
 							const i = index(key);

@@ -130,16 +130,14 @@ export function array<T extends Type>(
 
 					public static readonly LENGTH = length;
 
-					public static override get MEMBERS(): Readonly<
-						MemberInfos
-					> {
+					public static override get MEMBERS(): MemberInfos {
 						let r = (members ??= new WeakMap()).get(this);
 						if (!r) {
 							members.set(
 								this satisfies ArrConstructor<T>,
 								r = Object.create(
 									Object.getPrototypeOf(this).MEMBERS,
-								) as Readonly<MemberInfos>,
+								) as MemberInfos,
 							);
 						}
 						return r;
