@@ -43,8 +43,6 @@ Deno.test('float16', () => {
 		) {
 			super(buffer, byteOffset, littleEndian);
 			Object.defineProperty(dataView(this.buffer), 'getFloat16', {
-				configurable: true,
-				enumerable: false,
 				value: function (
 					this: DataView,
 					offset: number,
@@ -52,11 +50,10 @@ Deno.test('float16', () => {
 				): number {
 					return getFloat16(this, offset, littleEndian);
 				},
+				configurable: true,
 				writable: true,
 			});
 			Object.defineProperty(dataView(this.buffer), 'setFloat16', {
-				configurable: true,
-				enumerable: false,
 				value: function (
 					this: DataView,
 					offset: number,
@@ -65,6 +62,7 @@ Deno.test('float16', () => {
 				): void {
 					setFloat16(this, offset, value, littleEndian);
 				},
+				configurable: true,
 				writable: true,
 			});
 		}
@@ -78,15 +76,13 @@ Deno.test('float16', () => {
 		) {
 			super(buffer, byteOffset, littleEndian);
 			Object.defineProperty(dataView(this.buffer), 'getFloat16', {
-				configurable: true,
-				enumerable: false,
 				value: null,
+				configurable: true,
 				writable: true,
 			});
 			Object.defineProperty(dataView(this.buffer), 'setFloat16', {
-				configurable: true,
-				enumerable: false,
 				value: null,
+				configurable: true,
 				writable: true,
 			});
 		}
@@ -176,8 +172,6 @@ Deno.test('Float16Ptr', () => {
 			) {
 				super(buffer, byteOffset, littleEndian);
 				Object.defineProperty(dataView(this.buffer), 'getFloat16', {
-					configurable: true,
-					enumerable: false,
 					value: function (
 						this: DataView,
 						offset: number,
@@ -185,11 +179,10 @@ Deno.test('Float16Ptr', () => {
 					): number {
 						return getFloat16(this, offset, littleEndian);
 					},
+					configurable: true,
 					writable: true,
 				});
 				Object.defineProperty(dataView(this.buffer), 'setFloat16', {
-					configurable: true,
-					enumerable: false,
 					value: function (
 						this: DataView,
 						offset: number,
@@ -198,6 +191,7 @@ Deno.test('Float16Ptr', () => {
 					): void {
 						setFloat16(this, offset, value, littleEndian);
 					},
+					configurable: true,
 					writable: true,
 				});
 			}
@@ -211,15 +205,13 @@ Deno.test('Float16Ptr', () => {
 			) {
 				super(buffer, byteOffset, littleEndian);
 				Object.defineProperty(dataView(this.buffer), 'getFloat16', {
-					configurable: true,
-					enumerable: false,
 					value: null,
+					configurable: true,
 					writable: true,
 				});
 				Object.defineProperty(dataView(this.buffer), 'setFloat16', {
-					configurable: true,
-					enumerable: false,
 					value: null,
+					configurable: true,
 					writable: true,
 				});
 			}
