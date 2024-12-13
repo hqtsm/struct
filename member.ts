@@ -17,7 +17,7 @@ export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
 	 * @param this Type instance.
 	 * @returns Member value.
 	 */
-	readonly get: (this: T) => M;
+	get: (this: T) => M;
 
 	/**
 	 * Setter function.
@@ -25,7 +25,7 @@ export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
 	 * @param this Type instance.
 	 * @param value Member value.
 	 */
-	readonly set: (this: T, value: M) => void;
+	set: (this: T, value: M) => void;
 }
 
 /**
@@ -39,7 +39,7 @@ export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
 export function defineMember<T extends Type, M>(
 	Type: TypeClass<T>,
 	name: MembersExtends<T, M>,
-	desc: MemberDescriptor<(T & Record<typeof name, M>), M>,
+	desc: Readonly<MemberDescriptor<(T & Record<typeof name, M>), M>>,
 ): number {
 	const { byteLength } = desc;
 	Object.defineProperty(Type.prototype, name, {
