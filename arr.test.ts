@@ -39,7 +39,7 @@ Deno.test('pointer', () => {
 	assertEquals(Foo4.LENGTH, 4);
 	assertStrictEquals(array(Foo, 4), Foo4);
 	assertStrictEquals(Object.getPrototypeOf(Foo4), pointer(Foo));
-	assertStrictEquals(Foo4, array(pointer(Foo), 4));
+	assertStrictEquals(array(pointer(Foo), 4), Foo4);
 	assertEquals(new Foo4(new ArrayBuffer(0)).length, 4);
 	assertEquals(new Foo4(new ArrayBuffer(0)).byteLength, Foo4.BYTE_LENGTH);
 
