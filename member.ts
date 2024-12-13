@@ -41,18 +41,15 @@ export function defineMember<T extends Type, M>(
 	name: MembersExtends<T, M>,
 	desc: Readonly<MemberDescriptor<(T & Record<typeof name, M>), M>>,
 ): number {
-	const { byteLength } = desc;
+	const { byteLength, byteOffset, get, set } = desc;
 	Object.defineProperty(Type.prototype, name, {
+		get,
+		set,
 		configurable: true,
 		enumerable: false,
-		get: desc.get,
-		set: desc.set,
 	});
 	Object.defineProperty(Type.MEMBERS, name, {
-		value: {
-			byteOffset: desc.byteOffset,
-			byteLength,
-		} satisfies MemberInfo,
+		value: { byteOffset, byteLength } satisfies MemberInfo,
 		configurable: true,
 		enumerable: false,
 		writable: true,
