@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { Members } from '../members.ts';
+import type { Memberable } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
@@ -14,7 +14,7 @@ import { dataView } from '../util.ts';
  */
 export function int8<T extends Type>(
 	Type: TypeClass<T>,
-	name: Members<T, number>,
+	name: Memberable<T, number>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {
@@ -39,7 +39,7 @@ export function int8<T extends Type>(
  */
 export function uint8<T extends Type>(
 	Type: TypeClass<T>,
-	name: Members<T, number>,
+	name: Memberable<T, number>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {

@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { Members } from '../members.ts';
+import type { Memberable } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
@@ -15,7 +15,7 @@ import { dataView } from '../util.ts';
  */
 export function int32<T extends Type>(
 	Type: TypeClass<T>,
-	name: Members<T, number>,
+	name: Memberable<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -48,7 +48,7 @@ export function int32<T extends Type>(
  */
 export function int32BE<T extends Type>(
 	Type: TypeClass<T>,
-	name: Members<T, number>,
+	name: Memberable<T, number>,
 	byteOffset: number,
 ): number {
 	return int32(Type, name, byteOffset, false);
@@ -64,7 +64,7 @@ export function int32BE<T extends Type>(
  */
 export function int32LE<T extends Type>(
 	Type: TypeClass<T>,
-	name: Members<T, number>,
+	name: Memberable<T, number>,
 	byteOffset: number,
 ): number {
 	return int32(Type, name, byteOffset, true);
@@ -81,7 +81,7 @@ export function int32LE<T extends Type>(
  */
 export function uint32<T extends Type>(
 	Type: TypeClass<T>,
-	name: Members<T, number>,
+	name: Memberable<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -115,7 +115,7 @@ export function uint32<T extends Type>(
  */
 export function uint32BE<T extends Type>(
 	Type: TypeClass<T>,
-	name: Members<T, number>,
+	name: Memberable<T, number>,
 	byteOffset: number,
 ): number {
 	return uint32(Type, name, byteOffset, false);
@@ -132,7 +132,7 @@ export function uint32BE<T extends Type>(
  */
 export function uint32LE<T extends Type>(
 	Type: TypeClass<T>,
-	name: Members<T, number>,
+	name: Memberable<T, number>,
 	byteOffset: number,
 ): number {
 	return uint32(Type, name, byteOffset, true);

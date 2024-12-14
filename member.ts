@@ -1,4 +1,4 @@
-import type { MemberInfo, Members } from './members.ts';
+import type { Memberable, MemberInfo } from './members.ts';
 import type { BufferView } from './native.ts';
 import type { Type, TypeClass } from './type.ts';
 import { assignView } from './util.ts';
@@ -34,7 +34,7 @@ export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
  */
 export function defineMember<T extends Type, M>(
 	Type: TypeClass<T>,
-	name: Members<T, M>,
+	name: Memberable<T, M>,
 	desc: Readonly<MemberDescriptor<(T & Record<typeof name, M>), M>>,
 ): number {
 	const { byteLength, byteOffset, get, set } = desc;
@@ -89,7 +89,7 @@ export interface MemberConstructor<
 export function member<M extends BufferView, T extends Type>(
 	Member: MemberConstructor<M>,
 	Type: TypeClass<T>,
-	name: Members<T, M>,
+	name: Memberable<T, M>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -129,7 +129,7 @@ export function member<M extends BufferView, T extends Type>(
 export function memberBE<M extends BufferView, T extends Type>(
 	Member: MemberConstructor<M>,
 	Type: TypeClass<T>,
-	name: Members<T, M>,
+	name: Memberable<T, M>,
 	byteOffset: number,
 ): number {
 	return member(Member, Type, name, byteOffset, false);
@@ -147,7 +147,7 @@ export function memberBE<M extends BufferView, T extends Type>(
 export function memberLE<M extends BufferView, T extends Type>(
 	Member: MemberConstructor<M>,
 	Type: TypeClass<T>,
-	name: Members<T, M>,
+	name: Memberable<T, M>,
 	byteOffset: number,
 ): number {
 	return member(Member, Type, name, byteOffset, true);
@@ -166,7 +166,7 @@ export function memberLE<M extends BufferView, T extends Type>(
 export function pad<T extends Type>(
 	byteLength: number,
 	Type: TypeClass<T>,
-	name: Members<T, unknown>,
+	name: Memberable<T, unknown>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {

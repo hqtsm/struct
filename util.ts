@@ -1,4 +1,4 @@
-import type { Membered, Members } from './members.ts';
+import type { Memberable, Membered } from './members.ts';
 import type { BufferView } from './native.ts';
 import type { Ptr, PtrClass } from './ptr.ts';
 import type { Type, TypeClass } from './type.ts';
@@ -28,7 +28,7 @@ export function dataView(buffer: ArrayBufferLike): DataView {
  */
 export function getByteOffset<T extends Type>(
 	Type: TypeClass<T>,
-	name: Members<T>,
+	name: Memberable<T>,
 ): number;
 
 /**
@@ -59,7 +59,7 @@ export function getByteOffset(
  */
 export function getByteLength<T extends Type>(
 	Type: TypeClass<T>,
-	name: Members<T>,
+	name: Memberable<T>,
 ): number;
 
 /**
