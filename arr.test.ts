@@ -19,8 +19,8 @@ Deno.test('pointer', () => {
 		declare public baz: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += int8(this, 'bar', o);
-			o += int8(this, 'baz', o);
+			o = int8(this, 'bar', o);
+			o = int8(this, 'baz', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -84,9 +84,9 @@ Deno.test('pointer', () => {
 		declare public extra: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += int8(this, 'extra', o);
+			o = int8(this, 'extra', o);
 			// Expected type checking errors:
-			// o += int8(this, 0, o);
+			// o = int8(this, 0, o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

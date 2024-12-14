@@ -35,7 +35,7 @@ Deno.test('Struct: byteOffset', () => {
 		declare public alpha: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += int8(this, 'alpha', o);
+			o = int8(this, 'alpha', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -100,7 +100,7 @@ Deno.test('Struct: protected properties', () => {
 		}
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += int8(this, 'alpha' as never, o);
+			o = int8(this, 'alpha' as never, o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -120,7 +120,7 @@ Deno.test('Struct: private properties', () => {
 		}
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += int8(this, 'alpha' as never, o);
+			o = int8(this, 'alpha' as never, o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -134,7 +134,7 @@ Deno.test('Struct: extends', () => {
 		declare public type: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += int8(this, 'type', o);
+			o = int8(this, 'type', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -143,7 +143,7 @@ Deno.test('Struct: extends', () => {
 		declare public value: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += int8(this, 'value', o);
+			o = int8(this, 'value', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -162,7 +162,7 @@ Deno.test('Struct: abstract', () => {
 		public abstract method(): number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += int8(this, 'value', o);
+			o = int8(this, 'value', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -179,7 +179,7 @@ Deno.test('Struct: abstract', () => {
 		declare public child: MemberImp;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += member(MemberImp, this, 'child', o);
+			o = member(MemberImp, this, 'child', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -197,7 +197,7 @@ Deno.test('Struct: abstract placeholder', () => {
 		public abstract method(): number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += int8(this, 'value', o);
+			o = int8(this, 'value', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -214,7 +214,7 @@ Deno.test('Struct: abstract placeholder', () => {
 		declare public child: Member;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += pad(Member.BYTE_LENGTH, this, 'child' as never, o);
+			o = pad(Member.BYTE_LENGTH, this, 'child' as never, o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -223,7 +223,7 @@ Deno.test('Struct: abstract placeholder', () => {
 		declare public child: Member;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += member(MemberImp, this, 'child', getByteOffset(this, 'child'));
+			o = member(MemberImp, this, 'child', getByteOffset(this, 'child'));
 			return o;
 		})(super.BYTE_LENGTH);
 	}

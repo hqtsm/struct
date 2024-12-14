@@ -28,9 +28,9 @@ class Example extends Struct {
 	declare public gamma: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += uint16LE(this, 'alpha', o);
-		o += uint16BE(this, 'beta', o);
-		o += int8(this, 'gamma', o);
+		o = uint16LE(this, 'alpha', o);
+		o = uint16BE(this, 'beta', o);
+		o = int8(this, 'gamma', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -57,8 +57,8 @@ class Example extends Struct {
 	declare public beta: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += uint16(this, 'alpha', o);
-		o += uint16(this, 'beta', o);
+		o = uint16(this, 'alpha', o);
+		o = uint16(this, 'beta', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -87,7 +87,7 @@ class Variable extends Struct {
 	declare public type: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += uint32(this, 'type', o);
+		o = uint32(this, 'type', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -96,7 +96,7 @@ class VariableFloat extends Variable {
 	declare public value: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += float32(this, 'value', o);
+		o = float32(this, 'value', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -121,8 +121,8 @@ class Child extends Struct {
 	declare public beta: number;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += uint16BE(this, 'alpha', o);
-		o += uint16BE(this, 'beta', o);
+		o = uint16BE(this, 'alpha', o);
+		o = uint16BE(this, 'beta', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -133,8 +133,8 @@ class Parent extends Struct {
 	declare public child2: Child;
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += member(Child, this, 'child1', o);
-		o += member(Child, this, 'child2', o);
+		o = member(Child, this, 'child1', o);
+		o = member(Child, this, 'child2', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }
@@ -173,9 +173,9 @@ class Example extends Struct {
 	}
 
 	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o += uint8(this, 'alpha' as never, o);
-		o += uint8(this, 'beta' as never, o);
-		o += uint8(this, 'gamma', o);
+		o = uint8(this, 'alpha' as never, o);
+		o = uint8(this, 'beta' as never, o);
+		o = uint8(this, 'gamma', o);
 		return o;
 	})(super.BYTE_LENGTH);
 }

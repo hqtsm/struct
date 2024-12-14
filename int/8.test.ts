@@ -11,8 +11,8 @@ Deno.test('int8', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += int8(this, 'alpha', o);
-			o += int8(this, 'beta', o);
+			o = int8(this, 'alpha', o);
+			o = int8(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -45,8 +45,8 @@ Deno.test('uint8', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += uint8(this, 'alpha', o);
-			o += uint8(this, 'beta', o);
+			o = uint8(this, 'alpha', o);
+			o = uint8(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

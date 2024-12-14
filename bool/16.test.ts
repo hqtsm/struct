@@ -22,10 +22,10 @@ Deno.test('bool16', () => {
 		declare public delta: boolean;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += bool16(this, 'alpha', o);
-			o += bool16(this, 'beta', o);
-			o += bool16LE(this, 'gamma', o);
-			o += bool16BE(this, 'delta', o);
+			o = bool16(this, 'alpha', o);
+			o = bool16(this, 'beta', o);
+			o = bool16LE(this, 'gamma', o);
+			o = bool16BE(this, 'delta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

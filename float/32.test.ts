@@ -26,9 +26,9 @@ Deno.test('float32', () => {
 		declare public gamma: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += float32LE(this, 'alpha', o);
-			o += float32BE(this, 'beta', o);
-			o += float32(this, 'gamma', o);
+			o = float32LE(this, 'alpha', o);
+			o = float32BE(this, 'beta', o);
+			o = float32(this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

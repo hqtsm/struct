@@ -19,8 +19,8 @@ Deno.test('assignStruct', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += uint8(this, 'alpha', o);
-			o += uint8(this, 'beta', o);
+			o = uint8(this, 'alpha', o);
+			o = uint8(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -29,7 +29,7 @@ Deno.test('assignStruct', () => {
 		declare public gamma: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += uint8(this, 'gamma', o);
+			o = uint8(this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

@@ -17,10 +17,10 @@ Deno.test('member', () => {
 		declare public two: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += uint32(this, 'one', o);
-			o += uint32(this, 'two', o);
+			o = uint32(this, 'one', o);
+			o = uint32(this, 'two', o);
 			// Expected type checking error:
-			// o += uint32(this, 'byteLength', o);
+			// o = uint32(this, 'byteLength', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -41,11 +41,11 @@ Deno.test('member', () => {
 		declare public gamma: TestChild;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += memberLE(TestChild, this, 'alpha', o);
-			o += memberBE(TestChild, this, 'beta', o);
-			o += member(TestChild, this, 'gamma', o);
+			o = memberLE(TestChild, this, 'alpha', o);
+			o = memberBE(TestChild, this, 'beta', o);
+			o = member(TestChild, this, 'gamma', o);
 			// Expected type checking error:
-			// o += member(Struct, this, 'gamma', o);
+			// o = member(Struct, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -147,9 +147,9 @@ Deno.test('pad', () => {
 		declare public beta: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += uint32(this, 'alpha', o);
-			o += pad(8, this, 'mystery', o);
-			o += uint32(this, 'beta', o);
+			o = uint32(this, 'alpha', o);
+			o = pad(8, this, 'mystery', o);
+			o = uint32(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

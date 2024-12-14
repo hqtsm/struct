@@ -48,7 +48,7 @@ export function defineMember<T extends Type, M>(
 		configurable: true,
 		writable: true,
 	});
-	return byteLength;
+	return byteOffset + byteLength;
 }
 
 /**

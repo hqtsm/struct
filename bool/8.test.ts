@@ -11,8 +11,8 @@ Deno.test('bool8', () => {
 		declare public beta: boolean;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o += bool8(this, 'alpha', o);
-			o += bool8(this, 'beta', o);
+			o = bool8(this, 'alpha', o);
+			o = bool8(this, 'beta', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
