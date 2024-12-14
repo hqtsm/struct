@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { MembersExtends } from '../members.ts';
+import type { Members } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
@@ -15,7 +15,7 @@ import { dataView } from '../util.ts';
  */
 export function int64<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, bigint>,
+	name: Members<T, bigint>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -48,7 +48,7 @@ export function int64<T extends Type>(
  */
 export function int64BE<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, bigint>,
+	name: Members<T, bigint>,
 	byteOffset: number,
 ): number {
 	return int64(Type, name, byteOffset, false);
@@ -64,7 +64,7 @@ export function int64BE<T extends Type>(
  */
 export function int64LE<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, bigint>,
+	name: Members<T, bigint>,
 	byteOffset: number,
 ): number {
 	return int64(Type, name, byteOffset, true);
@@ -81,7 +81,7 @@ export function int64LE<T extends Type>(
  */
 export function uint64<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, bigint>,
+	name: Members<T, bigint>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -114,7 +114,7 @@ export function uint64<T extends Type>(
  */
 export function uint64BE<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, bigint>,
+	name: Members<T, bigint>,
 	byteOffset: number,
 ): number {
 	return uint64(Type, name, byteOffset, false);
@@ -130,7 +130,7 @@ export function uint64BE<T extends Type>(
  */
 export function uint64LE<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, bigint>,
+	name: Members<T, bigint>,
 	byteOffset: number,
 ): number {
 	return uint64(Type, name, byteOffset, true);

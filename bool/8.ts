@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { MembersExtends } from '../members.ts';
+import type { Members } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
@@ -14,7 +14,7 @@ import { dataView } from '../util.ts';
  */
 export function bool8<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, boolean>,
+	name: Members<T, boolean>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {

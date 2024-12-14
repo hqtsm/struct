@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { MembersExtends } from '../members.ts';
+import type { Members } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
@@ -15,7 +15,7 @@ import { dataView } from '../util.ts';
  */
 export function float32<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, number>,
+	name: Members<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -48,7 +48,7 @@ export function float32<T extends Type>(
  */
 export function float32BE<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, number>,
+	name: Members<T, number>,
 	byteOffset: number,
 ): number {
 	return float32(Type, name, byteOffset, false);
@@ -64,7 +64,7 @@ export function float32BE<T extends Type>(
  */
 export function float32LE<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, number>,
+	name: Members<T, number>,
 	byteOffset: number,
 ): number {
 	return float32(Type, name, byteOffset, true);

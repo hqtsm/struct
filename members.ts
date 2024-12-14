@@ -36,13 +36,9 @@ export interface Membered {
 }
 
 /**
- * The possible member keys.
+ * The possible member keys, filterable by member type.
  */
-export type Members<T extends Type> = Exclude<keyof T, keyof Type>;
-
-/**
- * The possible member keys, that member type extends.
- */
-export type MembersExtends<T extends Type, M> = {
-	[K in Members<T>]: M extends T[K] ? K : never;
-}[Members<T>];
+// deno-lint-ignore no-explicit-any
+export type Members<T extends Type, M = any> = {
+	[K in keyof T]: M extends T[K] ? K : never;
+}[Exclude<keyof T, keyof Type>];

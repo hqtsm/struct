@@ -1,7 +1,7 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
 import { defineMember } from '../member.ts';
-import type { MembersExtends } from '../members.ts';
+import type { Members } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
@@ -22,7 +22,7 @@ type MaybeNativeFloat16 = Partial<{
  */
 export function float16<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, number>,
+	name: Members<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -72,7 +72,7 @@ export function float16<T extends Type>(
  */
 export function float16BE<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, number>,
+	name: Members<T, number>,
 	byteOffset: number,
 ): number {
 	return float16(Type, name, byteOffset, false);
@@ -88,7 +88,7 @@ export function float16BE<T extends Type>(
  */
 export function float16LE<T extends Type>(
 	Type: TypeClass<T>,
-	name: MembersExtends<T, number>,
+	name: Members<T, number>,
 	byteOffset: number,
 ): number {
 	return float16(Type, name, byteOffset, true);
