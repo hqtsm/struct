@@ -1,4 +1,5 @@
 import type {
+	Memberable,
 	MemberableClass,
 	MemberableClassKeys,
 	MemberInfo,
@@ -10,7 +11,7 @@ import { assignView } from './util.ts';
 /**
  * Member descriptor.
  */
-export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
+export interface MemberDescriptor<T extends Memberable, M> extends MemberInfo {
 	/**
 	 * Getter function.
 	 *
