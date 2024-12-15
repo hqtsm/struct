@@ -26,7 +26,7 @@ const keywords = readme.map((s) => s.match(/^\!\[(.*)\]\((.*)\)$/))
 
 const entryPoints = [];
 let types: string | undefined;
-const typed: { [s: string]: string[] } = {};
+let typed: { [s: string]: string[] } | null = null;
 for (const [name, path] of Object.entries(denoJson.exports)) {
 	const d = path.replace(/^(\.\/)?(.*)(\.[^.]+)$/i, './esm/$2.d$3');
 	if (name === '.') {
@@ -34,7 +34,7 @@ for (const [name, path] of Object.entries(denoJson.exports)) {
 		types = d;
 	} else {
 		entryPoints.push({ name, path });
-		typed[name.replace(/^\.\//, '')] = [d];
+		(typed ??= {})[name.replace(/^\.\//, '')] = [d];
 	}
 }
 
