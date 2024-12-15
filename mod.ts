@@ -9,4 +9,5 @@ export * from './native.ts';
 export * from './ptr.ts';
 export * from './struct.ts';
 export * from './type.ts';
+export * from './union.ts';
 export * from './util.ts';

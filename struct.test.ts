@@ -1,8 +1,6 @@
 import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
-import { bool32 } from './bool/32.ts';
 import { LITTLE_ENDIAN } from './endian.ts';
 import { int8 } from './int/8.ts';
-import { uint32 } from './int/32.ts';
 import { member, pad } from './member.ts';
 import { Struct } from './struct.ts';
 import { getByteOffset } from './util.ts';
@@ -231,28 +229,4 @@ Deno.test('Struct: abstract placeholder', () => {
 	const test = new TestImp(data.buffer, 0, true);
 	test.child.value = 123;
 	assertEquals(data, new Uint8Array([123]));
-});
-
-Deno.test('Struct: union', () => {
-	class Test extends Struct {
-		declare public i: number;
-
-		declare public b: boolean;
-
-		public static override readonly BYTE_LENGTH = Math.max(
-			uint32(this, 'i', 0),
-			bool32(this, 'b', 0),
-		);
-	}
-
-	const test = new Test(new ArrayBuffer(Test.BYTE_LENGTH));
-
-	test.i = 42;
-	assertEquals(test.b, true);
-	test.b = true;
-	assertEquals(test.i, 1);
-	test.i = 0;
-	assertEquals(test.b, false);
-	test.b = false;
-	assertEquals(test.i, 0);
 });
