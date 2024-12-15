@@ -93,7 +93,7 @@ export interface MemberConstructor<
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function member<M extends BufferView, T extends MemberableClass>(
+export function member<T extends MemberableClass, M extends BufferView>(
 	Member: MemberConstructor<M>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
@@ -133,7 +133,7 @@ export function member<M extends BufferView, T extends MemberableClass>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberBE<M extends BufferView, T extends MemberableClass>(
+export function memberBE<T extends MemberableClass, M extends BufferView>(
 	Member: MemberConstructor<M>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
@@ -151,7 +151,7 @@ export function memberBE<M extends BufferView, T extends MemberableClass>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberLE<M extends BufferView, T extends MemberableClass>(
+export function memberLE<T extends MemberableClass, M extends BufferView>(
 	Member: MemberConstructor<M>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
