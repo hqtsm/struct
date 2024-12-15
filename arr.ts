@@ -1,6 +1,6 @@
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 
-import type { MemberInfos } from './members.ts';
+import type { MemberInfoed, MemberInfos } from './members.ts';
 import type { ArrayBufferReal } from './native.ts';
 import {
 	pointer,
@@ -110,7 +110,7 @@ export function array<T extends Type>(
 		lengths.set(
 			length,
 			r = {
-				[name]: class extends Ptr implements Arr<T> {
+				[name]: class extends Ptr implements Arr<T>, MemberInfoed {
 					declare public readonly ['constructor']: ArrClass<Arr<T>>;
 
 					public get byteLength(): number {

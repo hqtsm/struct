@@ -28,9 +28,24 @@ export interface MemberInfos {
 }
 
 /**
- * Has MemberInfos.
+ * Member infoed.
  */
 export interface MemberInfoed {
+	/**
+	 * MemberInfoed class.
+	 */
+	readonly constructor: MemberInfoedClass;
+}
+
+/**
+ * Member infoed class.
+ */
+export interface MemberInfoedClass {
+	/**
+	 * MemberInfoed prototype.
+	 */
+	prototype: MemberInfoed;
+
 	/**
 	 * Member infos of members.
 	 */
