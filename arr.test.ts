@@ -86,8 +86,8 @@ Deno.test('pointer', () => {
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o = int8(this, 'extra', o);
 			// Expected type checking errors:
-			// o = int8(this, 0, o);
-			// o = int8(this, 'length', o);
+			// int8(this, 0, o);
+			// int8(this, 'length', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
