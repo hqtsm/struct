@@ -105,6 +105,11 @@ export class Ptr<T = never> extends Endian {
 	public static readonly BYTES_PER_ELEMENT: number = 0;
 
 	/**
+	 * Non-overlapping members.
+	 */
+	public static readonly OVERLAPPING: boolean = false;
+
+	/**
 	 * Members infos.
 	 */
 	public static get MEMBERS(): MemberInfos {

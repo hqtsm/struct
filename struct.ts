@@ -23,6 +23,11 @@ export class Struct extends Endian implements Type {
 	public static readonly BYTE_LENGTH: number = 0;
 
 	/**
+	 * Non-overlapping members.
+	 */
+	public static readonly OVERLAPPING: boolean = false;
+
+	/**
 	 * Members infos.
 	 */
 	public static get MEMBERS(): MemberInfos {
