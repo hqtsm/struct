@@ -61,7 +61,7 @@ export type Memberable<
  * The possible memberable keys for class, filterable by member type.
  */
 export type ClassMemberable<
-	T extends ArrClass | TypeClass,
+	T extends ClassMemberables,
 	// deno-lint-ignore no-explicit-any
 	M = any,
 > = Memberable<T['prototype'], M>;
