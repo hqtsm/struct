@@ -25,11 +25,6 @@ export interface TypeClass<T extends Type = Type> extends MemberInfoedClass {
 	 * Instance size in bytes.
 	 */
 	readonly BYTE_LENGTH: number;
-
-	/**
-	 * Overlapping members (union), or non-overlapping (struct, array).
-	 */
-	readonly OVERLAPPING: boolean;
 }
 
 /**

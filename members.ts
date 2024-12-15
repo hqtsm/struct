@@ -50,6 +50,11 @@ export interface MemberInfoedClass {
 	 * Member infos of members.
 	 */
 	readonly MEMBERS: MemberInfos;
+
+	/**
+	 * Overlapping members (union), or non-overlapping (struct, array).
+	 */
+	readonly OVERLAPPING: boolean;
 }
 
 /**
