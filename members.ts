@@ -28,7 +28,7 @@ export interface MemberInfos {
 }
 
 /**
- * Members.
+ * With members.
  */
 export interface Members {
 	/**
@@ -38,7 +38,7 @@ export interface Members {
 }
 
 /**
- * Members class.
+ * With members class.
  */
 export interface MembersClass {
 	/**
@@ -52,7 +52,7 @@ export interface MembersClass {
 	readonly MEMBERS: MemberInfos;
 
 	/**
-	 * Overlapping members (union), or non-overlapping (struct, array).
+	 * Overlapping members (union), or non-overlapping members (struct, array).
 	 */
 	readonly OVERLAPPING: boolean;
 }
