@@ -37,7 +37,7 @@ export interface MemberDescriptor<T extends Memberable, M> extends MemberInfo {
  * @param desc Member descriptor.
  * @returns Byte length.
  */
-export function defineMember<M, T extends MemberableClass>(
+export function defineMember<T extends MemberableClass, M>(
 	Type: T,
 	name: MemberableClassKeys<T, M>,
 	desc: Readonly<
