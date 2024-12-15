@@ -80,15 +80,13 @@ Deno.test('pointer', () => {
 	assertEquals(new Foo4LE(new ArrayBuffer(0)).littleEndian, true);
 
 	// Weird but not invalid.
-	class FooEx extends Foo4 {
+	class FooExtra extends Foo4 {
 		declare public extra: number;
 
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o = int8(this, 'extra', o);
-			// Expected type checking error:
-			// int8(this, 'length', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
-	assertEquals(FooEx.BYTE_LENGTH, Foo4.BYTE_LENGTH + 1);
+	assertEquals(FooExtra.BYTE_LENGTH, Foo4.BYTE_LENGTH + 1);
 });

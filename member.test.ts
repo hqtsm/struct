@@ -19,8 +19,6 @@ Deno.test('member', () => {
 		public static override readonly BYTE_LENGTH: number = ((o) => {
 			o = uint32(this, 'one', o);
 			o = uint32(this, 'two', o);
-			// Expected type checking error:
-			// o = uint32(this, 'byteLength', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
@@ -44,8 +42,6 @@ Deno.test('member', () => {
 			o = memberLE(TestChild, this, 'alpha', o);
 			o = memberBE(TestChild, this, 'beta', o);
 			o = member(TestChild, this, 'gamma', o);
-			// Expected type checking error:
-			// o = member(Struct, this, 'gamma', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}
