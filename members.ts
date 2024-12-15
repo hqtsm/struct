@@ -1,4 +1,5 @@
 import type { Arr, ArrClass } from './arr.ts';
+import type { Ptr, PtrClass } from './ptr.ts';
 import type { Type, TypeClass } from './type.ts';
 
 /**
@@ -27,14 +28,42 @@ export interface MemberInfos {
 }
 
 /**
- * Membered type.
+ * Has MemberInfos.
  */
-export interface Membered {
+export interface MemberInfoed {
 	/**
 	 * Member infos of members.
 	 */
 	readonly MEMBERS: MemberInfos;
 }
+
+/**
+ * Membered types.
+ */
+export type Membered = Arr<unknown> | Ptr<unknown> | Type;
+
+/**
+ * Membered class types.
+ */
+export type ClassMembered =
+	| ArrClass<Arr<unknown>>
+	| PtrClass<Ptr<unknown>>
+	| TypeClass;
+
+/**
+ * The possible member keys.
+ */
+export type Members<T extends Membered> = Exclude<
+	keyof T,
+	| (T extends Arr<unknown> ? Exclude<keyof Arr, number> : never)
+	| (T extends Ptr<unknown> ? Exclude<keyof Ptr, number> : never)
+	| (T extends Type ? keyof Type : never)
+>;
+
+/**
+ * The possible member keys for class.
+ */
+export type ClassMembers<T extends ClassMembered> = Members<T['prototype']>;
 
 /**
  * Memberable types.
@@ -53,9 +82,7 @@ export type Memberable<
 	T extends Memberables,
 	// deno-lint-ignore no-explicit-any
 	M = any,
-> = {
-	[K in keyof T]: M extends T[K] ? K : never;
-}[Exclude<keyof T, T extends Arr<unknown> ? keyof Arr : keyof Type>];
+> = { [K in Members<T>]: M extends T[K] ? K : never }[Members<T>];
 
 /**
  * The possible memberable keys for class, filterable by member type.

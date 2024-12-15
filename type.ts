@@ -1,5 +1,5 @@
 import type { EndianAware } from './endian.ts';
-import type { Membered } from './members.ts';
+import type { MemberInfoed } from './members.ts';
 import type { ArrayBufferReal, BufferView } from './native.ts';
 
 /**
@@ -15,7 +15,7 @@ export interface Type extends BufferView, EndianAware {
 /**
  * Type class.
  */
-export interface TypeClass<T extends Type = Type> extends Membered {
+export interface TypeClass<T extends Type = Type> extends MemberInfoed {
 	/**
 	 * Type prototype.
 	 */
