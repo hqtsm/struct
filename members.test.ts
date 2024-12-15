@@ -57,22 +57,26 @@ Deno.test('ClassMemberable: extends member', () => {
 			o = member(Child, this, 'set', o);
 			o = uint32(this, 'length', o);
 
+			// @ts-expect-error: Does not extend the member type.
+			o = member(Struct, this, 'gamma', o);
+
 			// @ts-expect-error: Does not exist in membered type.
 			o = uint32(this, 'unknown', o);
 
-			// @ts-expect-error: Does not extend the member type.
-			o = member(Struct, this, 'gamma', o);
+			// A way to have undeclared members.
+			o = uint32(this, 'hidden' as never, o);
 
 			return o;
 		})(super.BYTE_LENGTH);
 	}
 
-	assertEquals(Parent.BYTE_LENGTH, 24);
+	assertEquals(Parent.BYTE_LENGTH, 28);
 });
 
 Deno.test('ClassMemberable: array properties', () => {
 	const B4 = array(Uint8Ptr, 4);
 
+	// Weird but not invalid.
 	class B4Extra extends B4 {
 		declare public extra: number;
 
@@ -94,9 +98,12 @@ Deno.test('ClassMemberable: array properties', () => {
 			// @ts-expect-error: A non-member built-in property.
 			o = uint32(this, 'set', o);
 
+			// Extremely weird, not recommended, but not technically invalid.
+			o = uint32(this, 0, o);
+
 			return o;
 		})(super.BYTE_LENGTH);
 	}
 
-	assertEquals(B4Extra.BYTE_LENGTH, 28);
+	assertEquals(B4Extra.BYTE_LENGTH, 32);
 });
