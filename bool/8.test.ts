@@ -1,5 +1,4 @@
 import { assertEquals } from '@std/assert';
-
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
 import { bool8, Bool8Ptr } from './8.ts';

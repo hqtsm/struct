@@ -4,7 +4,6 @@ import {
 	assertStrictEquals,
 	assertThrows,
 } from '@std/assert';
-
 import { uint32 } from './int/32.ts';
 import { member, memberBE, memberLE, pad } from './member.ts';
 import { Struct } from './struct.ts';

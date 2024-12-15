@@ -5,7 +5,6 @@ import {
 	setUint24,
 } from '@hqtsm/dataview/int/24';
 import { assertEquals } from '@std/assert';
-
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
 import {

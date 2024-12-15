@@ -1,12 +1,11 @@
 import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
-
+import { bool32 } from './bool/32.ts';
 import { LITTLE_ENDIAN } from './endian.ts';
 import { int8 } from './int/8.ts';
+import { uint32 } from './int/32.ts';
 import { member, pad } from './member.ts';
 import { Struct } from './struct.ts';
 import { getByteOffset } from './util.ts';
-import { uint32 } from './int/32.ts';
-import { bool32 } from './bool/32.ts';
 
 Deno.test('Struct: buffer', () => {
 	const buffer = new ArrayBuffer(0);

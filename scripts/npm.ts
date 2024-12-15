@@ -1,7 +1,6 @@
 // deno-lint-ignore-file no-top-level-await no-console
 
 import { build, type BuildOptions, emptyDir } from '@deno/dnt';
-
 import denoJson from '../deno.json' with { type: 'json' };
 
 if (Deno.args.length !== 1 || !/^(dev|prod)$/.test(Deno.args[0])) {

@@ -4,13 +4,12 @@ import {
 	assertStrictEquals,
 	assertThrows,
 } from '@std/assert';
-
-import { int8 } from './int/8.ts';
-import { Struct } from './struct.ts';
 import { array } from './arr.ts';
-import { pointer } from './ptr.ts';
-import { getByteLength, getByteOffset } from './util.ts';
 import { bigEndian, littleEndian } from './endian.ts';
+import { int8 } from './int/8.ts';
+import { pointer } from './ptr.ts';
+import { Struct } from './struct.ts';
+import { getByteLength, getByteOffset } from './util.ts';
 
 Deno.test('pointer', () => {
 	class Foo extends Struct {

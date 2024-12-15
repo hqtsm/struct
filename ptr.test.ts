@@ -4,7 +4,6 @@ import {
 	assertStrictEquals,
 	assertThrows,
 } from '@std/assert';
-
 import { LITTLE_ENDIAN } from './endian.ts';
 import { int8, Uint8Ptr } from './int/8.ts';
 import { pointer, Ptr } from './ptr.ts';

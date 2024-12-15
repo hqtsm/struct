@@ -1,5 +1,4 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
-
 import { defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';

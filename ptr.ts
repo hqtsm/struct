@@ -1,5 +1,4 @@
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
-
 import { Endian } from './endian.ts';
 import type { MemberInfo, MemberInfos, Members } from './members.ts';
 import type { ArrayBufferReal } from './native.ts';

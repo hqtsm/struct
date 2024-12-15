@@ -1,5 +1,4 @@
 import { assertEquals, assertNotEquals, assertStrictEquals } from '@std/assert';
-
 import {
 	BIG_ENDIAN,
 	bigEndian,

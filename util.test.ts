@@ -1,5 +1,4 @@
 import { assertEquals, assertThrows } from '@std/assert';
-
 import { uint8 } from './int/8.ts';
 import { Struct } from './struct.ts';
 import { assignType, assignView } from './util.ts';

@@ -4,7 +4,6 @@ import {
 	setInt24,
 	setUint24,
 } from '@hqtsm/dataview/int/24';
-
 import { defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';

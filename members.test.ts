@@ -1,10 +1,9 @@
 import { assertEquals } from '@std/assert/equals';
-
+import { array } from './arr.ts';
+import { Uint8Ptr } from './int/8.ts';
 import { uint32 } from './int/32.ts';
 import { member } from './member.ts';
 import { Struct } from './struct.ts';
-import { array } from './arr.ts';
-import { Uint8Ptr } from './int/8.ts';
 
 Deno.test('ClassMemberable: additional member', () => {
 	class Foo extends Struct {
