@@ -1,6 +1,6 @@
 import type {
-	ClassMemberable,
-	ClassMemberables,
+	MemberableClass,
+	MemberableClassKeys,
 	MemberInfo,
 } from './members.ts';
 import type { BufferView } from './native.ts';
@@ -36,9 +36,9 @@ export interface MemberDescriptor<T extends Type, M> extends MemberInfo {
  * @param desc Member descriptor.
  * @returns Byte length.
  */
-export function defineMember<M, T extends ClassMemberables>(
+export function defineMember<M, T extends MemberableClass>(
 	Type: T,
-	name: ClassMemberable<T, M>,
+	name: MemberableClassKeys<T, M>,
 	desc: Readonly<
 		MemberDescriptor<(T['prototype'] & Record<typeof name, M>), M>
 	>,
@@ -92,10 +92,10 @@ export interface MemberConstructor<
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function member<M extends BufferView, T extends ClassMemberables>(
+export function member<M extends BufferView, T extends MemberableClass>(
 	Member: MemberConstructor<M>,
 	Type: T,
-	name: ClassMemberable<T, M>,
+	name: MemberableClassKeys<T, M>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -132,10 +132,10 @@ export function member<M extends BufferView, T extends ClassMemberables>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberBE<M extends BufferView, T extends ClassMemberables>(
+export function memberBE<M extends BufferView, T extends MemberableClass>(
 	Member: MemberConstructor<M>,
 	Type: T,
-	name: ClassMemberable<T, M>,
+	name: MemberableClassKeys<T, M>,
 	byteOffset: number,
 ): number {
 	return member(Member, Type, name, byteOffset, false);
@@ -150,10 +150,10 @@ export function memberBE<M extends BufferView, T extends ClassMemberables>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function memberLE<M extends BufferView, T extends ClassMemberables>(
+export function memberLE<M extends BufferView, T extends MemberableClass>(
 	Member: MemberConstructor<M>,
 	Type: T,
-	name: ClassMemberable<T, M>,
+	name: MemberableClassKeys<T, M>,
 	byteOffset: number,
 ): number {
 	return member(Member, Type, name, byteOffset, true);
@@ -169,10 +169,10 @@ export function memberLE<M extends BufferView, T extends ClassMemberables>(
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function pad<T extends ClassMemberables>(
+export function pad<T extends MemberableClass>(
 	byteLength: number,
 	Type: T,
-	name: ClassMemberable<T, unknown>,
+	name: MemberableClassKeys<T, unknown>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {

@@ -1,7 +1,7 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 
 import { defineMember } from '../member.ts';
-import type { ClassMemberable, ClassMemberables } from '../members.ts';
+import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import { dataView } from '../util.ts';
 
@@ -19,9 +19,9 @@ type MaybeNativeFloat16 = Partial<{
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function float16<T extends ClassMemberables>(
+export function float16<T extends MemberableClass>(
 	Type: T,
-	name: ClassMemberable<T, number>,
+	name: MemberableClassKeys<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -69,9 +69,9 @@ export function float16<T extends ClassMemberables>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function float16BE<T extends ClassMemberables>(
+export function float16BE<T extends MemberableClass>(
 	Type: T,
-	name: ClassMemberable<T, number>,
+	name: MemberableClassKeys<T, number>,
 	byteOffset: number,
 ): number {
 	return float16(Type, name, byteOffset, false);
@@ -85,9 +85,9 @@ export function float16BE<T extends ClassMemberables>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function float16LE<T extends ClassMemberables>(
+export function float16LE<T extends MemberableClass>(
 	Type: T,
-	name: ClassMemberable<T, number>,
+	name: MemberableClassKeys<T, number>,
 	byteOffset: number,
 ): number {
 	return float16(Type, name, byteOffset, true);

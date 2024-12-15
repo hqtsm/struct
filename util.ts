@@ -1,4 +1,4 @@
-import type { ClassMembered, ClassMembers } from './members.ts';
+import type { MemberClassKeys, MemberedClass } from './members.ts';
 import type { BufferView } from './native.ts';
 import type { Type } from './type.ts';
 
@@ -25,9 +25,9 @@ export function dataView(buffer: ArrayBufferLike): DataView {
  * @param name Member name.
  * @returns Byte offset.
  */
-export function getByteOffset<T extends ClassMembered>(
+export function getByteOffset<T extends MemberedClass>(
 	Type: T,
-	name: ClassMembers<T>,
+	name: MemberClassKeys<T>,
 ): number {
 	return Type.MEMBERS[name].byteOffset;
 }
@@ -39,9 +39,9 @@ export function getByteOffset<T extends ClassMembered>(
  * @param name Member name.
  * @returns Byte length.
  */
-export function getByteLength<T extends ClassMembered>(
+export function getByteLength<T extends MemberedClass>(
 	Type: T,
-	name: ClassMembers<T>,
+	name: MemberClassKeys<T>,
 ): number {
 	return Type.MEMBERS[name].byteLength;
 }

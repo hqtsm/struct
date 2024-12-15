@@ -28,23 +28,23 @@ export interface MemberInfos {
 }
 
 /**
- * Member infoed.
+ * Members.
  */
-export interface MemberInfoed {
+export interface Members {
 	/**
 	 * MemberInfoed class.
 	 */
-	readonly constructor: MemberInfoedClass;
+	readonly constructor: MembersClass;
 }
 
 /**
- * Member infoed class.
+ * Members class.
  */
-export interface MemberInfoedClass {
+export interface MembersClass {
 	/**
 	 * MemberInfoed prototype.
 	 */
-	prototype: MemberInfoed;
+	prototype: Members;
 
 	/**
 	 * Member infos of members.
@@ -65,7 +65,7 @@ export type Membered = Arr<unknown> | Ptr<unknown> | Type;
 /**
  * Membered class types.
  */
-export type ClassMembered =
+export type MemberedClass =
 	| ArrClass<Arr<unknown>>
 	| PtrClass<Ptr<unknown>>
 	| TypeClass;
@@ -73,7 +73,7 @@ export type ClassMembered =
 /**
  * The possible member keys.
  */
-export type Members<T extends Membered> = Exclude<
+export type MemberKeys<T extends Membered> = Exclude<
 	keyof T,
 	| (T extends Arr<unknown> ? Exclude<keyof Arr, number> : never)
 	| (T extends Ptr<unknown> ? Exclude<keyof Ptr, number> : never)
@@ -83,32 +83,34 @@ export type Members<T extends Membered> = Exclude<
 /**
  * The possible member keys for class.
  */
-export type ClassMembers<T extends ClassMembered> = Members<T['prototype']>;
+export type MemberClassKeys<T extends MemberedClass> = MemberKeys<
+	T['prototype']
+>;
 
 /**
  * Memberable types.
  */
-export type Memberables = Arr<unknown> | Type;
+export type Memberable = Arr<unknown> | Type;
 
 /**
  * Memberable class types.
  */
-export type ClassMemberables = ArrClass<Arr<unknown>> | TypeClass;
+export type MemberableClass = ArrClass<Arr<unknown>> | TypeClass;
 
 /**
  * The possible memberable keys, filterable by member type.
  */
-export type Memberable<
-	T extends Memberables,
+export type MemberableKeys<
+	T extends Memberable,
 	// deno-lint-ignore no-explicit-any
 	M = any,
-> = { [K in keyof T]: M extends T[K] ? K : never }[Members<T>];
+> = { [K in keyof T]: M extends T[K] ? K : never }[MemberKeys<T>];
 
 /**
  * The possible memberable keys for class, filterable by member type.
  */
-export type ClassMemberable<
-	T extends ClassMemberables,
+export type MemberableClassKeys<
+	T extends MemberableClass,
 	// deno-lint-ignore no-explicit-any
 	M = any,
-> = Memberable<T['prototype'], M>;
+> = MemberableKeys<T['prototype'], M>;

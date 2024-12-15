@@ -1,7 +1,7 @@
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 
 import { Endian } from './endian.ts';
-import type { MemberInfo, MemberInfoed, MemberInfos } from './members.ts';
+import type { MemberInfo, MemberInfos, Members } from './members.ts';
 import type { ArrayBufferReal } from './native.ts';
 import type { Type, TypeConstructor } from './type.ts';
 import { assignType } from './util.ts';
@@ -51,7 +51,7 @@ let members: WeakMap<typeof Ptr, MemberInfos>;
 /**
  * Pointer to a type.
  */
-export class Ptr<T = never> extends Endian implements MemberInfoed {
+export class Ptr<T = never> extends Endian implements Members {
 	/**
 	 * Ptr class.
 	 */

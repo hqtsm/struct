@@ -1,5 +1,5 @@
 import { defineMember } from '../member.ts';
-import type { ClassMemberable, ClassMemberables } from '../members.ts';
+import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import { dataView } from '../util.ts';
 
@@ -11,9 +11,9 @@ import { dataView } from '../util.ts';
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function int8<T extends ClassMemberables>(
+export function int8<T extends MemberableClass>(
 	Type: T,
-	name: ClassMemberable<T, number>,
+	name: MemberableClassKeys<T, number>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {
@@ -36,9 +36,9 @@ export function int8<T extends ClassMemberables>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function uint8<T extends ClassMemberables>(
+export function uint8<T extends MemberableClass>(
 	Type: T,
-	name: ClassMemberable<T, number>,
+	name: MemberableClassKeys<T, number>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {
