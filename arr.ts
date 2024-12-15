@@ -61,8 +61,7 @@ export interface ArrConstructor<T extends Arr<unknown> = Arr>
 }
 
 let arrays: WeakMap<
-	// deno-lint-ignore no-explicit-any
-	PtrConstructor<Ptr<any>>,
+	PtrConstructor<Ptr<unknown>>,
 	// deno-lint-ignore no-explicit-any
 	MeekValueMap<number, ArrConstructor<Arr<any>>>
 >;

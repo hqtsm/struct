@@ -1,7 +1,6 @@
 import { defineMember } from '../member.ts';
-import type { Memberable } from '../members.ts';
+import type { ClassMemberable, ClassMemberables } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
@@ -12,9 +11,9 @@ import { dataView } from '../util.ts';
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function int8<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function int8<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {
@@ -37,9 +36,9 @@ export function int8<T extends Type>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function uint8<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function uint8<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {

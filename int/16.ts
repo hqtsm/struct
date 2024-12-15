@@ -1,7 +1,6 @@
 import { defineMember } from '../member.ts';
-import type { Memberable } from '../members.ts';
+import type { ClassMemberable, ClassMemberables } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
@@ -13,9 +12,9 @@ import { dataView } from '../util.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function int16<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function int16<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -46,9 +45,9 @@ export function int16<T extends Type>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function int16BE<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function int16BE<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 ): number {
 	return int16(Type, name, byteOffset, false);
@@ -62,9 +61,9 @@ export function int16BE<T extends Type>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function int16LE<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function int16LE<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 ): number {
 	return int16(Type, name, byteOffset, true);
@@ -79,9 +78,9 @@ export function int16LE<T extends Type>(
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function uint16<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function uint16<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -112,9 +111,9 @@ export function uint16<T extends Type>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function uint16BE<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function uint16BE<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 ): number {
 	return uint16(Type, name, byteOffset, false);
@@ -128,9 +127,9 @@ export function uint16BE<T extends Type>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function uint16LE<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function uint16LE<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 ): number {
 	return uint16(Type, name, byteOffset, true);

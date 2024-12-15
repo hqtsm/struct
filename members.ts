@@ -1,4 +1,5 @@
-import type { Type } from './type.ts';
+import type { Arr, ArrClass } from './arr.ts';
+import type { Type, TypeClass } from './type.ts';
 
 /**
  * Member info.
@@ -36,9 +37,31 @@ export interface Membered {
 }
 
 /**
+ * Memberable types.
+ */
+export type Memberables = Arr<unknown> | Type;
+
+/**
+ * Memberable class types.
+ */
+export type ClassMemberables = ArrClass<Arr<unknown>> | TypeClass;
+
+/**
  * The possible memberable keys, filterable by member type.
  */
-// deno-lint-ignore no-explicit-any
-export type Memberable<T extends Type, M = any> = {
+export type Memberable<
+	T extends Memberables,
+	// deno-lint-ignore no-explicit-any
+	M = any,
+> = {
 	[K in keyof T]: M extends T[K] ? K : never;
-}[Exclude<keyof T, keyof Type>];
+}[Exclude<keyof T, T extends Arr<unknown> ? keyof Arr : keyof Type>];
+
+/**
+ * The possible memberable keys for class, filterable by member type.
+ */
+export type ClassMemberable<
+	T extends ArrClass | TypeClass,
+	// deno-lint-ignore no-explicit-any
+	M = any,
+> = Memberable<T['prototype'], M>;

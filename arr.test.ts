@@ -87,6 +87,7 @@ Deno.test('pointer', () => {
 			o = int8(this, 'extra', o);
 			// Expected type checking errors:
 			// o = int8(this, 0, o);
+			// o = int8(this, 'length', o);
 			return o;
 		})(super.BYTE_LENGTH);
 	}

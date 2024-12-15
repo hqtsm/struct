@@ -1,7 +1,6 @@
 import { defineMember } from '../member.ts';
-import type { Memberable } from '../members.ts';
+import type { ClassMemberable, ClassMemberables } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
@@ -12,9 +11,9 @@ import { dataView } from '../util.ts';
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function bool8<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, boolean>,
+export function bool8<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, boolean>,
 	byteOffset: number,
 ): number {
 	return defineMember(Type, name, {

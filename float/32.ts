@@ -1,7 +1,6 @@
 import { defineMember } from '../member.ts';
-import type { Memberable } from '../members.ts';
+import type { ClassMemberable, ClassMemberables } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
@@ -13,9 +12,9 @@ import { dataView } from '../util.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function float32<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function float32<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -46,9 +45,9 @@ export function float32<T extends Type>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function float32BE<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function float32BE<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 ): number {
 	return float32(Type, name, byteOffset, false);
@@ -62,9 +61,9 @@ export function float32BE<T extends Type>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function float32LE<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, number>,
+export function float32LE<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, number>,
 	byteOffset: number,
 ): number {
 	return float32(Type, name, byteOffset, true);

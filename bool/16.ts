@@ -1,7 +1,6 @@
 import { defineMember } from '../member.ts';
-import type { Memberable } from '../members.ts';
+import type { ClassMemberable, ClassMemberables } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import type { Type, TypeClass } from '../type.ts';
 import { dataView } from '../util.ts';
 
 /**
@@ -13,9 +12,9 @@ import { dataView } from '../util.ts';
  * @param littleEndian Little endian, big endian, or default.
  * @returns Byte length.
  */
-export function bool16<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, boolean>,
+export function bool16<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, boolean>,
 	byteOffset: number,
 	littleEndian: boolean | null = null,
 ): number {
@@ -46,9 +45,9 @@ export function bool16<T extends Type>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function bool16BE<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, boolean>,
+export function bool16BE<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, boolean>,
 	byteOffset: number,
 ): number {
 	return bool16(Type, name, byteOffset, false);
@@ -62,9 +61,9 @@ export function bool16BE<T extends Type>(
  * @param byteOffset Byte offset.
  * @returns Byte length.
  */
-export function bool16LE<T extends Type>(
-	Type: TypeClass<T>,
-	name: Memberable<T, boolean>,
+export function bool16LE<T extends ClassMemberables>(
+	Type: T,
+	name: ClassMemberable<T, boolean>,
 	byteOffset: number,
 ): number {
 	return bool16(Type, name, byteOffset, true);
