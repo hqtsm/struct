@@ -82,7 +82,7 @@ export type Memberable<
 	T extends Memberables,
 	// deno-lint-ignore no-explicit-any
 	M = any,
-> = { [K in Members<T>]: M extends T[K] ? K : never }[Members<T>];
+> = keyof { [K in Members<T>]: M extends T[K] ? K : never };
 
 /**
  * The possible memberable keys for class, filterable by member type.
