@@ -11,18 +11,20 @@ import { pointer } from './ptr.ts';
 import { Struct } from './struct.ts';
 import { getByteLength, getByteOffset } from './util.ts';
 
-Deno.test('array', () => {
-	class Foo extends Struct {
-		declare public bar: number;
+class Foo extends Struct {
+	declare public bar: number;
 
-		declare public baz: number;
+	declare public baz: number;
 
-		static {
-			int8(this, 'bar');
-			int8(this, 'baz');
-		}
+	static {
+		int8(this, 'bar');
+		int8(this, 'baz');
 	}
+}
 
+const Foo4 = array(Foo, 4);
+
+Deno.test('array: lengths', () => {
 	assertThrows(() => array(Foo, -1), RangeError);
 	assertThrows(() => array(Foo, Infinity), RangeError);
 	assertThrows(() => array(Foo, Number.MAX_SAFE_INTEGER + 1), RangeError);
@@ -31,7 +33,6 @@ Deno.test('array', () => {
 	assertEquals(array(Foo, 0.5).LENGTH, 0);
 	assertEquals(array(Foo, 1.1).LENGTH, 1);
 
-	const Foo4 = array(Foo, 4);
 	assertEquals(Foo4.BYTES_PER_ELEMENT, Foo.BYTE_LENGTH);
 	assertEquals(Foo4.BYTE_LENGTH, Foo.BYTE_LENGTH * 4);
 	assertEquals(Foo4.LENGTH, 4);
@@ -41,6 +42,13 @@ Deno.test('array', () => {
 	assertEquals(new Foo4(new ArrayBuffer(0)).length, 4);
 	assertEquals(new Foo4(new ArrayBuffer(0)).byteLength, Foo4.BYTE_LENGTH);
 
+	assertEquals(getByteLength(Foo4, 0), Foo.BYTE_LENGTH);
+	assertEquals(getByteOffset(Foo4, 1), Foo.BYTE_LENGTH);
+	assertEquals(getByteOffset(Foo4, 2), Foo.BYTE_LENGTH * 2);
+	assertEquals(getByteOffset(Foo4, -1), -Foo.BYTE_LENGTH);
+});
+
+Deno.test('array: values', () => {
 	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
 	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
 	{
@@ -61,6 +69,23 @@ Deno.test('array', () => {
 		assertNotStrictEquals(foo4[1], tmp);
 	}
 	assertEquals(data, new Uint8Array([-2, -1, 1, 2, 3, 4]));
+});
+
+Deno.test('array: endian', () => {
+	const Foo4BE = bigEndian(Foo4);
+	const Foo4LE = littleEndian(Foo4BE);
+	assertEquals(getByteLength(Foo4BE, 0), Foo.BYTE_LENGTH);
+	assertEquals(getByteOffset(Foo4BE, 1), Foo.BYTE_LENGTH);
+	assertEquals(getByteOffset(Foo4BE, 2), Foo.BYTE_LENGTH * 2);
+	assertEquals(getByteOffset(Foo4BE, -1), -Foo.BYTE_LENGTH);
+	assertNotStrictEquals(Foo4.MEMBERS, Foo4BE.MEMBERS);
+	assertEquals(new Foo4BE(new ArrayBuffer(0)).littleEndian, false);
+	assertEquals(new Foo4LE(new ArrayBuffer(0)).littleEndian, true);
+});
+
+Deno.test('array: Symbol.iterator', () => {
+	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
+	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
 
 	{
 		const list = [...foo4];
@@ -71,22 +96,9 @@ Deno.test('array', () => {
 			i++;
 		}
 	}
+});
 
-	assertEquals(getByteLength(Foo4, 0), Foo.BYTE_LENGTH);
-	assertEquals(getByteOffset(Foo4, 1), Foo.BYTE_LENGTH);
-	assertEquals(getByteOffset(Foo4, 2), Foo.BYTE_LENGTH * 2);
-	assertEquals(getByteOffset(Foo4, -1), -Foo.BYTE_LENGTH);
-
-	const Foo4BE = bigEndian(Foo4);
-	const Foo4LE = littleEndian(Foo4BE);
-	assertEquals(getByteLength(Foo4BE, 0), Foo.BYTE_LENGTH);
-	assertEquals(getByteOffset(Foo4BE, 1), Foo.BYTE_LENGTH);
-	assertEquals(getByteOffset(Foo4BE, 2), Foo.BYTE_LENGTH * 2);
-	assertEquals(getByteOffset(Foo4BE, -1), -Foo.BYTE_LENGTH);
-	assertNotStrictEquals(Foo4.MEMBERS, Foo4BE.MEMBERS);
-	assertEquals(new Foo4BE(new ArrayBuffer(0)).littleEndian, false);
-	assertEquals(new Foo4LE(new ArrayBuffer(0)).littleEndian, true);
-
+Deno.test('array: extend', () => {
 	// Weird but not invalid.
 	class FooExtra extends Foo4 {
 		declare public extra: number;
