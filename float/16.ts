@@ -36,7 +36,7 @@ export function float16<T extends MemberableClass>(
 				)
 				: getFloat16(
 					d as DataView,
-					byteOffset,
+					this.byteOffset + byteOffset,
 					littleEndian ?? this.littleEndian,
 				);
 		},
@@ -44,14 +44,14 @@ export function float16<T extends MemberableClass>(
 			const d = dataView(this.buffer) as MaybeNativeFloat16;
 			if (d.setFloat16) {
 				d.setFloat16(
-					byteOffset,
+					this.byteOffset + byteOffset,
 					value,
 					littleEndian ?? this.littleEndian,
 				);
 			} else {
 				setFloat16(
 					d as DataView,
-					byteOffset,
+					this.byteOffset + byteOffset,
 					value,
 					littleEndian ?? this.littleEndian,
 				);
