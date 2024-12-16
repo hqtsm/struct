@@ -1,11 +1,11 @@
-import type { EndianAware } from './endian.ts';
+import type { Endian, EndianClass } from './endian.ts';
 import type { MembersClass } from './members.ts';
 import type { ArrayBufferReal, BufferView } from './native.ts';
 
 /**
  * Type.
  */
-export interface Type extends BufferView, EndianAware {
+export interface Type extends Endian, BufferView {
 	/**
 	 * Type class.
 	 */
@@ -20,7 +20,8 @@ export interface Type extends BufferView, EndianAware {
 /**
  * Type class.
  */
-export interface TypeClass<T extends Type = Type> extends MembersClass {
+export interface TypeClass<T extends Type = Type>
+	extends EndianClass, MembersClass {
 	/**
 	 * Type prototype.
 	 */
