@@ -26,13 +26,12 @@ Deno.test('int16', () => {
 
 		declare public delta: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int16(this, 'alpha', o);
-			o = int16(this, 'beta', o);
-			o = int16LE(this, 'gamma', o);
-			o = int16BE(this, 'delta', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int16(this, 'alpha');
+			int16(this, 'beta');
+			int16LE(this, 'gamma');
+			int16BE(this, 'delta');
+		}
 	}
 
 	const off = {
@@ -96,13 +95,12 @@ Deno.test('uint16', () => {
 
 		declare public delta: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = uint16(this, 'alpha', o);
-			o = uint16(this, 'beta', o);
-			o = uint16LE(this, 'gamma', o);
-			o = uint16BE(this, 'delta', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			uint16(this, 'alpha');
+			uint16(this, 'beta');
+			uint16LE(this, 'gamma');
+			uint16BE(this, 'delta');
+		}
 	}
 
 	const off = {

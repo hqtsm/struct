@@ -1,5 +1,5 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
-import { defineMember } from '../member.ts';
+import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import { dataView } from '../util.ts';
@@ -12,7 +12,7 @@ type MaybeNativeFloat16 = Partial<{
 /**
  * Member: float16.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
@@ -21,9 +21,10 @@ type MaybeNativeFloat16 = Partial<{
 export function float16<T extends MemberableClass>(
 	Type: T,
 	name: MemberableClassKeys<T, number>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 	littleEndian: boolean | null = null,
 ): number {
+	byteOffset ??= defaultMemberByteOffset(Type);
 	return defineMember(Type, name, {
 		byteLength: 2,
 		byteOffset,
@@ -63,7 +64,7 @@ export function float16<T extends MemberableClass>(
 /**
  * Member: float16, big endian.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
@@ -71,7 +72,7 @@ export function float16<T extends MemberableClass>(
 export function float16BE<T extends MemberableClass>(
 	Type: T,
 	name: MemberableClassKeys<T, number>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 ): number {
 	return float16(Type, name, byteOffset, false);
 }
@@ -79,7 +80,7 @@ export function float16BE<T extends MemberableClass>(
 /**
  * Member: float16, little endian.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
@@ -87,7 +88,7 @@ export function float16BE<T extends MemberableClass>(
 export function float16LE<T extends MemberableClass>(
 	Type: T,
 	name: MemberableClassKeys<T, number>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 ): number {
 	return float16(Type, name, byteOffset, true);
 }

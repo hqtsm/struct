@@ -18,12 +18,11 @@ Deno.test('float64', () => {
 
 		declare public gamma: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = float64LE(this, 'alpha', o);
-			o = float64BE(this, 'beta', o);
-			o = float64(this, 'gamma', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			float64LE(this, 'alpha');
+			float64BE(this, 'beta');
+			float64(this, 'gamma');
+		}
 	}
 
 	const off = {

@@ -17,20 +17,18 @@ Deno.test('assignStruct', () => {
 
 		declare public beta: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = uint8(this, 'alpha', o);
-			o = uint8(this, 'beta', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			uint8(this, 'alpha');
+			uint8(this, 'beta');
+		}
 	}
 
 	class TestExt extends Test {
 		declare public gamma: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = uint8(this, 'gamma', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			uint8(this, 'gamma');
+		}
 	}
 
 	{

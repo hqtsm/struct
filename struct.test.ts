@@ -31,10 +31,9 @@ Deno.test('Struct: byteOffset', () => {
 	class Test extends Struct {
 		declare public alpha: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'alpha', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'alpha');
+		}
 	}
 
 	const buffer = new ArrayBuffer(32);
@@ -96,10 +95,9 @@ Deno.test('Struct: protected properties', () => {
 			return this.alpha;
 		}
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'alpha' as never, o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'alpha' as never);
+		}
 	}
 
 	const test = new Test(new Uint8Array([42]).buffer);
@@ -116,10 +114,9 @@ Deno.test('Struct: private properties', () => {
 			return this.alpha;
 		}
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'alpha' as never, o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'alpha' as never);
+		}
 	}
 
 	const test = new Test(new Uint8Array([42]).buffer);
@@ -130,19 +127,17 @@ Deno.test('Struct: extends', () => {
 	class Var extends Struct {
 		declare public type: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'type', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'type');
+		}
 	}
 
 	class Int8 extends Var {
 		declare public value: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'value', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'value');
+		}
 	}
 
 	const data = new Uint8Array(Int8.BYTE_LENGTH);
@@ -158,10 +153,9 @@ Deno.test('Struct: abstract', () => {
 
 		public abstract method(): number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'value', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'value');
+		}
 	}
 
 	class MemberImp extends Member {
@@ -175,10 +169,9 @@ Deno.test('Struct: abstract', () => {
 	class Test extends Struct {
 		declare public child: MemberImp;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = member(MemberImp, this, 'child', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			member(MemberImp, this, 'child');
+		}
 	}
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
@@ -193,10 +186,9 @@ Deno.test('Struct: abstract placeholder', () => {
 
 		public abstract method(): number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'value', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'value');
+		}
 	}
 
 	class MemberImp extends Member {
@@ -210,19 +202,17 @@ Deno.test('Struct: abstract placeholder', () => {
 	abstract class Test extends Struct {
 		declare public child: Member;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = pad(Member.BYTE_LENGTH, this, 'child' as never, o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			pad(Member.BYTE_LENGTH, this, 'child' as never);
+		}
 	}
 
 	class TestImp extends Test {
 		declare public child: Member;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = member(MemberImp, this, 'child', getByteOffset(this, 'child'));
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			member(MemberImp, this, 'child', getByteOffset(this, 'child'));
+		}
 	}
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);

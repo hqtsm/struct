@@ -11,18 +11,16 @@ Deno.test('ClassMemberable: additional member', () => {
 
 		declare public baz: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = uint32(this, 'bar', o);
-			o = uint32(this, 'baz', o);
+		static {
+			uint32(this, 'bar');
+			uint32(this, 'baz');
 
 			// @ts-expect-error: A non-member built-in property.
-			o = uint32(this, 'byteLength', o);
+			uint32(this, 'byteLength');
 
 			// @ts-expect-error: A non-member built-in property.
-			o = uint32(this, 'byteOffset', o);
-
-			return o;
-		})(super.BYTE_LENGTH);
+			uint32(this, 'byteOffset');
+		}
 	}
 
 	assertEquals(Foo.BYTE_LENGTH, 16);
@@ -34,11 +32,10 @@ Deno.test('ClassMemberable: extends member', () => {
 
 		declare public two: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = uint32(this, 'one', o);
-			o = uint32(this, 'two', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			uint32(this, 'one');
+			uint32(this, 'two');
+		}
 	}
 
 	class Parent extends Struct {
@@ -50,23 +47,21 @@ Deno.test('ClassMemberable: extends member', () => {
 
 		declare public gamma: Child;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
+		static {
 			// Not an array, so we can use these.
-			o = member(Child, this, 'get', o);
-			o = member(Child, this, 'set', o);
-			o = uint32(this, 'length', o);
+			member(Child, this, 'get');
+			member(Child, this, 'set');
+			uint32(this, 'length');
 
 			// @ts-expect-error: Does not extend the member type.
-			o = member(Struct, this, 'gamma', o);
+			member(Struct, this, 'gamma');
 
 			// @ts-expect-error: Does not exist in membered type.
-			o = uint32(this, 'unknown', o);
+			uint32(this, 'unknown');
 
 			// A way to have undeclared members.
-			o = uint32(this, 'hidden' as never, o);
-
-			return o;
-		})(super.BYTE_LENGTH);
+			uint32(this, 'hidden' as never);
+		}
 	}
 
 	assertEquals(Parent.BYTE_LENGTH, 28);
@@ -79,29 +74,27 @@ Deno.test('ClassMemberable: array properties', () => {
 	class B4Extra extends B4 {
 		declare public extra: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = uint32(this, 'extra', o);
+		static {
+			uint32(this, 'extra');
 
 			// @ts-expect-error: A non-member built-in property.
-			o = uint32(this, 'byteLength', o);
+			uint32(this, 'byteLength');
 
 			// @ts-expect-error: A non-member built-in property.
-			o = uint32(this, 'byteOffset', o);
+			uint32(this, 'byteOffset');
 
 			// @ts-expect-error: A non-member built-in property.
-			o = uint32(this, 'length', o);
+			uint32(this, 'length');
 
 			// @ts-expect-error: A non-member built-in property.
-			o = uint32(this, 'get', o);
+			uint32(this, 'get');
 
 			// @ts-expect-error: A non-member built-in property.
-			o = uint32(this, 'set', o);
+			uint32(this, 'set');
 
 			// Extremely weird, not recommended, but not technically invalid.
-			o = uint32(this, 0, o);
-
-			return o;
-		})(super.BYTE_LENGTH);
+			uint32(this, 0);
+		}
 	}
 
 	assertEquals(B4Extra.BYTE_LENGTH, 32);

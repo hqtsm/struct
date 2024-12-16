@@ -9,9 +9,29 @@ import type { Type } from './type.ts';
 import { assignView } from './util.ts';
 
 /**
+ * Get default/current/next member offset for type.
+ *
+ * @param Type Type class.
+ * @returns Byte offset.
+ */
+export function defaultMemberByteOffset(Type: MemberableClass): number {
+	return Type.OVERLAPPING ? 0 : Type.BYTE_LENGTH;
+}
+
+/**
  * Member descriptor.
  */
-export interface MemberDescriptor<T extends Memberable, M> extends MemberInfo {
+export interface MemberDescriptor<T extends Memberable, M> {
+	/**
+	 * Byte length.
+	 */
+	byteLength: number;
+
+	/**
+	 * Byte offset.
+	 */
+	byteOffset?: number | null;
+
 	/**
 	 * Getter function.
 	 *
@@ -32,7 +52,7 @@ export interface MemberDescriptor<T extends Memberable, M> extends MemberInfo {
 /**
  * Define member.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param desc Member descriptor.
  * @returns Byte length.
@@ -44,7 +64,8 @@ export function defineMember<T extends MemberableClass, M>(
 		MemberDescriptor<(T['prototype'] & Record<typeof name, M>), M>
 	>,
 ): number {
-	const { byteLength, byteOffset, get, set } = desc;
+	let { byteLength, byteOffset, get, set } = desc;
+	byteOffset ??= defaultMemberByteOffset(Type);
 	Object.defineProperty(Type.prototype, name, {
 		get,
 		set,
@@ -55,7 +76,11 @@ export function defineMember<T extends MemberableClass, M>(
 		configurable: true,
 		writable: true,
 	});
-	return byteOffset + byteLength;
+	byteLength += byteOffset;
+	if (byteLength > Type.BYTE_LENGTH) {
+		(Type as { BYTE_LENGTH: number }).BYTE_LENGTH = byteLength;
+	}
+	return byteLength;
 }
 
 /**
@@ -87,7 +112,7 @@ export interface MemberConstructor<
  * Member: generic.
  *
  * @param Member Member constructor.
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
@@ -97,10 +122,11 @@ export function member<T extends MemberableClass, M extends BufferView>(
 	Member: MemberConstructor<M>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 	littleEndian: boolean | null = null,
 ): number {
 	let m: WeakMap<Type, M>;
+	byteOffset ??= defaultMemberByteOffset(Type);
 	return defineMember(Type, name, {
 		byteLength: Member.BYTE_LENGTH,
 		byteOffset,
@@ -128,7 +154,7 @@ export function member<T extends MemberableClass, M extends BufferView>(
  * Member: generic, big endian.
  *
  * @param Member Member constructor.
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
@@ -137,7 +163,7 @@ export function memberBE<T extends MemberableClass, M extends BufferView>(
 	Member: MemberConstructor<M>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 ): number {
 	return member(Member, Type, name, byteOffset, false);
 }
@@ -146,7 +172,7 @@ export function memberBE<T extends MemberableClass, M extends BufferView>(
  * Member: generic, little endian.
  *
  * @param Member Member constructor.
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
@@ -155,7 +181,7 @@ export function memberLE<T extends MemberableClass, M extends BufferView>(
 	Member: MemberConstructor<M>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 ): number {
 	return member(Member, Type, name, byteOffset, true);
 }
@@ -164,7 +190,7 @@ export function memberLE<T extends MemberableClass, M extends BufferView>(
  * Member: pad.
  *
  * @param byteLength Padding size.
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
@@ -174,7 +200,7 @@ export function pad<T extends MemberableClass>(
 	byteLength: number,
 	Type: T,
 	name: MemberableClassKeys<T, unknown>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 ): number {
 	return defineMember(Type, name, {
 		byteLength,

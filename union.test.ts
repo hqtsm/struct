@@ -31,10 +31,9 @@ Deno.test('Union: byteOffset', () => {
 	class Test extends Union {
 		declare public alpha: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'alpha', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'alpha');
+		}
 	}
 
 	const buffer = new ArrayBuffer(32);
@@ -96,10 +95,9 @@ Deno.test('Union: protected properties', () => {
 			return this.alpha;
 		}
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'alpha' as never, o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'alpha' as never);
+		}
 	}
 
 	const test = new Test(new Uint8Array([42]).buffer);
@@ -116,10 +114,9 @@ Deno.test('Union: private properties', () => {
 			return this.alpha;
 		}
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'alpha' as never, o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'alpha' as never);
+		}
 	}
 
 	const test = new Test(new Uint8Array([42]).buffer);
@@ -130,9 +127,9 @@ Deno.test('Union: extends', () => {
 	class One extends Union {
 		declare public one: number;
 
-		public static override readonly BYTE_LENGTH: number = Math.max(
-			int8(this, 'one', 0),
-		);
+		static {
+			int8(this, 'one');
+		}
 	}
 
 	assertEquals(One.BYTE_LENGTH, 1);
@@ -140,10 +137,9 @@ Deno.test('Union: extends', () => {
 	class Two extends One {
 		declare public two: number;
 
-		public static override readonly BYTE_LENGTH: number = Math.max(
-			super.BYTE_LENGTH,
-			int32(this, 'two', 0),
-		);
+		static {
+			int32(this, 'two');
+		}
 	}
 
 	assertEquals(One.BYTE_LENGTH, 1);

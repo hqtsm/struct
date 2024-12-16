@@ -26,12 +26,11 @@ Deno.test('float16', () => {
 
 		declare public gamma: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = float16LE(this, 'alpha', o);
-			o = float16BE(this, 'beta', o);
-			o = float16(this, 'gamma', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			float16LE(this, 'alpha');
+			float16BE(this, 'beta');
+			float16(this, 'gamma');
+		}
 	}
 
 	class TestM extends Test {

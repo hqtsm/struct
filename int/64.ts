@@ -1,4 +1,4 @@
-import { defineMember } from '../member.ts';
+import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import { dataView } from '../util.ts';
@@ -6,7 +6,7 @@ import { dataView } from '../util.ts';
 /**
  * Member: int64.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
@@ -15,9 +15,10 @@ import { dataView } from '../util.ts';
 export function int64<T extends MemberableClass>(
 	Type: T,
 	name: MemberableClassKeys<T, bigint>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 	littleEndian: boolean | null = null,
 ): number {
+	byteOffset ??= defaultMemberByteOffset(Type);
 	return defineMember(Type, name, {
 		byteLength: 8,
 		byteOffset,
@@ -40,7 +41,7 @@ export function int64<T extends MemberableClass>(
 /**
  * Member: int64, big endian.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
@@ -48,7 +49,7 @@ export function int64<T extends MemberableClass>(
 export function int64BE<T extends MemberableClass>(
 	Type: T,
 	name: MemberableClassKeys<T, bigint>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 ): number {
 	return int64(Type, name, byteOffset, false);
 }
@@ -56,7 +57,7 @@ export function int64BE<T extends MemberableClass>(
 /**
  * Member: int64, little endian.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
@@ -64,7 +65,7 @@ export function int64BE<T extends MemberableClass>(
 export function int64LE<T extends MemberableClass>(
 	Type: T,
 	name: MemberableClassKeys<T, bigint>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 ): number {
 	return int64(Type, name, byteOffset, true);
 }
@@ -72,7 +73,7 @@ export function int64LE<T extends MemberableClass>(
 /**
  * Member: uint64.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
@@ -81,9 +82,10 @@ export function int64LE<T extends MemberableClass>(
 export function uint64<T extends MemberableClass>(
 	Type: T,
 	name: MemberableClassKeys<T, bigint>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 	littleEndian: boolean | null = null,
 ): number {
+	byteOffset ??= defaultMemberByteOffset(Type);
 	return defineMember(Type, name, {
 		byteLength: 8,
 		byteOffset,
@@ -106,7 +108,7 @@ export function uint64<T extends MemberableClass>(
 /**
  * Member: uint64, big endian.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
@@ -114,7 +116,7 @@ export function uint64<T extends MemberableClass>(
 export function uint64BE<T extends MemberableClass>(
 	Type: T,
 	name: MemberableClassKeys<T, bigint>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 ): number {
 	return uint64(Type, name, byteOffset, false);
 }
@@ -122,7 +124,7 @@ export function uint64BE<T extends MemberableClass>(
 /**
  * Member: uint64, little endian.
  *
- * @param Type Type constructor.
+ * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @returns Byte length.
@@ -130,7 +132,7 @@ export function uint64BE<T extends MemberableClass>(
 export function uint64LE<T extends MemberableClass>(
 	Type: T,
 	name: MemberableClassKeys<T, bigint>,
-	byteOffset: number,
+	byteOffset: number | null = null,
 ): number {
 	return uint64(Type, name, byteOffset, true);
 }

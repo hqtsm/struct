@@ -15,11 +15,10 @@ Deno.test('member', () => {
 
 		declare public two: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = uint32(this, 'one', o);
-			o = uint32(this, 'two', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			uint32(this, 'one');
+			uint32(this, 'two');
+		}
 	}
 
 	class TestChildExtended extends TestChild {
@@ -37,16 +36,15 @@ Deno.test('member', () => {
 
 		declare public gamma: TestChild;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = memberLE(TestChild, this, 'alpha', o);
-			o = memberBE(TestChild, this, 'beta', o);
-			o = member(TestChild, this, 'gamma', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			memberLE(TestChild, this, 'alpha');
+			memberBE(TestChild, this, 'beta');
+			member(TestChild, this, 'gamma');
+		}
 	}
 
 	class TestParentExtended extends TestParent {
-		public static override readonly BYTE_LENGTH: number = ((o) => {
+		static {
 			// Extending overrides are possible.
 			member(
 				TestChildExtended,
@@ -54,8 +52,7 @@ Deno.test('member', () => {
 				'gamma',
 				getByteOffset(this, 'gamma'),
 			);
-			return o;
-		})(super.BYTE_LENGTH);
+		}
 	}
 
 	const cOff = {
@@ -141,12 +138,11 @@ Deno.test('pad', () => {
 
 		declare public beta: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = uint32(this, 'alpha', o);
-			o = pad(8, this, 'mystery', o);
-			o = uint32(this, 'beta', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			uint32(this, 'alpha');
+			pad(8, this, 'mystery');
+			uint32(this, 'beta');
+		}
 	}
 
 	const off = {

@@ -27,12 +27,11 @@ class Example extends Struct {
 
 	declare public gamma: number;
 
-	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o = uint16LE(this, 'alpha', o);
-		o = uint16BE(this, 'beta', o);
-		o = int8(this, 'gamma', o);
-		return o;
-	})(super.BYTE_LENGTH);
+	static {
+		uint16LE(this, 'alpha');
+		uint16BE(this, 'beta');
+		int8(this, 'gamma');
+	}
 }
 
 const data = new Uint8Array(Example.BYTE_LENGTH);
@@ -56,11 +55,10 @@ class Example extends Struct {
 
 	declare public beta: number;
 
-	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o = uint16(this, 'alpha', o);
-		o = uint16(this, 'beta', o);
-		return o;
-	})(super.BYTE_LENGTH);
+	static {
+		uint16(this, 'alpha');
+		uint16(this, 'beta');
+	}
 }
 
 const data = new Uint8Array(Example.BYTE_LENGTH);
@@ -86,19 +84,17 @@ import { float32, Struct, uint32 } from '@hqtsm/struct';
 class Variable extends Struct {
 	declare public type: number;
 
-	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o = uint32(this, 'type', o);
-		return o;
-	})(super.BYTE_LENGTH);
+	static {
+		uint32(this, 'type');
+	}
 }
 
 class VariableFloat extends Variable {
 	declare public value: number;
 
-	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o = float32(this, 'value', o);
-		return o;
-	})(super.BYTE_LENGTH);
+	static {
+		float32(this, 'value');
+	}
 }
 
 const data = new Uint8Array(VariableFloat.BYTE_LENGTH);
@@ -120,11 +116,10 @@ class Child extends Struct {
 
 	declare public beta: number;
 
-	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o = uint16BE(this, 'alpha', o);
-		o = uint16BE(this, 'beta', o);
-		return o;
-	})(super.BYTE_LENGTH);
+	static {
+		uint16BE(this, 'alpha');
+		uint16BE(this, 'beta');
+	}
 }
 
 class Parent extends Struct {
@@ -132,11 +127,10 @@ class Parent extends Struct {
 
 	declare public child2: Child;
 
-	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o = member(Child, this, 'child1', o);
-		o = member(Child, this, 'child2', o);
-		return o;
-	})(super.BYTE_LENGTH);
+	static {
+		member(Child, this, 'child1');
+		member(Child, this, 'child2');
+	}
 }
 
 const data = new Uint8Array(Parent.BYTE_LENGTH);
@@ -172,12 +166,11 @@ class Example extends Struct {
 		this.beta = value;
 	}
 
-	public static override readonly BYTE_LENGTH: number = ((o) => {
-		o = uint8(this, 'alpha' as never, o);
-		o = uint8(this, 'beta' as never, o);
-		o = uint8(this, 'gamma', o);
-		return o;
-	})(super.BYTE_LENGTH);
+	static {
+		uint8(this, 'alpha' as never);
+		uint8(this, 'beta' as never);
+		uint8(this, 'gamma');
+	}
 }
 
 const data = new Uint8Array(Example.BYTE_LENGTH);

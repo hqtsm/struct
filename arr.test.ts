@@ -17,11 +17,10 @@ Deno.test('pointer', () => {
 
 		declare public baz: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'bar', o);
-			o = int8(this, 'baz', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'bar');
+			int8(this, 'baz');
+		}
 	}
 
 	assertThrows(() => array(Foo, -1), RangeError);
@@ -82,10 +81,9 @@ Deno.test('pointer', () => {
 	class FooExtra extends Foo4 {
 		declare public extra: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int8(this, 'extra', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int8(this, 'extra');
+		}
 	}
 	assertEquals(FooExtra.BYTE_LENGTH, Foo4.BYTE_LENGTH + 1);
 });

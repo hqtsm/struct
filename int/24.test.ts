@@ -32,13 +32,12 @@ Deno.test('int24', () => {
 
 		declare public delta: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = int24(this, 'alpha', o);
-			o = int24(this, 'beta', o);
-			o = int24LE(this, 'gamma', o);
-			o = int24BE(this, 'delta', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			int24(this, 'alpha');
+			int24(this, 'beta');
+			int24LE(this, 'gamma');
+			int24BE(this, 'delta');
+		}
 	}
 
 	const off = {
@@ -102,13 +101,12 @@ Deno.test('uint24', () => {
 
 		declare public delta: number;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = uint24(this, 'alpha', o);
-			o = uint24(this, 'beta', o);
-			o = uint24LE(this, 'gamma', o);
-			o = uint24BE(this, 'delta', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			uint24(this, 'alpha');
+			uint24(this, 'beta');
+			uint24LE(this, 'gamma');
+			uint24BE(this, 'delta');
+		}
 	}
 
 	const off = {

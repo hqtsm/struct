@@ -20,13 +20,12 @@ Deno.test('bool32', () => {
 
 		declare public delta: boolean;
 
-		public static override readonly BYTE_LENGTH: number = ((o) => {
-			o = bool32(this, 'alpha', o);
-			o = bool32(this, 'beta', o);
-			o = bool32LE(this, 'gamma', o);
-			o = bool32BE(this, 'delta', o);
-			return o;
-		})(super.BYTE_LENGTH);
+		static {
+			bool32(this, 'alpha');
+			bool32(this, 'beta');
+			bool32LE(this, 'gamma');
+			bool32BE(this, 'delta');
+		}
 	}
 
 	const off = {
