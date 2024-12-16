@@ -106,7 +106,7 @@ export interface EndianConstructor extends EndianClass {
 	): Endian;
 }
 
-let defaultEndians: WeakMap<EndianClass, EndianClass>;
+let dynamicEndians: WeakMap<EndianClass, EndianClass>;
 
 /**
  * Extend endian class as default endian.
@@ -114,14 +114,14 @@ let defaultEndians: WeakMap<EndianClass, EndianClass>;
  * @param Endian Endian class.
  * @returns Extended class.
  */
-export function defaultEndian<T extends EndianClass>(
+export function dynamicEndian<T extends EndianClass>(
 	// deno-lint-ignore ban-types
 	Endian: T & Function,
 ): T {
-	let r = (defaultEndians ??= new WeakMap()).get(Endian);
+	let r = (dynamicEndians ??= new WeakMap()).get(Endian);
 	if (!r) {
-		const name = `DefaultEndian<${Endian.name}>`;
-		defaultEndians.set(
+		const name = `DynamicEndian<${Endian.name}>`;
+		dynamicEndians.set(
 			Endian,
 			r = {
 				[name]: class extends (Endian as unknown as EndianConstructor) {
@@ -132,7 +132,7 @@ export function defaultEndian<T extends EndianClass>(
 							this.prototype,
 							Symbol.toStringTag,
 							{
-								value: `DefaultEndian<${
+								value: `DynamicEndian<${
 									Endian.prototype[Symbol.toStringTag]
 								}>`,
 								configurable: true,

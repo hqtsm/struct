@@ -2,7 +2,7 @@ import { assertEquals, assertNotEquals, assertStrictEquals } from '@std/assert';
 import {
 	BIG_ENDIAN,
 	bigEndian,
-	defaultEndian,
+	dynamicEndian,
 	Endian,
 	LITTLE_ENDIAN,
 	littleEndian,
@@ -13,17 +13,17 @@ Deno.test('BIG_ENDIAN != LITTLE_ENDIAN', () => {
 	assertNotEquals(BIG_ENDIAN, LITTLE_ENDIAN);
 });
 
-Deno.test('defaultEndian', () => {
-	const DE = defaultEndian(Endian);
+Deno.test('dynamicEndian', () => {
+	const DE = dynamicEndian(Endian);
 	assertEquals(DE.LITTLE_ENDIAN, null);
-	assertStrictEquals(defaultEndian(Endian), DE);
+	assertStrictEquals(dynamicEndian(Endian), DE);
 	assertEquals(
 		`${new DE(new ArrayBuffer(0))}`,
-		'[object DefaultEndian<Endian>]',
+		'[object DynamicEndian<Endian>]',
 	);
 	assertEquals(
-		`${new (defaultEndian(Struct))(new ArrayBuffer(0))}`,
-		'[object DefaultEndian<Struct>]',
+		`${new (dynamicEndian(Struct))(new ArrayBuffer(0))}`,
+		'[object DynamicEndian<Struct>]',
 	);
 });
 
