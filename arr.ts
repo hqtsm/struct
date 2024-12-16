@@ -26,27 +26,36 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	/**
 	 * Get value at index.
 	 *
-	 * @param i Index, can be negative.
+	 * @param i Index, negative to index from end.
+	 * @returns Value at index.
 	 */
 	at(i: number): T | undefined;
 
 	/**
-	 * Value iterator.
+	 * Get iterator for values.
+	 *
+	 * @returns Value iterator.
 	 */
 	[Symbol.iterator](): Generator<T, undefined, unknown>;
 
 	/**
-	 * Entry key-value pair iterator.
+	 * Get iterator for entries.
+	 *
+	 * @returns Entry iterator.
 	 */
 	entries(): Generator<[number, T], undefined, unknown>;
 
 	/**
-	 * Key iterator.
+	 * Get iterator for keys.
+	 *
+	 * @returns Key iterator.
 	 */
 	keys(): Generator<number, undefined, unknown>;
 
 	/**
-	 * Value iterator.
+	 * Get iterator for values.
+	 *
+	 * @returns Value iterator.
 	 */
 	values(): Generator<T, undefined, unknown>;
 }
