@@ -142,6 +142,58 @@ stru.child2.beta = 66;
 console.assert(data.join(' ') === '0 97 0 98 0 65 0 66');
 ```
 
+## Pointer
+
+Comes with pointers for primitives, and a factory for pointers to types.
+
+```ts
+import { int8, Int8Ptr, pointer, Struct } from '@hqtsm/struct';
+
+const data = new Int8Array(6);
+const i8p = new Int8Ptr(data.buffer, 2);
+
+// Setting values by index.
+i8p[0] = 0;
+i8p[1] = 1;
+i8p[2] = 2;
+i8p[3] = 3;
+
+// Negative indexing also works.
+i8p[-1] = -1;
+i8p[-2] = -2;
+
+console.assert(data.join(' ') === '-2 -1 0 1 2 3');
+
+class XY extends Struct {
+	declare public x: number;
+
+	declare public y: number;
+
+	static {
+		int8(this, 'x');
+		int8(this, 'y');
+	}
+}
+
+// Pointer for custom type.
+const XYPtr = pointer(XY);
+const xyp = new XYPtr(data.buffer, 2);
+
+console.assert(xyp[0].x === 0);
+console.assert(xyp[0].y === 1);
+console.assert(xyp[1].x === 2);
+console.assert(xyp[1].y === 3);
+console.assert(xyp[-1].x === -2);
+console.assert(xyp[-1].y === -1);
+
+// Type memory can also be assigned.
+const xy = new XY(new ArrayBuffer(XY.BYTE_LENGTH));
+xy.x = 88;
+xy.y = 89;
+xyp[0] = xy;
+console.assert(data.join(' ') === '-2 -1 88 89 2 3');
+```
+
 ## Union
 
 A union will automatically use overlapping member memory.
