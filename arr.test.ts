@@ -151,7 +151,7 @@ Deno.test('array: at', () => {
 			[-1, -2, -3, -4, -5, -6, -7, -8, -9, -10],
 			[Infinity, -Infinity, NaN, Number.EPSILON, -Number.EPSILON],
 			[1.1, 0.5, -1.1, -0.5, -0],
-			['1', ''],
+			['1', '', 'invalid'],
 		].flat() as number[]
 	) {
 		assertStrictEquals(four.at(index), jsar.at(index), `at(${index})`);
