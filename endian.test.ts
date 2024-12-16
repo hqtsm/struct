@@ -7,6 +7,7 @@ import {
 	LITTLE_ENDIAN,
 	littleEndian,
 } from './endian.ts';
+import { Struct } from './struct.ts';
 
 Deno.test('BIG_ENDIAN != LITTLE_ENDIAN', () => {
 	assertNotEquals(BIG_ENDIAN, LITTLE_ENDIAN);
@@ -20,6 +21,10 @@ Deno.test('defaultEndian', () => {
 		`${new DE(new ArrayBuffer(0))}`,
 		'[object DefaultEndian<Endian>]',
 	);
+	assertEquals(
+		`${new (defaultEndian(Struct))(new ArrayBuffer(0))}`,
+		'[object DefaultEndian<Struct>]',
+	);
 });
 
 Deno.test('bigEndian', () => {
@@ -30,6 +35,10 @@ Deno.test('bigEndian', () => {
 		`${new BE(new ArrayBuffer(0))}`,
 		'[object BigEndian<Endian>]',
 	);
+	assertEquals(
+		`${new (bigEndian(Struct))(new ArrayBuffer(0))}`,
+		'[object BigEndian<Struct>]',
+	);
 });
 
 Deno.test('littleEndian', () => {
@@ -39,5 +48,9 @@ Deno.test('littleEndian', () => {
 	assertEquals(
 		`${new LE(new ArrayBuffer(0))}`,
 		'[object LittleEndian<Endian>]',
+	);
+	assertEquals(
+		`${new (littleEndian(Struct))(new ArrayBuffer(0))}`,
+		'[object LittleEndian<Struct>]',
 	);
 });
