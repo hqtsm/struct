@@ -49,4 +49,11 @@ export class Bool8Ptr extends Ptr<boolean> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Bool8Ptr',
+			configurable: true,
+		});
+	}
 }

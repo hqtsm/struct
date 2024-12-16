@@ -116,5 +116,10 @@ Deno.test('Float64Ptr', () => {
 				assertEquals(ptr[i], fB);
 			}
 		}
+
+		assertEquals(
+			`${new Ptr(new ArrayBuffer(0))}`,
+			`[object ${Ptr.name}]`,
+		);
 	}
 });

@@ -85,6 +85,19 @@ Deno.test('Union: MEMBERS', () => {
 	assertStrictEquals(Object.getPrototypeOf(A).MEMBERS, Union.MEMBERS);
 });
 
+Deno.test('Struct: Symbol.toStringTag', () => {
+	class A extends Union {}
+
+	assertEquals(
+		`${new Union(new ArrayBuffer(0))}`,
+		`[object ${Union.name}]`,
+	);
+	assertEquals(
+		`${new A(new ArrayBuffer(0))}`,
+		`[object ${Union.name}]`,
+	);
+});
+
 Deno.test('Union: protected properties', () => {
 	class Test extends Union {
 		declare protected alpha: number;

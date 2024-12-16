@@ -63,4 +63,9 @@ Deno.test('Bool8Ptr', () => {
 			assertEquals(ptr[i], true);
 		}
 	}
+
+	assertEquals(
+		`${new Bool8Ptr(new ArrayBuffer(0))}`,
+		`[object ${Bool8Ptr.name}]`,
+	);
 });

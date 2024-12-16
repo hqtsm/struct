@@ -16,16 +16,28 @@ Deno.test('defaultEndian', () => {
 	const DE = defaultEndian(Endian);
 	assertEquals(DE.LITTLE_ENDIAN, null);
 	assertStrictEquals(defaultEndian(Endian), DE);
+	assertEquals(
+		`${new DE(new ArrayBuffer(0))}`,
+		'[object DefaultEndian<Endian>]',
+	);
 });
 
 Deno.test('bigEndian', () => {
 	const BE = bigEndian(Endian);
 	assertEquals(BE.LITTLE_ENDIAN, false);
 	assertStrictEquals(bigEndian(Endian), BE);
+	assertEquals(
+		`${new BE(new ArrayBuffer(0))}`,
+		'[object BigEndian<Endian>]',
+	);
 });
 
 Deno.test('littleEndian', () => {
 	const LE = littleEndian(Endian);
 	assertEquals(LE.LITTLE_ENDIAN, true);
 	assertStrictEquals(littleEndian(Endian), LE);
+	assertEquals(
+		`${new LE(new ArrayBuffer(0))}`,
+		'[object LittleEndian<Endian>]',
+	);
 });

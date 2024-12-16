@@ -88,6 +88,13 @@ Deno.test('Ptr: littleEndian', () => {
 	assertEquals(new DummyPtr(buffer, 0, false).littleEndian, false);
 });
 
+Deno.test('Ptr: Symbol.toStringTag', () => {
+	assertEquals(
+		`${new Ptr(new ArrayBuffer(0))}`,
+		`[object ${Ptr.name}]`,
+	);
+});
+
 Deno.test('Ptr: getter + setter', () => {
 	const test = new Ptr(new ArrayBuffer(4), 1);
 	for (let i = -2; i <= 5; i++) {

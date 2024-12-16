@@ -42,4 +42,11 @@ export class Struct extends Endian implements Type, Members {
 		}
 		return r;
 	}
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Struct',
+			configurable: true,
+		});
+	}
 }

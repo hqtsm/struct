@@ -184,6 +184,11 @@ Deno.test('Int24Ptr', () => {
 				assertEquals(ptr[i], 1);
 			}
 		}
+
+		assertEquals(
+			`${new Ptr(new ArrayBuffer(0))}`,
+			`[object ${Ptr.name}]`,
+		);
 	}
 });
 
@@ -214,5 +219,10 @@ Deno.test('Uint24Ptr', () => {
 				assertEquals(ptr[i], 1);
 			}
 		}
+
+		assertEquals(
+			`${new Ptr(new ArrayBuffer(0))}`,
+			`[object ${Ptr.name}]`,
+		);
 	}
 });

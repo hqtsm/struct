@@ -132,6 +132,13 @@ export class Float16Ptr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Float16Ptr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -169,6 +176,13 @@ export class Float16BEPtr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Float16BEPtr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -210,4 +224,11 @@ export class Float16LEPtr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Float16LEPtr',
+			configurable: true,
+		});
+	}
 }

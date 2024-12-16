@@ -159,6 +159,13 @@ export class Int64Ptr extends Ptr<bigint> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Int64Ptr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -181,6 +188,13 @@ export class Int64BEPtr extends Ptr<bigint> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Int64BEPtr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -205,6 +219,13 @@ export class Int64LEPtr extends Ptr<bigint> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Int64LEPtr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -229,6 +250,13 @@ export class Uint64Ptr extends Ptr<bigint> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Uint64Ptr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -251,6 +279,13 @@ export class Uint64BEPtr extends Ptr<bigint> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Uint64BEPtr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -275,4 +310,11 @@ export class Uint64LEPtr extends Ptr<bigint> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Uint64LEPtr',
+			configurable: true,
+		});
+	}
 }

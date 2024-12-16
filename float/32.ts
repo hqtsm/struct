@@ -92,6 +92,13 @@ export class Float32Ptr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Float32Ptr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -114,6 +121,13 @@ export class Float32BEPtr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Float32BEPtr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -138,4 +152,11 @@ export class Float32LEPtr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Float32LEPtr',
+			configurable: true,
+		});
+	}
 }

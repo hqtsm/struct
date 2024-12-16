@@ -216,6 +216,19 @@ export function array<T extends Type>(
 						}
 						return r;
 					}
+
+					static {
+						Object.defineProperty(
+							this.prototype,
+							Symbol.toStringTag,
+							{
+								value: `${
+									Ptr.prototype[Symbol.toStringTag]
+								}[${length}]`,
+								configurable: true,
+							},
+						);
+					}
 				},
 			}[name],
 		);

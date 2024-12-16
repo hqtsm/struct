@@ -70,6 +70,13 @@ export class Int8Ptr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Int8Ptr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -87,4 +94,11 @@ export class Uint8Ptr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Uint8Ptr',
+			configurable: true,
+		});
+	}
 }

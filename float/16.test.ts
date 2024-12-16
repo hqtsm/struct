@@ -162,6 +162,7 @@ Deno.test('Float16Ptr', () => {
 			[Float16LEPtr, true],
 		] as [typeof Float16Ptr, boolean | null][]
 	) {
+		const { name } = Ptr;
 		class PtrM extends Ptr {
 			constructor(
 				buffer: ArrayBufferReal,
@@ -238,6 +239,11 @@ Deno.test('Float16Ptr', () => {
 					assertEquals(ptr[i], fB);
 				}
 			}
+
+			assertEquals(
+				`${new Ptr(new ArrayBuffer(0))}`,
+				`[object ${name}]`,
+			);
 		}
 	}
 });

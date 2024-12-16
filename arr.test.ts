@@ -7,7 +7,7 @@ import {
 import { array } from './arr.ts';
 import { bigEndian, littleEndian } from './endian.ts';
 import { int8 } from './int/8.ts';
-import { pointer } from './ptr.ts';
+import { pointer, Ptr } from './ptr.ts';
 import { Struct } from './struct.ts';
 import { getByteLength, getByteOffset } from './util.ts';
 import { Uint8Ptr } from './mod.ts';
@@ -25,7 +25,7 @@ class Foo extends Struct {
 
 const Foo4 = array(Foo, 4);
 
-Deno.test('array: lengths', () => {
+Deno.test('Arr: lengths', () => {
 	assertThrows(() => array(Foo, -1), RangeError);
 	assertThrows(() => array(Foo, Infinity), RangeError);
 	assertThrows(() => array(Foo, Number.MAX_SAFE_INTEGER + 1), RangeError);
@@ -49,7 +49,7 @@ Deno.test('array: lengths', () => {
 	assertEquals(getByteOffset(Foo4, -1), -Foo.BYTE_LENGTH);
 });
 
-Deno.test('array: values', () => {
+Deno.test('Arr: values', () => {
 	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
 	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
 	{
@@ -72,7 +72,7 @@ Deno.test('array: values', () => {
 	assertEquals(data, new Uint8Array([-2, -1, 1, 2, 3, 4]));
 });
 
-Deno.test('array: endian', () => {
+Deno.test('Arr: endian', () => {
 	const Foo4BE = bigEndian(Foo4);
 	const Foo4LE = littleEndian(Foo4BE);
 	assertEquals(getByteLength(Foo4BE, 0), Foo.BYTE_LENGTH);
@@ -84,7 +84,14 @@ Deno.test('array: endian', () => {
 	assertEquals(new Foo4LE(new ArrayBuffer(0)).littleEndian, true);
 });
 
-Deno.test('array: Symbol.iterator', () => {
+Deno.test('Arr: Symbol.toStringTag', () => {
+	assertEquals(
+		`${new Foo4(new ArrayBuffer(0))}`,
+		`[object ${Ptr.name}<${Struct.name}>[4]]`,
+	);
+});
+
+Deno.test('Arr: Symbol.iterator', () => {
 	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
 	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
 
@@ -98,7 +105,7 @@ Deno.test('array: Symbol.iterator', () => {
 	assertEquals(list.length, foo4.length);
 });
 
-Deno.test('array: entries', () => {
+Deno.test('Arr: entries', () => {
 	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
 	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
 
@@ -112,7 +119,7 @@ Deno.test('array: entries', () => {
 	assertEquals(list.length, 4);
 });
 
-Deno.test('array: keys', () => {
+Deno.test('Arr: keys', () => {
 	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
 	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
 
@@ -125,7 +132,7 @@ Deno.test('array: keys', () => {
 	assertEquals(list, [0, 1, 2, 3]);
 });
 
-Deno.test('array: values', () => {
+Deno.test('Arr: values', () => {
 	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
 	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
 
@@ -139,7 +146,7 @@ Deno.test('array: values', () => {
 	assertEquals(list.length, foo4.length);
 });
 
-Deno.test('array: at', () => {
+Deno.test('Arr: at', () => {
 	const jsar = [1, 2, 3, 4];
 	const data = new Uint8Array(jsar);
 	const Four = array(Uint8Ptr, 4);
@@ -158,7 +165,7 @@ Deno.test('array: at', () => {
 	}
 });
 
-Deno.test('array: extend', () => {
+Deno.test('Arr: extend', () => {
 	// Weird but not invalid.
 	class FooExtra extends Foo4 {
 		declare public extra: number;

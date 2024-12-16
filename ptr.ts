@@ -146,6 +146,13 @@ export class Ptr<T = never> extends Endian implements Members {
 		}
 		return r;
 	}
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Ptr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -234,6 +241,19 @@ export function pointer<T extends Type>(
 					}
 
 					public static override readonly BYTES_PER_ELEMENT = bpe;
+
+					static {
+						Object.defineProperty(
+							this.prototype,
+							Symbol.toStringTag,
+							{
+								value: `${Ptr.prototype[Symbol.toStringTag]}<${
+									Type.prototype[Symbol.toStringTag]
+								}>`,
+								configurable: true,
+							},
+						);
+					}
 				},
 			}[name],
 		);

@@ -10,6 +10,11 @@ export interface Type extends BufferView, EndianAware {
 	 * Type class.
 	 */
 	readonly constructor: TypeClass;
+
+	/**
+	 * Type string.
+	 */
+	readonly [Symbol.toStringTag]: string;
 }
 
 /**

@@ -35,6 +35,11 @@ export class Endian implements BufferPointer, EndianAware {
 	declare public readonly ['constructor']: EndianClass;
 
 	/**
+	 * Endian type.
+	 */
+	declare public readonly [Symbol.toStringTag]: string;
+
+	/**
 	 * Create instance for buffer.
 	 *
 	 * @param buffer Buffer data.
@@ -73,6 +78,13 @@ export class Endian implements BufferPointer, EndianAware {
 	 * Type level endian override.
 	 */
 	public static readonly LITTLE_ENDIAN: boolean | null = null;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Endian',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -108,12 +120,25 @@ export function defaultEndian<T extends EndianClass>(
 ): T {
 	let r = (defaultEndians ??= new WeakMap()).get(Endian);
 	if (!r) {
-		const name = `defaultEndian<${Endian.name}>`;
+		const name = `DefaultEndian<${Endian.name}>`;
 		defaultEndians.set(
 			Endian,
 			r = {
 				[name]: class extends (Endian as unknown as EndianConstructor) {
 					public static override readonly LITTLE_ENDIAN = null;
+
+					static {
+						Object.defineProperty(
+							this.prototype,
+							Symbol.toStringTag,
+							{
+								value: `DefaultEndian<${
+									Endian.prototype[Symbol.toStringTag]
+								}>`,
+								configurable: true,
+							},
+						);
+					}
 				},
 			}[name],
 		);
@@ -141,6 +166,19 @@ export function bigEndian<T extends EndianClass>(
 			r = {
 				[name]: class extends (Endian as unknown as EndianConstructor) {
 					public static override readonly LITTLE_ENDIAN = false;
+
+					static {
+						Object.defineProperty(
+							this.prototype,
+							Symbol.toStringTag,
+							{
+								value: `BigEndian<${
+									Endian.prototype[Symbol.toStringTag]
+								}>`,
+								configurable: true,
+							},
+						);
+					}
 				},
 			}[name],
 		);
@@ -168,6 +206,19 @@ export function littleEndian<T extends EndianClass>(
 			r = {
 				[name]: class extends (Endian as unknown as EndianConstructor) {
 					public static override readonly LITTLE_ENDIAN = true;
+
+					static {
+						Object.defineProperty(
+							this.prototype,
+							Symbol.toStringTag,
+							{
+								value: `LittleEndian<${
+									Endian.prototype[Symbol.toStringTag]
+								}>`,
+								configurable: true,
+							},
+						);
+					}
 				},
 			}[name],
 		);

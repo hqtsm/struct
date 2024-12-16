@@ -143,5 +143,10 @@ Deno.test('Bool16Ptr', () => {
 				assertEquals(ptr[i], true);
 			}
 		}
+
+		assertEquals(
+			`${new Ptr(new ArrayBuffer(0))}`,
+			`[object ${Ptr.name}]`,
+		);
 	}
 });

@@ -178,6 +178,11 @@ Deno.test('Int32Ptr', () => {
 				assertEquals(ptr[i], 1);
 			}
 		}
+
+		assertEquals(
+			`${new Ptr(new ArrayBuffer(0))}`,
+			`[object ${Ptr.name}]`,
+		);
 	}
 });
 
@@ -208,5 +213,10 @@ Deno.test('Uint32Ptr', () => {
 				assertEquals(ptr[i], 1);
 			}
 		}
+
+		assertEquals(
+			`${new Ptr(new ArrayBuffer(0))}`,
+			`[object ${Ptr.name}]`,
+		);
 	}
 });

@@ -171,6 +171,13 @@ export class Int24Ptr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Int24Ptr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -195,6 +202,13 @@ export class Int24BEPtr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Int24BEPtr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -221,6 +235,13 @@ export class Int24LEPtr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Int24LEPtr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -247,6 +268,13 @@ export class Uint24Ptr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Uint24Ptr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -271,6 +299,13 @@ export class Uint24BEPtr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Uint24BEPtr',
+			configurable: true,
+		});
+	}
 }
 
 /**
@@ -297,4 +332,11 @@ export class Uint24LEPtr extends Ptr<number> {
 	}
 
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
+
+	static {
+		Object.defineProperty(this.prototype, Symbol.toStringTag, {
+			value: 'Uint24LEPtr',
+			configurable: true,
+		});
+	}
 }
