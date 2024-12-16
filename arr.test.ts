@@ -11,7 +11,7 @@ import { pointer } from './ptr.ts';
 import { Struct } from './struct.ts';
 import { getByteLength, getByteOffset } from './util.ts';
 
-Deno.test('pointer', () => {
+Deno.test('array', () => {
 	class Foo extends Struct {
 		declare public bar: number;
 
@@ -61,6 +61,16 @@ Deno.test('pointer', () => {
 		assertNotStrictEquals(foo4[1], tmp);
 	}
 	assertEquals(data, new Uint8Array([-2, -1, 1, 2, 3, 4]));
+
+	{
+		const list = [...foo4];
+		let i = 0;
+		for (const foo of foo4) {
+			assertStrictEquals(foo, foo4[i]);
+			assertStrictEquals(foo, list[i]);
+			i++;
+		}
+	}
 
 	assertEquals(getByteLength(Foo4, 0), Foo.BYTE_LENGTH);
 	assertEquals(getByteOffset(Foo4, 1), Foo.BYTE_LENGTH);

@@ -22,6 +22,11 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	 * Array length.
 	 */
 	readonly length: number;
+
+	/**
+	 * Array iterator.
+	 */
+	[Symbol.iterator](): Generator<T, undefined, unknown>;
 }
 
 /**
@@ -111,6 +116,16 @@ export function array<T extends Type>(
 			r = {
 				[name]: class extends Ptr implements Arr<T>, Members {
 					declare public readonly ['constructor']: ArrClass<Arr<T>>;
+
+					public *[Symbol.iterator](): Generator<
+						T,
+						undefined,
+						unknown
+					> {
+						for (let i = 0; i < length; i++) {
+							yield this[i];
+						}
+					}
 
 					public get byteLength(): number {
 						return this.constructor.BYTE_LENGTH;
