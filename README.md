@@ -194,6 +194,56 @@ xyp[0] = xy;
 console.assert(data.join(' ') === '-2 -1 88 89 2 3');
 ```
 
+## Array
+
+A pointer extended to a type of a fixed length.
+
+```ts
+import {
+	Arr,
+	array,
+	int8,
+	member,
+	pointer,
+	Struct,
+	Uint8Ptr,
+} from '@hqtsm/struct';
+
+class XY extends Struct {
+	declare public x: number;
+
+	declare public y: number;
+
+	static {
+		int8(this, 'x');
+		int8(this, 'y');
+	}
+}
+
+class Example extends Struct {
+	declare public bytes: Arr<number>;
+
+	declare public xys: Arr<XY>;
+
+	static {
+		member(array(Uint8Ptr, 4), this, 'bytes');
+		member(array(XY, 2), this, 'xys');
+	}
+}
+
+const data = new Uint8Array(Example.BYTE_LENGTH);
+const example = new Example(data.buffer);
+example.bytes[0] = 10;
+example.bytes[1] = 20;
+example.bytes[2] = 30;
+example.bytes[3] = 40;
+example.xys[0].x = 150;
+example.xys[0].y = 160;
+example.xys[1].x = 170;
+example.xys[1].y = 180;
+console.assert(data.join(' ') === '10 20 30 40 150 160 170 180');
+```
+
 ## Union
 
 A union will automatically use overlapping member memory.
