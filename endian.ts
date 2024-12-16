@@ -35,7 +35,7 @@ export class Endian implements BufferPointer, EndianAware {
 	declare public readonly ['constructor']: EndianClass;
 
 	/**
-	 * Endian type.
+	 * Type tag.
 	 */
 	declare public readonly [Symbol.toStringTag]: string;
 
