@@ -24,6 +24,13 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	readonly length: number;
 
 	/**
+	 * Get value at index.
+	 *
+	 * @param i Index, can be negative.
+	 */
+	at(i: number): T | undefined;
+
+	/**
 	 * Array iterator.
 	 */
 	[Symbol.iterator](): Generator<T, undefined, unknown>;
@@ -133,6 +140,14 @@ export function array<T extends Type>(
 
 					public get length(): number {
 						return length;
+					}
+
+					public at(i: number): T | undefined {
+						i ||= 0;
+						i -= i % 1;
+						if ((i < 0 ? i += length : 0) >= 0 && i < length) {
+							return this[i];
+						}
 					}
 
 					public static readonly BYTE_LENGTH = (

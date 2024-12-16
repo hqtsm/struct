@@ -10,6 +10,7 @@ import { int8 } from './int/8.ts';
 import { pointer } from './ptr.ts';
 import { Struct } from './struct.ts';
 import { getByteLength, getByteOffset } from './util.ts';
+import { Uint8Ptr } from './mod.ts';
 
 class Foo extends Struct {
 	declare public bar: number;
@@ -95,6 +96,24 @@ Deno.test('array: Symbol.iterator', () => {
 			assertStrictEquals(foo, list[i]);
 			i++;
 		}
+	}
+});
+
+Deno.test('array: at', () => {
+	const jsar = [1, 2, 3, 4];
+	const data = new Uint8Array(jsar);
+	const Four = array(Uint8Ptr, 4);
+	const four = new Four(data.buffer);
+
+	for (
+		const index of [
+			[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+			[-1, -2, -3, -4, -5, -6, -7, -8, -9, -10],
+			[Infinity, -Infinity, NaN, Number.EPSILON, -Number.EPSILON],
+			[1.1, 0.5, -1.1, -0.5, -0],
+		].flat()
+	) {
+		assertStrictEquals(four.at(index), jsar.at(index), `at(${index})`);
 	}
 });
 
