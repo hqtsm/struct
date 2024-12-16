@@ -24,14 +24,6 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	readonly length: number;
 
 	/**
-	 * Get value at index.
-	 *
-	 * @param i Index, negative to index from end.
-	 * @returns Value at index.
-	 */
-	at(i: number): T | undefined;
-
-	/**
 	 * Get iterator for values.
 	 *
 	 * @returns Value iterator.
@@ -58,6 +50,14 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	 * @returns Value iterator.
 	 */
 	values(): Generator<T, undefined, unknown>;
+
+	/**
+	 * Get value at index.
+	 *
+	 * @param i Index, negative to index from end.
+	 * @returns Value at index.
+	 */
+	at(i: number): T | undefined;
 }
 
 /**
@@ -156,16 +156,6 @@ export function array<T extends Type>(
 						return length;
 					}
 
-					public at(i: number): T | undefined {
-						i = +i || 0;
-						if (
-							((i -= i % 1) < 0 ? i += length : i) >= 0 &&
-							i < length
-						) {
-							return this[i];
-						}
-					}
-
 					public *[Symbol.iterator](): Generator<
 						T,
 						undefined,
@@ -195,6 +185,16 @@ export function array<T extends Type>(
 					public *values(): Generator<T, undefined, unknown> {
 						for (let i = 0; i < length; i++) {
 							yield this[i];
+						}
+					}
+
+					public at(i: number): T | undefined {
+						i = +i || 0;
+						if (
+							((i -= i % 1) < 0 ? i += length : i) >= 0 &&
+							i < length
+						) {
+							return this[i];
 						}
 					}
 
