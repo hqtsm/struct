@@ -180,3 +180,28 @@ example.setBeta(66);
 example.gamma = 71;
 console.assert(data.join(' ') === '65 66 71');
 ```
+
+## Union
+
+A union will automatically use overlapping member memory.
+
+```ts
+import { Arr, array, member, uint32BE, Uint8Ptr, Union } from '@hqtsm/struct';
+
+class FourCC extends Union {
+	declare public int: number;
+
+	declare public chars: Arr<number>;
+
+	static {
+		uint32BE(this, 'int');
+		member(array(Uint8Ptr, 4), this, 'chars');
+	}
+}
+
+const data = new Uint8Array(FourCC.BYTE_LENGTH);
+const four = new FourCC(data.buffer);
+four.int = 0x41424344;
+console.assert(four.chars[0] === 0x41);
+console.assert(new TextDecoder().decode(data) === 'ABCD');
+```
