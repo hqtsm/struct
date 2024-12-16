@@ -266,7 +266,7 @@ const data = new Uint8Array(FourCC.BYTE_LENGTH);
 const four = new FourCC(data.buffer);
 four.int = 0x41424344;
 console.assert(four.chars[0] === 0x41);
-console.assert(new TextDecoder().decode(data) === 'ABCD');
+console.assert(String.fromCharCode(...four.chars) === 'ABCD');
 ```
 
 ## Private / Protected
