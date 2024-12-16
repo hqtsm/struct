@@ -4,6 +4,7 @@ import {
 	assertStrictEquals,
 	assertThrows,
 } from '@std/assert';
+import { uint8 } from './int/8.ts';
 import { uint32 } from './int/32.ts';
 import { member, memberBE, memberLE, pad } from './member.ts';
 import { Struct } from './struct.ts';
@@ -140,8 +141,14 @@ Deno.test('pad', () => {
 
 		static {
 			uint32(this, 'alpha');
+
+			// Padding can be an unknown member.
 			pad(8, this, 'mystery');
-			uint32(this, 'beta');
+
+			uint8(this, 'beta');
+
+			// Or anonymous.
+			pad(3, this);
 		}
 	}
 
@@ -154,18 +161,17 @@ Deno.test('pad', () => {
 	assertEquals(Test.BYTE_LENGTH, 16);
 	assertEquals(getByteLength(Test, 'alpha'), 4);
 	assertEquals(getByteLength(Test, 'mystery'), 8);
-	assertEquals(getByteLength(Test, 'beta'), 4);
+	assertEquals(getByteLength(Test, 'beta'), 1);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
 	const view = new DataView(data.buffer);
 	const test = new Test(data.buffer);
 	view.setUint32(off.alpha, 0x12345678, test.littleEndian);
-	view.setUint32(off.beta, 0x23456789, test.littleEndian);
+	view.setUint8(off.beta, 0xab);
 
 	assertEquals(test.byteLength, Test.BYTE_LENGTH);
 	assertEquals(test.alpha, 0x12345678);
-	assertEquals(test.beta, 0x23456789);
-
+	assertEquals(test.beta, 0xab);
 	assertThrows(() => {
 		void test.mystery;
 	});

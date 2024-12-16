@@ -199,14 +199,23 @@ export function memberLE<T extends MemberableClass, M extends BufferView>(
 export function pad<T extends MemberableClass>(
 	byteLength: number,
 	Type: T,
-	name: MemberableClassKeys<T, unknown>,
+	name: MemberableClassKeys<T, unknown> | null = null,
 	byteOffset: number | null = null,
 ): number {
+	if (name === null) {
+		byteLength += byteOffset ?? defaultMemberByteOffset(Type);
+		if (byteLength > Type.BYTE_LENGTH) {
+			(Type as { BYTE_LENGTH: number }).BYTE_LENGTH = byteLength;
+		}
+		return byteLength;
+	}
 	return defineMember(Type, name, {
 		byteLength,
 		byteOffset,
 		get(): unknown {
-			throw new TypeError(`Read from padding member: ${String(name)}`);
+			throw new TypeError(
+				`Read from padding member: ${String(name)}`,
+			);
 		},
 		set(): void {
 			throw new TypeError(`Write to padding member: ${String(name)}`);
