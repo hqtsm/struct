@@ -55,7 +55,7 @@ export interface MemberDescriptor<T extends Memberable, M> {
  * @param Type Type class.
  * @param name Member name.
  * @param desc Member descriptor.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function defineMember<T extends MemberableClass, M>(
 	Type: T,
@@ -116,7 +116,7 @@ export interface MemberConstructor<
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function member<T extends MemberableClass, M extends BufferView>(
 	Member: MemberConstructor<M>,
@@ -157,7 +157,7 @@ export function member<T extends MemberableClass, M extends BufferView>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function memberBE<T extends MemberableClass, M extends BufferView>(
 	Member: MemberConstructor<M>,
@@ -175,7 +175,7 @@ export function memberBE<T extends MemberableClass, M extends BufferView>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function memberLE<T extends MemberableClass, M extends BufferView>(
 	Member: MemberConstructor<M>,
@@ -194,7 +194,7 @@ export function memberLE<T extends MemberableClass, M extends BufferView>(
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function pad<T extends MemberableClass>(
 	byteLength: number,

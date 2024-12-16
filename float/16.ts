@@ -16,7 +16,7 @@ type MaybeNativeFloat16 = Partial<{
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function float16<T extends MemberableClass>(
 	Type: T,
@@ -67,7 +67,7 @@ export function float16<T extends MemberableClass>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function float16BE<T extends MemberableClass>(
 	Type: T,
@@ -83,7 +83,7 @@ export function float16BE<T extends MemberableClass>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function float16LE<T extends MemberableClass>(
 	Type: T,

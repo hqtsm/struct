@@ -10,7 +10,7 @@ import { dataView } from '../util.ts';
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function bool32<T extends MemberableClass>(
 	Type: T,
@@ -44,7 +44,7 @@ export function bool32<T extends MemberableClass>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function bool32BE<T extends MemberableClass>(
 	Type: T,
@@ -60,7 +60,7 @@ export function bool32BE<T extends MemberableClass>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function bool32LE<T extends MemberableClass>(
 	Type: T,

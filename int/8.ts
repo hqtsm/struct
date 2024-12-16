@@ -9,7 +9,7 @@ import { dataView } from '../util.ts';
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function int8<T extends MemberableClass>(
 	Type: T,
@@ -35,7 +35,7 @@ export function int8<T extends MemberableClass>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function uint8<T extends MemberableClass>(
 	Type: T,

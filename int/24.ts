@@ -16,7 +16,7 @@ import { dataView } from '../util.ts';
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function int24<T extends MemberableClass>(
 	Type: T,
@@ -52,7 +52,7 @@ export function int24<T extends MemberableClass>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function int24BE<T extends MemberableClass>(
 	Type: T,
@@ -68,7 +68,7 @@ export function int24BE<T extends MemberableClass>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function int24LE<T extends MemberableClass>(
 	Type: T,
@@ -85,7 +85,7 @@ export function int24LE<T extends MemberableClass>(
  * @param name Member name.
  * @param byteOffset Byte offset.
  * @param littleEndian Little endian, big endian, or default.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function uint24<T extends MemberableClass>(
 	Type: T,
@@ -121,7 +121,7 @@ export function uint24<T extends MemberableClass>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function uint24BE<T extends MemberableClass>(
 	Type: T,
@@ -137,7 +137,7 @@ export function uint24BE<T extends MemberableClass>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @returns Byte length.
+ * @returns Updated type byte length.
  */
 export function uint24LE<T extends MemberableClass>(
 	Type: T,
