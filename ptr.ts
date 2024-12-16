@@ -174,7 +174,7 @@ export interface PtrConstructor<T extends Ptr<unknown> = Ptr>
 	new (
 		buffer: ArrayBufferReal,
 		byteOffset?: number,
-		littleEndian?: boolean,
+		littleEndian?: boolean | null,
 	): T;
 }
 

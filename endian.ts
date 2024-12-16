@@ -90,7 +90,7 @@ export interface EndianConstructor extends EndianClass {
 	new (
 		buffer: ArrayBufferReal,
 		byteOffset?: number,
-		littleEndian?: boolean,
+		littleEndian?: boolean | null,
 	): Endian;
 }
 

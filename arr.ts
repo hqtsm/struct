@@ -55,7 +55,7 @@ export interface ArrConstructor<T extends Arr<unknown> = Arr>
 	new (
 		buffer: ArrayBufferReal,
 		byteOffset?: number,
-		littleEndian?: boolean,
+		littleEndian?: boolean | null,
 	): T;
 }
 
