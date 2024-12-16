@@ -31,9 +31,24 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	at(i: number): T | undefined;
 
 	/**
-	 * Array iterator.
+	 * Value iterator.
 	 */
 	[Symbol.iterator](): Generator<T, undefined, unknown>;
+
+	/**
+	 * Entry key-value pair iterator.
+	 */
+	entries(): Generator<[number, T], undefined, unknown>;
+
+	/**
+	 * Key iterator.
+	 */
+	keys(): Generator<number, undefined, unknown>;
+
+	/**
+	 * Value iterator.
+	 */
+	values(): Generator<T, undefined, unknown>;
 }
 
 /**
@@ -124,16 +139,6 @@ export function array<T extends Type>(
 				[name]: class extends Ptr implements Arr<T>, Members {
 					declare public readonly ['constructor']: ArrClass<Arr<T>>;
 
-					public *[Symbol.iterator](): Generator<
-						T,
-						undefined,
-						unknown
-					> {
-						for (let i = 0; i < length; i++) {
-							yield this[i];
-						}
-					}
-
 					public get byteLength(): number {
 						return this.constructor.BYTE_LENGTH;
 					}
@@ -145,8 +150,40 @@ export function array<T extends Type>(
 					public at(i: number): T | undefined {
 						i ||= 0;
 						i -= i % 1;
-						if ((i < 0 ? i += length : 0) >= 0 && i < length) {
+						if ((i < 0 ? i += length : i) >= 0 && i < length) {
 							return this[i];
+						}
+					}
+
+					public *[Symbol.iterator](): Generator<
+						T,
+						undefined,
+						unknown
+					> {
+						for (let i = 0; i < length; i++) {
+							yield this[i];
+						}
+					}
+
+					public *entries(): Generator<
+						[number, T],
+						undefined,
+						unknown
+					> {
+						for (let i = 0; i < length; i++) {
+							yield [i, this[i]];
+						}
+					}
+
+					public *keys(): Generator<number, undefined, unknown> {
+						for (let i = 0; i < length; i++) {
+							yield i;
+						}
+					}
+
+					public *values(): Generator<T, undefined, unknown> {
+						for (let i = 0; i < length; i++) {
+							yield this[i];
 						}
 					}
 

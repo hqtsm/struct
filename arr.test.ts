@@ -88,15 +88,55 @@ Deno.test('array: Symbol.iterator', () => {
 	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
 	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
 
-	{
-		const list = [...foo4];
-		let i = 0;
-		for (const foo of foo4) {
-			assertStrictEquals(foo, foo4[i]);
-			assertStrictEquals(foo, list[i]);
-			i++;
-		}
+	const list = [...foo4];
+	let i = 0;
+	for (const foo of foo4) {
+		assertStrictEquals(foo, foo4[i]);
+		assertStrictEquals(foo, list[i]);
+		i++;
 	}
+	assertEquals(list.length, foo4.length);
+});
+
+Deno.test('array: entries', () => {
+	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
+	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
+
+	const list = [...foo4.entries()];
+	let i = 0;
+	for (const [k, v] of foo4.entries()) {
+		assertStrictEquals(k, list[i][0]);
+		assertStrictEquals(v, list[i][1]);
+		i++;
+	}
+	assertEquals(list.length, 4);
+});
+
+Deno.test('array: keys', () => {
+	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
+	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
+
+	const list = [...foo4.keys()];
+	let i = 0;
+	for (const foo of foo4.keys()) {
+		assertStrictEquals(foo, i);
+		i++;
+	}
+	assertEquals(list, [0, 1, 2, 3]);
+});
+
+Deno.test('array: values', () => {
+	const data = new Uint8Array(Foo.BYTE_LENGTH * 3);
+	const foo4 = new Foo4(data.buffer, Foo.BYTE_LENGTH);
+
+	const list = [...foo4.values()];
+	let i = 0;
+	for (const foo of foo4.values()) {
+		assertStrictEquals(foo, foo4[i]);
+		assertStrictEquals(foo, list[i]);
+		i++;
+	}
+	assertEquals(list.length, foo4.length);
 });
 
 Deno.test('array: at', () => {
@@ -111,7 +151,8 @@ Deno.test('array: at', () => {
 			[-1, -2, -3, -4, -5, -6, -7, -8, -9, -10],
 			[Infinity, -Infinity, NaN, Number.EPSILON, -Number.EPSILON],
 			[1.1, 0.5, -1.1, -0.5, -0],
-		].flat()
+			['1', ''],
+		].flat() as number[]
 	) {
 		assertStrictEquals(four.at(index), jsar.at(index), `at(${index})`);
 	}
