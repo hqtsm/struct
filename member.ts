@@ -74,6 +74,7 @@ export function defineMember<T extends MemberableClass, M>(
 	Object.defineProperty(Type.MEMBERS, name, {
 		value: { byteOffset, byteLength } satisfies MemberInfo,
 		configurable: true,
+		enumerable: true,
 		writable: true,
 	});
 	byteLength += byteOffset;
