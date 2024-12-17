@@ -135,7 +135,7 @@ Deno.test('pad', () => {
 	class Test extends Struct {
 		declare public alpha: number;
 
-		declare public mystery: unknown;
+		declare public mystery: never;
 
 		declare public beta: number;
 
@@ -176,6 +176,6 @@ Deno.test('pad', () => {
 		void test.mystery;
 	});
 	assertThrows(() => {
-		test.mystery = null;
+		(test as { mystery: unknown }).mystery = null;
 	});
 });

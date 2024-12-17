@@ -303,7 +303,7 @@ class Example extends Struct {
 console.assert(Example.BYTE_LENGTH === 6);
 ```
 
-Padding can be manually added as needed property or anonymously.
+Padding can be manually added as a property or anonymously.
 
 ```ts
 import { pad, Struct, uint32, uint8 } from '@hqtsm/struct';
@@ -311,7 +311,7 @@ import { pad, Struct, uint32, uint8 } from '@hqtsm/struct';
 class Example extends Struct {
 	declare private alpha: number;
 
-	declare padding: unknown;
+	declare public padding: never;
 
 	declare protected beta: number;
 
@@ -327,10 +327,10 @@ class Example extends Struct {
 
 	static {
 		uint8(this, 'alpha' as never);
-		pad(3, this, 'padding');
+		pad(3, this, 'padding'); // Property.
 		uint32(this, 'beta' as never);
 		uint8(this, 'gamma');
-		pad(3, this);
+		pad(3, this); // Anonymous.
 	}
 }
 

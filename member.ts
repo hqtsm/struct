@@ -219,7 +219,7 @@ export function memberLE<T extends MemberableClass, M extends BufferView>(
 export function pad<T extends MemberableClass>(
 	byteLength: number,
 	Type: T,
-	name: MemberableClassKeys<T, unknown> | null = null,
+	name: MemberableClassKeys<T, never> | null = null,
 	byteOffset: number | null = null,
 ): number {
 	return (name === null)
@@ -230,7 +230,7 @@ export function pad<T extends MemberableClass>(
 		: defineMember(Type, name, {
 			byteLength,
 			byteOffset,
-			get(): unknown {
+			get(): never {
 				throw new TypeError(
 					`Read from padding member: ${String(name)}`,
 				);

@@ -1,6 +1,7 @@
 import type { Arr, ArrClass } from './arr.ts';
 import type { Ptr, PtrClass } from './ptr.ts';
 import type { Type, TypeClass } from './type.ts';
+import type { TypesEqual } from './util.ts';
 
 /**
  * Member info.
@@ -104,7 +105,9 @@ export type MemberableKeys<
 	T extends Memberable,
 	// deno-lint-ignore no-explicit-any
 	M = any,
-> = { [K in keyof T]: M extends T[K] ? K : never }[MemberKeys<T>];
+> = {
+	[K in keyof T]: TypesEqual<T[K], M, K, M extends T[K] ? K : never>;
+}[MemberKeys<T>];
 
 /**
  * The possible memberable keys for class, filterable by member type.
