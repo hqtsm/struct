@@ -5,7 +5,7 @@ import type { Type } from './type.ts';
 /**
  * If types are equal.
  */
-export type IfTypeEqual<A, B, X = A, Y = never> = (
+export type TypesEqual<A, B, X = A, Y = never> = (
 	<T>() => T extends A ? 1 : 2
 ) extends (
 	<T>() => T extends B ? 1 : 2
@@ -16,7 +16,7 @@ export type IfTypeEqual<A, B, X = A, Y = never> = (
  * Readonly keys.
  */
 export type ReadonlyKeyof<T> = {
-	[K in keyof T]: IfTypeEqual<
+	[K in keyof T]: TypesEqual<
 		{ [Q in K]: T[K] },
 		{ -readonly [Q in K]: T[K] },
 		never,
