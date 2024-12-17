@@ -2,6 +2,26 @@ import type { MemberClassKeys, MemberedClass } from './members.ts';
 import type { BufferView } from './native.ts';
 import type { Type } from './type.ts';
 
+/**
+ * Define constant.
+ *
+ * @param o Object.
+ * @param key Key.
+ * @param value Value, or undefined for current value.
+ */
+export function constant<T, K extends keyof T>(
+	o: T,
+	key: K,
+	value: T[K] | undefined = undefined,
+): void {
+	Object.defineProperty(o, key, {
+		value: value === undefined ? o[key] : value,
+		configurable: false,
+		enumerable: false,
+		writable: false,
+	});
+}
+
 let dataViews: WeakMap<ArrayBufferLike, DataView>;
 
 /**

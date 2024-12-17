@@ -1,7 +1,54 @@
 import { assertEquals, assertThrows } from '@std/assert';
 import { uint8 } from './int/8.ts';
 import { Struct } from './struct.ts';
-import { assignType, assignView } from './util.ts';
+import { assignType, assignView, constant } from './util.ts';
+
+Deno.test('constant', () => {
+	class A {
+		public static foo: string = 'bar';
+
+		static {
+			constant(this, 'foo');
+		}
+	}
+
+	assertEquals(Object.getOwnPropertyDescriptor(A, 'foo'), {
+		value: 'bar',
+		writable: false,
+		enumerable: false,
+		configurable: false,
+	});
+
+	class B {
+		public static foo: string;
+
+		static {
+			constant(this, 'foo', 'bar');
+		}
+	}
+
+	assertEquals(Object.getOwnPropertyDescriptor(B, 'foo'), {
+		value: 'bar',
+		writable: false,
+		enumerable: false,
+		configurable: false,
+	});
+
+	class C {
+		declare public static foo: string;
+
+		static {
+			constant(this, 'foo', 'bar');
+		}
+	}
+
+	assertEquals(Object.getOwnPropertyDescriptor(C, 'foo'), {
+		value: 'bar',
+		writable: false,
+		enumerable: false,
+		configurable: false,
+	});
+});
 
 Deno.test('assignView', () => {
 	const src = new Uint8Array([0xff, 0xfe, 0xfd, 0xfc]);
