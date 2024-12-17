@@ -96,7 +96,6 @@ export class Bool32Ptr extends Ptr<boolean> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Bool32Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -125,7 +124,6 @@ export class Bool32BEPtr extends Ptr<boolean> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Bool32BEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -156,7 +154,6 @@ export class Bool32LEPtr extends Ptr<boolean> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Bool32LEPtr',
-			configurable: true,
 		});
 	}
 }

@@ -225,7 +225,6 @@ export function array<T extends Type>(
 								value: `${
 									Ptr.prototype[Symbol.toStringTag]
 								}[${length}]`,
-								configurable: true,
 							},
 						);
 					}

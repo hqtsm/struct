@@ -74,7 +74,6 @@ export class Int8Ptr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Int8Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -98,7 +97,6 @@ export class Uint8Ptr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Uint8Ptr',
-			configurable: true,
 		});
 	}
 }

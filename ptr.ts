@@ -150,7 +150,6 @@ export class Ptr<T = never> extends Endian implements Members {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -250,7 +249,6 @@ export function pointer<T extends Type>(
 								value: `${Ptr.prototype[Symbol.toStringTag]}<${
 									Type.prototype[Symbol.toStringTag]
 								}>`,
-								configurable: true,
 							},
 						);
 					}

@@ -165,7 +165,6 @@ export class Int32Ptr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Int32Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -194,7 +193,6 @@ export class Int32BEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Int32BEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -225,7 +223,6 @@ export class Int32LEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Int32LEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -256,7 +253,6 @@ export class Uint32Ptr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Uint32Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -285,7 +281,6 @@ export class Uint32BEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Uint32BEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -316,7 +311,6 @@ export class Uint32LEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Uint32LEPtr',
-			configurable: true,
 		});
 	}
 }

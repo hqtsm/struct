@@ -82,7 +82,6 @@ export class Endian implements BufferPointer, EndianAware {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Endian',
-			configurable: true,
 		});
 	}
 }
@@ -135,7 +134,6 @@ export function dynamicEndian<T extends EndianClass>(
 								value: `DynamicEndian<${
 									Endian.prototype[Symbol.toStringTag]
 								}>`,
-								configurable: true,
 							},
 						);
 					}
@@ -175,7 +173,6 @@ export function bigEndian<T extends EndianClass>(
 								value: `BigEndian<${
 									Endian.prototype[Symbol.toStringTag]
 								}>`,
-								configurable: true,
 							},
 						);
 					}
@@ -215,7 +212,6 @@ export function littleEndian<T extends EndianClass>(
 								value: `LittleEndian<${
 									Endian.prototype[Symbol.toStringTag]
 								}>`,
-								configurable: true,
 							},
 						);
 					}

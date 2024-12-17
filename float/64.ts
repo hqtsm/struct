@@ -96,7 +96,6 @@ export class Float64Ptr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Float64Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -125,7 +124,6 @@ export class Float64BEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Float64BEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -156,7 +154,6 @@ export class Float64LEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Float64LEPtr',
-			configurable: true,
 		});
 	}
 }

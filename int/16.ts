@@ -163,7 +163,6 @@ export class Int16Ptr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Int16Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -192,7 +191,6 @@ export class Int16BEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Int16BEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -223,7 +221,6 @@ export class Int16LEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Int16LEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -254,7 +251,6 @@ export class Uint16Ptr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Uint16Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -283,7 +279,6 @@ export class Uint16BEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Uint16BEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -314,7 +309,6 @@ export class Uint16LEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Uint16LEPtr',
-			configurable: true,
 		});
 	}
 }

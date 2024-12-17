@@ -136,7 +136,6 @@ export class Float16Ptr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Float16Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -180,7 +179,6 @@ export class Float16BEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Float16BEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -228,7 +226,6 @@ export class Float16LEPtr extends Ptr<number> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Float16LEPtr',
-			configurable: true,
 		});
 	}
 }

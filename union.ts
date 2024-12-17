@@ -46,7 +46,6 @@ export class Union extends Endian implements Type, Members {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Union',
-			configurable: true,
 		});
 	}
 }

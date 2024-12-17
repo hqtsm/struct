@@ -163,7 +163,6 @@ export class Int64Ptr extends Ptr<bigint> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Int64Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -192,7 +191,6 @@ export class Int64BEPtr extends Ptr<bigint> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Int64BEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -223,7 +221,6 @@ export class Int64LEPtr extends Ptr<bigint> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Int64LEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -254,7 +251,6 @@ export class Uint64Ptr extends Ptr<bigint> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Uint64Ptr',
-			configurable: true,
 		});
 	}
 }
@@ -283,7 +279,6 @@ export class Uint64BEPtr extends Ptr<bigint> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Uint64BEPtr',
-			configurable: true,
 		});
 	}
 }
@@ -314,7 +309,6 @@ export class Uint64LEPtr extends Ptr<bigint> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Uint64LEPtr',
-			configurable: true,
 		});
 	}
 }

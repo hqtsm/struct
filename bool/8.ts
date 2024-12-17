@@ -53,7 +53,6 @@ export class Bool8Ptr extends Ptr<boolean> {
 	static {
 		Object.defineProperty(this.prototype, Symbol.toStringTag, {
 			value: 'Bool8Ptr',
-			configurable: true,
 		});
 	}
 }
