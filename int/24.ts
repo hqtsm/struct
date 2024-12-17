@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * 24-bit integer.
+ */
+
 import {
 	getInt24,
 	getUint24,

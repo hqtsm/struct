@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * Struct type.
+ */
+
 import { Endian } from './endian.ts';
 import type { MemberInfos, Members } from './members.ts';
 import type { Type } from './type.ts';

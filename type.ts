@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * Type types.
+ */
+
 import type { Endian, EndianClass } from './endian.ts';
 import type { MembersClass } from './members.ts';
 import type { ArrayBufferReal, BufferView } from './native.ts';

@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * Utility types and functions.
+ */
+
 import type { MemberClassKeys, MemberedClass } from './members.ts';
 import type { BufferView } from './native.ts';
 import type { Type } from './type.ts';

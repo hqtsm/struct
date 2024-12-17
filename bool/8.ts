@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * 8-bit boolean.
+ */
+
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';

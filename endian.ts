@@ -1,15 +1,11 @@
+/**
+ * @module
+ *
+ * Endian related constants, types, and factories.
+ */
+
 import type { ArrayBufferReal, BufferPointer } from './native.ts';
 import { constant, dataView } from './util.ts';
-
-/**
- * Endian aware.
- */
-export interface EndianAware {
-	/**
-	 * True for little endian, false for big endian.
-	 */
-	readonly littleEndian: boolean;
-}
 
 /**
  * Is host big endian.
@@ -22,6 +18,16 @@ export const BIG_ENDIAN: boolean = !new Uint8Array(
  * Is host little endian.
  */
 export const LITTLE_ENDIAN = !BIG_ENDIAN;
+
+/**
+ * Endian aware.
+ */
+export interface EndianAware {
+	/**
+	 * True for little endian, false for big endian.
+	 */
+	readonly littleEndian: boolean;
+}
 
 let pri: WeakMap<Endian, BufferPointer & EndianAware>;
 

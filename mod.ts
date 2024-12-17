@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * Everything from struct module.
+ */
+
 export * from './arr.ts';
 export * from './bool/mod.ts';
 export * from './endian.ts';

@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * Types for members.
+ */
+
 import type { Arr, ArrClass } from './arr.ts';
 import type { Ptr, PtrClass } from './ptr.ts';
 import type { Type, TypeClass } from './type.ts';

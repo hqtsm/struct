@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * 16-bit float.
+ */
+
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';

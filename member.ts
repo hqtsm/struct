@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * Types and functions for defining a member.
+ */
+
 import type {
 	Memberable,
 	MemberableClass,

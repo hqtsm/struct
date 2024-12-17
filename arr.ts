@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * Array types and factory.
+ */
+
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 import type { MemberInfos, Members } from './members.ts';
 import type { ArrayBufferReal } from './native.ts';
