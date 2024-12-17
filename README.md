@@ -279,8 +279,6 @@ import { pad, Struct, uint32, uint8 } from '@hqtsm/struct';
 class Example extends Struct {
 	declare private alpha: number;
 
-	declare padding: unknown;
-
 	declare protected beta: number;
 
 	declare public gamma: number;

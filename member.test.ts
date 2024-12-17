@@ -135,15 +135,15 @@ Deno.test('pad', () => {
 	class Test extends Struct {
 		declare public alpha: number;
 
-		declare public mystery: never;
+		declare public pad: never;
 
 		declare public beta: number;
 
 		static {
 			uint32(this, 'alpha');
 
-			// Padding can be an unknown member.
-			pad(8, this, 'mystery');
+			// Padding can be a never member.
+			pad(8, this, 'pad');
 
 			uint8(this, 'beta');
 
@@ -154,13 +154,13 @@ Deno.test('pad', () => {
 
 	const off = {
 		alpha: getByteOffset(Test, 'alpha'),
-		mystery: getByteOffset(Test, 'mystery'),
+		pad: getByteOffset(Test, 'pad'),
 		beta: getByteOffset(Test, 'beta'),
 	};
 
 	assertEquals(Test.BYTE_LENGTH, 16);
 	assertEquals(getByteLength(Test, 'alpha'), 4);
-	assertEquals(getByteLength(Test, 'mystery'), 8);
+	assertEquals(getByteLength(Test, 'pad'), 8);
 	assertEquals(getByteLength(Test, 'beta'), 1);
 
 	const data = new Uint8Array(Test.BYTE_LENGTH);
@@ -173,9 +173,9 @@ Deno.test('pad', () => {
 	assertEquals(test.alpha, 0x12345678);
 	assertEquals(test.beta, 0xab);
 	assertThrows(() => {
-		void test.mystery;
+		void test.pad;
 	});
 	assertThrows(() => {
-		(test as { mystery: unknown }).mystery = null;
+		(test as { pad: unknown }).pad = null;
 	});
 });
