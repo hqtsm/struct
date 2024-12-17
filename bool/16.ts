@@ -1,7 +1,7 @@
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { dataView } from '../util.ts';
+import { constant, dataView } from '../util.ts';
 
 /**
  * Member: bool16.
@@ -94,9 +94,7 @@ export class Bool16Ptr extends Ptr<boolean> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Bool16Ptr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Bool16Ptr');
 	}
 }
 
@@ -122,9 +120,7 @@ export class Bool16BEPtr extends Ptr<boolean> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Bool16BEPtr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Bool16BEPtr');
 	}
 }
 
@@ -152,8 +148,6 @@ export class Bool16LEPtr extends Ptr<boolean> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Bool16LEPtr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Bool16LEPtr');
 	}
 }

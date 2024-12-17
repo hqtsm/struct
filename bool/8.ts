@@ -1,7 +1,7 @@
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { dataView } from '../util.ts';
+import { constant, dataView } from '../util.ts';
 
 /**
  * Member: bool8.
@@ -51,8 +51,6 @@ export class Bool8Ptr extends Ptr<boolean> {
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Bool8Ptr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Bool8Ptr');
 	}
 }

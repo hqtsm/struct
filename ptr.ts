@@ -3,7 +3,7 @@ import { Endian } from './endian.ts';
 import type { MemberInfo, MemberInfos, Members } from './members.ts';
 import type { ArrayBufferReal } from './native.ts';
 import type { Type, TypeConstructor } from './type.ts';
-import { assignType } from './util.ts';
+import { assignType, constant } from './util.ts';
 
 function index(key: PropertyKey): number | null {
 	let i;
@@ -148,9 +148,7 @@ export class Ptr<T = never> extends Endian implements Members {
 	}
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Ptr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Ptr');
 	}
 }
 
@@ -242,14 +240,12 @@ export function pointer<T extends Type>(
 					public static override readonly BYTES_PER_ELEMENT = bpe;
 
 					static {
-						Object.defineProperty(
+						constant(
 							this.prototype,
 							Symbol.toStringTag,
-							{
-								value: `${Ptr.prototype[Symbol.toStringTag]}<${
-									Type.prototype[Symbol.toStringTag]
-								}>`,
-							},
+							`${Ptr.prototype[Symbol.toStringTag]}<${
+								Type.prototype[Symbol.toStringTag]
+							}>`,
 						);
 					}
 				},

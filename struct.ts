@@ -1,6 +1,7 @@
 import { Endian } from './endian.ts';
 import type { MemberInfos, Members } from './members.ts';
 import type { Type } from './type.ts';
+import { constant } from './util.ts';
 
 let members: WeakMap<typeof Struct, MemberInfos>;
 
@@ -44,8 +45,6 @@ export class Struct extends Endian implements Type, Members {
 	}
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Struct',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Struct');
 	}
 }

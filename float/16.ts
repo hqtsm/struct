@@ -2,7 +2,7 @@ import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { dataView } from '../util.ts';
+import { constant, dataView } from '../util.ts';
 
 type MaybeNativeFloat16 = Partial<{
 	getFloat16(byteOffset: number, littleEndian?: boolean): number;
@@ -134,9 +134,7 @@ export class Float16Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Float16Ptr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Float16Ptr');
 	}
 }
 
@@ -177,9 +175,7 @@ export class Float16BEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Float16BEPtr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Float16BEPtr');
 	}
 }
 
@@ -224,8 +220,6 @@ export class Float16LEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Float16LEPtr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Float16LEPtr');
 	}
 }

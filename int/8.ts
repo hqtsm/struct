@@ -1,7 +1,7 @@
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { dataView } from '../util.ts';
+import { constant, dataView } from '../util.ts';
 
 /**
  * Member: int8.
@@ -72,9 +72,7 @@ export class Int8Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Int8Ptr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Int8Ptr');
 	}
 }
 
@@ -95,8 +93,6 @@ export class Uint8Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Uint8Ptr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Uint8Ptr');
 	}
 }

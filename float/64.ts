@@ -1,7 +1,7 @@
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { dataView } from '../util.ts';
+import { constant, dataView } from '../util.ts';
 
 /**
  * Member: float64.
@@ -94,9 +94,7 @@ export class Float64Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Float64Ptr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Float64Ptr');
 	}
 }
 
@@ -122,9 +120,7 @@ export class Float64BEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Float64BEPtr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Float64BEPtr');
 	}
 }
 
@@ -152,8 +148,6 @@ export class Float64LEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 8;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Float64LEPtr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Float64LEPtr');
 	}
 }

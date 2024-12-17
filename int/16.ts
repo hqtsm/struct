@@ -1,7 +1,7 @@
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { dataView } from '../util.ts';
+import { constant, dataView } from '../util.ts';
 
 /**
  * Member: int16.
@@ -161,9 +161,7 @@ export class Int16Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Int16Ptr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Int16Ptr');
 	}
 }
 
@@ -189,9 +187,7 @@ export class Int16BEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Int16BEPtr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Int16BEPtr');
 	}
 }
 
@@ -219,9 +215,7 @@ export class Int16LEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Int16LEPtr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Int16LEPtr');
 	}
 }
 
@@ -249,9 +243,7 @@ export class Uint16Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Uint16Ptr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Uint16Ptr');
 	}
 }
 
@@ -277,9 +269,7 @@ export class Uint16BEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Uint16BEPtr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Uint16BEPtr');
 	}
 }
 
@@ -307,8 +297,6 @@ export class Uint16LEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Uint16LEPtr',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Uint16LEPtr');
 	}
 }

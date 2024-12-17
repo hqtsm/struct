@@ -1,5 +1,5 @@
 import type { ArrayBufferReal, BufferPointer } from './native.ts';
-import { dataView } from './util.ts';
+import { constant, dataView } from './util.ts';
 
 /**
  * Endian aware.
@@ -80,9 +80,7 @@ export class Endian implements BufferPointer, EndianAware {
 	public static readonly LITTLE_ENDIAN: boolean | null = null;
 
 	static {
-		Object.defineProperty(this.prototype, Symbol.toStringTag, {
-			value: 'Endian',
-		});
+		constant(this.prototype, Symbol.toStringTag, 'Endian');
 	}
 }
 
@@ -127,14 +125,12 @@ export function dynamicEndian<T extends EndianClass>(
 					public static override readonly LITTLE_ENDIAN = null;
 
 					static {
-						Object.defineProperty(
+						constant(
 							this.prototype,
 							Symbol.toStringTag,
-							{
-								value: `DynamicEndian<${
-									Endian.prototype[Symbol.toStringTag]
-								}>`,
-							},
+							`DynamicEndian<${
+								Endian.prototype[Symbol.toStringTag]
+							}>`,
 						);
 					}
 				},
@@ -166,14 +162,12 @@ export function bigEndian<T extends EndianClass>(
 					public static override readonly LITTLE_ENDIAN = false;
 
 					static {
-						Object.defineProperty(
+						constant(
 							this.prototype,
 							Symbol.toStringTag,
-							{
-								value: `BigEndian<${
-									Endian.prototype[Symbol.toStringTag]
-								}>`,
-							},
+							`BigEndian<${
+								Endian.prototype[Symbol.toStringTag]
+							}>`,
 						);
 					}
 				},
@@ -205,14 +199,12 @@ export function littleEndian<T extends EndianClass>(
 					public static override readonly LITTLE_ENDIAN = true;
 
 					static {
-						Object.defineProperty(
+						constant(
 							this.prototype,
 							Symbol.toStringTag,
-							{
-								value: `LittleEndian<${
-									Endian.prototype[Symbol.toStringTag]
-								}>`,
-							},
+							`LittleEndian<${
+								Endian.prototype[Symbol.toStringTag]
+							}>`,
 						);
 					}
 				},

@@ -8,6 +8,7 @@ import {
 	type PtrConstructor,
 } from './ptr.ts';
 import type { Type, TypeClass, TypeConstructor } from './type.ts';
+import { constant } from './util.ts';
 
 /**
  * Array.
@@ -218,14 +219,10 @@ export function array<T extends Type>(
 					}
 
 					static {
-						Object.defineProperty(
+						constant(
 							this.prototype,
 							Symbol.toStringTag,
-							{
-								value: `${
-									Ptr.prototype[Symbol.toStringTag]
-								}[${length}]`,
-							},
+							`${Ptr.prototype[Symbol.toStringTag]}[${length}]`,
 						);
 					}
 				},
