@@ -95,7 +95,7 @@ Deno.test('Arr: constants', () => {
 			continue;
 		}
 		const desc = Object.getOwnPropertyDescriptor(Foo4, p);
-		assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, p);
+		assertMatch(p, /^[A-Z][A-Z0-9_]*$/, p);
 		assertEquals(desc!.writable ?? false, false, p);
 	}
 });

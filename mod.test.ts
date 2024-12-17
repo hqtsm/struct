@@ -32,8 +32,41 @@ Deno.test('class constants', () => {
 				continue;
 			}
 			const desc = Object.getOwnPropertyDescriptor(v, p);
-			assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, `${k}.${p}`);
+			assertMatch(p, /^[A-Z][A-Z0-9_]*$/, `${k}.${p}`);
 			assertEquals(desc!.writable ?? false, false, `${k}.${p}`);
 		}
+	}
+});
+
+Deno.test('class names', () => {
+	for (const [k, v] of Object.entries(mod)) {
+		if (
+			typeof v !== 'function' ||
+			Object.getOwnPropertyDescriptor(v, 'prototype')?.writable
+		) {
+			continue;
+		}
+		assertMatch(k, /^[A-Z][a-zA-Z0-9_]*$/, k);
+	}
+});
+
+Deno.test('function names', () => {
+	for (const [k, v] of Object.entries(mod)) {
+		if (
+			typeof v !== 'function' ||
+			!Object.getOwnPropertyDescriptor(v, 'prototype')?.writable
+		) {
+			continue;
+		}
+		assertMatch(k, /^[a-z][a-zA-Z0-9_]*$/, k);
+	}
+});
+
+Deno.test('variable names', () => {
+	for (const [k, v] of Object.entries(mod)) {
+		if (typeof v === 'function') {
+			continue;
+		}
+		assertMatch(k, /^[A-Z][A-Z0-9_]*$/, k);
 	}
 });

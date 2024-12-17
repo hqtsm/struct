@@ -37,7 +37,7 @@ Deno.test('dynamicEndian', () => {
 			continue;
 		}
 		const desc = Object.getOwnPropertyDescriptor(DE, p);
-		assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, p);
+		assertMatch(p, /^[A-Z][A-Z0-9_]*$/, p);
 		assertEquals(desc!.writable ?? false, false, p);
 	}
 });
@@ -59,7 +59,7 @@ Deno.test('bigEndian', () => {
 			continue;
 		}
 		const desc = Object.getOwnPropertyDescriptor(BE, p);
-		assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, p);
+		assertMatch(p, /^[A-Z][A-Z0-9_]*$/, p);
 		assertEquals(desc!.writable ?? false, false, p);
 	}
 });
@@ -81,7 +81,7 @@ Deno.test('littleEndian', () => {
 			continue;
 		}
 		const desc = Object.getOwnPropertyDescriptor(LE, p);
-		assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, p);
+		assertMatch(p, /^[A-Z][A-Z0-9_]*$/, p);
 		assertEquals(desc!.writable ?? false, false, p);
 	}
 });
