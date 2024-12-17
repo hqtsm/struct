@@ -21,3 +21,19 @@ Deno.test('class constants', () => {
 		}
 	}
 });
+
+Deno.test('class Symbol.toStringTag', () => {
+	for (const [k, v] of Object.entries(mod)) {
+		if (
+			typeof v !== 'function' ||
+			Object.getOwnPropertyDescriptor(v, 'prototype')?.writable
+		) {
+			continue;
+		}
+		const desc = Object.getOwnPropertyDescriptor(
+			v.prototype,
+			Symbol.toStringTag,
+		);
+		assertEquals(desc?.value, k, k);
+	}
+});
