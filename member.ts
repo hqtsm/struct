@@ -75,7 +75,6 @@ export function defineMember<T extends MemberableClass, M>(
 		value: { byteOffset, byteLength } satisfies MemberInfo,
 		configurable: true,
 		enumerable: true,
-		writable: true,
 	});
 	byteLength += byteOffset;
 	if (byteLength > Type.BYTE_LENGTH) {
