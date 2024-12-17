@@ -22,7 +22,7 @@ export function defaultMemberByteOffset(Type: MemberableClass): number {
  * Ensure byte length of type is defined.
  *
  * @param Type Type class.
- * @param byteLength Byte length to ensure greater than or equal.
+ * @param byteLength Byte length to ensure at-least.
  * @returns Updated type byte length.
  */
 export function ensureByteLength<T extends MemberableClass>(
