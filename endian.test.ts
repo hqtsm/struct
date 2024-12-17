@@ -1,4 +1,9 @@
-import { assertEquals, assertNotEquals, assertStrictEquals } from '@std/assert';
+import {
+	assertEquals,
+	assertMatch,
+	assertNotEquals,
+	assertStrictEquals,
+} from '@std/assert';
 import {
 	BIG_ENDIAN,
 	bigEndian,
@@ -8,6 +13,8 @@ import {
 	littleEndian,
 } from './endian.ts';
 import { Struct } from './struct.ts';
+
+const defaultClassProperties = new Set(Object.getOwnPropertyNames(class {}));
 
 Deno.test('BIG_ENDIAN != LITTLE_ENDIAN', () => {
 	assertNotEquals(BIG_ENDIAN, LITTLE_ENDIAN);
@@ -25,6 +32,14 @@ Deno.test('dynamicEndian', () => {
 		`${new (dynamicEndian(Struct))(new ArrayBuffer(0))}`,
 		'[object DynamicEndian<Struct>]',
 	);
+	for (const p of Object.getOwnPropertyNames(DE)) {
+		if (defaultClassProperties.has(p)) {
+			continue;
+		}
+		const desc = Object.getOwnPropertyDescriptor(DE, p);
+		assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, p);
+		assertEquals(desc!.writable ?? false, false, p);
+	}
 });
 
 Deno.test('bigEndian', () => {
@@ -39,6 +54,14 @@ Deno.test('bigEndian', () => {
 		`${new (bigEndian(Struct))(new ArrayBuffer(0))}`,
 		'[object BigEndian<Struct>]',
 	);
+	for (const p of Object.getOwnPropertyNames(BE)) {
+		if (defaultClassProperties.has(p)) {
+			continue;
+		}
+		const desc = Object.getOwnPropertyDescriptor(BE, p);
+		assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, p);
+		assertEquals(desc!.writable ?? false, false, p);
+	}
 });
 
 Deno.test('littleEndian', () => {
@@ -53,4 +76,12 @@ Deno.test('littleEndian', () => {
 		`${new (littleEndian(Struct))(new ArrayBuffer(0))}`,
 		'[object LittleEndian<Struct>]',
 	);
+	for (const p of Object.getOwnPropertyNames(LE)) {
+		if (defaultClassProperties.has(p)) {
+			continue;
+		}
+		const desc = Object.getOwnPropertyDescriptor(LE, p);
+		assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, p);
+		assertEquals(desc!.writable ?? false, false, p);
+	}
 });

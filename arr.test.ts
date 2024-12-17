@@ -1,5 +1,6 @@
 import {
 	assertEquals,
+	assertMatch,
 	assertNotStrictEquals,
 	assertStrictEquals,
 	assertThrows,
@@ -82,6 +83,21 @@ Deno.test('Arr: endian', () => {
 	assertNotStrictEquals(Foo4.MEMBERS, Foo4BE.MEMBERS);
 	assertEquals(new Foo4BE(new ArrayBuffer(0)).littleEndian, false);
 	assertEquals(new Foo4LE(new ArrayBuffer(0)).littleEndian, true);
+});
+
+Deno.test('Arr: constants', () => {
+	const defaultClassProperties = new Set(
+		Object.getOwnPropertyNames(class {}),
+	);
+
+	for (const p of Object.getOwnPropertyNames(Foo4)) {
+		if (defaultClassProperties.has(p)) {
+			continue;
+		}
+		const desc = Object.getOwnPropertyDescriptor(Foo4, p);
+		assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, p);
+		assertEquals(desc!.writable ?? false, false, p);
+	}
 });
 
 Deno.test('Arr: Symbol.toStringTag', () => {

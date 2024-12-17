@@ -1,5 +1,6 @@
 import {
 	assertEquals,
+	assertMatch,
 	assertNotStrictEquals,
 	assertStrictEquals,
 	assertThrows,
@@ -8,6 +9,8 @@ import { LITTLE_ENDIAN } from './endian.ts';
 import { int8, Uint8Ptr } from './int/8.ts';
 import { pointer, Ptr } from './ptr.ts';
 import { Struct } from './struct.ts';
+
+const defaultClassProperties = new Set(Object.getOwnPropertyNames(class {}));
 
 class DummyPtr extends Ptr<number> {
 	public override get(index: number): number {
@@ -86,6 +89,17 @@ Deno.test('Ptr: littleEndian', () => {
 	assertEquals(new DummyPtr(buffer).littleEndian, LITTLE_ENDIAN);
 	assertEquals(new DummyPtr(buffer, 0, true).littleEndian, true);
 	assertEquals(new DummyPtr(buffer, 0, false).littleEndian, false);
+});
+
+Deno.test('Ptr: constants', () => {
+	for (const p of Object.getOwnPropertyNames(Ptr)) {
+		if (defaultClassProperties.has(p)) {
+			continue;
+		}
+		const desc = Object.getOwnPropertyDescriptor(Ptr, p);
+		assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, p);
+		assertEquals(desc!.writable ?? false, false, p);
+	}
 });
 
 Deno.test('Ptr: Symbol.toStringTag', () => {
@@ -232,5 +246,19 @@ Deno.test('pointer', () => {
 	{
 		const foo = f[-2];
 		assertThrows(() => foo.bar, RangeError);
+	}
+
+	assertEquals(
+		`${new FooPtr(new ArrayBuffer(0))}`,
+		`[object Ptr<${Struct.name}>]`,
+	);
+
+	for (const p of Object.getOwnPropertyNames(FooPtr)) {
+		if (defaultClassProperties.has(p)) {
+			continue;
+		}
+		const desc = Object.getOwnPropertyDescriptor(FooPtr, p);
+		assertMatch(p, /^[a-zA-Z][a-zA-Z0-9_]*$/, p);
+		assertEquals(desc!.writable ?? false, false, p);
 	}
 });
