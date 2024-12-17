@@ -3,13 +3,35 @@ import type { BufferView } from './native.ts';
 import type { Type } from './type.ts';
 
 /**
+ * If types are equal.
+ */
+export type IfTypeEqual<A, B, X = A, Y = never> = (
+	<T>() => T extends A ? 1 : 2
+) extends (
+	<T>() => T extends B ? 1 : 2
+) ? X
+	: Y;
+
+/**
+ * Readonly keys.
+ */
+export type ReadonlyKeyof<T> = {
+	[K in keyof T]: IfTypeEqual<
+		{ [Q in K]: T[K] },
+		{ -readonly [Q in K]: T[K] },
+		never,
+		K
+	>;
+}[keyof T];
+
+/**
  * Define constant.
  *
  * @param o Object.
  * @param key Key.
  * @param value Value, or undefined for current value.
  */
-export function constant<T, K extends keyof T>(
+export function constant<T, K extends ReadonlyKeyof<T>>(
 	o: T,
 	key: K,
 	value: T[K] | undefined = undefined,

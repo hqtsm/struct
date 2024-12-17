@@ -5,13 +5,12 @@ import { assignType, assignView, constant } from './util.ts';
 
 Deno.test('constant', () => {
 	class A {
-		public static foo: string = 'bar';
+		public static readonly foo: string = 'bar';
 
 		static {
 			constant(this, 'foo');
 		}
 	}
-
 	assertEquals(Object.getOwnPropertyDescriptor(A, 'foo'), {
 		value: 'bar',
 		writable: false,
@@ -20,13 +19,12 @@ Deno.test('constant', () => {
 	});
 
 	class B {
-		public static foo: string;
+		public static readonly foo: string;
 
 		static {
 			constant(this, 'foo', 'bar');
 		}
 	}
-
 	assertEquals(Object.getOwnPropertyDescriptor(B, 'foo'), {
 		value: 'bar',
 		writable: false,
@@ -35,14 +33,28 @@ Deno.test('constant', () => {
 	});
 
 	class C {
-		declare public static foo: string;
+		declare public static readonly foo: string;
 
 		static {
 			constant(this, 'foo', 'bar');
 		}
 	}
-
 	assertEquals(Object.getOwnPropertyDescriptor(C, 'foo'), {
+		value: 'bar',
+		writable: false,
+		enumerable: false,
+		configurable: false,
+	});
+
+	class D {
+		public static foo: string = 'bar';
+
+		static {
+			// @ts-expect-error: Not readonly.
+			constant(this, 'foo');
+		}
+	}
+	assertEquals(Object.getOwnPropertyDescriptor(D, 'foo'), {
 		value: 'bar',
 		writable: false,
 		enumerable: false,
