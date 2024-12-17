@@ -164,6 +164,7 @@ export class Int32Ptr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Int32Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -190,6 +191,7 @@ export class Int32BEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Int32BEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -218,6 +220,7 @@ export class Int32LEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Int32LEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -246,6 +249,7 @@ export class Uint32Ptr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Uint32Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -272,6 +276,7 @@ export class Uint32BEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Uint32BEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -300,5 +305,6 @@ export class Uint32LEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Uint32LEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

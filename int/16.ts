@@ -162,6 +162,7 @@ export class Int16Ptr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Int16Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -188,6 +189,7 @@ export class Int16BEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Int16BEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -216,6 +218,7 @@ export class Int16LEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Int16LEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -244,6 +247,7 @@ export class Uint16Ptr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Uint16Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -270,6 +274,7 @@ export class Uint16BEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Uint16BEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -298,5 +303,6 @@ export class Uint16LEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Uint16LEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

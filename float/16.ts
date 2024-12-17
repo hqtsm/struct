@@ -135,6 +135,7 @@ export class Float16Ptr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Float16Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -176,6 +177,7 @@ export class Float16BEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Float16BEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -221,5 +223,6 @@ export class Float16LEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Float16LEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

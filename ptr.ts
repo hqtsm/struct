@@ -249,6 +249,7 @@ export function pointer<T extends Type>(
 								Type.prototype[Symbol.toStringTag]
 							}>`,
 						);
+						constant(this, 'BYTES_PER_ELEMENT');
 					}
 				},
 			}[name],

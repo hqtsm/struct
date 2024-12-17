@@ -73,6 +73,7 @@ export class Int8Ptr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Int8Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -94,5 +95,6 @@ export class Uint8Ptr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Uint8Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

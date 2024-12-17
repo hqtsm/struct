@@ -162,6 +162,7 @@ export class Int64Ptr extends Ptr<bigint> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Int64Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -188,6 +189,7 @@ export class Int64BEPtr extends Ptr<bigint> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Int64BEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -216,6 +218,7 @@ export class Int64LEPtr extends Ptr<bigint> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Int64LEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -244,6 +247,7 @@ export class Uint64Ptr extends Ptr<bigint> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Uint64Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -270,6 +274,7 @@ export class Uint64BEPtr extends Ptr<bigint> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Uint64BEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -298,5 +303,6 @@ export class Uint64LEPtr extends Ptr<bigint> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Uint64LEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

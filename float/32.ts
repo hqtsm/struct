@@ -95,6 +95,7 @@ export class Float32Ptr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Float32Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -121,6 +122,7 @@ export class Float32BEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Float32BEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -149,5 +151,6 @@ export class Float32LEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Float32LEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

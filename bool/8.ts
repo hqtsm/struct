@@ -52,5 +52,6 @@ export class Bool8Ptr extends Ptr<boolean> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Bool8Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

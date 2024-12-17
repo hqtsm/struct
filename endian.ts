@@ -133,6 +133,7 @@ export function dynamicEndian<T extends EndianClass>(
 								Endian.prototype[Symbol.toStringTag]
 							}>`,
 						);
+						constant(this, 'LITTLE_ENDIAN');
 					}
 				},
 			}[name],
@@ -170,6 +171,7 @@ export function bigEndian<T extends EndianClass>(
 								Endian.prototype[Symbol.toStringTag]
 							}>`,
 						);
+						constant(this, 'LITTLE_ENDIAN');
 					}
 				},
 			}[name],
@@ -207,6 +209,7 @@ export function littleEndian<T extends EndianClass>(
 								Endian.prototype[Symbol.toStringTag]
 							}>`,
 						);
+						constant(this, 'LITTLE_ENDIAN');
 					}
 				},
 			}[name],

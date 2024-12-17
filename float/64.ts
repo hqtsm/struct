@@ -95,6 +95,7 @@ export class Float64Ptr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Float64Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -121,6 +122,7 @@ export class Float64BEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Float64BEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -149,5 +151,6 @@ export class Float64LEPtr extends Ptr<number> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Float64LEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

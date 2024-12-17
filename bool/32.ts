@@ -95,6 +95,7 @@ export class Bool32Ptr extends Ptr<boolean> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Bool32Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -121,6 +122,7 @@ export class Bool32BEPtr extends Ptr<boolean> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Bool32BEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
 
@@ -149,5 +151,6 @@ export class Bool32LEPtr extends Ptr<boolean> {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Bool32LEPtr');
+		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
