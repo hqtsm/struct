@@ -19,6 +19,28 @@ export function defaultMemberByteOffset(Type: MemberableClass): number {
 }
 
 /**
+ * Ensure byte length of type is defined.
+ *
+ * @param Type Type class.
+ * @param byteLength Byte length to ensure greater than or equal.
+ * @returns Updated type byte length.
+ */
+export function ensureByteLength<T extends MemberableClass>(
+	Type: T,
+	byteLength = 0,
+): number {
+	const { BYTE_LENGTH } = Type;
+	const value = byteLength > BYTE_LENGTH ? byteLength : BYTE_LENGTH;
+	Object.defineProperty(Type, 'BYTE_LENGTH', {
+		value,
+		configurable: true,
+		enumerable: false,
+		writable: false,
+	});
+	return value;
+}
+
+/**
  * Member descriptor.
  */
 export interface MemberDescriptor<T extends Memberable, M> {
@@ -78,11 +100,7 @@ export function defineMember<T extends MemberableClass, M>(
 		enumerable: true,
 		writable: false,
 	});
-	byteLength += byteOffset;
-	if (byteLength > Type.BYTE_LENGTH) {
-		(Type as { BYTE_LENGTH: number }).BYTE_LENGTH = byteLength;
-	}
-	return byteLength;
+	return ensureByteLength(Type, byteOffset + byteLength);
 }
 
 /**
@@ -204,23 +222,21 @@ export function pad<T extends MemberableClass>(
 	name: MemberableClassKeys<T, unknown> | null = null,
 	byteOffset: number | null = null,
 ): number {
-	if (name === null) {
-		byteLength += byteOffset ?? defaultMemberByteOffset(Type);
-		if (byteLength > Type.BYTE_LENGTH) {
-			(Type as { BYTE_LENGTH: number }).BYTE_LENGTH = byteLength;
-		}
-		return byteLength;
-	}
-	return defineMember(Type, name, {
-		byteLength,
-		byteOffset,
-		get(): unknown {
-			throw new TypeError(
-				`Read from padding member: ${String(name)}`,
-			);
-		},
-		set(): void {
-			throw new TypeError(`Write to padding member: ${String(name)}`);
-		},
-	});
+	return (name === null)
+		? ensureByteLength(
+			Type,
+			byteLength + (byteOffset ?? defaultMemberByteOffset(Type)),
+		)
+		: defineMember(Type, name, {
+			byteLength,
+			byteOffset,
+			get(): unknown {
+				throw new TypeError(
+					`Read from padding member: ${String(name)}`,
+				);
+			},
+			set(): void {
+				throw new TypeError(`Write to padding member: ${String(name)}`);
+			},
+		});
 }
