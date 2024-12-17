@@ -269,6 +269,76 @@ console.assert(four.chars[0] === 0x41);
 console.assert(String.fromCharCode(...four.chars) === 'ABCD');
 ```
 
+## Alignment / Padding
+
+By default member memory is sequentially without alignment or padding.
+
+```ts
+import { pad, Struct, uint32, uint8 } from '@hqtsm/struct';
+
+class Example extends Struct {
+	declare private alpha: number;
+
+	declare padding: unknown;
+
+	declare protected beta: number;
+
+	declare public gamma: number;
+
+	public setAlpha(value: number): void {
+		this.alpha = value;
+	}
+
+	public setBeta(value: number): void {
+		this.beta = value;
+	}
+
+	static {
+		uint8(this, 'alpha' as never);
+		uint32(this, 'beta' as never);
+		uint8(this, 'gamma');
+	}
+}
+
+console.assert(Example.BYTE_LENGTH === 6);
+```
+
+Padding can be manually added as needed property or anonymously.
+
+```ts
+import { pad, Struct, uint32, uint8 } from '@hqtsm/struct';
+
+class Example extends Struct {
+	declare private alpha: number;
+
+	declare padding: unknown;
+
+	declare protected beta: number;
+
+	declare public gamma: number;
+
+	public setAlpha(value: number): void {
+		this.alpha = value;
+	}
+
+	public setBeta(value: number): void {
+		this.beta = value;
+	}
+
+	static {
+		uint8(this, 'alpha' as never);
+		pad(3, this, 'padding');
+		uint32(this, 'beta' as never);
+		uint8(this, 'gamma');
+		pad(3, this);
+	}
+}
+
+console.assert(Example.BYTE_LENGTH === 12);
+```
+
+Using intergers or arrays for padding also works.
+
 ## Private / Protected
 
 Members can be made `private` or `protected` but type checking must be relaxed.
