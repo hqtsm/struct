@@ -46,5 +46,7 @@ export class Struct extends Endian implements Type, Members {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Struct');
+		constant(this, 'BYTE_LENGTH');
+		constant(this, 'OVERLAPPING');
 	}
 }

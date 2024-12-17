@@ -149,6 +149,8 @@ export class Ptr<T = never> extends Endian implements Members {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Ptr');
+		constant(this, 'BYTES_PER_ELEMENT');
+		constant(this, 'OVERLAPPING');
 	}
 }
 

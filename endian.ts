@@ -81,6 +81,7 @@ export class Endian implements BufferPointer, EndianAware {
 
 	static {
 		constant(this.prototype, Symbol.toStringTag, 'Endian');
+		constant(this, 'LITTLE_ENDIAN');
 	}
 }
 

@@ -224,6 +224,8 @@ export function array<T extends Type>(
 							Symbol.toStringTag,
 							`${Ptr.prototype[Symbol.toStringTag]}[${length}]`,
 						);
+						constant(this, 'BYTE_LENGTH');
+						constant(this, 'LENGTH');
 					}
 				},
 			}[name],
