@@ -8,8 +8,8 @@ Binary structures
 - Strong static type checking
 - Tree shaking friendly design
 - Public interface compatible with `ArrayBufferView`, like native binary types
-- Support for little-endian, big-endian, and dynamic endian structures
-- Support for inheritance, access modifiers, and child structures
+- Support for little-endian, big-endian, and dynamic endian
+- Support for structures, unions, pointers, arrays, inheritance, and more
 
 # Usage
 
