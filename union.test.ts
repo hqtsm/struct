@@ -172,10 +172,10 @@ Deno.test('Union: union', () => {
 
 		declare public b: boolean;
 
-		public static override readonly BYTE_LENGTH = Math.max(
-			uint32(this, 'i', 0),
-			bool32(this, 'b', 0),
-		);
+		static {
+			uint32(this, 'i');
+			bool32(this, 'b');
+		}
 	}
 
 	const test = new Test(new ArrayBuffer(Test.BYTE_LENGTH));
