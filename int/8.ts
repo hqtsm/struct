@@ -68,10 +68,12 @@ export class Int8Ptr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Int8Ptr, 'new'>;
 
 	public override get(index: number): number {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getInt8(this.byteOffset + index);
 	}
 
 	public override set(index: number, value: number): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setInt8(this.byteOffset + index, value);
 	}
 
@@ -90,10 +92,12 @@ export class Uint8Ptr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Uint8Ptr, 'new'>;
 
 	public override get(index: number): number {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getUint8(this.byteOffset + index);
 	}
 
 	public override set(index: number, value: number): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setUint8(this.byteOffset + index, value);
 	}
 

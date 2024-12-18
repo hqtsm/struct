@@ -83,6 +83,7 @@ export class Float64Ptr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Float64Ptr, 'new'>;
 
 	public override get(index: number): number {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getFloat64(
 			this.byteOffset + index * 8,
 			this.littleEndian,
@@ -90,6 +91,7 @@ export class Float64Ptr extends Ptr<number> {
 	}
 
 	public override set(index: number, value: number): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setFloat64(
 			this.byteOffset + index * 8,
 			value,
@@ -112,12 +114,14 @@ export class Float64BEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Float64BEPtr, 'new'>;
 
 	public override get(index: number): number {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getFloat64(
 			this.byteOffset + index * 8,
 		);
 	}
 
 	public override set(index: number, value: number): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setFloat64(
 			this.byteOffset + index * 8,
 			value,
@@ -139,6 +143,7 @@ export class Float64LEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Float64LEPtr, 'new'>;
 
 	public override get(index: number): number {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getFloat64(
 			this.byteOffset + index * 8,
 			true,
@@ -146,6 +151,7 @@ export class Float64LEPtr extends Ptr<number> {
 	}
 
 	public override set(index: number, value: number): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setFloat64(
 			this.byteOffset + index * 8,
 			value,

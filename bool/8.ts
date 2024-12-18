@@ -47,10 +47,12 @@ export class Bool8Ptr extends Ptr<boolean> {
 	declare public readonly ['constructor']: Omit<typeof Bool8Ptr, 'new'>;
 
 	public override get(index: number): boolean {
+		index = (+index || 0) - (index % 1 || 0);
 		return !!dataView(this.buffer).getInt8(this.byteOffset + index);
 	}
 
 	public override set(index: number, value: boolean): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setInt8(this.byteOffset + index, value ? 1 : 0);
 	}
 

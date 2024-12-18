@@ -150,6 +150,7 @@ export class Int64Ptr extends Ptr<bigint> {
 	declare public readonly ['constructor']: Omit<typeof Int64Ptr, 'new'>;
 
 	public override get(index: number): bigint {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigInt64(
 			this.byteOffset + index * 8,
 			this.littleEndian,
@@ -157,6 +158,7 @@ export class Int64Ptr extends Ptr<bigint> {
 	}
 
 	public override set(index: number, value: bigint): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setBigInt64(
 			this.byteOffset + index * 8,
 			value,
@@ -179,12 +181,14 @@ export class Int64BEPtr extends Ptr<bigint> {
 	declare public readonly ['constructor']: Omit<typeof Int64BEPtr, 'new'>;
 
 	public override get(index: number): bigint {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigInt64(
 			this.byteOffset + index * 8,
 		);
 	}
 
 	public override set(index: number, value: bigint): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setBigInt64(
 			this.byteOffset + index * 8,
 			value,
@@ -206,6 +210,7 @@ export class Int64LEPtr extends Ptr<bigint> {
 	declare public readonly ['constructor']: Omit<typeof Int64LEPtr, 'new'>;
 
 	public override get(index: number): bigint {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigInt64(
 			this.byteOffset + index * 8,
 			true,
@@ -213,6 +218,7 @@ export class Int64LEPtr extends Ptr<bigint> {
 	}
 
 	public override set(index: number, value: bigint): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setBigInt64(
 			this.byteOffset + index * 8,
 			value,
@@ -235,6 +241,7 @@ export class Uint64Ptr extends Ptr<bigint> {
 	declare public readonly ['constructor']: Omit<typeof Uint64Ptr, 'new'>;
 
 	public override get(index: number): bigint {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigUint64(
 			this.byteOffset + index * 8,
 			this.littleEndian,
@@ -242,6 +249,7 @@ export class Uint64Ptr extends Ptr<bigint> {
 	}
 
 	public override set(index: number, value: bigint): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setBigUint64(
 			this.byteOffset + index * 8,
 			value,
@@ -264,12 +272,14 @@ export class Uint64BEPtr extends Ptr<bigint> {
 	declare public readonly ['constructor']: Omit<typeof Uint64BEPtr, 'new'>;
 
 	public override get(index: number): bigint {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigUint64(
 			this.byteOffset + index * 8,
 		);
 	}
 
 	public override set(index: number, value: bigint): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setBigUint64(
 			this.byteOffset + index * 8,
 			value,
@@ -291,6 +301,7 @@ export class Uint64LEPtr extends Ptr<bigint> {
 	declare public readonly ['constructor']: Omit<typeof Uint64LEPtr, 'new'>;
 
 	public override get(index: number): bigint {
+		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigUint64(
 			this.byteOffset + index * 8,
 			true,
@@ -298,6 +309,7 @@ export class Uint64LEPtr extends Ptr<bigint> {
 	}
 
 	public override set(index: number, value: bigint): void {
+		index = (+index || 0) - (index % 1 || 0);
 		dataView(this.buffer).setBigUint64(
 			this.byteOffset + index * 8,
 			value,

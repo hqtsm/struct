@@ -106,6 +106,7 @@ export class Float16Ptr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Float16Ptr, 'new'>;
 
 	public override get(index: number): number {
+		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		return d.getFloat16
 			? d.getFloat16(
@@ -120,6 +121,7 @@ export class Float16Ptr extends Ptr<number> {
 	}
 
 	public override set(index: number, value: number): void {
+		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		if (d.setFloat16) {
 			d.setFloat16(
@@ -152,6 +154,7 @@ export class Float16BEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Float16BEPtr, 'new'>;
 
 	public override get(index: number): number {
+		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		return d.getFloat16
 			? d.getFloat16(
@@ -164,6 +167,7 @@ export class Float16BEPtr extends Ptr<number> {
 	}
 
 	public override set(index: number, value: number): void {
+		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		if (d.setFloat16) {
 			d.setFloat16(
@@ -194,6 +198,7 @@ export class Float16LEPtr extends Ptr<number> {
 	declare public readonly ['constructor']: Omit<typeof Float16LEPtr, 'new'>;
 
 	public override get(index: number): number {
+		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		return d.getFloat16
 			? d.getFloat16(
@@ -208,6 +213,7 @@ export class Float16LEPtr extends Ptr<number> {
 	}
 
 	public override set(index: number, value: number): void {
+		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
 		if (d.setFloat16) {
 			d.setFloat16(

@@ -90,6 +90,7 @@ export class Ptr<T = never> extends Endian implements Members {
 	 * @returns Pointer value.
 	 */
 	public get(index: number): T {
+		index = (+index || 0) - (index % 1 || 0);
 		throw new TypeError(`Read from void pointer: ${index}`);
 	}
 
@@ -100,6 +101,7 @@ export class Ptr<T = never> extends Endian implements Members {
 	 * @param value Pointer value.
 	 */
 	public set(index: number, value: T): void {
+		index = (+index || 0) - (index % 1 || 0);
 		void value;
 		throw new TypeError(`Write to void pointer: ${index}`);
 	}
@@ -216,6 +218,7 @@ export function pointer<T extends Type>(
 					readonly #values = new MeekValueMap<number, T>();
 
 					public override get(index: number): T {
+						index = (+index || 0) - (index % 1 || 0);
 						let r = this.#values.get(index);
 						if (!r) {
 							this.#values.set(
@@ -231,6 +234,7 @@ export function pointer<T extends Type>(
 					}
 
 					public override set(index: number, value: T): void {
+						index = (+index || 0) - (index % 1 || 0);
 						let r = this.#values.get(index);
 						if (!r) {
 							this.#values.set(
