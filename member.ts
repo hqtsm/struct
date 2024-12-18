@@ -240,9 +240,7 @@ export function pad<T extends MemberableClass>(
 		byteLength,
 		byteOffset,
 		get(): never {
-			throw new TypeError(
-				`Read from padding member: ${String(name)}`,
-			);
+			throw new TypeError(`Read from padding member: ${String(name)}`);
 		},
 		set(): void {
 			throw new TypeError(`Write to padding member: ${String(name)}`);
