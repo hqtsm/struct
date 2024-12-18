@@ -122,7 +122,7 @@ export interface MemberConstructor<
 	 *
 	 * @param buffer Buffer data.
 	 * @param byteOffset Byte offset.
-	 * @param littleEndian Little endian, big endian, or default.
+	 * @param littleEndian Little endian, big endian, or inherit.
 	 */
 	new (
 		buffer: ArrayBufferLike,
@@ -143,7 +143,7 @@ export interface MemberConstructor<
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @param littleEndian Little endian, big endian, or default.
+ * @param littleEndian Little endian, big endian, or inherit.
  * @returns Updated type byte length.
  */
 export function member<T extends MemberableClass, M extends BufferView>(
