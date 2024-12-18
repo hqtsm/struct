@@ -93,7 +93,9 @@ export function defineMember<T extends MemberableClass, M>(
 	>,
 ): number {
 	let { byteLength, byteOffset, get, set } = desc;
+	byteLength = (+byteLength || 0) - (byteLength % 1 || 0);
 	byteOffset ??= defaultMemberByteOffset(Type);
+	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 	Object.defineProperty(Type.prototype, name, {
 		get,
 		set,
@@ -153,6 +155,7 @@ export function member<T extends MemberableClass, M extends BufferView>(
 ): number {
 	let m: WeakMap<Type, M>;
 	byteOffset ??= defaultMemberByteOffset(Type);
+	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 	return defineMember(Type, name, {
 		byteLength: Member.BYTE_LENGTH,
 		byteOffset,

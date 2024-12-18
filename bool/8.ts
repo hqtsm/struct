@@ -23,6 +23,7 @@ export function bool8<T extends MemberableClass>(
 	byteOffset: number | null = null,
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
+	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 	return defineMember(Type, name, {
 		byteLength: 1,
 		byteOffset,

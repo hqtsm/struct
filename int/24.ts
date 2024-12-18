@@ -31,6 +31,7 @@ export function int24<T extends MemberableClass>(
 	littleEndian: boolean | null = null,
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
+	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 	return defineMember(Type, name, {
 		byteLength: 3,
 		byteOffset,
@@ -100,6 +101,7 @@ export function uint24<T extends MemberableClass>(
 	littleEndian: boolean | null = null,
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
+	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 	return defineMember(Type, name, {
 		byteLength: 3,
 		byteOffset,
