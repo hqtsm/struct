@@ -15,7 +15,7 @@ import { constant, dataView } from '../util.ts';
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @param littleEndian Little endian, big endian, or default.
+ * @param littleEndian Little endian, big endian, or inherit.
  * @returns Updated type byte length.
  */
 export function float32<T extends MemberableClass>(

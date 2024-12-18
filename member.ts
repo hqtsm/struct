@@ -222,7 +222,6 @@ export function memberLE<T extends MemberableClass, M extends BufferView>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @param littleEndian Little endian, big endian, or default.
  * @returns Updated type byte length.
  */
 export function pad<T extends MemberableClass>(

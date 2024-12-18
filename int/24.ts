@@ -21,7 +21,7 @@ import { constant, dataView } from '../util.ts';
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @param littleEndian Little endian, big endian, or default.
+ * @param littleEndian Little endian, big endian, or inherit.
  * @returns Updated type byte length.
  */
 export function int24<T extends MemberableClass>(
@@ -91,7 +91,7 @@ export function int24LE<T extends MemberableClass>(
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
- * @param littleEndian Little endian, big endian, or default.
+ * @param littleEndian Little endian, big endian, or inherit.
  * @returns Updated type byte length.
  */
 export function uint24<T extends MemberableClass>(
