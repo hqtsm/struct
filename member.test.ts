@@ -178,4 +178,22 @@ Deno.test('pad', () => {
 	assertThrows(() => {
 		(test as { pad: unknown }).pad = null;
 	});
+
+	assertEquals(
+		class extends Struct {
+			static {
+				pad(3.5, this);
+			}
+		}.BYTE_LENGTH,
+		3,
+	);
+
+	assertEquals(
+		class extends Struct {
+			static {
+				pad(NaN, this);
+			}
+		}.BYTE_LENGTH,
+		0,
+	);
 });

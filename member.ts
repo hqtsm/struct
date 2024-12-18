@@ -231,21 +231,22 @@ export function pad<T extends MemberableClass>(
 	name: MemberableClassKeys<T, never> | null = null,
 	byteOffset: number | null = null,
 ): number {
-	return (name === null)
-		? ensureByteLength(
-			Type,
-			byteLength + (byteOffset ?? defaultMemberByteOffset(Type)),
-		)
-		: defineMember(Type, name, {
-			byteLength,
-			byteOffset,
-			get(): never {
-				throw new TypeError(
-					`Read from padding member: ${String(name)}`,
-				);
-			},
-			set(): void {
-				throw new TypeError(`Write to padding member: ${String(name)}`);
-			},
-		});
+	if (name === null) {
+		byteLength = (+byteLength || 0) - (byteLength % 1 || 0);
+		byteOffset ??= defaultMemberByteOffset(Type);
+		byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
+		return ensureByteLength(Type, byteLength + byteOffset);
+	}
+	return defineMember(Type, name, {
+		byteLength,
+		byteOffset,
+		get(): never {
+			throw new TypeError(
+				`Read from padding member: ${String(name)}`,
+			);
+		},
+		set(): void {
+			throw new TypeError(`Write to padding member: ${String(name)}`);
+		},
+	});
 }
