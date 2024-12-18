@@ -26,23 +26,25 @@ export function float64<T extends MemberableClass>(
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
-	return defineMember(Type, name, {
-		byteLength: 8,
+	return defineMember(
+		Type,
+		name,
+		8,
 		byteOffset,
-		get(): number {
+		function (): number {
 			return dataView(this.buffer).getFloat64(
 				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(value: number): void {
+		function (value: number): void {
 			dataView(this.buffer).setFloat64(
 				this.byteOffset + byteOffset,
 				value,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	});
+	);
 }
 
 /**

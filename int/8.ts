@@ -24,16 +24,18 @@ export function int8<T extends MemberableClass>(
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
-	return defineMember(Type, name, {
-		byteLength: 1,
+	return defineMember(
+		Type,
+		name,
+		1,
 		byteOffset,
-		get(): number {
+		function (): number {
 			return dataView(this.buffer).getInt8(this.byteOffset + byteOffset);
 		},
-		set(value: number): void {
+		function (value: number): void {
 			dataView(this.buffer).setInt8(this.byteOffset + byteOffset, value);
 		},
-	});
+	);
 }
 
 /**
@@ -51,16 +53,18 @@ export function uint8<T extends MemberableClass>(
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
-	return defineMember(Type, name, {
-		byteLength: 1,
+	return defineMember(
+		Type,
+		name,
+		1,
 		byteOffset,
-		get(): number {
+		function (): number {
 			return dataView(this.buffer).getUint8(this.byteOffset + byteOffset);
 		},
-		set(value: number): void {
+		function (value: number): void {
 			dataView(this.buffer).setUint8(this.byteOffset + byteOffset, value);
 		},
-	});
+	);
 }
 
 /**

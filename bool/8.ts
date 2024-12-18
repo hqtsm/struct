@@ -24,21 +24,23 @@ export function bool8<T extends MemberableClass>(
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
-	return defineMember(Type, name, {
-		byteLength: 1,
+	return defineMember(
+		Type,
+		name,
+		1,
 		byteOffset,
-		get(): boolean {
+		function (): boolean {
 			return !!dataView(this.buffer).getInt8(
 				this.byteOffset + byteOffset,
 			);
 		},
-		set(value: boolean): void {
+		function (value: boolean): void {
 			dataView(this.buffer).setInt8(
 				this.byteOffset + byteOffset,
 				value ? 1 : 0,
 			);
 		},
-	});
+	);
 }
 
 /**

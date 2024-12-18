@@ -5,7 +5,6 @@
  */
 
 import type {
-	Memberable,
 	MemberableClass,
 	MemberableClassKeys,
 	MemberInfo,
@@ -47,37 +46,6 @@ export function ensureByteLength<T extends MemberableClass>(
 }
 
 /**
- * Member descriptor.
- */
-export interface MemberDescriptor<T extends Memberable, M> {
-	/**
-	 * Byte length.
-	 */
-	byteLength: number;
-
-	/**
-	 * Byte offset.
-	 */
-	byteOffset?: number | null;
-
-	/**
-	 * Getter function.
-	 *
-	 * @param this Type instance.
-	 * @returns Member value.
-	 */
-	get: (this: T) => M;
-
-	/**
-	 * Setter function.
-	 *
-	 * @param this Type instance.
-	 * @param value Member value.
-	 */
-	set: (this: T, value: M) => void;
-}
-
-/**
  * Define member.
  *
  * @param Type Type class.
@@ -88,11 +56,11 @@ export interface MemberDescriptor<T extends Memberable, M> {
 export function defineMember<T extends MemberableClass, M>(
 	Type: T,
 	name: MemberableClassKeys<T, M>,
-	desc: Readonly<
-		MemberDescriptor<(T['prototype'] & Record<typeof name, M>), M>
-	>,
+	byteLength: number,
+	byteOffset: number | null,
+	get: (this: T['prototype'] & Record<typeof name, M>) => M,
+	set: (this: T['prototype'] & Record<typeof name, M>, value: M) => void,
 ): number {
-	let { byteLength, byteOffset, get, set } = desc;
 	byteLength = (+byteLength || 0) - (byteLength % 1 || 0);
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
@@ -156,10 +124,12 @@ export function member<T extends MemberableClass, M extends BufferView>(
 	let m: WeakMap<Type, M>;
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
-	return defineMember(Type, name, {
-		byteLength: Member.BYTE_LENGTH,
+	return defineMember(
+		Type,
+		name,
+		Member.BYTE_LENGTH,
 		byteOffset,
-		get(): M {
+		function (): M {
 			let r = (m ??= new WeakMap()).get(this);
 			if (!r) {
 				m.set(
@@ -173,10 +143,10 @@ export function member<T extends MemberableClass, M extends BufferView>(
 			}
 			return r;
 		},
-		set(value): void {
+		function (value): void {
 			assignView(this[name], value);
 		},
-	});
+	);
 }
 
 /**
@@ -236,14 +206,16 @@ export function pad<T extends MemberableClass>(
 		byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 		return ensureByteLength(Type, byteLength + byteOffset);
 	}
-	return defineMember(Type, name, {
+	return defineMember(
+		Type,
+		name,
 		byteLength,
 		byteOffset,
-		get(): never {
+		(): never => {
 			throw new TypeError(`Read from padding member: ${String(name)}`);
 		},
-		set(): void {
+		(): void => {
 			throw new TypeError(`Write to padding member: ${String(name)}`);
 		},
-	});
+	);
 }

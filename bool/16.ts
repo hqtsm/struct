@@ -26,23 +26,25 @@ export function bool16<T extends MemberableClass>(
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
-	return defineMember(Type, name, {
-		byteLength: 2,
+	return defineMember(
+		Type,
+		name,
+		2,
 		byteOffset,
-		get(): boolean {
+		function (): boolean {
 			return !!dataView(this.buffer).getInt16(
 				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(value: boolean): void {
+		function (value: boolean): void {
 			dataView(this.buffer).setInt16(
 				this.byteOffset + byteOffset,
 				value ? 1 : 0,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	});
+	);
 }
 
 /**

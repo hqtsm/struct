@@ -32,17 +32,19 @@ export function int24<T extends MemberableClass>(
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
-	return defineMember(Type, name, {
-		byteLength: 3,
+	return defineMember(
+		Type,
+		name,
+		3,
 		byteOffset,
-		get(): number {
+		function (): number {
 			return getInt24(
 				dataView(this.buffer),
 				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(value: number): void {
+		function (value: number): void {
 			setInt24(
 				dataView(this.buffer),
 				this.byteOffset + byteOffset,
@@ -50,7 +52,7 @@ export function int24<T extends MemberableClass>(
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	});
+	);
 }
 
 /**
@@ -102,17 +104,19 @@ export function uint24<T extends MemberableClass>(
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
-	return defineMember(Type, name, {
-		byteLength: 3,
+	return defineMember(
+		Type,
+		name,
+		3,
 		byteOffset,
-		get(): number {
+		function (): number {
 			return getUint24(
 				dataView(this.buffer),
 				this.byteOffset + byteOffset,
 				littleEndian ?? this.littleEndian,
 			);
 		},
-		set(value: number): void {
+		function (value: number): void {
 			setUint24(
 				dataView(this.buffer),
 				this.byteOffset + byteOffset,
@@ -120,7 +124,7 @@ export function uint24<T extends MemberableClass>(
 				littleEndian ?? this.littleEndian,
 			);
 		},
-	});
+	);
 }
 
 /**

@@ -32,10 +32,12 @@ export function float16<T extends MemberableClass>(
 ): number {
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
-	return defineMember(Type, name, {
-		byteLength: 2,
+	return defineMember(
+		Type,
+		name,
+		2,
 		byteOffset,
-		get(): number {
+		function (): number {
 			const d = dataView(this.buffer) as MaybeNativeFloat16;
 			return d.getFloat16
 				? d.getFloat16(
@@ -48,7 +50,7 @@ export function float16<T extends MemberableClass>(
 					littleEndian ?? this.littleEndian,
 				);
 		},
-		set(value: number): void {
+		function (value: number): void {
 			const d = dataView(this.buffer) as MaybeNativeFloat16;
 			if (d.setFloat16) {
 				d.setFloat16(
@@ -65,7 +67,7 @@ export function float16<T extends MemberableClass>(
 				);
 			}
 		},
-	});
+	);
 }
 
 /**
