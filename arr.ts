@@ -196,11 +196,8 @@ export function array<T extends Type>(
 					}
 
 					public at(i: number): T | undefined {
-						i = +i || 0;
-						if (
-							((i -= i % 1) < 0 ? i += length : i) >= 0 &&
-							i < length
-						) {
+						i = (+i || 0) - (i % 1 || 0);
+						if ((i < 0 ? i += length : i) >= 0 && i < length) {
 							return this[i];
 						}
 					}
