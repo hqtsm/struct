@@ -58,12 +58,13 @@ export class Endian implements BufferPointer, EndianAware {
 		littleEndian: boolean | null = null,
 	) {
 		dataView(buffer);
+		byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 		if (byteOffset < -0x1fffffffffffff || byteOffset > 0x1fffffffffffff) {
 			throw new RangeError(`Invalid offset: ${byteOffset}`);
 		}
 		(pri ??= new WeakMap()).set(this, {
 			buffer,
-			byteOffset: byteOffset - byteOffset % 1 || 0,
+			byteOffset,
 			littleEndian: !!(littleEndian ?? LITTLE_ENDIAN),
 		});
 	}
