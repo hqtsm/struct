@@ -2,6 +2,15 @@
 
 Binary structures
 
+![binary](https://img.shields.io/badge/binary-eee)
+![struct](https://img.shields.io/badge/struct-eee)
+![union](https://img.shields.io/badge/union-eee)
+![pointer](https://img.shields.io/badge/pointer-eee)
+![array](https://img.shields.io/badge/array-eee)
+![endian](https://img.shields.io/badge/endian-eee)
+![dataview](https://img.shields.io/badge/dataview-eee)
+![arraybuffer](https://img.shields.io/badge/arraybuffer-eee)
+
 # Features
 
 - Pure TypeScript, run anywhere
