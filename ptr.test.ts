@@ -68,8 +68,6 @@ Deno.test('Ptr: byteOffset', () => {
 	assertEquals(new DummyPtr(buffer, -1).byteOffset, -1);
 
 	// Impossible offset throws immediately.
-	assertThrows(() => new DummyPtr(buffer, MAX + 1), RangeError);
-	assertThrows(() => new DummyPtr(buffer, MAX + .5), RangeError);
 	assertThrows(() => new DummyPtr(buffer, Infinity), RangeError);
 	assertThrows(() => new DummyPtr(buffer, -Infinity), RangeError);
 

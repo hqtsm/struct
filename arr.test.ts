@@ -29,7 +29,6 @@ const Foo4 = array(Foo, 4);
 Deno.test('Arr: lengths', () => {
 	assertThrows(() => array(Foo, -1), RangeError);
 	assertThrows(() => array(Foo, Infinity), RangeError);
-	assertThrows(() => array(Foo, Number.MAX_SAFE_INTEGER + 1), RangeError);
 	assertEquals(array(Foo, 0).LENGTH, 0);
 	assertEquals(array(Foo, NaN).LENGTH, 0);
 	assertEquals(array(Foo, 0.5).LENGTH, 0);

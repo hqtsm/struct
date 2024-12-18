@@ -48,8 +48,6 @@ Deno.test('Union: byteOffset', () => {
 	assertEquals(new Test(buffer, -1).byteOffset, -1);
 
 	// Impossible offset throws immediately.
-	assertThrows(() => new Test(buffer, MAX + 1), RangeError);
-	assertThrows(() => new Test(buffer, MAX + .5), RangeError);
 	assertThrows(() => new Test(buffer, Infinity), RangeError);
 	assertThrows(() => new Test(buffer, -Infinity), RangeError);
 

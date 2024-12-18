@@ -59,7 +59,7 @@ export class Endian implements BufferPointer, EndianAware {
 	) {
 		dataView(buffer);
 		byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
-		if (byteOffset < -0x1fffffffffffff || byteOffset > 0x1fffffffffffff) {
+		if (!(byteOffset > -Infinity && byteOffset < Infinity)) {
 			throw new RangeError(`Invalid offset: ${byteOffset}`);
 		}
 		(pri ??= new WeakMap()).set(this, {

@@ -137,7 +137,7 @@ export function array<T extends Type>(
 	length: number,
 ): ArrConstructor<Arr<T>> {
 	length = (+length || 0) - (length % 1 || 0);
-	if (length < 0 || length > 0x1fffffffffffff) {
+	if (length < 0 || !(length < Infinity)) {
 		throw new RangeError(`Invalid length: ${length}`);
 	}
 	const Ptr = 'BYTE_LENGTH' in TypePtr ? pointer(TypePtr) : TypePtr;
