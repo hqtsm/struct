@@ -96,6 +96,7 @@ export function getByteLength<T extends MemberedClass>(
 
 /**
  * Get members of type.
+ * Array indexes then member keys from highest to lowest inheritance.
  *
  * @param Type Type class.
  * @returns Member list.
