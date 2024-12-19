@@ -95,6 +95,31 @@ export function getByteLength<T extends MemberedClass>(
 }
 
 /**
+ * Get members of type.
+ *
+ * @param Type Type class.
+ * @returns Member list.
+ */
+export function getMembers<T extends MemberedClass>(
+	Type: T,
+): (keyof T['prototype'])[] {
+	const props: Set<PropertyKey> | PropertyKey[] = new Set();
+	for (let m = Type.MEMBERS; m; m = Object.getPrototypeOf(m)) {
+		const keys = Reflect.ownKeys(m);
+		for (let i = keys.length; i--;) {
+			props.add(keys[i]);
+		}
+	}
+	if ('LENGTH' in Type) {
+		for (let i = Type.LENGTH; i--;) {
+			props.delete(`${i}`);
+			props.add(i);
+		}
+	}
+	return [...props].reverse() as (keyof T['prototype'])[];
+}
+
+/**
  * Assign ArrayBuffer data from one view to another.
  *
  * @param dst Destination memory.

@@ -1,7 +1,10 @@
 import { assertEquals, assertThrows } from '@std/assert';
-import { uint8 } from './int/8.ts';
+import { array } from './arr.ts';
+import { uint8, Uint8Ptr } from './int/8.ts';
+import { pointer, Ptr } from './ptr.ts';
 import { Struct } from './struct.ts';
-import { assignType, assignView, constant } from './util.ts';
+import { Union } from './union.ts';
+import { assignType, assignView, constant, getMembers } from './util.ts';
 
 Deno.test('constant', () => {
 	class A {
@@ -110,4 +113,117 @@ Deno.test('assignStruct', () => {
 		assertEquals(dst.alpha, 65);
 		assertEquals(dst.beta, 66);
 	}
+});
+
+Deno.test('getMembers: struct', () => {
+	const symA = Symbol('a');
+	const symB = Symbol('b');
+
+	class Base extends Struct {
+		declare public alpha: number;
+
+		declare public [symA]: number;
+
+		declare public beta: number;
+
+		static {
+			uint8(this, 'alpha');
+			uint8(this, symA);
+			uint8(this, 'beta');
+		}
+	}
+
+	class Extends extends Base {
+		declare public gamma: number;
+
+		declare protected [symB]: number;
+
+		declare private delta: number;
+
+		static {
+			uint8(this, 'gamma');
+			uint8(this, symB as never);
+			uint8(this, 'delta' as never);
+		}
+	}
+
+	assertEquals(getMembers(Base), ['alpha', 'beta', symA]);
+	assertEquals(getMembers(Extends), [
+		'alpha',
+		'beta',
+		symA,
+		'gamma',
+		'delta',
+		symB,
+	]);
+});
+
+Deno.test('getMembers: union', () => {
+	const symA = Symbol('a');
+	const symB = Symbol('b');
+
+	class Base extends Union {
+		declare public alpha: number;
+
+		declare public [symA]: number;
+
+		declare public beta: number;
+
+		static {
+			uint8(this, 'alpha');
+			uint8(this, symA);
+			uint8(this, 'beta');
+		}
+	}
+
+	class Extends extends Base {
+		declare public gamma: number;
+
+		declare protected [symB]: number;
+
+		declare private delta: number;
+
+		static {
+			uint8(this, 'gamma');
+			uint8(this, symB as never);
+			uint8(this, 'delta' as never);
+		}
+	}
+
+	assertEquals(getMembers(Base), ['alpha', 'beta', symA]);
+	assertEquals(getMembers(Extends), [
+		'alpha',
+		'beta',
+		symA,
+		'gamma',
+		'delta',
+		symB,
+	]);
+});
+
+Deno.test('getMembers: pointer', () => {
+	assertEquals(getMembers(Ptr), []);
+	assertEquals(getMembers(pointer(Struct)), []);
+});
+
+Deno.test('getMembers: array', () => {
+	assertEquals(getMembers(array(Uint8Ptr, 8)), [0, 1, 2, 3, 4, 5, 6, 7]);
+
+	const sym = Symbol('a');
+
+	class Weird extends array(Struct, 3) {
+		declare public alpha: number;
+
+		declare public [sym]: number;
+
+		declare public beta: number;
+
+		static {
+			uint8(this, 'alpha');
+			uint8(this, sym);
+			uint8(this, 'beta');
+		}
+	}
+
+	assertEquals(getMembers(Weird), [0, 1, 2, 'alpha', 'beta', sym]);
 });
