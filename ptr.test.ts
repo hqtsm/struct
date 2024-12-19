@@ -37,18 +37,21 @@ Deno.test('Ptr: MEMBERS', () => {
 	assertEquals(Test.MEMBERS[-1], { byteLength: 1, byteOffset: -1 });
 
 	const value = { ...Test.MEMBERS[0] };
-	(Test.MEMBERS as unknown as { weird: unknown })['weird'] = value;
-	assert(0 in Ptr.MEMBERS);
-	assert(0 in Test.MEMBERS);
-	assert(1 in Ptr.MEMBERS);
-	assert(1 in Test.MEMBERS);
-	assert((-1) in Ptr.MEMBERS);
-	assert((-1) in Test.MEMBERS);
-	assert(!('weird' in Ptr.MEMBERS));
-	assert('weird' in Test.MEMBERS);
-	assertThrows(() => {
-		(Test.MEMBERS as unknown as { [key: number]: unknown })[0] = value;
-	});
+
+	for (let i = 0; i < 2; i++) {
+		(Test.MEMBERS as unknown as { weird: unknown })['weird'] = value;
+		assert(0 in Ptr.MEMBERS);
+		assert(0 in Test.MEMBERS);
+		assert(1 in Ptr.MEMBERS);
+		assert(1 in Test.MEMBERS);
+		assert((-1) in Ptr.MEMBERS);
+		assert((-1) in Test.MEMBERS);
+		assert(!('weird' in Ptr.MEMBERS));
+		assert('weird' in Test.MEMBERS);
+		assertThrows(() => {
+			(Test.MEMBERS as unknown as { [key: number]: unknown })[0] = value;
+		});
+	}
 });
 
 Deno.test('Ptr: buffer', () => {
