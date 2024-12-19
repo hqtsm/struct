@@ -51,6 +51,34 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 	},
 };
 
+function memberGet(
+	bpe: number,
+	target: Readonly<MemberInfos>,
+	key: string | symbol,
+): Readonly<MemberInfo> | undefined {
+	const i = index(key);
+	if (i === null) {
+		return Reflect.get(target, key);
+	}
+	if (i === i - i % 1) {
+		return {
+			byteLength: bpe,
+			byteOffset: i * bpe,
+		};
+	}
+}
+
+function memberSet(
+	target: Readonly<MemberInfos>,
+	key: string | symbol,
+	value: unknown,
+	receiver: Readonly<MemberInfos>,
+): boolean {
+	return index(key) === null
+		? Reflect.set(target, key, value, receiver)
+		: false;
+}
+
 let members: WeakMap<typeof Ptr, MemberInfos>;
 
 /**
@@ -122,7 +150,6 @@ export class Ptr<T = never> extends Endian implements Members {
 	public static get MEMBERS(): MemberInfos {
 		let r = (members ??= new WeakMap()).get(this);
 		if (!r) {
-			const bpe = this.BYTES_PER_ELEMENT;
 			members.set(
 				this,
 				r = new Proxy(
@@ -130,28 +157,8 @@ export class Ptr<T = never> extends Endian implements Members {
 						Object.getPrototypeOf(this).MEMBERS ?? null,
 					) as MemberInfos,
 					{
-						get(target, key): Readonly<MemberInfo> | undefined {
-							const i = index(key);
-							if (i === null) {
-								return Reflect.get(target, key);
-							}
-							if (i === i - i % 1) {
-								return {
-									byteLength: bpe,
-									byteOffset: i * bpe,
-								};
-							}
-						},
-						set(
-							target,
-							key,
-							value,
-							receiver: MemberInfos,
-						): boolean {
-							return index(key) === null
-								? Reflect.set(target, key, value, receiver)
-								: false;
-						},
+						get: memberGet.bind(null, this.BYTES_PER_ELEMENT),
+						set: memberSet,
 					},
 				),
 			);
