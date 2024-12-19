@@ -227,3 +227,32 @@ Deno.test('getMembers: array', () => {
 
 	assertEquals(getMembers(Weird), [0, 1, 2, 'alpha', 'beta', sym]);
 });
+
+Deno.test('getMembers: override', () => {
+	class Base extends Struct {
+		declare public alpha: number;
+
+		declare public beta: number;
+
+		static {
+			uint8(this, 'alpha');
+			uint8(this, 'beta');
+		}
+	}
+
+	class Extends extends Base {
+		declare public gamma: number;
+
+		static {
+			uint8(this, 'gamma');
+			uint8(this, 'beta');
+		}
+	}
+
+	assertEquals(getMembers(Base), ['alpha', 'beta']);
+	assertEquals(getMembers(Extends), [
+		'alpha',
+		'beta',
+		'gamma',
+	]);
+});

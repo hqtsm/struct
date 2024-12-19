@@ -107,7 +107,9 @@ export function getMembers<T extends MemberedClass>(
 	for (let m = Type.MEMBERS; m; m = Object.getPrototypeOf(m)) {
 		const keys = Reflect.ownKeys(m);
 		for (let i = keys.length; i--;) {
-			props.add(keys[i]);
+			const k = keys[i];
+			props.delete(k);
+			props.add(k);
 		}
 	}
 	if ('LENGTH' in Type) {
