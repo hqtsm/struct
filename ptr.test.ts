@@ -36,10 +36,13 @@ Deno.test('Ptr: MEMBERS', () => {
 	assertEquals(Test.MEMBERS[1], { byteLength: 1, byteOffset: 1 });
 	assertEquals(Test.MEMBERS[-1], { byteLength: 1, byteOffset: -1 });
 
-	const value = { ...Test.MEMBERS[0] };
-
+	const mi = { ...Test.MEMBERS[0] };
 	for (let i = 0; i < 2; i++) {
-		(Test.MEMBERS as unknown as { weird: unknown })['weird'] = value;
+		(Test.MEMBERS as unknown as { weird: unknown })['weird'] = mi;
+		assertStrictEquals(
+			(Test.MEMBERS as unknown as { weird: unknown })['weird'],
+			mi,
+		);
 		assert(0 in Ptr.MEMBERS);
 		assert(0 in Test.MEMBERS);
 		assert(1 in Ptr.MEMBERS);
@@ -49,7 +52,7 @@ Deno.test('Ptr: MEMBERS', () => {
 		assert(!('weird' in Ptr.MEMBERS));
 		assert('weird' in Test.MEMBERS);
 		assertThrows(() => {
-			(Test.MEMBERS as unknown as { [key: number]: unknown })[0] = value;
+			(Test.MEMBERS as unknown as { [key: number]: unknown })[0] = mi;
 		});
 	}
 });

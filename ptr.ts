@@ -26,7 +26,7 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 	get(target, key, receiver: Ptr<unknown>): unknown | undefined {
 		let i;
 		if (Reflect.has(target, key) || (i = index(key)) === null) {
-			return Reflect.get(target, key);
+			return Reflect.get(target, key, key in target ? target : receiver);
 		}
 		if ((i === i - i % 1)) {
 			return receiver.get(i);
@@ -42,7 +42,12 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 	set(target, key, value, receiver: Ptr<unknown>): boolean {
 		let i;
 		if (Reflect.has(target, key) || (i = index(key)) === null) {
-			return Reflect.set(target, key, value);
+			return Reflect.set(
+				target,
+				key,
+				value,
+				key in target ? target : receiver,
+			);
 		}
 		if (i === i - i % 1) {
 			receiver.set(i, value);
@@ -55,10 +60,11 @@ function memberGet(
 	bpe: number,
 	target: Readonly<MemberInfos>,
 	key: string | symbol,
+	receiver: Readonly<MemberInfos>,
 ): Readonly<MemberInfo> | undefined {
 	const i = index(key);
 	if (i === null) {
-		return Reflect.get(target, key);
+		return Reflect.get(target, key, key in target ? target : receiver);
 	}
 	if (i === i - i % 1) {
 		return {
