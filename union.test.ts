@@ -134,6 +134,31 @@ Deno.test('Union: private properties', () => {
 	assertEquals(test.getAlpha(), 42);
 });
 
+Deno.test('Struct: symbol properties', () => {
+	const symPub = Symbol('public');
+	const symPro = Symbol('protected');
+	const symPri = Symbol('private');
+
+	class Test extends Union {
+		declare public [symPub]: number;
+
+		declare protected [symPro]: number;
+
+		declare private [symPri]: number;
+
+		static {
+			int8(this, symPub);
+			int8(this, symPro as never);
+			int8(this, symPri as never);
+		}
+	}
+
+	const test = new Test(new Uint8Array([123]).buffer);
+	assertEquals(test[symPub], 123);
+	assertEquals(test[symPro], 123);
+	assertEquals(test[symPri], 123);
+});
+
 Deno.test('Union: extends', () => {
 	class One extends Union {
 		declare public one: number;
