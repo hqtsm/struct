@@ -68,6 +68,13 @@ function memberGet(
 	}
 }
 
+function memberHas(
+	target: Readonly<MemberInfos>,
+	key: string | symbol,
+): boolean {
+	return index(key) === null ? Reflect.has(target, key) : true;
+}
+
 function memberSet(
 	target: Readonly<MemberInfos>,
 	key: string | symbol,
@@ -158,6 +165,7 @@ export class Ptr<T = never> extends Endian implements Members {
 					) as MemberInfos,
 					{
 						get: memberGet.bind(null, this.BYTES_PER_ELEMENT),
+						has: memberHas,
 						set: memberSet,
 					},
 				),

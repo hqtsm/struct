@@ -38,8 +38,14 @@ Deno.test('Ptr: MEMBERS', () => {
 
 	const value = { ...Test.MEMBERS[0] };
 	(Test.MEMBERS as unknown as { weird: unknown })['weird'] = value;
-	assert('weird' in Test.MEMBERS);
+	assert(0 in Ptr.MEMBERS);
+	assert(0 in Test.MEMBERS);
+	assert(1 in Ptr.MEMBERS);
+	assert(1 in Test.MEMBERS);
+	assert((-1) in Ptr.MEMBERS);
+	assert((-1) in Test.MEMBERS);
 	assert(!('weird' in Ptr.MEMBERS));
+	assert('weird' in Test.MEMBERS);
 	assertThrows(() => {
 		(Test.MEMBERS as unknown as { [key: number]: unknown })[0] = value;
 	});
