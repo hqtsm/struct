@@ -5,6 +5,7 @@ import { pointer, Ptr } from './ptr.ts';
 import { Struct } from './struct.ts';
 import { Union } from './union.ts';
 import { assignType, assignView, constant, getMembers } from './util.ts';
+import { member } from './member.ts';
 
 Deno.test('constant', () => {
 	class A {
@@ -222,10 +223,18 @@ Deno.test('getMembers: array', () => {
 			uint8(this, 'alpha');
 			uint8(this, sym);
 			uint8(this, 'beta');
+
+			// Extremely weird, not recommended, but not technically invalid.
+			// Will not added to the list.
+			member(Struct, this, 1);
+
+			// Will add to the list, as it is not within length, as a string.
+			member(Struct, this, 3);
+			member(Struct, this, -1);
 		}
 	}
 
-	assertEquals(getMembers(Weird), [0, 1, 2, 'alpha', 'beta', sym]);
+	assertEquals(getMembers(Weird), [0, 1, 2, '3', 'alpha', 'beta', '-1', sym]);
 });
 
 Deno.test('getMembers: override', () => {
