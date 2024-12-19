@@ -42,7 +42,7 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 	set(target, key, value, receiver: Ptr<unknown>): boolean {
 		let i;
 		if (Reflect.has(target, key) || (i = index(key)) === null) {
-			return Reflect.set(target, key, value, receiver);
+			return Reflect.set(target, key, value);
 		}
 		if (i === i - i % 1) {
 			receiver.set(i, value);
