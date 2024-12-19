@@ -42,7 +42,7 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 	set(target, key, value, receiver: Ptr<unknown>): boolean {
 		let i;
 		if (Reflect.has(target, key) || (i = index(key)) === null) {
-			return Reflect.set(target, key, value);
+			return Reflect.set(target, key, value, receiver);
 		}
 		if (i === i - i % 1) {
 			receiver.set(i, value);
@@ -142,9 +142,14 @@ export class Ptr<T = never> extends Endian implements Members {
 								};
 							}
 						},
-						set(target, key, value): boolean {
+						set(
+							target,
+							key,
+							value,
+							receiver: MemberInfos,
+						): boolean {
 							return index(key) === null
-								? Reflect.set(target, key, value)
+								? Reflect.set(target, key, value, receiver)
 								: false;
 						},
 					},

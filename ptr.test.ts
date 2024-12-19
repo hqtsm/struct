@@ -1,4 +1,5 @@
 import {
+	assert,
 	assertEquals,
 	assertMatch,
 	assertNotStrictEquals,
@@ -36,7 +37,9 @@ Deno.test('Ptr: MEMBERS', () => {
 	assertEquals(Test.MEMBERS[-1], { byteLength: 1, byteOffset: -1 });
 
 	const value = { ...Test.MEMBERS[0] };
-	// (Test.MEMBERS as unknown as { weird: unknown })['weird'] = value;
+	(Test.MEMBERS as unknown as { weird: unknown })['weird'] = value;
+	assert('weird' in Test.MEMBERS);
+	assert(!('weird' in Ptr.MEMBERS));
 	assertThrows(() => {
 		(Test.MEMBERS as unknown as { [key: number]: unknown })[0] = value;
 	});
