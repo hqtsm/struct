@@ -228,7 +228,7 @@ Deno.test('getMembers: array', () => {
 			// Will not added to the list.
 			member(Struct, this, 1);
 
-			// Will add to the list, as it is not within length, as a string.
+			// Will add to the list as a string, as it is not within length.
 			member(Struct, this, 3);
 			member(Struct, this, -1);
 		}
