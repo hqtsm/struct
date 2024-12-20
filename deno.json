@@ -33,7 +33,7 @@
 		"@deno/dnt": "jsr:@deno/dnt@^0.41.3",
 		"@hqtsm/dataview": "jsr:@hqtsm/dataview@^1.0.5",
 		"@hqtsm/meek": "jsr:@hqtsm/meek@^1.0.5",
-		"@std/assert": "jsr:@std/assert@^1.0.9"
+		"@std/assert": "jsr:@std/assert@^1.0.10"
 	},
 	"fmt": {
 		"useTabs": true,

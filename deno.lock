@@ -8,7 +8,7 @@
     "jsr:@hqtsm/meek@^1.0.5": "1.0.5",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@0.226": "0.226.0",
-    "jsr:@std/assert@^1.0.9": "1.0.9",
+    "jsr:@std/assert@^1.0.10": "1.0.10",
     "jsr:@std/bytes@0.223": "0.223.0",
     "jsr:@std/fmt@0.223": "0.223.0",
     "jsr:@std/fmt@1": "1.0.3",
@@ -61,8 +61,8 @@
     "@std/assert@0.226.0": {
       "integrity": "0dfb5f7c7723c18cec118e080fec76ce15b4c31154b15ad2bd74822603ef75b3"
     },
-    "@std/assert@1.0.9": {
-      "integrity": "a9f0c611a869cc791b26f523eec54c7e187aab7932c2c8e8bea0622d13680dcd",
+    "@std/assert@1.0.10": {
+      "integrity": "59b5cbac5bd55459a19045d95cc7c2ff787b4f8527c0dd195078ff6f9481fbb3",
       "dependencies": [
         "jsr:@std/internal"
       ]
@@ -138,7 +138,7 @@
       "jsr:@deno/dnt@~0.41.3",
       "jsr:@hqtsm/dataview@^1.0.5",
       "jsr:@hqtsm/meek@^1.0.5",
-      "jsr:@std/assert@^1.0.9"
+      "jsr:@std/assert@^1.0.10"
     ]
   }
 }
