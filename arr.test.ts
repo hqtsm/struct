@@ -191,3 +191,48 @@ Deno.test('Arr: extend', () => {
 	}
 	assertEquals(FooExtra.BYTE_LENGTH, Foo4.BYTE_LENGTH + 1);
 });
+
+Deno.test('Arr: 2d int', () => {
+	const TwoD = array(array(Uint8Ptr, 2), 4);
+	assertEquals(TwoD.BYTE_LENGTH, 8);
+
+	const data = new Uint8Array(TwoD.BYTE_LENGTH);
+	const twoD = new TwoD(data.buffer);
+	assertEquals(twoD.byteLength, TwoD.BYTE_LENGTH);
+	assertEquals(twoD.length, 4);
+	assertEquals(twoD[0].byteLength, 2);
+	assertEquals(twoD[1].byteLength, 2);
+
+	twoD[0][0] = 1;
+	twoD[0][1] = 2;
+	twoD[1][0] = 13;
+	twoD[1][1] = 14;
+	twoD[2] = twoD[1];
+	twoD[3] = twoD[0];
+	assertEquals(data, new Uint8Array([1, 2, 13, 14, 13, 14, 1, 2]));
+});
+
+Deno.test('Arr: 2d struct', () => {
+	const Foo4x2 = array(Foo4, 2);
+	assertEquals(Foo4x2.BYTE_LENGTH, Foo4.BYTE_LENGTH * 2);
+
+	const data = new Uint8Array(Foo4x2.BYTE_LENGTH);
+	const foo4x2 = new Foo4x2(data.buffer);
+	assertEquals(foo4x2.byteLength, Foo4x2.BYTE_LENGTH);
+	assertEquals(foo4x2.length, 2);
+	assertEquals(foo4x2[0].byteLength, Foo4.BYTE_LENGTH);
+	assertEquals(foo4x2[1].byteLength, Foo4.BYTE_LENGTH);
+
+	let v = 1;
+	for (let i = 0; i < foo4x2.length; i++) {
+		for (let j = 0; j < foo4x2[i].length; j++) {
+			foo4x2[i][j].bar = v++;
+			foo4x2[i][j].baz = v++;
+		}
+	}
+
+	assertEquals(
+		data,
+		new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]),
+	);
+});
