@@ -11,6 +11,10 @@ Binary structures
 ![dataview](https://img.shields.io/badge/dataview-eee)
 ![arraybuffer](https://img.shields.io/badge/arraybuffer-eee)
 
+[![JSR](https://jsr.io/badges/@hqtsm/struct)](https://jsr.io/@hqtsm/struct)
+[![npm](https://img.shields.io/npm/v/@hqtsm/struct.svg)](https://npmjs.com/package/@hqtsm/struct)
+[![CI](https://github.com/hqtsm/struct/actions/workflows/ci.yaml/badge.svg)](https://github.com/hqtsm/struct/actions/workflows/ci.yaml)
+
 # Features
 
 - Pure TypeScript, run anywhere
