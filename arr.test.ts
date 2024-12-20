@@ -189,6 +189,7 @@ Deno.test('Arr: extend', () => {
 			int8(this, 'extra');
 		}
 	}
+
 	assertEquals(FooExtra.BYTE_LENGTH, Foo4.BYTE_LENGTH + 1);
 });
 
