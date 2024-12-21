@@ -31,9 +31,15 @@ Deno.test('class constants', () => {
 			if (defaultClassProperties.has(p)) {
 				continue;
 			}
-			const desc = Object.getOwnPropertyDescriptor(v, p);
+			const desc = Object.getOwnPropertyDescriptor(v, p)!;
 			assertMatch(p, /^[A-Z][A-Z0-9_]*$/, `${k}.${p}`);
-			assertEquals(desc!.writable ?? false, false, `${k}.${p}`);
+			assertEquals(desc.writable ?? false, false, `${k}.${p}`);
+			assertEquals(desc.enumerable ?? false, false, `${k}.${p}`);
+			assertEquals(
+				desc.configurable ?? false,
+				!('value' in desc),
+				`${k}.${p}`,
+			);
 		}
 	}
 });
