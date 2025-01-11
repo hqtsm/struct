@@ -90,7 +90,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22.12.0
+          node-version: 22.13.0
 
       - name: Build NPM
         run: deno task npm dev
@@ -120,7 +120,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22.12.0
+          node-version: 22.13.0
 
       - name: Build NPM
         run: deno task npm prod
@@ -141,8 +141,8 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 23.4.0
-          - 22.12.0
+          - 23.6.0
+          - 22.13.0
           - 22.11.0
           - 20.9.0
           - 18.12.0
@@ -180,7 +180,7 @@ jobs:
     strategy:
       matrix:
         bun-version:
-          - 1.1.39
+          - 1.1.43
           - 1.0.0
 
     name: Bun ${{ matrix.bun-version }}
