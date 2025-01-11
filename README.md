@@ -111,6 +111,7 @@ class VariableFloat extends Variable {
 }
 
 const data = new Uint8Array(VariableFloat.BYTE_LENGTH);
+
 const varFloat = new VariableFloat(data.buffer, 0, true);
 varFloat.type = 0xF;
 varFloat.value = 3.1415;
@@ -147,6 +148,7 @@ class Parent extends Struct {
 }
 
 const data = new Uint8Array(Parent.BYTE_LENGTH);
+
 const stru = new Parent(data.buffer);
 stru.child1.alpha = 97;
 stru.child1.beta = 98;
@@ -163,6 +165,8 @@ Comes with pointers for primitives, and a factory for pointers to types.
 import { int8, Int8Ptr, pointer, Struct } from '@hqtsm/struct';
 
 const data = new Int8Array(6);
+
+// Starting at an offset.
 const i8p = new Int8Ptr(data.buffer, 2);
 
 // Setting values by index.
@@ -171,7 +175,7 @@ i8p[1] = 1;
 i8p[2] = 2;
 i8p[3] = 3;
 
-// Negative indexing also works.
+// Negative indexing also works, accessing memory before offset.
 i8p[-1] = -1;
 i8p[-2] = -2;
 
@@ -245,6 +249,7 @@ class Example extends Struct {
 }
 
 const data = new Uint8Array(Example.BYTE_LENGTH);
+
 const example = new Example(data.buffer);
 example.bytes[0] = 10;
 example.bytes[1] = 20;
@@ -276,6 +281,7 @@ class FourCC extends Union {
 }
 
 const data = new Uint8Array(FourCC.BYTE_LENGTH);
+
 const four = new FourCC(data.buffer);
 four.int = 0x41424344;
 console.assert(four.chars[0] === 0x41);
@@ -382,6 +388,7 @@ class Example extends Struct {
 }
 
 const data = new Uint8Array(Example.BYTE_LENGTH);
+
 const example = new Example(data.buffer);
 example.setAlpha(65);
 example.setBeta(66);
