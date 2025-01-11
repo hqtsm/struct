@@ -126,6 +126,7 @@ Deno.test('Const<Arr<number>> Extended', () => {
 
 Deno.test('Const<Struct> Extras', () => {
 	const sym = Symbol('sym');
+	const now = Date.now();
 
 	class Test extends Struct {
 		declare public a: number;
@@ -138,6 +139,8 @@ Deno.test('Const<Struct> Extras', () => {
 		public tup: [number, boolean] = [1, true];
 		public set = new Set([1]);
 		public map = new Map([[0, false], [1, true]]);
+		public reg = /a/;
+		public dat = new Date(now);
 		declare public nev: never;
 
 		static {
@@ -160,6 +163,8 @@ Deno.test('Const<Struct> Extras', () => {
 	assertEquals(stru.tup[1] satisfies boolean, true);
 	assertEquals([...stru.set], [1]);
 	assertEquals([...stru.map], [[0, false], [1, true]]);
+	assertEquals(stru.reg.test('a'), true);
+	assertEquals(stru.dat.getTime(), now);
 	assertEquals(stru.nev, undefined);
 });
 
