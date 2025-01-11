@@ -158,8 +158,8 @@ Deno.test('Const<Struct> Extras', () => {
 	assertEquals(stru[sym], sym);
 	assertEquals(stru.tup[0] satisfies number, 1);
 	assertEquals(stru.tup[1] satisfies boolean, true);
-	assertEquals(stru.set, new Set([1]));
-	assertEquals(stru.map, new Map([[0, false], [1, true]]));
+	assertEquals([...stru.set], [1]);
+	assertEquals([...stru.map], [[0, false], [1, true]]);
 	assertEquals(stru.nev, undefined);
 });
 
