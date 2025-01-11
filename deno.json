@@ -9,6 +9,7 @@
 		"./bool/8": "./bool/8.ts",
 		"./bool/16": "./bool/16.ts",
 		"./bool/32": "./bool/32.ts",
+		"./const": "./const.ts",
 		"./endian": "./endian.ts",
 		"./float": "./float/mod.ts",
 		"./float/16": "./float/16.ts",
