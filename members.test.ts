@@ -1,4 +1,4 @@
-import { assertEquals } from '@std/assert/equals';
+import { assertEquals } from '@std/assert';
 import { array } from './arr.ts';
 import { Uint8Ptr } from './int/8.ts';
 import { uint32 } from './int/32.ts';
