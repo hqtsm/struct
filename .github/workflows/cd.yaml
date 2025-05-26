@@ -24,7 +24,7 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
-          deno-version: 2.1.4
+          deno-version: 2.3.3
 
       - name: Version
         run: deno task version "${GITHUB_REF#refs/tags/v}"
@@ -48,12 +48,12 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
-          deno-version: 2.1.4
+          deno-version: 2.3.3
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22.13.0
+          node-version: 22.16.0
           registry-url: https://registry.npmjs.org/
 
       - name: Version
