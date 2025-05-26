@@ -11,7 +11,7 @@ Deno.test('Struct: buffer', () => {
 
 	// Non-ArrayBuffer throws immediately.
 	assertThrows(
-		() => new Struct(new Uint8Array() as ArrayBufferLike),
+		() => new Struct(new Uint8Array() as unknown as ArrayBufferLike),
 		TypeError,
 	);
 });

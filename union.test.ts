@@ -11,7 +11,7 @@ Deno.test('Union: buffer', () => {
 
 	// Non-ArrayBuffer throws immediately.
 	assertThrows(
-		() => new Union(new Uint8Array() as ArrayBufferLike),
+		() => new Union(new Uint8Array() as unknown as ArrayBufferLike),
 		TypeError,
 	);
 });

@@ -63,7 +63,7 @@ Deno.test('Ptr: buffer', () => {
 
 	// Non-ArrayBuffer throws immediately.
 	assertThrows(
-		() => new DummyPtr(new Uint8Array() as ArrayBufferLike),
+		() => new DummyPtr(new Uint8Array() as unknown as ArrayBufferLike),
 		TypeError,
 	);
 });
