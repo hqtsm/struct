@@ -185,7 +185,7 @@ jobs:
     strategy:
       matrix:
         bun-version:
-          - 1.1.39
+          - 1.2.15
           - 1.0.0
 
     name: Bun ${{ matrix.bun-version }}
