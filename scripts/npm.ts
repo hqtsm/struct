@@ -99,7 +99,7 @@ if (replace.size) {
 		);
 
 		let pos = 0;
-		f.readSync = function (d: Uint8Array): number | null {
+		f.readSync = function readSync(d: Uint8Array): number | null {
 			if (pos < body.byteLength) {
 				const view = body.slice(pos, pos + d.byteLength);
 				d.set(view);
@@ -108,7 +108,7 @@ if (replace.size) {
 			}
 			return null;
 		};
-		f.close = function (): void {};
+		f.close = function close(): void {};
 		return f;
 	};
 	Object.defineProperty(Deno, 'openSync', desc);
