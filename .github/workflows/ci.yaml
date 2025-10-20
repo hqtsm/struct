@@ -13,10 +13,12 @@ jobs:
     strategy:
       matrix:
         config:
-          - deno-version: 2.3.3
-          - deno-version: 2.3.0
-          - deno-version: 2.2.12
-          - deno-version: 2.1.12
+          - deno-version: 2.5.x
+          - deno-version: 2.4.x
+          - deno-version: 2.2.x
+          - deno-version: 2.1.x
+            deno-lock: 0
+          - deno-version: 2.0.x
             deno-lock: 0
           - deno-version: 2.0.0
             deno-lock: 0
@@ -29,10 +31,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Setup Deno
-        uses: denoland/setup-deno@v2
+        uses: denoland/setup-deno@e95548e56dfa95d4e1a28d6f422fafe75c4c26fb # v2.0.3
         with:
           deno-version: ${{ matrix.config.deno-version }}
 
@@ -53,18 +55,18 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Setup Deno
-        uses: denoland/setup-deno@v2
+        uses: denoland/setup-deno@e95548e56dfa95d4e1a28d6f422fafe75c4c26fb # v2.0.3
         with:
-          deno-version: 2.3.3
+          deno-version: 2.4.x
 
       - name: Docs
         run: deno task docs
 
       - name: Artifact docs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: docs
           path: docs
@@ -85,23 +87,23 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Setup Deno
-        uses: denoland/setup-deno@v2
+        uses: denoland/setup-deno@e95548e56dfa95d4e1a28d6f422fafe75c4c26fb # v2.0.3
         with:
-          deno-version: 2.3.3
+          deno-version: 2.4.x
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: 22.16.0
+          node-version: 24.x
 
       - name: Build NPM
         run: deno task npm dev
 
       - name: Artifact NPM
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: npm-dev
           path: |
@@ -115,23 +117,23 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Setup Deno
-        uses: denoland/setup-deno@v2
+        uses: denoland/setup-deno@e95548e56dfa95d4e1a28d6f422fafe75c4c26fb # v2.0.3
         with:
-          deno-version: 2.3.3
+          deno-version: 2.4.x
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: 22.16.0
+          node-version: 24.x
 
       - name: Build NPM
         run: deno task npm prod
 
       - name: Artifact NPM
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: npm-prod
           path: |
@@ -140,16 +142,17 @@ jobs:
 
       - name: Check Publish
         working-directory: npm
-        run: npm publish --dry-run
+        run: npm publish --dry-run --tag dry-run
 
   node:
     strategy:
       matrix:
         node-version:
-          - 24.1.0
-          - 22.16.0
-          - 22.11.0
-          - 20.9.0
+          - 25.x
+          - 24.x
+          - 22.x
+          - 20.x
+          - 18.x
           - 18.12.0
 
     name: Node ${{ matrix.node-version }}
@@ -160,15 +163,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Artifact NPM
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
         with:
           name: npm-dev
           path: npm
@@ -185,7 +188,10 @@ jobs:
     strategy:
       matrix:
         bun-version:
-          - 1.2.15
+          - 1.3.0
+          - 1.2.23
+          - 1.1.45
+          - 1.0.36
           - 1.0.0
 
     name: Bun ${{ matrix.bun-version }}
@@ -196,15 +202,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
         with:
           bun-version: ${{ matrix.bun-version }}
 
       - name: Artifact NPM
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
         with:
           name: npm-dev
           path: npm
