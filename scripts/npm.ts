@@ -64,24 +64,54 @@ if (replace.size) {
 	const reg = /\.m?[tj]sx?$/i;
 	const dec = new TextDecoder();
 	const enc = new TextEncoder();
-	const desc = Object.getOwnPropertyDescriptor(Deno, 'readFile')!;
+	const desc = Object.getOwnPropertyDescriptor(Deno, 'openSync')!;
 	const value = desc.value!;
-	desc.value = async function readFile(
+	desc.value = function openSync(
 		path: string | URL,
-		_options?: Deno.ReadFileOptions,
-	): Promise<Uint8Array> {
-		let r = await value.apply(this, arguments);
-		if (reg.test(typeof path === 'string' ? path : path.pathname)) {
-			r = enc.encode(
-				dec.decode(r).replace(
-					/(['"])([^'"]+)(['"])/g,
-					(_0, q1, s, q2) => `${q1}${replace.get(s) ?? s}${q2}`,
-				),
-			);
+		options?: Deno.OpenOptions,
+	): Deno.FsFile {
+		const f = value.apply(this, arguments) as Deno.FsFile;
+		if (
+			options?.write ||
+			options?.create ||
+			options?.truncate ||
+			options?.append ||
+			options?.createNew ||
+			!reg.test(typeof path === 'string' ? path : path.pathname)
+		) {
+			return f;
 		}
-		return r;
+
+		const st = f.statSync();
+		if (!st.isFile) {
+			return f;
+		}
+
+		let body = new Uint8Array(st.size);
+		f.readSync(body);
+		f.close();
+
+		body = enc.encode(
+			dec.decode(body).replace(
+				/(['"])([^'"]+)(['"])/g,
+				(_0, q1, s, q2) => `${q1}${replace.get(s) ?? s}${q2}`,
+			),
+		);
+
+		let pos = 0;
+		f.readSync = function (d: Uint8Array): number | null {
+			if (pos < body.byteLength) {
+				const view = body.slice(pos, pos + d.byteLength);
+				d.set(view);
+				pos += view.byteLength;
+				return view.byteLength;
+			}
+			return null;
+		};
+		f.close = function (): void {};
+		return f;
 	};
-	Object.defineProperty(Deno, 'readFile', desc);
+	Object.defineProperty(Deno, 'openSync', desc);
 }
 
 const outDir = './npm';

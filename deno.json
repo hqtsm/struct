@@ -31,10 +31,10 @@
 		"./util": "./util.ts"
 	},
 	"imports": {
-		"@deno/dnt": "jsr:@deno/dnt@^0.42.1",
+		"@deno/dnt": "jsr:@deno/dnt@^0.42.3",
 		"@hqtsm/dataview": "jsr:@hqtsm/dataview@^1.0.5",
 		"@hqtsm/meek": "jsr:@hqtsm/meek@^1.0.5",
-		"@std/assert": "jsr:@std/assert@^1.0.13"
+		"@std/assert": "jsr:@std/assert@^1.0.15"
 	},
 	"fmt": {
 		"useTabs": true,
