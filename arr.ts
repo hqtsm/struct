@@ -132,6 +132,13 @@ export function array<T>(
 	length: number,
 ): ArrConstructor<Arr<T>>;
 
+/**
+ * Create array of length from type/array or pointer.
+ *
+ * @param Type Type constructor or pointer constructor.
+ * @param length Array length.
+ * @returns Array constructor.
+ */
 export function array<T extends Type>(
 	TypePtr: TypeConstructor<T> | PtrConstructor<Ptr<T>>,
 	length: number,
