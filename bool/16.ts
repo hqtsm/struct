@@ -12,6 +12,7 @@ import { constant, dataView } from '../util.ts';
 /**
  * Member: bool16.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -50,6 +51,7 @@ export function bool16<T extends MemberableClass>(
 /**
  * Member: bool16, big endian.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -66,6 +68,7 @@ export function bool16BE<T extends MemberableClass>(
 /**
  * Member: bool16, little endian.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.

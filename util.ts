@@ -12,6 +12,11 @@ let dataViews: WeakMap<ArrayBufferLike, DataView>;
 
 /**
  * If types are equal.
+ *
+ * @template A Type A.
+ * @template B Type B.
+ * @template X True type.
+ * @template Y False type.
  */
 export type TypesEqual<A, B, X = A, Y = never> = (
 	<T>() => T extends A ? 1 : 2
@@ -22,6 +27,8 @@ export type TypesEqual<A, B, X = A, Y = never> = (
 
 /**
  * Readonly keys.
+ *
+ * @template T Type.
  */
 export type ReadonlyKeyof<T> = {
 	[K in keyof T]: TypesEqual<
@@ -35,6 +42,8 @@ export type ReadonlyKeyof<T> = {
 /**
  * Define constant.
  *
+ * @template T Type.
+ * @template K Key.
  * @param o Object.
  * @param key Key.
  * @param value Value, or undefined for current value.
@@ -69,6 +78,7 @@ export function dataView(buffer: ArrayBufferLike): DataView {
 /**
  * Get byte offset of member.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @returns Byte offset.
@@ -83,6 +93,7 @@ export function getByteOffset<T extends MemberedClass>(
 /**
  * Get byte length of member.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @returns Byte length.
@@ -98,6 +109,7 @@ export function getByteLength<T extends MemberedClass>(
  * Get members of type.
  * Array indexes then member keys from highest to lowest inheritance.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @returns Member list.
  */
@@ -125,6 +137,7 @@ export function getMembers<T extends MemberedClass>(
 /**
  * Assign ArrayBuffer data from one view to another.
  *
+ * @template D Destination type.
  * @param dst Destination memory.
  * @param src Source memory of equal or greater size.
  * @returns Destination memory.
@@ -143,6 +156,8 @@ export function assignView<D extends BufferView>(
 /**
  * Assign ArrayBuffer data from one type to another.
  *
+ * @template D Destination type.
+ * @template S Source type.
  * @param dst Destination type.
  * @param src Source type, must extend destination type.
  * @returns Destination type.

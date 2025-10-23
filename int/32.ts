@@ -12,6 +12,7 @@ import { constant, dataView } from '../util.ts';
 /**
  * Member: int32.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -50,6 +51,7 @@ export function int32<T extends MemberableClass>(
 /**
  * Member: int32, big endian.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -66,6 +68,7 @@ export function int32BE<T extends MemberableClass>(
 /**
  * Member: int32, little endian.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -82,6 +85,7 @@ export function int32LE<T extends MemberableClass>(
 /**
  * Member: uint32.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -120,6 +124,7 @@ export function uint32<T extends MemberableClass>(
 /**
  * Member: uint32, big endian.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -137,6 +142,7 @@ export function uint32BE<T extends MemberableClass>(
 /**
  * Member: uint32, little endian.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.

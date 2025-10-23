@@ -117,6 +117,7 @@ export interface EndianConstructor extends EndianClass {
 /**
  * Extend endian class as default endian.
  *
+ * @template T Endian class.
  * @param Endian Endian class.
  * @returns Extended class.
  */
@@ -153,6 +154,7 @@ export function dynamicEndian<T extends EndianClass>(
 /**
  * Extend endian class as big endian.
  *
+ * @template T Endian class.
  * @param Endian Endian class.
  * @returns Extended class.
  */
@@ -189,6 +191,7 @@ export function bigEndian<T extends EndianClass>(
 /**
  * Extend endian class as little endian.
  *
+ * @template T Endian class.
  * @param Endian Endian class.
  * @returns Extended class.
  */

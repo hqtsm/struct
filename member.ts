@@ -26,6 +26,7 @@ export function defaultMemberByteOffset(Type: MemberableClass): number {
 /**
  * Ensure byte length of type is defined.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param byteLength Byte length to ensure at-least.
  * @returns Updated type byte length.
@@ -48,6 +49,8 @@ export function ensureByteLength<T extends MemberableClass>(
 /**
  * Define member.
  *
+ * @template T Type class.
+ * @template M Member type.
  * @param Type Type class.
  * @param name Member name.
  * @param desc Member descriptor.
@@ -81,10 +84,10 @@ export function defineMember<T extends MemberableClass, M>(
 
 /**
  * Member constructor.
+ *
+ * @template T Member type.
  */
-export interface MemberConstructor<
-	T extends BufferView = BufferView,
-> {
+export interface MemberConstructor<T extends BufferView = BufferView> {
 	/**
 	 * Member constructor.
 	 *
@@ -107,6 +110,8 @@ export interface MemberConstructor<
 /**
  * Member: generic.
  *
+ * @template T Type class.
+ * @template M Member type.
  * @param Member Member constructor.
  * @param Type Type class.
  * @param name Member name.
@@ -152,6 +157,8 @@ export function member<T extends MemberableClass, M extends BufferView>(
 /**
  * Member: generic, big endian.
  *
+ * @template T Type class.
+ * @template M Member type.
  * @param Member Member constructor.
  * @param Type Type class.
  * @param name Member name.
@@ -170,6 +177,8 @@ export function memberBE<T extends MemberableClass, M extends BufferView>(
 /**
  * Member: generic, little endian.
  *
+ * @template T Type class.
+ * @template M Member type.
  * @param Member Member constructor.
  * @param Type Type class.
  * @param name Member name.
@@ -188,6 +197,7 @@ export function memberLE<T extends MemberableClass, M extends BufferView>(
 /**
  * Member: pad.
  *
+ * @template T Type class.
  * @param byteLength Padding size.
  * @param Type Type class.
  * @param name Member name.

@@ -9,6 +9,8 @@ import type { Ptr } from './ptr.ts';
 
 /**
  * Constant type.
+ *
+ * @template T Type.
  */
 // deno-lint-ignore ban-types
 export type Const<T> = T extends Function | RegExp | Date ? T
@@ -19,12 +21,16 @@ export type Const<T> = T extends Function | RegExp | Date ? T
 
 /**
  * Constant pointer.
+ *
+ * @template T Type.
  */
 export interface ConstPtr<T = never>
 	extends Const<Omit<Ptr<Const<T>>, 'set'>> {}
 
 /**
  * Constant array.
+ *
+ * @template T Type.
  */
 export interface ConstArr<T = never>
 	extends Const<Omit<Arr<Const<T>>, 'set'>> {}

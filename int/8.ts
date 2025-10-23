@@ -12,6 +12,7 @@ import { constant, dataView } from '../util.ts';
 /**
  * Member: int8.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -41,6 +42,7 @@ export function int8<T extends MemberableClass>(
 /**
  * Member: uint8.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.

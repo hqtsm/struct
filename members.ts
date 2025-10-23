@@ -79,6 +79,8 @@ export type MemberedClass =
 
 /**
  * The possible member keys.
+ *
+ * @template T Membered type.
  */
 export type MemberKeys<T extends Membered> = Exclude<
 	keyof T,
@@ -89,6 +91,8 @@ export type MemberKeys<T extends Membered> = Exclude<
 
 /**
  * The possible member keys for class.
+ *
+ * @template T Membered class type.
  */
 export type MemberClassKeys<T extends MemberedClass> = MemberKeys<
 	T['prototype']
@@ -106,6 +110,9 @@ export type MemberableClass = ArrClass<Arr<unknown>> | TypeClass;
 
 /**
  * The possible memberable keys, filterable by member type.
+ *
+ * @template T Memberable type.
+ * @template M Member type.
  */
 export type MemberableKeys<
 	T extends Memberable,
@@ -117,6 +124,9 @@ export type MemberableKeys<
 
 /**
  * The possible memberable keys for class, filterable by member type.
+ *
+ * @template T Memberable class type.
+ * @template M Member type.
  */
 export type MemberableClassKeys<
 	T extends MemberableClass,

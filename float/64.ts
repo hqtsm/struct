@@ -12,6 +12,7 @@ import { constant, dataView } from '../util.ts';
 /**
  * Member: float64.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -50,6 +51,7 @@ export function float64<T extends MemberableClass>(
 /**
  * Member: float64, big endian.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.
@@ -66,6 +68,7 @@ export function float64BE<T extends MemberableClass>(
 /**
  * Member: float64, little endian.
  *
+ * @template T Type class.
  * @param Type Type class.
  * @param name Member name.
  * @param byteOffset Byte offset.

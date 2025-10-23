@@ -106,6 +106,8 @@ function memberSet(
 
 /**
  * Pointer to a type.
+ *
+ * @template T Value type.
  */
 export class Ptr<T = never> extends Endian implements Members {
 	/**
@@ -200,6 +202,8 @@ export class Ptr<T = never> extends Endian implements Members {
 
 /**
  * Pointer class.
+ *
+ * @template T Pointer type.
  */
 export interface PtrClass<T extends Ptr<unknown> = Ptr>
 	extends Omit<typeof Ptr<T[number]>, 'new'> {
@@ -211,6 +215,8 @@ export interface PtrClass<T extends Ptr<unknown> = Ptr>
 
 /**
  * Pointer constructor.
+ *
+ * @template T Pointer type.
  */
 export interface PtrConstructor<T extends Ptr<unknown> = Ptr>
 	extends PtrClass<T> {
@@ -231,6 +237,7 @@ export interface PtrConstructor<T extends Ptr<unknown> = Ptr>
 /**
  * Get pointer of type.
  *
+ * @template T Type.
  * @param Type Type constructor.
  * @returns Ptr constructor.
  */

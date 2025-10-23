@@ -18,6 +18,8 @@ import { constant } from './util.ts';
 
 /**
  * Array.
+ *
+ * @template T Value type.
  */
 export interface Arr<T = never> extends Ptr<T>, Type {
 	/**
@@ -69,6 +71,8 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 
 /**
  * Array class.
+ *
+ * @template T Array type.
  */
 export interface ArrClass<T extends Arr<unknown> = Arr>
 	extends PtrClass<T>, TypeClass {
@@ -85,6 +89,8 @@ export interface ArrClass<T extends Arr<unknown> = Arr>
 
 /**
  * Array constructor.
+ *
+ * @template T Array type.
  */
 export interface ArrConstructor<T extends Arr<unknown> = Arr>
 	extends ArrClass<T> {
@@ -111,6 +117,7 @@ let arrays: WeakMap<
 /**
  * Create array of length from type/array.
  *
+ * @template T Value type.
  * @param Type Type constructor.
  * @param length Array length.
  * @returns Array constructor.
@@ -123,6 +130,7 @@ export function array<T extends Type>(
 /**
  * Create array of length from pointer.
  *
+ * @template T Pointer type.
  * @param Ptr Pointer constructor.
  * @param length Array length.
  * @returns Array constructor.
@@ -135,6 +143,7 @@ export function array<T>(
 /**
  * Create array of length from type/array or pointer.
  *
+ * @template T Value type.
  * @param Type Type constructor or pointer constructor.
  * @param length Array length.
  * @returns Array constructor.

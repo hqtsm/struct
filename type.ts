@@ -20,6 +20,8 @@ export interface Type extends Endian, BufferView {
 
 /**
  * Type class.
+ *
+ * @template T Type.
  */
 export interface TypeClass<T extends Type = Type>
 	extends EndianClass, MembersClass {
@@ -36,6 +38,8 @@ export interface TypeClass<T extends Type = Type>
 
 /**
  * Type constructor.
+ *
+ * @template T Type.
  */
 export interface TypeConstructor<T extends Type = Type> extends TypeClass<T> {
 	/**
