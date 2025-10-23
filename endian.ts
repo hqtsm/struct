@@ -19,6 +19,11 @@ export const BIG_ENDIAN: boolean = !new Uint8Array(
  */
 export const LITTLE_ENDIAN = !BIG_ENDIAN;
 
+let pri: WeakMap<Endian, BufferPointer & EndianAware>;
+let dynamicEndians: WeakMap<EndianClass, EndianClass>;
+let bigEndians: WeakMap<EndianClass, EndianClass>;
+let littleEndians: WeakMap<EndianClass, EndianClass>;
+
 /**
  * Endian aware.
  */
@@ -28,8 +33,6 @@ export interface EndianAware {
 	 */
 	readonly littleEndian: boolean;
 }
-
-let pri: WeakMap<Endian, BufferPointer & EndianAware>;
 
 /**
  * Endian aware buffer pointer.
@@ -111,8 +114,6 @@ export interface EndianConstructor extends EndianClass {
 	): Endian;
 }
 
-let dynamicEndians: WeakMap<EndianClass, EndianClass>;
-
 /**
  * Extend endian class as default endian.
  *
@@ -149,8 +150,6 @@ export function dynamicEndian<T extends EndianClass>(
 	return r as T;
 }
 
-let bigEndians: WeakMap<EndianClass, EndianClass>;
-
 /**
  * Extend endian class as big endian.
  *
@@ -186,8 +185,6 @@ export function bigEndian<T extends EndianClass>(
 	}
 	return r as T;
 }
-
-let littleEndians: WeakMap<EndianClass, EndianClass>;
 
 /**
  * Extend endian class as little endian.

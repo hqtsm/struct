@@ -8,6 +8,8 @@ import type { MemberClassKeys, MemberedClass } from './members.ts';
 import type { BufferView } from './native.ts';
 import type { Type } from './type.ts';
 
+let dataViews: WeakMap<ArrayBufferLike, DataView>;
+
 /**
  * If types are equal.
  */
@@ -49,8 +51,6 @@ export function constant<T, K extends ReadonlyKeyof<T>>(
 		writable: false,
 	});
 }
-
-let dataViews: WeakMap<ArrayBufferLike, DataView>;
 
 /**
  * Get reusable data view of buffer.

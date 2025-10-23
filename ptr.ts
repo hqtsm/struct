@@ -11,10 +11,9 @@ import type { ArrayBufferReal } from './native.ts';
 import type { Type, TypeConstructor } from './type.ts';
 import { assignType, constant } from './util.ts';
 
-function index(key: PropertyKey): number | null {
-	let i;
-	return key === '-0' ? NaN : (key === '' + (i = +String(key)) ? i : null);
-}
+let members: WeakMap<typeof Ptr, MemberInfos>;
+let pointers: WeakMap<TypeConstructor<Type>, PtrConstructor<Ptr<Type>>>;
+let pointerValues: WeakMap<Ptr<Type>, MeekValueMap<number, Type>>;
 
 const handler: ProxyHandler<Ptr<unknown>> = {
 	deleteProperty(target, key): boolean {
@@ -56,6 +55,19 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 	},
 };
 
+function values<T extends Ptr<Type>>(p: T): MeekValueMap<number, T[number]> {
+	let r = (pointerValues ??= new WeakMap()).get(p);
+	if (!r) {
+		pointerValues.set(p, r = new MeekValueMap<number, Type>());
+	}
+	return r;
+}
+
+function index(key: PropertyKey): number | null {
+	let i;
+	return key === '-0' ? NaN : (key === '' + (i = +String(key)) ? i : null);
+}
+
 function memberGet(
 	bpe: number,
 	target: Readonly<MemberInfos>,
@@ -91,8 +103,6 @@ function memberSet(
 		? Reflect.set(target, key, value, key in target ? target : receiver)
 		: false;
 }
-
-let members: WeakMap<typeof Ptr, MemberInfos>;
 
 /**
  * Pointer to a type.
@@ -216,17 +226,6 @@ export interface PtrConstructor<T extends Ptr<unknown> = Ptr>
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;
-}
-
-let pointers: WeakMap<TypeConstructor<Type>, PtrConstructor<Ptr<Type>>>;
-let pointerValues: WeakMap<Ptr<Type>, MeekValueMap<number, Type>>;
-
-function values<T extends Ptr<Type>>(p: T): MeekValueMap<number, T[number]> {
-	let r = (pointerValues ??= new WeakMap()).get(p);
-	if (!r) {
-		pointerValues.set(p, r = new MeekValueMap<number, Type>());
-	}
-	return r;
 }
 
 /**
