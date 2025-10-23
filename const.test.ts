@@ -186,7 +186,13 @@ Deno.test('Const<Arr<Struct>>', () => {
 	const stru: Const<Arr<Test>> = new Test2(data.buffer);
 
 	const zero = stru.get(0);
-	const one = stru.at(1);
+	const one = stru.at(1)!;
+
+	// @ts-expect-error: Readonly.
+	zero.a = 1;
+
+	// @ts-expect-error: Readonly.
+	zero.b = 2;
 
 	// @ts-expect-error: Readonly.
 	stru[0].a = 1;
