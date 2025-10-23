@@ -219,6 +219,15 @@ export interface PtrConstructor<T extends Ptr<unknown> = Ptr>
 }
 
 let pointers: WeakMap<TypeConstructor<Type>, PtrConstructor<Ptr<Type>>>;
+let pointerValues: WeakMap<Ptr<Type>, MeekValueMap<number, Type>>;
+
+function values<T extends Ptr<Type>>(p: T): MeekValueMap<number, T[number]> {
+	let r = (pointerValues ??= new WeakMap()).get(p);
+	if (!r) {
+		pointerValues.set(p, r = new MeekValueMap<number, Type>());
+	}
+	return r;
+}
 
 /**
  * Get pointer of type.
@@ -241,13 +250,12 @@ export function pointer<T extends Type>(
 				[name]: class extends Ptr<T> {
 					declare public readonly ['constructor']: PtrClass<Ptr<T>>;
 
-					readonly #values = new MeekValueMap<number, T>();
-
 					public override get(index: number): T {
 						index = (+index || 0) - (index % 1 || 0);
-						let r = this.#values.get(index);
+						const v = values(this);
+						let r = v.get(index);
 						if (!r) {
-							this.#values.set(
+							v.set(
 								index,
 								r = new Type(
 									this.buffer,
@@ -261,9 +269,10 @@ export function pointer<T extends Type>(
 
 					public override set(index: number, value: T): void {
 						index = (+index || 0) - (index % 1 || 0);
-						let r = this.#values.get(index);
+						const v = values(this);
+						let r = v.get(index);
 						if (!r) {
-							this.#values.set(
+							v.set(
 								index,
 								r = new Type(
 									this.buffer,
