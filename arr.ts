@@ -23,7 +23,7 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	/**
 	 * Array constructor.
 	 */
-	readonly constructor: PtrClass<Ptr<T>> & TypeClass;
+	readonly constructor: ArrClass<Arr<T>>;
 
 	/**
 	 * Array length.

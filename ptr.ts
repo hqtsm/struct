@@ -192,7 +192,7 @@ export class Ptr<T = never> extends Endian implements Members {
  * Pointer class.
  */
 export interface PtrClass<T extends Ptr<unknown> = Ptr>
-	extends Omit<typeof Ptr, 'new'> {
+	extends Omit<typeof Ptr<T[number]>, 'new'> {
 	/**
 	 * Ptr prototype.
 	 */
