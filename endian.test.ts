@@ -14,6 +14,7 @@ import {
 } from './endian.ts';
 import { Struct } from './struct.ts';
 
+abstract class AbstractChild extends Endian {}
 const defaultClassProperties = new Set(Object.getOwnPropertyNames(class {}));
 
 Deno.test('BIG_ENDIAN != LITTLE_ENDIAN', () => {
@@ -40,6 +41,11 @@ Deno.test('dynamicEndian', () => {
 		assertMatch(p, /^[A-Z][A-Z0-9_]*$/, p);
 		assertEquals(desc!.writable ?? false, false, p);
 	}
+
+	dynamicEndian(AbstractChild);
+
+	// @ts-expect-error: Class but not function.
+	dynamicEndian(Function);
 });
 
 Deno.test('bigEndian', () => {
@@ -62,6 +68,11 @@ Deno.test('bigEndian', () => {
 		assertMatch(p, /^[A-Z][A-Z0-9_]*$/, p);
 		assertEquals(desc!.writable ?? false, false, p);
 	}
+
+	bigEndian(AbstractChild);
+
+	// @ts-expect-error: Class but not function.
+	bigEndian(Function);
 });
 
 Deno.test('littleEndian', () => {
@@ -84,4 +95,9 @@ Deno.test('littleEndian', () => {
 		assertMatch(p, /^[A-Z][A-Z0-9_]*$/, p);
 		assertEquals(desc!.writable ?? false, false, p);
 	}
+
+	littleEndian(AbstractChild);
+
+	// @ts-expect-error: Class but not function.
+	littleEndian(Function);
 });

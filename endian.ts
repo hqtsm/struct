@@ -121,9 +121,10 @@ export interface EndianConstructor extends EndianClass {
  * @param Endian Endian class.
  * @returns Extended class.
  */
-export function dynamicEndian<T extends EndianClass>(
-	// deno-lint-ignore ban-types
-	Endian: T & Function,
+export function dynamicEndian<
+	T extends EndianClass & (abstract new (...args: never[]) => Endian),
+>(
+	Endian: T,
 ): T {
 	let r = (dynamicEndians ??= new WeakMap()).get(Endian);
 	if (!r) {
@@ -158,9 +159,10 @@ export function dynamicEndian<T extends EndianClass>(
  * @param Endian Endian class.
  * @returns Extended class.
  */
-export function bigEndian<T extends EndianClass>(
-	// deno-lint-ignore ban-types
-	Endian: T & Function,
+export function bigEndian<
+	T extends EndianClass & (abstract new (...args: never[]) => Endian),
+>(
+	Endian: T,
 ): T {
 	let r = (bigEndians ??= new WeakMap()).get(Endian);
 	if (!r) {
@@ -195,9 +197,10 @@ export function bigEndian<T extends EndianClass>(
  * @param Endian Endian class.
  * @returns Extended class.
  */
-export function littleEndian<T extends EndianClass>(
-	// deno-lint-ignore ban-types
-	Endian: T & Function,
+export function littleEndian<
+	T extends EndianClass & (abstract new (...args: never[]) => Endian),
+>(
+	Endian: T,
 ): T {
 	let r = (littleEndians ??= new WeakMap()).get(Endian);
 	if (!r) {
