@@ -70,7 +70,7 @@ export interface Arr<T = never> extends Ptr<T>, Type {
  * @template T Array type.
  */
 export interface ArrConstructor<T extends Arr<unknown> = Arr>
-	extends Omit<PtrConstructor<T>, never>, TypeConstructor<T> {
+	extends Omit<PtrConstructor<T>, 'new'>, Omit<TypeConstructor<T>, 'new'> {
 	/**
 	 * Create instance for buffer.
 	 *
