@@ -7,13 +7,8 @@
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 import type { MemberInfos, Members } from './members.ts';
 import type { ArrayBufferReal } from './native.ts';
-import {
-	pointer,
-	type Ptr,
-	type PtrClass,
-	type PtrConstructor,
-} from './ptr.ts';
-import type { Type, TypeClass, TypeConstructor } from './type.ts';
+import { pointer, type Ptr, type PtrConstructor } from './ptr.ts';
+import type { Type, TypeConstructor } from './type.ts';
 import { constant } from './util.ts';
 
 /**
@@ -75,7 +70,7 @@ export interface Arr<T = never> extends Ptr<T>, Type {
  * @template T Array type.
  */
 export interface ArrConstructor<T extends Arr<unknown> = Arr>
-	extends PtrClass<T>, TypeClass {
+	extends Omit<PtrConstructor<T>, 'new'>, TypeConstructor<T> {
 	/**
 	 * Create instance for buffer.
 	 *

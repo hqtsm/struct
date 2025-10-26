@@ -4,7 +4,7 @@
  * Type types.
  */
 
-import type { Endian, EndianClass } from './endian.ts';
+import type { Endian, EndianConstructor } from './endian.ts';
 import type { MembersClass } from './members.ts';
 import type { ArrayBufferReal, BufferView } from './native.ts';
 
@@ -24,7 +24,7 @@ export interface Type extends Endian, BufferView {
  * @template T Type.
  */
 export interface TypeConstructor<T extends Type = Type>
-	extends EndianClass, MembersClass {
+	extends Omit<EndianConstructor, 'new'>, MembersClass {
 	/**
 	 * Create instance for buffer.
 	 *
