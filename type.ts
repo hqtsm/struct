@@ -24,7 +24,7 @@ export interface Type extends Endian, BufferView {
  * @template T Type.
  */
 export interface TypeConstructor<T extends Type = Type>
-	extends Omit<EndianConstructor, 'new'>, MembersClass {
+	extends Omit<EndianConstructor, never>, MembersClass {
 	/**
 	 * Create instance for buffer.
 	 *
