@@ -96,23 +96,14 @@ export class Endian implements BufferPointer, EndianAware {
 }
 
 /**
- * Endian class.
- */
-export interface EndianClass extends Omit<typeof Endian, 'new'> {}
-
-/**
  * Endian constructor.
  */
-export interface EndianConstructor extends EndianClass {
-	/**
-	 * Endian constructor.
-	 */
-	new (
-		buffer: ArrayBufferReal,
-		byteOffset?: number,
-		littleEndian?: boolean | null,
-	): Endian;
-}
+export interface EndianConstructor extends Exclude<typeof Endian, never> {}
+
+/**
+ * Endian class.
+ */
+export interface EndianClass extends Omit<EndianConstructor, 'new'> {}
 
 /**
  * Extend endian class as default endian.

@@ -201,12 +201,12 @@ export class Ptr<T = never> extends Endian implements Members {
 }
 
 /**
- * Pointer class.
+ * Pointer constructor.
  *
  * @template T Pointer type.
  */
-export interface PtrClass<T extends Ptr<unknown> = Ptr>
-	extends Omit<typeof Ptr<T[number]>, 'new'> {
+export interface PtrConstructor<T extends Ptr<unknown> = Ptr>
+	extends Exclude<typeof Ptr<T[number]>, never> {
 	/**
 	 * Ptr prototype.
 	 */
@@ -214,24 +214,12 @@ export interface PtrClass<T extends Ptr<unknown> = Ptr>
 }
 
 /**
- * Pointer constructor.
+ * Pointer class.
  *
  * @template T Pointer type.
  */
-export interface PtrConstructor<T extends Ptr<unknown> = Ptr>
-	extends PtrClass<T> {
-	/**
-	 * Ptr constructor.
-	 *
-	 * @param buffer Buffer data.
-	 * @param byteOffset Byte offset into buffer.
-	 * @param littleEndian Host endian, little endian, big endian.
-	 */
-	new (
-		buffer: ArrayBufferReal,
-		byteOffset?: number,
-		littleEndian?: boolean | null,
-	): T;
+export interface PtrClass<T extends Ptr<unknown> = Ptr>
+	extends Omit<PtrConstructor<T>, 'new'> {
 }
 
 /**

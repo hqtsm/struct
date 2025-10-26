@@ -70,30 +70,12 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 }
 
 /**
- * Array class.
- *
- * @template T Array type.
- */
-export interface ArrClass<T extends Arr<unknown> = Arr>
-	extends PtrClass<T>, TypeClass {
-	/**
-	 * Array prototype.
-	 */
-	readonly prototype: T;
-
-	/**
-	 * Array length.
-	 */
-	readonly LENGTH: number;
-}
-
-/**
  * Array constructor.
  *
  * @template T Array type.
  */
 export interface ArrConstructor<T extends Arr<unknown> = Arr>
-	extends ArrClass<T> {
+	extends PtrClass<T>, TypeClass {
 	/**
 	 * Create instance for buffer.
 	 *
@@ -106,6 +88,25 @@ export interface ArrConstructor<T extends Arr<unknown> = Arr>
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;
+
+	/**
+	 * Array prototype.
+	 */
+	readonly prototype: T;
+
+	/**
+	 * Array length.
+	 */
+	readonly LENGTH: number;
+}
+
+/**
+ * Array class.
+ *
+ * @template T Array type.
+ */
+export interface ArrClass<T extends Arr<unknown> = Arr>
+	extends Omit<ArrConstructor<T>, 'new'> {
 }
 
 let arrays: WeakMap<

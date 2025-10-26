@@ -19,29 +19,12 @@ export interface Type extends Endian, BufferView {
 }
 
 /**
- * Type class.
- *
- * @template T Type.
- */
-export interface TypeClass<T extends Type = Type>
-	extends EndianClass, MembersClass {
-	/**
-	 * Type prototype.
-	 */
-	readonly prototype: T;
-
-	/**
-	 * Instance size in bytes.
-	 */
-	readonly BYTE_LENGTH: number;
-}
-
-/**
  * Type constructor.
  *
  * @template T Type.
  */
-export interface TypeConstructor<T extends Type = Type> extends TypeClass<T> {
+export interface TypeConstructor<T extends Type = Type>
+	extends EndianClass, MembersClass {
 	/**
 	 * Create instance for buffer.
 	 *
@@ -54,4 +37,22 @@ export interface TypeConstructor<T extends Type = Type> extends TypeClass<T> {
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;
+
+	/**
+	 * Type prototype.
+	 */
+	readonly prototype: T;
+
+	/**
+	 * Instance size in bytes.
+	 */
+	readonly BYTE_LENGTH: number;
 }
+
+/**
+ * Type class.
+ *
+ * @template T Type.
+ */
+export interface TypeClass<T extends Type = Type>
+	extends Omit<TypeConstructor<T>, 'new'> {}
