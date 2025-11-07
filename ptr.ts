@@ -20,14 +20,14 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 		let i;
 		return Reflect.has(target, key) || (i = index(key)) === null
 			? Reflect.deleteProperty(target, key)
-			: !(i === i - i % 1);
+			: i !== i - i % 1;
 	},
 	get(target, key, receiver: Ptr<unknown>): unknown | undefined {
 		let i;
 		if (Reflect.has(target, key) || (i = index(key)) === null) {
 			return Reflect.get(target, key, key in target ? target : receiver);
 		}
-		if ((i === i - i % 1)) {
+		if (i === i - i % 1) {
 			return receiver.get(i);
 		}
 	},

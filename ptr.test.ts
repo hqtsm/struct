@@ -199,6 +199,7 @@ Deno.test('Ptr: [[deleteProperty]]', () => {
 	const test = new Uint8Ptr(data.buffer, 2);
 
 	assertThrows(() => delete test[0], TypeError);
+	assertThrows(() => delete test[-0], TypeError);
 	assertThrows(() => delete test[1], TypeError);
 	assertThrows(() => delete test[10], TypeError);
 	assertThrows(() => delete test[-1], TypeError);
@@ -213,6 +214,9 @@ Deno.test('Ptr: [[deleteProperty]]', () => {
 	assertEquals(unk in test, true);
 	assertEquals(delete o[unk], true);
 	assertEquals(unk in test, false);
+
+	assertEquals(delete test[1.1], true);
+	assertEquals(delete test['-0' as unknown as number], true);
 });
 
 Deno.test('pointer', () => {
