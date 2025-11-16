@@ -7,7 +7,21 @@
 import type { Arr, ArrClass } from './arr.ts';
 import type { Ptr, PtrClass } from './ptr.ts';
 import type { Type, TypeClass } from './type.ts';
-import type { TypesEqual } from './util.ts';
+
+/**
+ * If types are equal.
+ *
+ * @template A Type A.
+ * @template B Type B.
+ * @template T True type.
+ * @template F False type.
+ */
+type TypesEqual<A, B, T, F> = (
+	<T>() => T extends A ? 1 : 2
+) extends (
+	<T>() => T extends B ? 1 : 2
+) ? T
+	: F;
 
 /**
  * Member info.

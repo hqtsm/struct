@@ -11,35 +11,6 @@ import type { Type } from './type.ts';
 let dataViews: WeakMap<ArrayBufferLike, DataView>;
 
 /**
- * If types are equal.
- *
- * @template A Type A.
- * @template B Type B.
- * @template X True type.
- * @template Y False type.
- */
-export type TypesEqual<A, B, X = A, Y = never> = (
-	<T>() => T extends A ? 1 : 2
-) extends (
-	<T>() => T extends B ? 1 : 2
-) ? X
-	: Y;
-
-/**
- * Readonly keys.
- *
- * @template T Type.
- */
-export type ReadonlyKeyof<T> = {
-	[K in keyof T]: TypesEqual<
-		{ [Q in K]: T[K] },
-		{ -readonly [Q in K]: T[K] },
-		never,
-		K
-	>;
-}[keyof T];
-
-/**
  * Get reusable data view of buffer.
  *
  * @param buffer Array buffer.
