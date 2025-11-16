@@ -14,16 +14,6 @@ jobs:
       matrix:
         config:
           - deno-version: 2.5.x
-          - deno-version: 2.4.x
-          - deno-version: 2.2.x
-          - deno-version: 2.1.x
-            deno-lock: 0
-          - deno-version: 2.0.x
-            deno-lock: 0
-          - deno-version: 2.0.0
-            deno-lock: 0
-          - deno-version: 1.46.3
-            deno-lock: 0
 
     name: Deno ${{ matrix.config.deno-version }}
 
@@ -60,16 +50,17 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@e95548e56dfa95d4e1a28d6f422fafe75c4c26fb # v2.0.3
         with:
-          deno-version: 2.4.x
+          deno-version: 2.5.x
 
       - name: Docs
         run: deno task docs
 
       - name: Artifact docs
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: docs
           path: docs
+          include-hidden-files: true
 
       - name: Linted
         run: deno task linted
@@ -92,7 +83,7 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@e95548e56dfa95d4e1a28d6f422fafe75c4c26fb # v2.0.3
         with:
-          deno-version: 2.4.x
+          deno-version: 2.5.x
 
       - name: Setup Node
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
@@ -103,12 +94,13 @@ jobs:
         run: deno task npm dev
 
       - name: Artifact NPM
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: npm-dev
           path: |
             npm
             !npm/node_modules
+          include-hidden-files: true
 
   npm-prod:
     name: NPM prod
@@ -122,7 +114,7 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@e95548e56dfa95d4e1a28d6f422fafe75c4c26fb # v2.0.3
         with:
-          deno-version: 2.4.x
+          deno-version: 2.5.x
 
       - name: Setup Node
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
@@ -133,12 +125,13 @@ jobs:
         run: deno task npm prod
 
       - name: Artifact NPM
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: npm-prod
           path: |
             npm
             !npm/node_modules
+          include-hidden-files: true
 
       - name: Check Publish
         working-directory: npm
@@ -152,8 +145,6 @@ jobs:
           - 24.x
           - 22.x
           - 20.x
-          - 18.x
-          - 18.12.0
 
     name: Node ${{ matrix.node-version }}
 
@@ -171,7 +162,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Artifact NPM
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           name: npm-dev
           path: npm
@@ -188,11 +179,7 @@ jobs:
     strategy:
       matrix:
         bun-version:
-          - 1.3.1
-          - 1.2.23
-          - 1.1.45
-          - 1.0.36
-          - 1.0.0
+          - 1.3.2
 
     name: Bun ${{ matrix.bun-version }}
 
@@ -210,7 +197,7 @@ jobs:
           bun-version: ${{ matrix.bun-version }}
 
       - name: Artifact NPM
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           name: npm-dev
           path: npm

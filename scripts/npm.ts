@@ -149,6 +149,9 @@ await build({
 			}
 			: {}),
 	},
+	esModule: true,
+	scriptModule: false,
+	declaration: 'inline',
 	typeCheck: 'both',
 	compilerOptions: {
 		target: 'Latest',
@@ -157,10 +160,10 @@ await build({
 	},
 	async postBuild(): Promise<void> {
 		await Promise.all([
-			Deno.copyFile('LICENSE.txt', 'npm/LICENSE.txt'),
-			Deno.copyFile('README.md', 'npm/README.md'),
+			Deno.copyFile('LICENSE.txt', `${outDir}/LICENSE.txt`),
+			Deno.copyFile('README.md', `${outDir}/README.md`),
 			Deno.writeTextFile(
-				'npm/.npmignore',
+				`${outDir}/.npmignore`,
 				[
 					'.*',
 					'ehthumbs.db',
