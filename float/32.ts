@@ -4,10 +4,11 @@
  * 32-bit float.
  */
 
+import { constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { constant, dataView } from '../util.ts';
+import { dataView } from '../util.ts';
 
 /**
  * Member: float32.
@@ -108,7 +109,7 @@ export class Float32Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Float32Ptr');
+		toStringTag(this, 'Float32Ptr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -137,7 +138,7 @@ export class Float32BEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Float32BEPtr');
+		toStringTag(this, 'Float32BEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -168,7 +169,7 @@ export class Float32LEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Float32LEPtr');
+		toStringTag(this, 'Float32LEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

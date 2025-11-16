@@ -32,6 +32,7 @@
 	},
 	"imports": {
 		"@deno/dnt": "jsr:@deno/dnt@^0.42.3",
+		"@hqtsm/class": "jsr:@hqtsm/class@^1.0.1",
 		"@hqtsm/dataview": "jsr:@hqtsm/dataview@^2.0.0",
 		"@hqtsm/meek": "jsr:@hqtsm/meek@^2.0.0",
 		"@std/assert": "jsr:@std/assert@^1.0.15"

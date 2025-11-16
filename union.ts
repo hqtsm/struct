@@ -4,10 +4,10 @@
  * Union type.
  */
 
+import { constant, toStringTag } from '@hqtsm/class';
 import { Endian } from './endian.ts';
 import type { MemberInfos, Members } from './members.ts';
 import type { Type } from './type.ts';
-import { constant } from './util.ts';
 
 let members: WeakMap<typeof Union, MemberInfos>;
 
@@ -51,7 +51,7 @@ export class Union extends Endian implements Type, Members {
 	}
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Union');
+		toStringTag(this, 'Union');
 		constant(this, 'BYTE_LENGTH');
 		constant(this, 'OVERLAPPING');
 	}

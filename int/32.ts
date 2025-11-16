@@ -4,10 +4,11 @@
  * 32-bit integer.
  */
 
+import { constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { constant, dataView } from '../util.ts';
+import { dataView } from '../util.ts';
 
 /**
  * Member: int32.
@@ -183,7 +184,7 @@ export class Int32Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Int32Ptr');
+		toStringTag(this, 'Int32Ptr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -212,7 +213,7 @@ export class Int32BEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Int32BEPtr');
+		toStringTag(this, 'Int32BEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -243,7 +244,7 @@ export class Int32LEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Int32LEPtr');
+		toStringTag(this, 'Int32LEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -274,7 +275,7 @@ export class Uint32Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Uint32Ptr');
+		toStringTag(this, 'Uint32Ptr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -303,7 +304,7 @@ export class Uint32BEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Uint32BEPtr');
+		toStringTag(this, 'Uint32BEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -334,7 +335,7 @@ export class Uint32LEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Uint32LEPtr');
+		toStringTag(this, 'Uint32LEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

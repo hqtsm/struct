@@ -5,11 +5,12 @@
  */
 
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
+import { constant, toStringTag } from '@hqtsm/class';
 import { Endian } from './endian.ts';
 import type { MemberInfo, MemberInfos, Members } from './members.ts';
 import type { ArrayBufferReal } from './native.ts';
 import type { Type, TypeConstructor } from './type.ts';
-import { assignType, constant } from './util.ts';
+import { assignType } from './util.ts';
 
 let members: WeakMap<typeof Ptr, MemberInfos>;
 let pointers: WeakMap<TypeConstructor<Type>, PtrConstructor<Ptr<Type>>>;
@@ -194,7 +195,7 @@ export class Ptr<T = never> extends Endian implements Members {
 	}
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Ptr');
+		toStringTag(this, 'Ptr');
 		constant(this, 'BYTES_PER_ELEMENT');
 		constant(this, 'OVERLAPPING');
 	}
@@ -281,9 +282,8 @@ export function pointer<T extends Type>(
 					public static override readonly BYTES_PER_ELEMENT = bpe;
 
 					static {
-						constant(
-							this.prototype,
-							Symbol.toStringTag,
+						toStringTag(
+							this,
 							`${Ptr.prototype[Symbol.toStringTag]}<${
 								Type.prototype[Symbol.toStringTag]
 							}>`,

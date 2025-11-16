@@ -4,10 +4,11 @@
  * 16-bit boolean.
  */
 
+import { constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { constant, dataView } from '../util.ts';
+import { dataView } from '../util.ts';
 
 /**
  * Member: bool16.
@@ -108,7 +109,7 @@ export class Bool16Ptr extends Ptr<boolean> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Bool16Ptr');
+		toStringTag(this, 'Bool16Ptr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -137,7 +138,7 @@ export class Bool16BEPtr extends Ptr<boolean> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Bool16BEPtr');
+		toStringTag(this, 'Bool16BEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -168,7 +169,7 @@ export class Bool16LEPtr extends Ptr<boolean> {
 	public static override readonly BYTES_PER_ELEMENT: number = 2;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Bool16LEPtr');
+		toStringTag(this, 'Bool16LEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

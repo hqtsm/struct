@@ -1,10 +1,11 @@
 import { assertEquals, assertThrows } from '@std/assert';
+import { constant } from '@hqtsm/class';
 import { array } from './arr.ts';
 import { uint8, Uint8Ptr } from './int/8.ts';
 import { pointer, Ptr } from './ptr.ts';
 import { Struct } from './struct.ts';
 import { Union } from './union.ts';
-import { assignType, assignView, constant, getMembers } from './util.ts';
+import { assignType, assignView, getMembers } from './util.ts';
 import { member } from './member.ts';
 
 Deno.test('constant', () => {
@@ -23,10 +24,10 @@ Deno.test('constant', () => {
 	});
 
 	class B {
-		public static readonly foo: string;
+		public static readonly foo: string = 'bar';
 
 		static {
-			constant(this, 'foo', 'bar');
+			constant(this, 'foo');
 		}
 	}
 	assertEquals(Object.getOwnPropertyDescriptor(B, 'foo'), {
@@ -37,10 +38,10 @@ Deno.test('constant', () => {
 	});
 
 	class C {
-		declare public static readonly foo: string;
+		public static readonly foo: string = 'bar';
 
 		static {
-			constant(this, 'foo', 'bar');
+			constant(this, 'foo');
 		}
 	}
 	assertEquals(Object.getOwnPropertyDescriptor(C, 'foo'), {

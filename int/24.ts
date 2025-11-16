@@ -10,10 +10,11 @@ import {
 	setInt24,
 	setUint24,
 } from '@hqtsm/dataview/int/24';
+import { constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { constant, dataView } from '../util.ts';
+import { dataView } from '../util.ts';
 
 /**
  * Member: int24.
@@ -193,7 +194,7 @@ export class Int24Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Int24Ptr');
+		toStringTag(this, 'Int24Ptr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -224,7 +225,7 @@ export class Int24BEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Int24BEPtr');
+		toStringTag(this, 'Int24BEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -257,7 +258,7 @@ export class Int24LEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Int24LEPtr');
+		toStringTag(this, 'Int24LEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -290,7 +291,7 @@ export class Uint24Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Uint24Ptr');
+		toStringTag(this, 'Uint24Ptr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -321,7 +322,7 @@ export class Uint24BEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Uint24BEPtr');
+		toStringTag(this, 'Uint24BEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -354,7 +355,7 @@ export class Uint24LEPtr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 3;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Uint24LEPtr');
+		toStringTag(this, 'Uint24LEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

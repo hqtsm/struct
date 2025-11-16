@@ -4,10 +4,11 @@
  * 32-bit boolean.
  */
 
+import { constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { constant, dataView } from '../util.ts';
+import { dataView } from '../util.ts';
 
 /**
  * Member: bool32.
@@ -108,7 +109,7 @@ export class Bool32Ptr extends Ptr<boolean> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Bool32Ptr');
+		toStringTag(this, 'Bool32Ptr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -137,7 +138,7 @@ export class Bool32BEPtr extends Ptr<boolean> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Bool32BEPtr');
+		toStringTag(this, 'Bool32BEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -168,7 +169,7 @@ export class Bool32LEPtr extends Ptr<boolean> {
 	public static override readonly BYTES_PER_ELEMENT: number = 4;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Bool32LEPtr');
+		toStringTag(this, 'Bool32LEPtr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

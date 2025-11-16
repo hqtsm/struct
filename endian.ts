@@ -4,8 +4,9 @@
  * Endian related constants, types, and factories.
  */
 
+import { constant, toStringTag } from '@hqtsm/class';
 import type { ArrayBufferReal, BufferPointer } from './native.ts';
-import { constant, dataView } from './util.ts';
+import { dataView } from './util.ts';
 
 /**
  * Is host big endian.
@@ -90,7 +91,7 @@ export class Endian implements BufferPointer, EndianAware {
 	public static readonly LITTLE_ENDIAN: boolean | null = null;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Endian');
+		toStringTag(this, 'Endian');
 		constant(this, 'LITTLE_ENDIAN');
 	}
 }
@@ -127,9 +128,8 @@ export function dynamicEndian<
 					public static override readonly LITTLE_ENDIAN = null;
 
 					static {
-						constant(
-							this.prototype,
-							Symbol.toStringTag,
+						toStringTag(
+							this,
 							`DynamicEndian<${
 								Endian.prototype[Symbol.toStringTag]
 							}>`,
@@ -165,9 +165,8 @@ export function bigEndian<
 					public static override readonly LITTLE_ENDIAN = false;
 
 					static {
-						constant(
-							this.prototype,
-							Symbol.toStringTag,
+						toStringTag(
+							this,
 							`BigEndian<${
 								Endian.prototype[Symbol.toStringTag]
 							}>`,
@@ -203,9 +202,8 @@ export function littleEndian<
 					public static override readonly LITTLE_ENDIAN = true;
 
 					static {
-						constant(
-							this.prototype,
-							Symbol.toStringTag,
+						toStringTag(
+							this,
 							`LittleEndian<${
 								Endian.prototype[Symbol.toStringTag]
 							}>`,

@@ -4,10 +4,11 @@
  * 8-bit integer.
  */
 
+import { constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
-import { constant, dataView } from '../util.ts';
+import { dataView } from '../util.ts';
 
 /**
  * Member: int8.
@@ -88,7 +89,7 @@ export class Int8Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Int8Ptr');
+		toStringTag(this, 'Int8Ptr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }
@@ -112,7 +113,7 @@ export class Uint8Ptr extends Ptr<number> {
 	public static override readonly BYTES_PER_ELEMENT: number = 1;
 
 	static {
-		constant(this.prototype, Symbol.toStringTag, 'Uint8Ptr');
+		toStringTag(this, 'Uint8Ptr');
 		constant(this, 'BYTES_PER_ELEMENT');
 	}
 }

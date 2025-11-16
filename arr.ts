@@ -5,11 +5,11 @@
  */
 
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
+import { constant, toStringTag } from '@hqtsm/class';
 import type { MemberInfos, Members } from './members.ts';
 import type { ArrayBufferReal } from './native.ts';
 import { pointer, type Ptr, type PtrConstructor } from './ptr.ts';
 import type { Type, TypeConstructor } from './type.ts';
-import { constant } from './util.ts';
 
 /**
  * Array.
@@ -234,9 +234,8 @@ export function array<T extends Type>(
 					}
 
 					static {
-						constant(
-							this.prototype,
-							Symbol.toStringTag,
+						toStringTag(
+							this,
 							`${Ptr.prototype[Symbol.toStringTag]}[${length}]`,
 						);
 						constant(this, 'BYTE_LENGTH');

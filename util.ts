@@ -40,28 +40,6 @@ export type ReadonlyKeyof<T> = {
 }[keyof T];
 
 /**
- * Define constant.
- *
- * @template T Type.
- * @template K Key.
- * @param o Object.
- * @param key Key.
- * @param value Value, or undefined for current value.
- */
-export function constant<T, K extends ReadonlyKeyof<T>>(
-	o: T,
-	key: K,
-	value: T[K] | undefined = undefined,
-): void {
-	Object.defineProperty(o, key, {
-		value: value === undefined ? o[key] : value,
-		configurable: false,
-		enumerable: false,
-		writable: false,
-	});
-}
-
-/**
  * Get reusable data view of buffer.
  *
  * @param buffer Array buffer.
