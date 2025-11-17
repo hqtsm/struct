@@ -64,6 +64,11 @@ export interface Members {
  */
 export interface MembersClass {
 	/**
+	 * Members.
+	 */
+	readonly prototype: Members;
+
+	/**
 	 * Member infos of members.
 	 */
 	readonly MEMBERS: MemberInfos;
