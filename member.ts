@@ -103,6 +103,11 @@ export interface MemberConstructor<
 	): T;
 
 	/**
+	 * Member prototype.
+	 */
+	readonly prototype: T;
+
+	/**
 	 * Byte length.
 	 */
 	readonly BYTE_LENGTH: number;
