@@ -4,7 +4,13 @@ import { uint8, Uint8Ptr } from './int/8.ts';
 import { pointer, Ptr } from './ptr.ts';
 import { Struct } from './struct.ts';
 import { Union } from './union.ts';
-import { assignType, assignView, dataView, getMembers } from './util.ts';
+import {
+	assignType,
+	assignView,
+	dataView,
+	getMembers,
+	parseIndex,
+} from './util.ts';
 import { member } from './member.ts';
 
 Deno.test('dataView', () => {
@@ -12,6 +18,42 @@ Deno.test('dataView', () => {
 	const a = dataView(buffer);
 	const b = dataView(buffer);
 	assertStrictEquals(a, b);
+});
+
+Deno.test('parseIndex', () => {
+	assertStrictEquals(parseIndex('0'), 0);
+	assertStrictEquals(parseIndex('1'), 1);
+	assertStrictEquals(parseIndex('2'), 2);
+	assertStrictEquals(parseIndex('3.14'), 3.14);
+	assertStrictEquals(parseIndex('10'), 10);
+	assertStrictEquals(parseIndex('-0'), -0);
+	assertStrictEquals(parseIndex('-1'), -1);
+	assertStrictEquals(parseIndex('-2'), -2);
+	assertStrictEquals(parseIndex('-3.14'), -3.14);
+	assertStrictEquals(parseIndex('-10'), -10);
+	assertStrictEquals(parseIndex('0.000001'), 0.000001);
+	assertStrictEquals(parseIndex('-0.000001'), -0.000001);
+	assertStrictEquals(parseIndex('1e-7'), 0.0000001);
+	assertStrictEquals(parseIndex('-1e-7'), -0.0000001);
+	assertStrictEquals(parseIndex('NaN'), NaN);
+	assertStrictEquals(parseIndex('Infinity'), Infinity);
+	assertStrictEquals(parseIndex('-Infinity'), -Infinity);
+
+	assertStrictEquals(parseIndex(''), undefined);
+	assertStrictEquals(parseIndex('a'), undefined);
+	assertStrictEquals(parseIndex('+0'), undefined);
+	assertStrictEquals(parseIndex('-'), undefined);
+	assertStrictEquals(parseIndex('+'), undefined);
+	assertStrictEquals(parseIndex('1.0'), undefined);
+	assertStrictEquals(parseIndex('-1.0'), undefined);
+	assertStrictEquals(parseIndex('0.0000001'), undefined);
+	assertStrictEquals(parseIndex('-0.0000001'), undefined);
+	assertStrictEquals(parseIndex('01'), undefined);
+	assertStrictEquals(parseIndex('+01'), undefined);
+	assertStrictEquals(parseIndex('+NaN'), undefined);
+	assertStrictEquals(parseIndex('+Infinity'), undefined);
+	assertStrictEquals(parseIndex('-NaN'), undefined);
+	assertStrictEquals(parseIndex(Symbol('symbol')), undefined);
 });
 
 Deno.test('assignView', () => {
