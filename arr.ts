@@ -7,7 +7,6 @@
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 import { type Class, constant, toStringTag } from '@hqtsm/class';
 import type { MemberInfos, Members } from './members.ts';
-import type { ArrayBufferReal } from './native.ts';
 import { pointer, type Ptr, type PtrConstructor } from './ptr.ts';
 import type { Type, TypeConstructor } from './type.ts';
 
@@ -79,7 +78,7 @@ export interface ArrConstructor<T extends Arr<unknown> = Arr>
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	new (
-		buffer: ArrayBufferReal,
+		buffer: ArrayBufferLike,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;

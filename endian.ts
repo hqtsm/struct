@@ -5,7 +5,7 @@
  */
 
 import { type Abstract, type Class, constant, toStringTag } from '@hqtsm/class';
-import type { ArrayBufferReal, BufferPointer } from './native.ts';
+import type { BufferPointer } from './native.ts';
 import { dataView } from './util.ts';
 
 /**
@@ -20,7 +20,7 @@ export const BIG_ENDIAN: boolean = !new Uint8Array(
  */
 export const LITTLE_ENDIAN = !BIG_ENDIAN;
 
-const buffers = new WeakMap<Endian, ArrayBufferReal>();
+const buffers = new WeakMap<Endian, ArrayBufferLike>();
 const byteOffsets = new WeakMap<Endian, number>();
 const littleEndians = new WeakMap<Endian, boolean>();
 const dynamicEndianClass = new WeakMap<EndianClass, EndianClass>();
@@ -59,7 +59,7 @@ export class Endian implements BufferPointer, EndianAware {
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	constructor(
-		buffer: ArrayBufferReal,
+		buffer: ArrayBufferLike,
 		byteOffset = 0,
 		littleEndian: boolean | null = null,
 	) {

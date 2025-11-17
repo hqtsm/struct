@@ -8,7 +8,6 @@ import { MeekValueMap } from '@hqtsm/meek/valuemap';
 import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { Endian } from './endian.ts';
 import type { MemberInfo, MemberInfos, Members } from './members.ts';
-import type { ArrayBufferReal } from './native.ts';
 import type { Type, TypeConstructor } from './type.ts';
 import { assignType } from './util.ts';
 
@@ -133,7 +132,7 @@ export class Ptr<T = never> extends Endian implements Members {
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	constructor(
-		buffer: ArrayBufferReal,
+		buffer: ArrayBufferLike,
 		byteOffset = 0,
 		littleEndian: boolean | null = null,
 	) {

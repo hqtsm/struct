@@ -7,7 +7,7 @@
 import type { Class } from '@hqtsm/class';
 import type { Endian, EndianConstructor } from './endian.ts';
 import type { MembersClass } from './members.ts';
-import type { ArrayBufferReal, BufferView } from './native.ts';
+import type { BufferView } from './native.ts';
 
 /**
  * Type.
@@ -34,7 +34,7 @@ export interface TypeConstructor<T extends Type = Type>
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	new (
-		buffer: ArrayBufferReal,
+		buffer: ArrayBufferLike,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;

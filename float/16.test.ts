@@ -1,6 +1,5 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
 import { assertEquals } from '@std/assert';
-import type { ArrayBufferReal } from '../native.ts';
 import { Struct } from '../struct.ts';
 import { dataView, getByteLength, getByteOffset } from '../util.ts';
 import {
@@ -35,7 +34,7 @@ Deno.test('float16', () => {
 
 	class TestM extends Test {
 		constructor(
-			buffer: ArrayBufferReal,
+			buffer: ArrayBufferLike,
 			byteOffset = 0,
 			littleEndian: boolean | null = null,
 		) {
@@ -68,7 +67,7 @@ Deno.test('float16', () => {
 
 	class TestF extends Test {
 		constructor(
-			buffer: ArrayBufferReal,
+			buffer: ArrayBufferLike,
 			byteOffset = 0,
 			littleEndian: boolean | null = null,
 		) {
@@ -165,7 +164,7 @@ Deno.test('Float16Ptr', () => {
 		const { name } = Ptr;
 		class PtrM extends Ptr {
 			constructor(
-				buffer: ArrayBufferReal,
+				buffer: ArrayBufferLike,
 				byteOffset = 0,
 				littleEndian: boolean | null = null,
 			) {
@@ -198,7 +197,7 @@ Deno.test('Float16Ptr', () => {
 
 		class PtrF extends Ptr {
 			constructor(
-				buffer: ArrayBufferReal,
+				buffer: ArrayBufferLike,
 				byteOffset = 0,
 				littleEndian: boolean | null = null,
 			) {
