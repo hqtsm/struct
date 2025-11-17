@@ -117,7 +117,7 @@ export class Ptr<T = never> extends Endian implements Members {
 	/**
 	 * Ptr class.
 	 */
-	declare public readonly ['constructor']: Class<typeof Ptr<T>>;
+	declare public readonly ['constructor']: PtrClass<Ptr<T>>;
 
 	/**
 	 * Pointer elements.
@@ -233,14 +233,15 @@ export function pointer<T extends Type>(
 	let r = pointers.get(Type) as PtrConstructor<Ptr<T>> | undefined;
 	if (!r) {
 		const name = `${Ptr.name}<${Type.name}>`;
+		const tag = `${Ptr.prototype[Symbol.toStringTag]}<${
+			Type.prototype[Symbol.toStringTag]
+		}>`;
 		const bpe = Type.BYTE_LENGTH;
 		pointers.set(
 			Type,
 			r = {
 				[name]: class extends Ptr<T> {
-					declare public readonly ['constructor']: Class<
-						typeof Ptr<T>
-					>;
+					declare public readonly ['constructor']: PtrClass<Ptr<T>>;
 
 					public override get(index: number): T {
 						index = (+index || 0) - (index % 1 || 0);
@@ -279,12 +280,7 @@ export function pointer<T extends Type>(
 					public static override readonly BYTES_PER_ELEMENT = bpe;
 
 					static {
-						toStringTag(
-							this,
-							`${Ptr.prototype[Symbol.toStringTag]}<${
-								Type.prototype[Symbol.toStringTag]
-							}>`,
-						);
+						toStringTag(this, tag);
 						constant(this, 'BYTES_PER_ELEMENT');
 					}
 				},

@@ -123,6 +123,7 @@ export function dynamicEndian<
 	let r = dynamicEndianClass.get(Endian);
 	if (!r) {
 		const name = `DynamicEndian<${Endian.name}>`;
+		const tag = `DynamicEndian<${Endian.prototype[Symbol.toStringTag]}>`;
 		dynamicEndianClass.set(
 			Endian,
 			r = {
@@ -130,12 +131,7 @@ export function dynamicEndian<
 					public static override readonly LITTLE_ENDIAN = null;
 
 					static {
-						toStringTag(
-							this,
-							`DynamicEndian<${
-								Endian.prototype[Symbol.toStringTag]
-							}>`,
-						);
+						toStringTag(this, tag);
 						constant(this, 'LITTLE_ENDIAN');
 					}
 				},
@@ -158,6 +154,7 @@ export function bigEndian<
 	let r = bigEndianClass.get(Endian);
 	if (!r) {
 		const name = `BigEndian<${Endian.name}>`;
+		const tag = `BigEndian<${Endian.prototype[Symbol.toStringTag]}>`;
 		bigEndianClass.set(
 			Endian,
 			r = {
@@ -165,12 +162,7 @@ export function bigEndian<
 					public static override readonly LITTLE_ENDIAN = false;
 
 					static {
-						toStringTag(
-							this,
-							`BigEndian<${
-								Endian.prototype[Symbol.toStringTag]
-							}>`,
-						);
+						toStringTag(this, tag);
 						constant(this, 'LITTLE_ENDIAN');
 					}
 				},
@@ -193,6 +185,7 @@ export function littleEndian<
 	let r = littleEndianClass.get(Endian);
 	if (!r) {
 		const name = `LittleEndian<${Endian.name}>`;
+		const tag = `LittleEndian<${Endian.prototype[Symbol.toStringTag]}>`;
 		littleEndianClass.set(
 			Endian,
 			r = {
@@ -200,12 +193,7 @@ export function littleEndian<
 					public static override readonly LITTLE_ENDIAN = true;
 
 					static {
-						toStringTag(
-							this,
-							`LittleEndian<${
-								Endian.prototype[Symbol.toStringTag]
-							}>`,
-						);
+						toStringTag(this, tag);
 						constant(this, 'LITTLE_ENDIAN');
 					}
 				},

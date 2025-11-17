@@ -158,6 +158,7 @@ export function array<T extends Type>(
 	let r = lengths.get(length);
 	if (!r) {
 		const name = `${Ptr.name}[${length}]`;
+		const tag = `${Ptr.prototype[Symbol.toStringTag]}[${length}]`;
 		const members = new WeakMap<ArrConstructor<Arr<T>>, MemberInfos>();
 		lengths.set(
 			length,
@@ -244,10 +245,7 @@ export function array<T extends Type>(
 					}
 
 					static {
-						toStringTag(
-							this,
-							`${Ptr.prototype[Symbol.toStringTag]}[${length}]`,
-						);
+						toStringTag(this, tag);
 						constant(this, 'BYTE_LENGTH');
 						constant(this, 'LENGTH');
 					}
