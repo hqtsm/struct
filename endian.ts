@@ -23,18 +23,9 @@ export const LITTLE_ENDIAN = !BIG_ENDIAN;
 const buffers = new WeakMap<Endian, ArrayBufferReal>();
 const byteOffsets = new WeakMap<Endian, number>();
 const littleEndians = new WeakMap<Endian, boolean>();
-const dynamicEndianClass = new WeakMap<
-	Class<EndianConstructor>,
-	Class<EndianConstructor>
->();
-const bigEndianClass = new WeakMap<
-	Class<EndianConstructor>,
-	Class<EndianConstructor>
->();
-const littleEndianClass = new WeakMap<
-	Class<EndianConstructor>,
-	Class<EndianConstructor>
->();
+const dynamicEndianClass = new WeakMap<EndianClass, EndianClass>();
+const bigEndianClass = new WeakMap<EndianClass, EndianClass>();
+const littleEndianClass = new WeakMap<EndianClass, EndianClass>();
 
 /**
  * Endian aware.
@@ -111,15 +102,18 @@ export class Endian implements BufferPointer, EndianAware {
 export type EndianConstructor = typeof Endian;
 
 /**
+ * Endian class.
+ */
+export type EndianClass = Class<EndianConstructor>;
+
+/**
  * Extend endian class as default endian.
  *
  * @template T Endian class.
  * @param Endian Endian class.
  * @returns Extended class.
  */
-export function dynamicEndian<
-	T extends Class<EndianConstructor>,
->(Endian: T): T {
+export function dynamicEndian<T extends EndianClass>(Endian: T): T {
 	let r = dynamicEndianClass.get(Endian);
 	if (!r) {
 		const name = `DynamicEndian<${Endian.name}>`;
@@ -148,9 +142,7 @@ export function dynamicEndian<
  * @param Endian Endian class.
  * @returns Extended class.
  */
-export function bigEndian<
-	T extends Class<EndianConstructor>,
->(Endian: T): T {
+export function bigEndian<T extends EndianClass>(Endian: T): T {
 	let r = bigEndianClass.get(Endian);
 	if (!r) {
 		const name = `BigEndian<${Endian.name}>`;
@@ -179,9 +171,7 @@ export function bigEndian<
  * @param Endian Endian class.
  * @returns Extended class.
  */
-export function littleEndian<
-	T extends Class<EndianConstructor>,
->(Endian: T): T {
+export function littleEndian<T extends EndianClass>(Endian: T): T {
 	let r = littleEndianClass.get(Endian);
 	if (!r) {
 		const name = `LittleEndian<${Endian.name}>`;
