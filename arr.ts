@@ -32,28 +32,28 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	 *
 	 * @returns Value iterator.
 	 */
-	[Symbol.iterator](): IterableIterator<T, undefined, unknown>;
+	[Symbol.iterator](): ArrayIterator<T>;
 
 	/**
 	 * Get iterator for entries.
 	 *
 	 * @returns Entry iterator.
 	 */
-	entries(): IterableIterator<[number, T], undefined, unknown>;
+	entries(): ArrayIterator<[number, T]>;
 
 	/**
 	 * Get iterator for keys.
 	 *
 	 * @returns Key iterator.
 	 */
-	keys(): IterableIterator<number, undefined, unknown>;
+	keys(): ArrayIterator<number>;
 
 	/**
 	 * Get iterator for values.
 	 *
 	 * @returns Value iterator.
 	 */
-	values(): IterableIterator<T, undefined, unknown>;
+	values(): ArrayIterator<T>;
 
 	/**
 	 * Get value at index.
@@ -174,41 +174,25 @@ export function array<T extends Type>(
 						return length;
 					}
 
-					public *[Symbol.iterator](): IterableIterator<
-						T,
-						undefined,
-						unknown
-					> {
+					public *[Symbol.iterator](): ArrayIterator<T> {
 						for (let i = 0; i < length; i++) {
 							yield this[i];
 						}
 					}
 
-					public *entries(): IterableIterator<
-						[number, T],
-						undefined,
-						unknown
-					> {
+					public *entries(): ArrayIterator<[number, T]> {
 						for (let i = 0; i < length; i++) {
 							yield [i, this[i]];
 						}
 					}
 
-					public *keys(): IterableIterator<
-						number,
-						undefined,
-						unknown
-					> {
+					public *keys(): ArrayIterator<number> {
 						for (let i = 0; i < length; i++) {
 							yield i;
 						}
 					}
 
-					public *values(): IterableIterator<
-						T,
-						undefined,
-						unknown
-					> {
+					public *values(): ArrayIterator<T> {
 						for (let i = 0; i < length; i++) {
 							yield this[i];
 						}
