@@ -192,7 +192,6 @@ export class Ptr<T = never> extends Endian implements Members {
 					},
 				),
 			);
-			members.set(this, r);
 		}
 		return r;
 	}
