@@ -136,6 +136,19 @@ Deno.test('Ptr: getter + setter', () => {
 	}
 });
 
+Deno.test('Ptr: constructor', () => {
+	const dummy = new DummyPtr(new ArrayBuffer(0));
+	assertStrictEquals(dummy.constructor, DummyPtr);
+	assertNotStrictEquals(dummy.constructor, Ptr);
+	assertThrows(
+		() => {
+			dummy[0] = 1;
+		},
+		Error,
+		`Setter: [0] = 1`,
+	);
+});
+
 Deno.test('Ptr: [[get]]', () => {
 	const test = new Uint8Ptr(new Uint8Array([1, 2, 3, 4]).buffer, 2);
 
