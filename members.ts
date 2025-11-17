@@ -62,7 +62,7 @@ export interface Members {
 /**
  * With members class.
  */
-export interface MembersClass {
+export interface MembersClass extends Class {
 	/**
 	 * Members.
 	 */
