@@ -94,7 +94,7 @@ function memberHas(
 	target: Readonly<MemberInfos>,
 	key: string | symbol,
 ): boolean {
-	return index(key) === null ? Reflect.has(target, key) : true;
+	return index(key) !== null || Reflect.has(target, key);
 }
 
 function memberSet(
@@ -103,9 +103,8 @@ function memberSet(
 	value: unknown,
 	receiver: Readonly<MemberInfos>,
 ): boolean {
-	return index(key) === null
-		? Reflect.set(target, key, value, key in target ? target : receiver)
-		: false;
+	return index(key) === null &&
+		Reflect.set(target, key, value, key in target ? target : receiver);
 }
 
 /**
