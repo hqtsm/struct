@@ -12,10 +12,7 @@ import type { Type, TypeConstructor } from './type.ts';
 import { assignType, parseIndex } from './util.ts';
 
 const members = new WeakMap<typeof Ptr, MemberInfos>();
-const pointers = new WeakMap<
-	TypeConstructor<Type>,
-	PtrConstructor<Ptr<Type>>
->();
+const pointers = new WeakMap<TypeConstructor, PtrConstructor<Ptr<Type>>>();
 const pointerValues = new WeakMap<Ptr<Type>, MeekValueMap<number, Type>>();
 const memberBytes = new WeakMap<MemberInfos, number>();
 const ptrHandler: ProxyHandler<Ptr<unknown>> = {
