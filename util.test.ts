@@ -1,11 +1,18 @@
-import { assertEquals, assertThrows } from '@std/assert';
+import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
 import { array } from './arr.ts';
 import { uint8, Uint8Ptr } from './int/8.ts';
 import { pointer, Ptr } from './ptr.ts';
 import { Struct } from './struct.ts';
 import { Union } from './union.ts';
-import { assignType, assignView, getMembers } from './util.ts';
+import { assignType, assignView, dataView, getMembers } from './util.ts';
 import { member } from './member.ts';
+
+Deno.test('dataView', () => {
+	const buffer = new ArrayBuffer(32);
+	const a = dataView(buffer);
+	const b = dataView(buffer);
+	assertStrictEquals(a, b);
+});
 
 Deno.test('assignView', () => {
 	const src = new Uint8Array([0xff, 0xfe, 0xfd, 0xfc]);
