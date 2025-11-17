@@ -20,7 +20,7 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	/**
 	 * Array constructor.
 	 */
-	readonly constructor: Class<ArrConstructor<Arr<T>>>;
+	readonly constructor: ArrClass<Arr<T>>;
 
 	/**
 	 * Array length.
@@ -94,6 +94,13 @@ export interface ArrConstructor<T extends Arr<unknown> = Arr>
 	 */
 	readonly LENGTH: number;
 }
+
+/**
+ * Array class.
+ *
+ * @template T Array type.
+ */
+export type ArrClass<T extends Arr<unknown>> = Class<ArrConstructor<T>>;
 
 let arrays: WeakMap<
 	PtrConstructor<Ptr<unknown>>,

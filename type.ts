@@ -16,7 +16,7 @@ export interface Type extends Endian, BufferView {
 	/**
 	 * Type class.
 	 */
-	readonly constructor: Class<TypeConstructor>;
+	readonly constructor: TypeClass;
 }
 
 /**
@@ -49,3 +49,10 @@ export interface TypeConstructor<T extends Type = Type>
 	 */
 	readonly BYTE_LENGTH: number;
 }
+
+/**
+ * Type class.
+ *
+ * @template T Type.
+ */
+export type TypeClass<T extends Type = Type> = Class<TypeConstructor<T>>;

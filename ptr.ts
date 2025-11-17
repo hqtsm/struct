@@ -211,6 +211,13 @@ export type PtrConstructor<T extends Ptr<unknown> = Ptr> = typeof Ptr<
 >;
 
 /**
+ * Pointer class.
+ *
+ * @template T Pointer type.
+ */
+export type PtrClass<T extends Ptr<unknown> = Ptr> = Class<PtrConstructor<T>>;
+
+/**
  * Get pointer of type.
  *
  * @template T Type.

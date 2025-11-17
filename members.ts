@@ -5,9 +5,9 @@
  */
 
 import type { Class } from '@hqtsm/class';
-import type { Arr, ArrConstructor } from './arr.ts';
-import type { Ptr, PtrConstructor } from './ptr.ts';
-import type { Type, TypeConstructor } from './type.ts';
+import type { Arr, ArrClass } from './arr.ts';
+import type { Ptr, PtrClass } from './ptr.ts';
+import type { Type, TypeClass } from './type.ts';
 
 /**
  * If types are equal.
@@ -88,9 +88,9 @@ export type Membered = Arr<unknown> | Ptr<unknown> | Type;
  * Membered class types.
  */
 export type MemberedClass =
-	| Class<ArrConstructor<Arr<unknown>>>
-	| Class<PtrConstructor<Ptr<unknown>>>
-	| Class<TypeConstructor>;
+	| ArrClass<Arr<unknown>>
+	| PtrClass<Ptr<unknown>>
+	| TypeClass;
 
 /**
  * The possible member keys.
@@ -122,8 +122,8 @@ export type Memberable = Arr<unknown> | Type;
  * Memberable class types.
  */
 export type MemberableClass =
-	| Class<ArrConstructor<Arr<unknown>>>
-	| Class<TypeConstructor>;
+	| ArrClass<Arr<unknown>>
+	| TypeClass;
 
 /**
  * The possible memberable keys, filterable by member type.
