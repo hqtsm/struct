@@ -88,9 +88,9 @@ export type Membered = Arr<unknown> | Ptr<unknown> | Type;
  * Membered class types.
  */
 export type MemberedClass =
-	| ArrConstructor<Arr<unknown>>
-	| PtrConstructor<Ptr<unknown>>
-	| TypeConstructor;
+	| Class<ArrConstructor<Arr<unknown>>>
+	| Class<PtrConstructor<Ptr<unknown>>>
+	| Class<TypeConstructor>;
 
 /**
  * The possible member keys.
