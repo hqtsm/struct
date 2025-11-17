@@ -32,28 +32,28 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	 *
 	 * @returns Value iterator.
 	 */
-	[Symbol.iterator](): Generator<T, undefined, unknown>;
+	[Symbol.iterator](): IterableIterator<T, undefined, unknown>;
 
 	/**
 	 * Get iterator for entries.
 	 *
 	 * @returns Entry iterator.
 	 */
-	entries(): Generator<[number, T], undefined, unknown>;
+	entries(): IterableIterator<[number, T], undefined, unknown>;
 
 	/**
 	 * Get iterator for keys.
 	 *
 	 * @returns Key iterator.
 	 */
-	keys(): Generator<number, undefined, unknown>;
+	keys(): IterableIterator<number, undefined, unknown>;
 
 	/**
 	 * Get iterator for values.
 	 *
 	 * @returns Value iterator.
 	 */
-	values(): Generator<T, undefined, unknown>;
+	values(): IterableIterator<T, undefined, unknown>;
 
 	/**
 	 * Get value at index.
@@ -170,7 +170,7 @@ export function array<T extends Type>(
 						return length;
 					}
 
-					public *[Symbol.iterator](): Generator<
+					public *[Symbol.iterator](): IterableIterator<
 						T,
 						undefined,
 						unknown
@@ -180,7 +180,7 @@ export function array<T extends Type>(
 						}
 					}
 
-					public *entries(): Generator<
+					public *entries(): IterableIterator<
 						[number, T],
 						undefined,
 						unknown
@@ -190,13 +190,21 @@ export function array<T extends Type>(
 						}
 					}
 
-					public *keys(): Generator<number, undefined, unknown> {
+					public *keys(): IterableIterator<
+						number,
+						undefined,
+						unknown
+					> {
 						for (let i = 0; i < length; i++) {
 							yield i;
 						}
 					}
 
-					public *values(): Generator<T, undefined, unknown> {
+					public *values(): IterableIterator<
+						T,
+						undefined,
+						unknown
+					> {
 						for (let i = 0; i < length; i++) {
 							yield this[i];
 						}
