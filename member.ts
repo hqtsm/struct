@@ -13,12 +13,12 @@ import type { Type } from './type.ts';
 import { assignView } from './util.ts';
 
 /**
- * Get default/current/next member offset for type.
+ * Get next/current/default member offset for type.
  *
  * @param Type Type class.
  * @returns Byte offset.
  */
-export function defaultMemberByteOffset(Type: MemberableClass): number {
+export function nextByteOffset(Type: MemberableClass): number {
 	return Type.OVERLAPPING ? 0 : Type.BYTE_LENGTH;
 }
 
@@ -64,7 +64,7 @@ export function defineMember<T extends MemberableClass, M>(
 	set: (this: T['prototype'] & Record<typeof name, M>, value: M) => void,
 ): number {
 	byteLength = (+byteLength || 0) - (byteLength % 1 || 0);
-	byteOffset ??= defaultMemberByteOffset(Type);
+	byteOffset ??= nextByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 	Object.defineProperty(Type.prototype, name, {
 		get,
@@ -128,7 +128,7 @@ export function member<T extends MemberableClass, M extends ArrayBufferView>(
 	littleEndian: boolean | null = null,
 ): number {
 	const members = new WeakMap<Type, M>();
-	byteOffset ??= defaultMemberByteOffset(Type);
+	byteOffset ??= nextByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 	return defineMember(
 		Type,
@@ -213,7 +213,7 @@ export function pad<T extends MemberableClass>(
 ): number {
 	if (name === null) {
 		byteLength = (+byteLength || 0) - (byteLength % 1 || 0);
-		byteOffset ??= defaultMemberByteOffset(Type);
+		byteOffset ??= nextByteOffset(Type);
 		byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 		return ensureByteLength(Type, byteLength + byteOffset);
 	}

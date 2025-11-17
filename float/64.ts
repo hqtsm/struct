@@ -5,7 +5,7 @@
  */
 
 import { type Class, constant, toStringTag } from '@hqtsm/class';
-import { defaultMemberByteOffset, defineMember } from '../member.ts';
+import { defineMember, nextByteOffset } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
 import { dataView } from '../util.ts';
@@ -26,7 +26,7 @@ export function float64<T extends MemberableClass>(
 	byteOffset: number | null = null,
 	littleEndian: boolean | null = null,
 ): number {
-	byteOffset ??= defaultMemberByteOffset(Type);
+	byteOffset ??= nextByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 	return defineMember(
 		Type,
