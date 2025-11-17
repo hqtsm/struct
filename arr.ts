@@ -5,7 +5,7 @@
  */
 
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
-import { constant, toStringTag } from '@hqtsm/class';
+import { type Class, constant, toStringTag } from '@hqtsm/class';
 import type { MemberInfos, Members } from './members.ts';
 import type { ArrayBufferReal } from './native.ts';
 import { pointer, type Ptr, type PtrConstructor } from './ptr.ts';
@@ -20,7 +20,7 @@ export interface Arr<T = never> extends Ptr<T>, Type {
 	/**
 	 * Array constructor.
 	 */
-	readonly constructor: ArrClass<Arr<T>>;
+	readonly constructor: Class<ArrConstructor<Arr<T>>>;
 
 	/**
 	 * Array length.
@@ -70,7 +70,7 @@ export interface Arr<T = never> extends Ptr<T>, Type {
  * @template T Array type.
  */
 export interface ArrConstructor<T extends Arr<unknown> = Arr>
-	extends Omit<PtrConstructor<T>, 'new'>, Omit<TypeConstructor<T>, 'new'> {
+	extends Omit<PtrConstructor<T>, never>, Omit<TypeConstructor<T>, never> {
 	/**
 	 * Create instance for buffer.
 	 *
@@ -93,15 +93,6 @@ export interface ArrConstructor<T extends Arr<unknown> = Arr>
 	 * Array length.
 	 */
 	readonly LENGTH: number;
-}
-
-/**
- * Array class.
- *
- * @template T Array type.
- */
-export interface ArrClass<T extends Arr<unknown> = Arr>
-	extends Omit<ArrConstructor<T>, 'new'> {
 }
 
 let arrays: WeakMap<
@@ -165,7 +156,11 @@ export function array<T extends Type>(
 			length,
 			r = {
 				[name]: class extends Ptr implements Arr<T>, Members {
-					declare public readonly ['constructor']: ArrClass<Arr<T>>;
+					declare public readonly ['constructor']: Class<
+						ArrConstructor<
+							Arr<T>
+						>
+					>;
 
 					public get byteLength(): number {
 						return this.constructor.BYTE_LENGTH;

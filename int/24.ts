@@ -10,7 +10,7 @@ import {
 	setInt24,
 	setUint24,
 } from '@hqtsm/dataview/int/24';
-import { constant, toStringTag } from '@hqtsm/class';
+import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
@@ -170,7 +170,7 @@ export function uint24LE<T extends MemberableClass>(
  * Pointer: int24.
  */
 export class Int24Ptr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Int24Ptr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Int24Ptr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -203,7 +203,7 @@ export class Int24Ptr extends Ptr<number> {
  * Pointer: int24, big endian.
  */
 export class Int24BEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Int24BEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Int24BEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -234,7 +234,7 @@ export class Int24BEPtr extends Ptr<number> {
  * Pointer: int24, little endian.
  */
 export class Int24LEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Int24LEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Int24LEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -267,7 +267,7 @@ export class Int24LEPtr extends Ptr<number> {
  * Pointer: uint24.
  */
 export class Uint24Ptr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Uint24Ptr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Uint24Ptr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -300,7 +300,7 @@ export class Uint24Ptr extends Ptr<number> {
  * Pointer: uint24, big endian.
  */
 export class Uint24BEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Uint24BEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Uint24BEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -331,7 +331,7 @@ export class Uint24BEPtr extends Ptr<number> {
  * Pointer: uint24, little endian.
  */
 export class Uint24LEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Uint24LEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Uint24LEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);

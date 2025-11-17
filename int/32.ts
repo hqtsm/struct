@@ -4,7 +4,7 @@
  * 32-bit integer.
  */
 
-import { constant, toStringTag } from '@hqtsm/class';
+import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
@@ -162,7 +162,7 @@ export function uint32LE<T extends MemberableClass>(
  * Pointer: int32.
  */
 export class Int32Ptr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Int32Ptr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Int32Ptr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -193,7 +193,7 @@ export class Int32Ptr extends Ptr<number> {
  * Pointer: int32, big endian.
  */
 export class Int32BEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Int32BEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Int32BEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -222,7 +222,7 @@ export class Int32BEPtr extends Ptr<number> {
  * Pointer: int32, little endian.
  */
 export class Int32LEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Int32LEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Int32LEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -253,7 +253,7 @@ export class Int32LEPtr extends Ptr<number> {
  * Pointer: uint32.
  */
 export class Uint32Ptr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Uint32Ptr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Uint32Ptr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -284,7 +284,7 @@ export class Uint32Ptr extends Ptr<number> {
  * Pointer: uint32, big endian.
  */
 export class Uint32BEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Uint32BEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Uint32BEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -313,7 +313,7 @@ export class Uint32BEPtr extends Ptr<number> {
  * Pointer: uint32, little endian.
  */
 export class Uint32LEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Uint32LEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Uint32LEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);

@@ -5,7 +5,7 @@
  */
 
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
-import { constant, toStringTag } from '@hqtsm/class';
+import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { Endian } from './endian.ts';
 import type { MemberInfo, MemberInfos, Members } from './members.ts';
 import type { ArrayBufferReal } from './native.ts';
@@ -114,7 +114,7 @@ export class Ptr<T = never> extends Endian implements Members {
 	/**
 	 * Ptr class.
 	 */
-	declare public readonly ['constructor']: PtrClass<Ptr<T>>;
+	declare public readonly ['constructor']: Class<typeof Ptr<T>>;
 
 	/**
 	 * Pointer elements.
@@ -206,22 +206,9 @@ export class Ptr<T = never> extends Endian implements Members {
  *
  * @template T Pointer type.
  */
-export interface PtrConstructor<T extends Ptr<unknown> = Ptr>
-	extends Exclude<typeof Ptr<T[number]>, never> {
-	/**
-	 * Ptr prototype.
-	 */
-	readonly prototype: T;
-}
-
-/**
- * Pointer class.
- *
- * @template T Pointer type.
- */
-export interface PtrClass<T extends Ptr<unknown> = Ptr>
-	extends Omit<PtrConstructor<T>, 'new'> {
-}
+export type PtrConstructor<T extends Ptr<unknown> = Ptr> = typeof Ptr<
+	T[number]
+>;
 
 /**
  * Get pointer of type.
@@ -243,7 +230,9 @@ export function pointer<T extends Type>(
 			Type,
 			r = {
 				[name]: class extends Ptr<T> {
-					declare public readonly ['constructor']: PtrClass<Ptr<T>>;
+					declare public readonly ['constructor']: Class<
+						typeof Ptr<T>
+					>;
 
 					public override get(index: number): T {
 						index = (+index || 0) - (index % 1 || 0);

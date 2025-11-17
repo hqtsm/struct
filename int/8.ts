@@ -4,7 +4,7 @@
  * 8-bit integer.
  */
 
-import { constant, toStringTag } from '@hqtsm/class';
+import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
@@ -74,7 +74,7 @@ export function uint8<T extends MemberableClass>(
  * Pointer: int8.
  */
 export class Int8Ptr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Int8Ptr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Int8Ptr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -98,7 +98,7 @@ export class Int8Ptr extends Ptr<number> {
  * Pointer: uint8.
  */
 export class Uint8Ptr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Uint8Ptr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Uint8Ptr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);

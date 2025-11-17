@@ -4,6 +4,7 @@
  * Type types.
  */
 
+import type { Class } from '@hqtsm/class';
 import type { Endian, EndianConstructor } from './endian.ts';
 import type { MembersClass } from './members.ts';
 import type { ArrayBufferReal, BufferView } from './native.ts';
@@ -15,7 +16,7 @@ export interface Type extends Endian, BufferView {
 	/**
 	 * Type class.
 	 */
-	readonly constructor: TypeClass;
+	readonly constructor: Class<TypeConstructor>;
 }
 
 /**
@@ -24,7 +25,7 @@ export interface Type extends Endian, BufferView {
  * @template T Type.
  */
 export interface TypeConstructor<T extends Type = Type>
-	extends Omit<EndianConstructor, 'new'>, MembersClass {
+	extends Omit<EndianConstructor, never>, MembersClass {
 	/**
 	 * Create instance for buffer.
 	 *
@@ -48,11 +49,3 @@ export interface TypeConstructor<T extends Type = Type>
 	 */
 	readonly BYTE_LENGTH: number;
 }
-
-/**
- * Type class.
- *
- * @template T Type.
- */
-export interface TypeClass<T extends Type = Type>
-	extends Omit<TypeConstructor<T>, 'new'> {}

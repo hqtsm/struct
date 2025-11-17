@@ -4,7 +4,7 @@
  * 16-bit boolean.
  */
 
-import { constant, toStringTag } from '@hqtsm/class';
+import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
@@ -87,7 +87,7 @@ export function bool16LE<T extends MemberableClass>(
  * Pointer: bool16.
  */
 export class Bool16Ptr extends Ptr<boolean> {
-	declare public readonly ['constructor']: Omit<typeof Bool16Ptr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Bool16Ptr>;
 
 	public override get(index: number): boolean {
 		index = (+index || 0) - (index % 1 || 0);
@@ -118,7 +118,7 @@ export class Bool16Ptr extends Ptr<boolean> {
  * Pointer: bool16, big endian.
  */
 export class Bool16BEPtr extends Ptr<boolean> {
-	declare public readonly ['constructor']: Omit<typeof Bool16BEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Bool16BEPtr>;
 
 	public override get(index: number): boolean {
 		index = (+index || 0) - (index % 1 || 0);
@@ -147,7 +147,7 @@ export class Bool16BEPtr extends Ptr<boolean> {
  * Pointer: bool16, little endian.
  */
 export class Bool16LEPtr extends Ptr<boolean> {
-	declare public readonly ['constructor']: Omit<typeof Bool16LEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Bool16LEPtr>;
 
 	public override get(index: number): boolean {
 		index = (+index || 0) - (index % 1 || 0);

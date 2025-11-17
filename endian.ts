@@ -4,7 +4,7 @@
  * Endian related constants, types, and factories.
  */
 
-import { constant, toStringTag } from '@hqtsm/class';
+import { type Abstract, type Class, constant, toStringTag } from '@hqtsm/class';
 import type { ArrayBufferReal, BufferPointer } from './native.ts';
 import { dataView } from './util.ts';
 
@@ -21,9 +21,9 @@ export const BIG_ENDIAN: boolean = !new Uint8Array(
 export const LITTLE_ENDIAN = !BIG_ENDIAN;
 
 let pri: WeakMap<Endian, BufferPointer & EndianAware>;
-let dynamicEndians: WeakMap<EndianClass, EndianClass>;
-let bigEndians: WeakMap<EndianClass, EndianClass>;
-let littleEndians: WeakMap<EndianClass, EndianClass>;
+let dynamicEndians: WeakMap<Class<EndianConstructor>, Class<EndianConstructor>>;
+let bigEndians: WeakMap<Class<EndianConstructor>, Class<EndianConstructor>>;
+let littleEndians: WeakMap<Class<EndianConstructor>, Class<EndianConstructor>>;
 
 /**
  * Endian aware.
@@ -42,7 +42,7 @@ export class Endian implements BufferPointer, EndianAware {
 	/**
 	 * Endian class.
 	 */
-	declare public readonly ['constructor']: EndianClass;
+	declare public readonly ['constructor']: Class<typeof Endian>;
 
 	/**
 	 * Type tag.
@@ -99,12 +99,7 @@ export class Endian implements BufferPointer, EndianAware {
 /**
  * Endian constructor.
  */
-export interface EndianConstructor extends Exclude<typeof Endian, never> {}
-
-/**
- * Endian class.
- */
-export interface EndianClass extends Omit<EndianConstructor, 'new'> {}
+export type EndianConstructor = typeof Endian;
 
 /**
  * Extend endian class as default endian.
@@ -114,17 +109,15 @@ export interface EndianClass extends Omit<EndianConstructor, 'new'> {}
  * @returns Extended class.
  */
 export function dynamicEndian<
-	T extends EndianClass & (abstract new (...args: never[]) => Endian),
->(
-	Endian: T,
-): T {
+	T extends Class<EndianConstructor>,
+>(Endian: T): T {
 	let r = (dynamicEndians ??= new WeakMap()).get(Endian);
 	if (!r) {
 		const name = `DynamicEndian<${Endian.name}>`;
 		dynamicEndians.set(
 			Endian,
 			r = {
-				[name]: class extends (Endian as unknown as EndianConstructor) {
+				[name]: class extends (Endian as Abstract<EndianConstructor>) {
 					public static override readonly LITTLE_ENDIAN = null;
 
 					static {
@@ -151,17 +144,15 @@ export function dynamicEndian<
  * @returns Extended class.
  */
 export function bigEndian<
-	T extends EndianClass & (abstract new (...args: never[]) => Endian),
->(
-	Endian: T,
-): T {
+	T extends Class<EndianConstructor>,
+>(Endian: T): T {
 	let r = (bigEndians ??= new WeakMap()).get(Endian);
 	if (!r) {
 		const name = `BigEndian<${Endian.name}>`;
 		bigEndians.set(
 			Endian,
 			r = {
-				[name]: class extends (Endian as unknown as EndianConstructor) {
+				[name]: class extends (Endian as Abstract<EndianConstructor>) {
 					public static override readonly LITTLE_ENDIAN = false;
 
 					static {
@@ -188,7 +179,7 @@ export function bigEndian<
  * @returns Extended class.
  */
 export function littleEndian<
-	T extends EndianClass & (abstract new (...args: never[]) => Endian),
+	T extends Class<EndianConstructor>,
 >(
 	Endian: T,
 ): T {
@@ -198,7 +189,7 @@ export function littleEndian<
 		littleEndians.set(
 			Endian,
 			r = {
-				[name]: class extends (Endian as unknown as EndianConstructor) {
+				[name]: class extends (Endian as Abstract<EndianConstructor>) {
 					public static override readonly LITTLE_ENDIAN = true;
 
 					static {

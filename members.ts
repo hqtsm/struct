@@ -4,9 +4,10 @@
  * Types for members.
  */
 
-import type { Arr, ArrClass } from './arr.ts';
-import type { Ptr, PtrClass } from './ptr.ts';
-import type { Type, TypeClass } from './type.ts';
+import type { Class } from '@hqtsm/class';
+import type { Arr, ArrConstructor } from './arr.ts';
+import type { Ptr, PtrConstructor } from './ptr.ts';
+import type { Type, TypeConstructor } from './type.ts';
 
 /**
  * If types are equal.
@@ -63,11 +64,6 @@ export interface Members {
  */
 export interface MembersClass {
 	/**
-	 * MemberInfoed prototype.
-	 */
-	prototype: Members;
-
-	/**
 	 * Member infos of members.
 	 */
 	readonly MEMBERS: MemberInfos;
@@ -87,9 +83,9 @@ export type Membered = Arr<unknown> | Ptr<unknown> | Type;
  * Membered class types.
  */
 export type MemberedClass =
-	| ArrClass<Arr<unknown>>
-	| PtrClass<Ptr<unknown>>
-	| TypeClass;
+	| ArrConstructor<Arr<unknown>>
+	| PtrConstructor<Ptr<unknown>>
+	| TypeConstructor;
 
 /**
  * The possible member keys.
@@ -120,7 +116,9 @@ export type Memberable = Arr<unknown> | Type;
 /**
  * Memberable class types.
  */
-export type MemberableClass = ArrClass<Arr<unknown>> | TypeClass;
+export type MemberableClass =
+	| Class<ArrConstructor<Arr<unknown>>>
+	| Class<TypeConstructor>;
 
 /**
  * The possible memberable keys, filterable by member type.

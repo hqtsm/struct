@@ -4,7 +4,7 @@
  * 16-bit integer.
  */
 
-import { constant, toStringTag } from '@hqtsm/class';
+import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { defaultMemberByteOffset, defineMember } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
@@ -160,7 +160,7 @@ export function uint16LE<T extends MemberableClass>(
  * Pointer: int16.
  */
 export class Int16Ptr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Int16Ptr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Int16Ptr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -191,7 +191,7 @@ export class Int16Ptr extends Ptr<number> {
  * Pointer: int16, big endian.
  */
 export class Int16BEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Int16BEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Int16BEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -220,7 +220,7 @@ export class Int16BEPtr extends Ptr<number> {
  * Pointer: int16, little endian.
  */
 export class Int16LEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Int16LEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Int16LEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -251,7 +251,7 @@ export class Int16LEPtr extends Ptr<number> {
  * Pointer: uint16.
  */
 export class Uint16Ptr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Uint16Ptr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Uint16Ptr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -282,7 +282,7 @@ export class Uint16Ptr extends Ptr<number> {
  * Pointer: uint16, big endian.
  */
 export class Uint16BEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Uint16BEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Uint16BEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
@@ -311,7 +311,7 @@ export class Uint16BEPtr extends Ptr<number> {
  * Pointer: uint16, little endian.
  */
 export class Uint16LEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Omit<typeof Uint16LEPtr, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Uint16LEPtr>;
 
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);

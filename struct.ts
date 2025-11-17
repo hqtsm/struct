@@ -4,7 +4,7 @@
  * Struct type.
  */
 
-import { constant, toStringTag } from '@hqtsm/class';
+import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { Endian } from './endian.ts';
 import type { MemberInfos, Members } from './members.ts';
 import type { Type } from './type.ts';
@@ -18,7 +18,7 @@ export class Struct extends Endian implements Type, Members {
 	/**
 	 * Struct class.
 	 */
-	declare public readonly ['constructor']: Omit<typeof Struct, 'new'>;
+	declare public readonly ['constructor']: Class<typeof Struct>;
 
 	public get byteLength(): number {
 		return this.constructor.BYTE_LENGTH;
