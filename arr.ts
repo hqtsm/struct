@@ -164,11 +164,7 @@ export function array<T extends Type>(
 			length,
 			r = {
 				[name]: class extends Ptr implements Arr<T>, Members {
-					declare public readonly ['constructor']: Class<
-						ArrConstructor<
-							Arr<T>
-						>
-					>;
+					declare public readonly ['constructor']: ArrClass<Arr<T>>;
 
 					public get byteLength(): number {
 						return this.constructor.BYTE_LENGTH;
