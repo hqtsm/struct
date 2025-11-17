@@ -214,7 +214,7 @@ export function array<T extends Type>(
 						let r = members.get(this);
 						if (!r) {
 							members.set(
-								this satisfies ArrConstructor<Arr<T>>,
+								this,
 								r = Object.create(
 									Object.getPrototypeOf(this).MEMBERS,
 								) as MemberInfos,
