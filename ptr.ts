@@ -103,8 +103,10 @@ function memberSet(
 	value: unknown,
 	receiver: Readonly<MemberInfos>,
 ): boolean {
-	return index(key) === null &&
-		Reflect.set(target, key, value, key in target ? target : receiver);
+	return (
+		index(key) === null &&
+		Reflect.set(target, key, value, key in target ? target : receiver)
+	);
 }
 
 /**
