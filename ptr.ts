@@ -231,10 +231,8 @@ export function pointer<T extends Type>(
 ): PtrConstructor<Ptr<T>> {
 	let r = pointers.get(Type) as PtrConstructor<Ptr<T>> | undefined;
 	if (!r) {
-		const name = `${Ptr.name}<${Type.name}>`;
-		const tag = `${Ptr.prototype[Symbol.toStringTag]}<${
-			Type.prototype[Symbol.toStringTag]
-		}>`;
+		const name = `Ptr<${Type.name}>`;
+		const tag = `Ptr<${Type.prototype[Symbol.toStringTag]}>`;
 		const bpe = Type.BYTE_LENGTH;
 		pointers.set(
 			Type,
