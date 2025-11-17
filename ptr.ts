@@ -9,7 +9,7 @@ import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { Endian } from './endian.ts';
 import type { MemberInfo, MemberInfos, Members } from './members.ts';
 import type { Type, TypeConstructor } from './type.ts';
-import { assignType } from './util.ts';
+import { assignType, parseIndex } from './util.ts';
 
 const members = new WeakMap<typeof Ptr, MemberInfos>();
 const pointers = new WeakMap<
@@ -21,13 +21,13 @@ const memberBytes = new WeakMap<MemberInfos, number>();
 const ptrHandler: ProxyHandler<Ptr<unknown>> = {
 	deleteProperty(target, key): boolean {
 		let i;
-		return Reflect.has(target, key) || (i = index(key)) === null
+		return Reflect.has(target, key) || (i = parseIndex(key)) === undefined
 			? Reflect.deleteProperty(target, key)
 			: i !== i - i % 1;
 	},
 	get(target, key, receiver: Ptr<unknown>): unknown | undefined {
 		let i;
-		if (Reflect.has(target, key) || (i = index(key)) === null) {
+		if (Reflect.has(target, key) || (i = parseIndex(key)) === undefined) {
 			return Reflect.get(target, key, key in target ? target : receiver);
 		}
 		if (i === i - i % 1) {
@@ -38,12 +38,12 @@ const ptrHandler: ProxyHandler<Ptr<unknown>> = {
 		let i;
 		return (
 			Reflect.has(target, key) ||
-			((i = index(key)) !== null && i === i - i % 1)
+			((i = parseIndex(key)) !== undefined && i === i - i % 1)
 		);
 	},
 	set(target, key, value, receiver: Ptr<unknown>): boolean {
 		let i;
-		if (Reflect.has(target, key) || (i = index(key)) === null) {
+		if (Reflect.has(target, key) || (i = parseIndex(key)) === undefined) {
 			return Reflect.set(
 				target,
 				key,
@@ -59,8 +59,8 @@ const ptrHandler: ProxyHandler<Ptr<unknown>> = {
 };
 const memberHandler: ProxyHandler<Readonly<MemberInfos>> = {
 	get(target, key, receiver): unknown {
-		const i = index(key);
-		if (i === null) {
+		const i = parseIndex(key);
+		if (i === undefined) {
 			return Reflect.get(target, key, key in target ? target : receiver);
 		}
 		const bpe = memberBytes.get(target)!;
@@ -72,11 +72,11 @@ const memberHandler: ProxyHandler<Readonly<MemberInfos>> = {
 		}
 	},
 	has(target, key): boolean {
-		return index(key) !== null || Reflect.has(target, key);
+		return parseIndex(key) !== undefined || Reflect.has(target, key);
 	},
 	set(target, key, value, receiver): boolean {
 		return (
-			index(key) === null &&
+			parseIndex(key) === undefined &&
 			Reflect.set(target, key, value, key in target ? target : receiver)
 		);
 	},
@@ -88,11 +88,6 @@ function values<T extends Ptr<Type>>(p: T): MeekValueMap<number, T[number]> {
 		pointerValues.set(p, r = new MeekValueMap<number, Type>());
 	}
 	return r;
-}
-
-function index(key: PropertyKey): number | null {
-	let i;
-	return key === '-0' ? NaN : (key === '' + (i = +String(key)) ? i : null);
 }
 
 /**

@@ -157,7 +157,7 @@ Deno.test('Ptr: [[get]]', () => {
 	assertEquals(test[0], 3);
 	assertEquals(test[1], 4);
 
-	assertEquals(test['-0' as unknown as number], undefined);
+	assertEquals(test['-0' as unknown as number], 3);
 	assertEquals(test['1e3' as unknown as number], undefined);
 });
 
@@ -229,7 +229,7 @@ Deno.test('Ptr: [[deleteProperty]]', () => {
 	assertEquals(unk in test, false);
 
 	assertEquals(delete test[1.1], true);
-	assertEquals(delete test['-0' as unknown as number], true);
+	assertThrows(() => delete test['-0' as unknown as number], TypeError);
 });
 
 Deno.test('pointer', () => {

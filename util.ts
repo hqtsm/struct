@@ -24,6 +24,19 @@ export function dataView(buffer: ArrayBufferLike): DataView {
 }
 
 /**
+ * Parse property key to array index (see CanonicalNumericIndexString).
+ *
+ * @param key Property key.
+ * @returns Number or undefined if not a numeric index.
+ */
+export function parseIndex(key: string | symbol): number | undefined {
+	let i;
+	return key === '-0'
+		? -0
+		: (key === '' + (i = +String(key)) ? i : undefined);
+}
+
+/**
  * Get byte offset of member.
  *
  * @template T Type class.
