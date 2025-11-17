@@ -17,8 +17,8 @@ const pointers = new WeakMap<
 	PtrConstructor<Ptr<Type>>
 >();
 const pointerValues = new WeakMap<Ptr<Type>, MeekValueMap<number, Type>>();
-
-const handler: ProxyHandler<Ptr<unknown>> = {
+const memberBytes = new WeakMap<MemberInfos, number>();
+const ptrHandler: ProxyHandler<Ptr<unknown>> = {
 	deleteProperty(target, key): boolean {
 		let i;
 		return Reflect.has(target, key) || (i = index(key)) === null
@@ -57,6 +57,30 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 		return true;
 	},
 };
+const memberHandler: ProxyHandler<Readonly<MemberInfos>> = {
+	get(target, key, receiver): unknown {
+		const i = index(key);
+		if (i === null) {
+			return Reflect.get(target, key, key in target ? target : receiver);
+		}
+		const bpe = memberBytes.get(target)!;
+		if (i === i - i % 1) {
+			return {
+				byteLength: bpe,
+				byteOffset: i * bpe,
+			} satisfies MemberInfo;
+		}
+	},
+	has(target, key): boolean {
+		return index(key) !== null || Reflect.has(target, key);
+	},
+	set(target, key, value, receiver): boolean {
+		return (
+			index(key) === null &&
+			Reflect.set(target, key, value, key in target ? target : receiver)
+		);
+	},
+};
 
 function values<T extends Ptr<Type>>(p: T): MeekValueMap<number, T[number]> {
 	let r = pointerValues.get(p);
@@ -69,43 +93,6 @@ function values<T extends Ptr<Type>>(p: T): MeekValueMap<number, T[number]> {
 function index(key: PropertyKey): number | null {
 	let i;
 	return key === '-0' ? NaN : (key === '' + (i = +String(key)) ? i : null);
-}
-
-function memberGet(
-	bpe: number,
-	target: Readonly<MemberInfos>,
-	key: string | symbol,
-	receiver: Readonly<MemberInfos>,
-): Readonly<MemberInfo> | undefined {
-	const i = index(key);
-	if (i === null) {
-		return Reflect.get(target, key, key in target ? target : receiver);
-	}
-	if (i === i - i % 1) {
-		return {
-			byteLength: bpe,
-			byteOffset: i * bpe,
-		};
-	}
-}
-
-function memberHas(
-	target: Readonly<MemberInfos>,
-	key: string | symbol,
-): boolean {
-	return index(key) !== null || Reflect.has(target, key);
-}
-
-function memberSet(
-	target: Readonly<MemberInfos>,
-	key: string | symbol,
-	value: unknown,
-	receiver: Readonly<MemberInfos>,
-): boolean {
-	return (
-		index(key) === null &&
-		Reflect.set(target, key, value, key in target ? target : receiver)
-	);
 }
 
 /**
@@ -137,7 +124,7 @@ export class Ptr<T = never> extends Endian implements Members {
 		littleEndian?: boolean | null,
 	) {
 		super(buffer, byteOffset, littleEndian);
-		return new Proxy(this, handler as ProxyHandler<Ptr<T>>);
+		return new Proxy(this, ptrHandler as ProxyHandler<Ptr<T>>);
 	}
 
 	/**
@@ -179,19 +166,11 @@ export class Ptr<T = never> extends Endian implements Members {
 	public static get MEMBERS(): MemberInfos {
 		let r = members.get(this);
 		if (!r) {
-			members.set(
-				this,
-				r = new Proxy(
-					Object.create(
-						Object.getPrototypeOf(this).MEMBERS ?? null,
-					) as MemberInfos,
-					{
-						get: memberGet.bind(null, this.BYTES_PER_ELEMENT),
-						has: memberHas,
-						set: memberSet,
-					},
-				),
-			);
+			const MEMBERS = Object.create(
+				Object.getPrototypeOf(this).MEMBERS ?? null,
+			) as MemberInfos;
+			memberBytes.set(MEMBERS, this.BYTES_PER_ELEMENT);
+			members.set(this, r = new Proxy(MEMBERS, memberHandler));
 		}
 		return r;
 	}
