@@ -48,6 +48,7 @@ Deno.test('float16', () => {
 					return getFloat16(this, offset, littleEndian);
 				},
 				configurable: true,
+				enumerable: false,
 				writable: true,
 			});
 			Object.defineProperty(dataView(this.buffer), 'setFloat16', {
@@ -60,6 +61,7 @@ Deno.test('float16', () => {
 					setFloat16(this, offset, value, littleEndian);
 				},
 				configurable: true,
+				enumerable: false,
 				writable: true,
 			});
 		}
@@ -75,11 +77,13 @@ Deno.test('float16', () => {
 			Object.defineProperty(dataView(this.buffer), 'getFloat16', {
 				value: null,
 				configurable: true,
+				enumerable: false,
 				writable: true,
 			});
 			Object.defineProperty(dataView(this.buffer), 'setFloat16', {
 				value: null,
 				configurable: true,
+				enumerable: false,
 				writable: true,
 			});
 		}
@@ -178,6 +182,7 @@ Deno.test('Float16Ptr', () => {
 						return getFloat16(this, offset, littleEndian);
 					},
 					configurable: true,
+					enumerable: false,
 					writable: true,
 				});
 				Object.defineProperty(dataView(this.buffer), 'setFloat16', {
@@ -190,6 +195,7 @@ Deno.test('Float16Ptr', () => {
 						setFloat16(this, offset, value, littleEndian);
 					},
 					configurable: true,
+					enumerable: false,
 					writable: true,
 				});
 			}
@@ -205,11 +211,13 @@ Deno.test('Float16Ptr', () => {
 				Object.defineProperty(dataView(this.buffer), 'getFloat16', {
 					value: null,
 					configurable: true,
+					enumerable: false,
 					writable: true,
 				});
 				Object.defineProperty(dataView(this.buffer), 'setFloat16', {
 					value: null,
 					configurable: true,
+					enumerable: false,
 					writable: true,
 				});
 			}
