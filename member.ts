@@ -98,7 +98,7 @@ export interface MemberConstructor<
 	 */
 	new (
 		buffer: ArrayBufferLike,
-		byteOffset: number,
+		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;
 

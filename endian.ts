@@ -60,11 +60,11 @@ export class Endian
 	 */
 	constructor(
 		buffer: ArrayBufferLike,
-		byteOffset = 0,
-		littleEndian: boolean | null = null,
+		byteOffset?: number,
+		littleEndian?: boolean | null,
 	) {
 		dataView(buffer);
-		byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
+		byteOffset = (+byteOffset! || 0) - (byteOffset! % 1 || 0);
 		if (!(byteOffset > -Infinity && byteOffset < Infinity)) {
 			throw new RangeError(`Invalid offset: ${byteOffset}`);
 		}

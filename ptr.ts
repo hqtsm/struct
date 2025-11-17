@@ -133,8 +133,8 @@ export class Ptr<T = never> extends Endian implements Members {
 	 */
 	constructor(
 		buffer: ArrayBufferLike,
-		byteOffset = 0,
-		littleEndian: boolean | null = null,
+		byteOffset?: number,
+		littleEndian?: boolean | null,
 	) {
 		super(buffer, byteOffset, littleEndian);
 		return new Proxy(this, handler as ProxyHandler<Ptr<T>>);
