@@ -195,6 +195,14 @@ export function memberLE<T extends MemberableClass, M extends ArrayBufferView>(
 	return member(Member, Type, name, byteOffset, true);
 }
 
+function padRead(name: PropertyKey): never {
+	throw new TypeError(`Read from padding member: ${String(name)}`);
+}
+
+function padWrite(name: PropertyKey): never {
+	throw new TypeError(`Write to padding member: ${String(name)}`);
+}
+
 /**
  * Member: pad.
  *
@@ -222,11 +230,7 @@ export function pad<T extends MemberableClass>(
 		name,
 		byteLength,
 		byteOffset,
-		(): never => {
-			throw new TypeError(`Read from padding member: ${String(name)}`);
-		},
-		(): void => {
-			throw new TypeError(`Write to padding member: ${String(name)}`);
-		},
+		padRead.bind(null, name),
+		padWrite.bind(null, name),
 	);
 }
