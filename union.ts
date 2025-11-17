@@ -9,7 +9,7 @@ import { Endian } from './endian.ts';
 import type { MemberInfos, Members } from './members.ts';
 import type { Type } from './type.ts';
 
-let members: WeakMap<typeof Union, MemberInfos>;
+const members = new WeakMap<typeof Union, MemberInfos>();
 
 /**
  * Binary union buffer view.
@@ -38,7 +38,7 @@ export class Union extends Endian implements Type, Members {
 	 * Members infos.
 	 */
 	public static get MEMBERS(): MemberInfos {
-		let r = (members ??= new WeakMap()).get(this);
+		let r = members.get(this);
 		if (!r) {
 			members.set(
 				this,

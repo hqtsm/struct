@@ -8,7 +8,7 @@ import type { MemberClassKeys, MemberedClass } from './members.ts';
 import type { BufferView } from './native.ts';
 import type { Type } from './type.ts';
 
-let dataViews: WeakMap<ArrayBufferLike, DataView>;
+const dataViews = new WeakMap<ArrayBufferLike, DataView>();
 
 /**
  * Get reusable data view of buffer.
@@ -17,7 +17,7 @@ let dataViews: WeakMap<ArrayBufferLike, DataView>;
  * @returns Data view.
  */
 export function dataView(buffer: ArrayBufferLike): DataView {
-	let r = (dataViews ??= new WeakMap()).get(buffer);
+	let r = dataViews.get(buffer);
 	if (!r) {
 		dataViews.set(buffer, r = new DataView(buffer));
 	}

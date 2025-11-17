@@ -126,7 +126,7 @@ export function member<T extends MemberableClass, M extends BufferView>(
 	byteOffset: number | null = null,
 	littleEndian: boolean | null = null,
 ): number {
-	let m: WeakMap<Type, M>;
+	const members = new WeakMap<Type, M>();
 	byteOffset ??= defaultMemberByteOffset(Type);
 	byteOffset = (+byteOffset || 0) - (byteOffset % 1 || 0);
 	return defineMember(
@@ -135,9 +135,9 @@ export function member<T extends MemberableClass, M extends BufferView>(
 		Member.BYTE_LENGTH,
 		byteOffset,
 		function (): M {
-			let r = (m ??= new WeakMap()).get(this);
+			let r = members.get(this);
 			if (!r) {
-				m.set(
+				members.set(
 					this,
 					r = new Member(
 						this.buffer,

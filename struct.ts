@@ -9,7 +9,7 @@ import { Endian } from './endian.ts';
 import type { MemberInfos, Members } from './members.ts';
 import type { Type } from './type.ts';
 
-let members: WeakMap<typeof Struct, MemberInfos>;
+const members = new WeakMap<typeof Struct, MemberInfos>();
 
 /**
  * Binary structure buffer view.
@@ -38,7 +38,7 @@ export class Struct extends Endian implements Type, Members {
 	 * Members infos.
 	 */
 	public static get MEMBERS(): MemberInfos {
-		let r = (members ??= new WeakMap()).get(this);
+		let r = members.get(this);
 		if (!r) {
 			members.set(
 				this,

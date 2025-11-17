@@ -102,11 +102,11 @@ export interface ArrConstructor<T extends Arr<unknown> = Arr>
  */
 export type ArrClass<T extends Arr<unknown>> = Class<ArrConstructor<T>>;
 
-let arrays: WeakMap<
+const arrays = new WeakMap<
 	PtrConstructor<Ptr<unknown>>,
 	// deno-lint-ignore no-explicit-any
 	MeekValueMap<number, ArrConstructor<Arr<any>>>
->;
+>();
 
 /**
  * Create array of length from type/array.
@@ -151,14 +151,14 @@ export function array<T extends Type>(
 		throw new RangeError(`Invalid length: ${length}`);
 	}
 	const Ptr = 'BYTE_LENGTH' in TypePtr ? pointer(TypePtr) : TypePtr;
-	let lengths = (arrays ??= new WeakMap()).get(Ptr);
+	let lengths = arrays.get(Ptr);
 	if (!lengths) {
 		arrays.set(Ptr, lengths = new MeekValueMap());
 	}
 	let r = lengths.get(length);
 	if (!r) {
 		const name = `${Ptr.name}[${length}]`;
-		let members: WeakMap<ArrConstructor<Arr<T>>, MemberInfos>;
+		const members = new WeakMap<ArrConstructor<Arr<T>>, MemberInfos>();
 		lengths.set(
 			length,
 			r = {
@@ -231,7 +231,7 @@ export function array<T extends Type>(
 					public static readonly LENGTH = length;
 
 					public static override get MEMBERS(): MemberInfos {
-						let r = (members ??= new WeakMap()).get(this);
+						let r = members.get(this);
 						if (!r) {
 							members.set(
 								this satisfies ArrConstructor<Arr<T>>,

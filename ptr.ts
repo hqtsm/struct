@@ -12,9 +12,12 @@ import type { ArrayBufferReal } from './native.ts';
 import type { Type, TypeConstructor } from './type.ts';
 import { assignType } from './util.ts';
 
-let members: WeakMap<typeof Ptr, MemberInfos>;
-let pointers: WeakMap<TypeConstructor<Type>, PtrConstructor<Ptr<Type>>>;
-let pointerValues: WeakMap<Ptr<Type>, MeekValueMap<number, Type>>;
+const members = new WeakMap<typeof Ptr, MemberInfos>();
+const pointers = new WeakMap<
+	TypeConstructor<Type>,
+	PtrConstructor<Ptr<Type>>
+>();
+const pointerValues = new WeakMap<Ptr<Type>, MeekValueMap<number, Type>>();
 
 const handler: ProxyHandler<Ptr<unknown>> = {
 	deleteProperty(target, key): boolean {
@@ -57,7 +60,7 @@ const handler: ProxyHandler<Ptr<unknown>> = {
 };
 
 function values<T extends Ptr<Type>>(p: T): MeekValueMap<number, T[number]> {
-	let r = (pointerValues ??= new WeakMap()).get(p);
+	let r = pointerValues.get(p);
 	if (!r) {
 		pointerValues.set(p, r = new MeekValueMap<number, Type>());
 	}
@@ -174,7 +177,7 @@ export class Ptr<T = never> extends Endian implements Members {
 	 * Members infos.
 	 */
 	public static get MEMBERS(): MemberInfos {
-		let r = (members ??= new WeakMap()).get(this);
+		let r = members.get(this);
 		if (!r) {
 			members.set(
 				this,
@@ -227,9 +230,7 @@ export type PtrClass<T extends Ptr<unknown> = Ptr> = Class<PtrConstructor<T>>;
 export function pointer<T extends Type>(
 	Type: TypeConstructor<T>,
 ): PtrConstructor<Ptr<T>> {
-	let r = (pointers ??= new WeakMap()).get(Type) as
-		| PtrConstructor<Ptr<T>>
-		| undefined;
+	let r = pointers.get(Type) as PtrConstructor<Ptr<T>> | undefined;
 	if (!r) {
 		const name = `${Ptr.name}<${Type.name}>`;
 		const bpe = Type.BYTE_LENGTH;

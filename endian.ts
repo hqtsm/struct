@@ -20,10 +20,19 @@ export const BIG_ENDIAN: boolean = !new Uint8Array(
  */
 export const LITTLE_ENDIAN = !BIG_ENDIAN;
 
-let pri: WeakMap<Endian, BufferPointer & EndianAware>;
-let dynamicEndians: WeakMap<Class<EndianConstructor>, Class<EndianConstructor>>;
-let bigEndians: WeakMap<Class<EndianConstructor>, Class<EndianConstructor>>;
-let littleEndians: WeakMap<Class<EndianConstructor>, Class<EndianConstructor>>;
+const pri = new WeakMap<Endian, BufferPointer & EndianAware>();
+const dynamicEndians = new WeakMap<
+	Class<EndianConstructor>,
+	Class<EndianConstructor>
+>();
+const bigEndians = new WeakMap<
+	Class<EndianConstructor>,
+	Class<EndianConstructor>
+>();
+const littleEndians = new WeakMap<
+	Class<EndianConstructor>,
+	Class<EndianConstructor>
+>();
 
 /**
  * Endian aware.
@@ -66,7 +75,7 @@ export class Endian implements BufferPointer, EndianAware {
 		if (!(byteOffset > -Infinity && byteOffset < Infinity)) {
 			throw new RangeError(`Invalid offset: ${byteOffset}`);
 		}
-		(pri ??= new WeakMap()).set(this, {
+		pri.set(this, {
 			buffer,
 			byteOffset,
 			littleEndian: !!(littleEndian ?? LITTLE_ENDIAN),
@@ -111,7 +120,7 @@ export type EndianConstructor = typeof Endian;
 export function dynamicEndian<
 	T extends Class<EndianConstructor>,
 >(Endian: T): T {
-	let r = (dynamicEndians ??= new WeakMap()).get(Endian);
+	let r = dynamicEndians.get(Endian);
 	if (!r) {
 		const name = `DynamicEndian<${Endian.name}>`;
 		dynamicEndians.set(
@@ -146,7 +155,7 @@ export function dynamicEndian<
 export function bigEndian<
 	T extends Class<EndianConstructor>,
 >(Endian: T): T {
-	let r = (bigEndians ??= new WeakMap()).get(Endian);
+	let r = bigEndians.get(Endian);
 	if (!r) {
 		const name = `BigEndian<${Endian.name}>`;
 		bigEndians.set(
@@ -183,7 +192,7 @@ export function littleEndian<
 >(
 	Endian: T,
 ): T {
-	let r = (littleEndians ??= new WeakMap()).get(Endian);
+	let r = littleEndians.get(Endian);
 	if (!r) {
 		const name = `LittleEndian<${Endian.name}>`;
 		littleEndians.set(
