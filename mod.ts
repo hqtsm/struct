@@ -12,7 +12,6 @@ export * from './float/mod.ts';
 export * from './int/mod.ts';
 export * from './member.ts';
 export * from './members.ts';
-export * from './native.ts';
 export * from './ptr.ts';
 export * from './struct.ts';
 export * from './type.ts';

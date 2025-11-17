@@ -7,12 +7,11 @@
 import type { Class } from '@hqtsm/class';
 import type { Endian, EndianConstructor } from './endian.ts';
 import type { MembersClass } from './members.ts';
-import type { BufferView } from './native.ts';
 
 /**
  * Type.
  */
-export interface Type extends Endian, BufferView {
+export interface Type extends Endian, ArrayBufferView {
 	/**
 	 * Type class.
 	 */

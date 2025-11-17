@@ -5,7 +5,6 @@
  */
 
 import type { MemberClassKeys, MemberedClass } from './members.ts';
-import type { BufferView } from './native.ts';
 import type { Type } from './type.ts';
 
 const dataViews = new WeakMap<ArrayBufferLike, DataView>();
@@ -91,9 +90,9 @@ export function getMembers<T extends MemberedClass>(
  * @param src Source memory of equal or greater size.
  * @returns Destination memory.
  */
-export function assignView<D extends BufferView>(
+export function assignView<D extends ArrayBufferView>(
 	dst: D,
-	src: BufferView,
+	src: ArrayBufferView,
 ): D {
 	const { byteLength } = dst;
 	new Uint8Array(dst.buffer, dst.byteOffset, byteLength).set(

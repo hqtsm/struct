@@ -9,7 +9,6 @@ import type {
 	MemberableClassKeys,
 	MemberInfo,
 } from './members.ts';
-import type { BufferView } from './native.ts';
 import type { Type } from './type.ts';
 import { assignView } from './util.ts';
 
@@ -87,7 +86,9 @@ export function defineMember<T extends MemberableClass, M>(
  *
  * @template T Member type.
  */
-export interface MemberConstructor<T extends BufferView = BufferView> {
+export interface MemberConstructor<
+	T extends ArrayBufferView = ArrayBufferView,
+> {
 	/**
 	 * Member constructor.
 	 *
@@ -119,7 +120,7 @@ export interface MemberConstructor<T extends BufferView = BufferView> {
  * @param littleEndian Little endian, big endian, or inherit.
  * @returns Updated type byte length.
  */
-export function member<T extends MemberableClass, M extends BufferView>(
+export function member<T extends MemberableClass, M extends ArrayBufferView>(
 	Member: MemberConstructor<M>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
@@ -165,7 +166,7 @@ export function member<T extends MemberableClass, M extends BufferView>(
  * @param byteOffset Byte offset.
  * @returns Updated type byte length.
  */
-export function memberBE<T extends MemberableClass, M extends BufferView>(
+export function memberBE<T extends MemberableClass, M extends ArrayBufferView>(
 	Member: MemberConstructor<M>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
@@ -185,7 +186,7 @@ export function memberBE<T extends MemberableClass, M extends BufferView>(
  * @param byteOffset Byte offset.
  * @returns Updated type byte length.
  */
-export function memberLE<T extends MemberableClass, M extends BufferView>(
+export function memberLE<T extends MemberableClass, M extends ArrayBufferView>(
 	Member: MemberConstructor<M>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,

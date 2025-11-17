@@ -23,7 +23,6 @@
 		"./int/64": "./int/64.ts",
 		"./member": "./member.ts",
 		"./members": "./members.ts",
-		"./native": "./native.ts",
 		"./ptr": "./ptr.ts",
 		"./struct": "./struct.ts",
 		"./type": "./type.ts",
