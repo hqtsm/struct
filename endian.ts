@@ -5,6 +5,7 @@
  */
 
 import { type Abstract, type Class, constant, toStringTag } from '@hqtsm/class';
+import type { ArrayBufferPointer } from './native.ts';
 import { dataView } from './util.ts';
 
 /**
@@ -39,8 +40,7 @@ export interface EndianAware {
 /**
  * Endian aware buffer pointer.
  */
-export class Endian
-	implements Omit<ArrayBufferView, 'byteLength'>, EndianAware {
+export class Endian implements ArrayBufferPointer, EndianAware {
 	/**
 	 * Endian class.
 	 */
