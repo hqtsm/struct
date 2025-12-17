@@ -3,7 +3,7 @@
   "specifiers": {
     "jsr:@david/code-block-writer@^13.0.3": "13.0.3",
     "jsr:@deno/dnt@~0.42.3": "0.42.3",
-    "jsr:@hqtsm/class@^1.2.0": "1.2.0",
+    "jsr:@hqtsm/class@^1.3.0": "1.3.0",
     "jsr:@hqtsm/dataview@2": "2.0.0",
     "jsr:@hqtsm/meek@^2.0.1": "2.0.1",
     "jsr:@std/assert@^1.0.16": "1.0.16",
@@ -31,8 +31,8 @@
         "jsr:@ts-morph/bootstrap"
       ]
     },
-    "@hqtsm/class@1.2.0": {
-      "integrity": "b15a4dd51946af6a55d5c0cf8a454b329062adb3dec05de383f3091aae65b0a1"
+    "@hqtsm/class@1.3.0": {
+      "integrity": "2a19777a2a74cbade93276f932adaea96bcb4d50e06f858b1fd82b954d6f6969"
     },
     "@hqtsm/dataview@2.0.0": {
       "integrity": "654a84e5553a73b0e9696e44a4d593439bceddf4bb9f5104a5a71ca888b501f6"
@@ -82,7 +82,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@deno/dnt@~0.42.3",
-      "jsr:@hqtsm/class@^1.2.0",
+      "jsr:@hqtsm/class@^1.3.0",
       "jsr:@hqtsm/dataview@2",
       "jsr:@hqtsm/meek@^2.0.1",
       "jsr:@std/assert@^1.0.16"
