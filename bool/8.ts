@@ -4,7 +4,7 @@
  * 8-bit boolean.
  */
 
-import { type Class, constant, toStringTag } from '@hqtsm/class';
+import { constant, toStringTag } from '@hqtsm/class';
 import { defineMember, nextByteOffset } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
@@ -49,8 +49,6 @@ export function bool8<T extends MemberableClass>(
  * Pointer: bool8.
  */
 export class Bool8Ptr extends Ptr<boolean> {
-	declare public readonly ['constructor']: Class<typeof Bool8Ptr>;
-
 	public override get(index: number): boolean {
 		index = (+index || 0) - (index % 1 || 0);
 		return !!dataView(this.buffer).getInt8(this.byteOffset + index);

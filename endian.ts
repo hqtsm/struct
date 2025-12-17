@@ -42,11 +42,6 @@ export interface EndianAware {
  */
 export class Endian implements ArrayBufferPointer, EndianAware {
 	/**
-	 * Endian class.
-	 */
-	declare public readonly ['constructor']: Class<typeof Endian>;
-
-	/**
 	 * Type tag.
 	 */
 	declare public readonly [Symbol.toStringTag]: string;
@@ -82,7 +77,8 @@ export class Endian implements ArrayBufferPointer, EndianAware {
 	}
 
 	public get littleEndian(): boolean {
-		return this.constructor.LITTLE_ENDIAN ?? littleEndians.get(this)!;
+		return (this.constructor as typeof Endian).LITTLE_ENDIAN ??
+			littleEndians.get(this)!;
 	}
 
 	/**

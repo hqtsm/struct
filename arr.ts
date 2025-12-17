@@ -6,7 +6,7 @@
 
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 import { type Class, constant, toStringTag } from '@hqtsm/class';
-import type { MemberInfos, Members } from './members.ts';
+import type { MemberInfos } from './members.ts';
 import { pointer, type Ptr, type PtrConstructor } from './ptr.ts';
 import type { Type, TypeConstructor } from './type.ts';
 
@@ -16,11 +16,6 @@ import type { Type, TypeConstructor } from './type.ts';
  * @template T Value type.
  */
 export interface Arr<T = never> extends Ptr<T>, Type {
-	/**
-	 * Array constructor.
-	 */
-	readonly constructor: ArrClass<Arr<T>>;
-
 	/**
 	 * Array length.
 	 */
@@ -162,11 +157,10 @@ export function array<T extends Type>(
 		lengths.set(
 			length,
 			r = {
-				[name]: class extends Ptr implements Arr<T>, Members {
-					declare public readonly ['constructor']: ArrClass<Arr<T>>;
-
+				[name]: class extends Ptr implements Arr<T> {
 					public get byteLength(): number {
-						return this.constructor.BYTE_LENGTH;
+						return (this.constructor as ArrClass<Arr<T>>)
+							.BYTE_LENGTH;
 					}
 
 					public get length(): number {

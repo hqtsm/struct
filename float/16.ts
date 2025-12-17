@@ -5,7 +5,7 @@
  */
 
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
-import { type Class, constant, toStringTag } from '@hqtsm/class';
+import { constant, toStringTag } from '@hqtsm/class';
 import { defineMember, nextByteOffset } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
@@ -110,8 +110,6 @@ export function float16LE<T extends MemberableClass>(
  * Pointer: float16.
  */
 export class Float16Ptr extends Ptr<number> {
-	declare public readonly ['constructor']: Class<typeof Float16Ptr>;
-
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
@@ -158,8 +156,6 @@ export class Float16Ptr extends Ptr<number> {
  * Pointer: float16, big endian.
  */
 export class Float16BEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Class<typeof Float16BEPtr>;
-
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
@@ -202,8 +198,6 @@ export class Float16BEPtr extends Ptr<number> {
  * Pointer: float16, little endian.
  */
 export class Float16LEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Class<typeof Float16LEPtr>;
-
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;

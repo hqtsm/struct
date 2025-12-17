@@ -50,24 +50,9 @@ export interface MemberInfos {
 }
 
 /**
- * With members.
- */
-export interface Members {
-	/**
-	 * MemberInfoed class.
-	 */
-	readonly constructor: MembersClass;
-}
-
-/**
  * With members class.
  */
 export interface MembersClass extends Class {
-	/**
-	 * Members.
-	 */
-	readonly prototype: Members;
-
 	/**
 	 * Member infos of members.
 	 */

@@ -4,9 +4,9 @@
  * Struct type.
  */
 
-import { type Class, constant, toStringTag } from '@hqtsm/class';
+import { constant, toStringTag } from '@hqtsm/class';
 import { Endian } from './endian.ts';
-import type { MemberInfos, Members } from './members.ts';
+import type { MemberInfos } from './members.ts';
 import type { Type } from './type.ts';
 
 const members = new WeakMap<typeof Struct, MemberInfos>();
@@ -14,14 +14,9 @@ const members = new WeakMap<typeof Struct, MemberInfos>();
 /**
  * Binary structure buffer view.
  */
-export class Struct extends Endian implements Type, Members {
-	/**
-	 * Struct class.
-	 */
-	declare public readonly ['constructor']: Class<typeof Struct>;
-
+export class Struct extends Endian implements Type {
 	public get byteLength(): number {
-		return this.constructor.BYTE_LENGTH;
+		return (this.constructor as typeof Struct).BYTE_LENGTH;
 	}
 
 	/**

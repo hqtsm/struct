@@ -4,9 +4,9 @@
  * Union type.
  */
 
-import { type Class, constant, toStringTag } from '@hqtsm/class';
+import { constant, toStringTag } from '@hqtsm/class';
 import { Endian } from './endian.ts';
-import type { MemberInfos, Members } from './members.ts';
+import type { MemberInfos } from './members.ts';
 import type { Type } from './type.ts';
 
 const members = new WeakMap<typeof Union, MemberInfos>();
@@ -14,14 +14,9 @@ const members = new WeakMap<typeof Union, MemberInfos>();
 /**
  * Binary union buffer view.
  */
-export class Union extends Endian implements Type, Members {
-	/**
-	 * Union class.
-	 */
-	declare public readonly ['constructor']: Class<typeof Union>;
-
+export class Union extends Endian implements Type {
 	public get byteLength(): number {
-		return this.constructor.BYTE_LENGTH;
+		return (this.constructor as typeof Union).BYTE_LENGTH;
 	}
 
 	/**

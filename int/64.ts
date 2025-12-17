@@ -4,7 +4,7 @@
  * 64-bit integer.
  */
 
-import { type Class, constant, toStringTag } from '@hqtsm/class';
+import { constant, toStringTag } from '@hqtsm/class';
 import { defineMember, nextByteOffset } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
@@ -160,8 +160,6 @@ export function uint64LE<T extends MemberableClass>(
  * Pointer: int64.
  */
 export class Int64Ptr extends Ptr<bigint> {
-	declare public readonly ['constructor']: Class<typeof Int64Ptr>;
-
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigInt64(
@@ -191,8 +189,6 @@ export class Int64Ptr extends Ptr<bigint> {
  * Pointer: int64, big endian.
  */
 export class Int64BEPtr extends Ptr<bigint> {
-	declare public readonly ['constructor']: Class<typeof Int64BEPtr>;
-
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigInt64(
@@ -220,8 +216,6 @@ export class Int64BEPtr extends Ptr<bigint> {
  * Pointer: int64, little endian.
  */
 export class Int64LEPtr extends Ptr<bigint> {
-	declare public readonly ['constructor']: Class<typeof Int64LEPtr>;
-
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigInt64(
@@ -251,8 +245,6 @@ export class Int64LEPtr extends Ptr<bigint> {
  * Pointer: uint64.
  */
 export class Uint64Ptr extends Ptr<bigint> {
-	declare public readonly ['constructor']: Class<typeof Uint64Ptr>;
-
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigUint64(
@@ -282,8 +274,6 @@ export class Uint64Ptr extends Ptr<bigint> {
  * Pointer: uint64.
  */
 export class Uint64BEPtr extends Ptr<bigint> {
-	declare public readonly ['constructor']: Class<typeof Uint64BEPtr>;
-
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigUint64(
@@ -311,8 +301,6 @@ export class Uint64BEPtr extends Ptr<bigint> {
  * Pointer: uint64.
  */
 export class Uint64LEPtr extends Ptr<bigint> {
-	declare public readonly ['constructor']: Class<typeof Uint64LEPtr>;
-
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigUint64(

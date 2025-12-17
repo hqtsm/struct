@@ -11,12 +11,7 @@ import type { MembersClass } from './members.ts';
 /**
  * Type.
  */
-export interface Type extends Endian, ArrayBufferView {
-	/**
-	 * Type class.
-	 */
-	readonly constructor: TypeClass;
-}
+export interface Type extends Endian, ArrayBufferView {}
 
 /**
  * Type constructor.

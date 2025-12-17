@@ -4,7 +4,7 @@
  * 32-bit float.
  */
 
-import { type Class, constant, toStringTag } from '@hqtsm/class';
+import { constant, toStringTag } from '@hqtsm/class';
 import { defineMember, nextByteOffset } from '../member.ts';
 import type { MemberableClass, MemberableClassKeys } from '../members.ts';
 import { Ptr } from '../ptr.ts';
@@ -87,8 +87,6 @@ export function float32LE<T extends MemberableClass>(
  * Pointer: float32.
  */
 export class Float32Ptr extends Ptr<number> {
-	declare public readonly ['constructor']: Class<typeof Float32Ptr>;
-
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getFloat32(
@@ -118,8 +116,6 @@ export class Float32Ptr extends Ptr<number> {
  * Pointer: float32, big endian.
  */
 export class Float32BEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Class<typeof Float32BEPtr>;
-
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getFloat32(
@@ -147,8 +143,6 @@ export class Float32BEPtr extends Ptr<number> {
  * Pointer: float32, little endian.
  */
 export class Float32LEPtr extends Ptr<number> {
-	declare public readonly ['constructor']: Class<typeof Float32LEPtr>;
-
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getFloat32(

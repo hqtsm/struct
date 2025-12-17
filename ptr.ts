@@ -7,7 +7,7 @@
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { Endian } from './endian.ts';
-import type { MemberInfo, MemberInfos, Members } from './members.ts';
+import type { MemberInfo, MemberInfos } from './members.ts';
 import type { Type, TypeConstructor } from './type.ts';
 import { assignType, parseIndex } from './util.ts';
 
@@ -92,12 +92,7 @@ function values<T extends Ptr<Type>>(p: T): MeekValueMap<number, T[number]> {
  *
  * @template T Value type.
  */
-export class Ptr<T = never> extends Endian implements Members {
-	/**
-	 * Ptr class.
-	 */
-	declare public readonly ['constructor']: PtrClass<Ptr<T>>;
-
+export class Ptr<T = never> extends Endian {
 	/**
 	 * Pointer elements.
 	 */
@@ -209,8 +204,6 @@ export function pointer<T extends Type>(
 			Type,
 			r = {
 				[name]: class extends Ptr<T> {
-					declare public readonly ['constructor']: PtrClass<Ptr<T>>;
-
 					public override get(index: number): T {
 						index = (+index || 0) - (index % 1 || 0);
 						const v = values(this);
