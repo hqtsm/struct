@@ -1,6 +1,7 @@
 import {
 	assert,
 	assertEquals,
+	assertInstanceOf,
 	assertMatch,
 	assertNotStrictEquals,
 	assertStrictEquals,
@@ -10,6 +11,13 @@ import { LITTLE_ENDIAN } from './endian.ts';
 import { int8, Uint8Ptr } from './int/8.ts';
 import { pointer, Ptr } from './ptr.ts';
 import { Struct } from './struct.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 const defaultClassProperties = new Set(Object.getOwnPropertyNames(class {}));
 
@@ -232,6 +240,16 @@ Deno.test('Ptr: [[deleteProperty]]', () => {
 	assertThrows(() => delete test['-0' as unknown as number], TypeError);
 });
 
+Deno.test('Ptr: buffer', () => {
+	assertArrayBuffer(new Ptr(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new Ptr(new SharedArrayBuffer(0)).buffer);
+
+	class MyPtr<TArrayBuffer extends ArrayBufferLike = ArrayBuffer>
+		extends Struct<TArrayBuffer> {}
+	assertArrayBuffer(new MyPtr(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new MyPtr(new SharedArrayBuffer(0)).buffer);
+});
+
 Deno.test('pointer', () => {
 	class Foo extends Struct {
 		declare public bar: number;
@@ -291,4 +309,26 @@ Deno.test('pointer', () => {
 		assertMatch(p, /^[A-Z][A-Z0-9_]*$/, p);
 		assertEquals(desc!.writable ?? false, false, p);
 	}
+});
+
+Deno.test('pointer: buffer', () => {
+	class AB extends Struct<ArrayBuffer> {
+		declare public a: number;
+
+		static {
+			int8(this, 'a');
+		}
+	}
+	const ABPtr = pointer(AB);
+	assertArrayBuffer(new ABPtr(new ArrayBuffer(0)).buffer);
+
+	class SAB extends Struct<SharedArrayBuffer> {
+		declare public a: number;
+
+		static {
+			int8(this, 'a');
+		}
+	}
+	const SABPtr = pointer(SAB);
+	assertSharedArrayBuffer(new SABPtr(new SharedArrayBuffer(0)).buffer);
 });

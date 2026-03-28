@@ -85,8 +85,12 @@ export function float32LE<T extends MemberableClass>(
 
 /**
  * Pointer: float32.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Float32Ptr extends Ptr<number> {
+export class Float32Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getFloat32(
@@ -114,8 +118,12 @@ export class Float32Ptr extends Ptr<number> {
 
 /**
  * Pointer: float32, big endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Float32BEPtr extends Ptr<number> {
+export class Float32BEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getFloat32(
@@ -141,8 +149,12 @@ export class Float32BEPtr extends Ptr<number> {
 
 /**
  * Pointer: float32, little endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Float32LEPtr extends Ptr<number> {
+export class Float32LEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getFloat32(

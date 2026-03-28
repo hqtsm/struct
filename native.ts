@@ -22,3 +22,12 @@ export interface ArrayBufferPointer<
 	 */
 	readonly byteOffset: number;
 }
+
+/**
+ * Get buffer type for a type.
+ *
+ * @template T Type.
+ */
+export type ArrayBufferType<T> = [T] extends [never] ? ArrayBufferLike
+	: [T] extends [{ readonly buffer: ArrayBufferLike }] ? T['buffer']
+	: ArrayBufferLike;

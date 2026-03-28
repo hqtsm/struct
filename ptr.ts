@@ -8,11 +8,13 @@ import { MeekValueMap } from '@hqtsm/meek/valuemap';
 import { type Class, constant, toStringTag } from '@hqtsm/class';
 import { Endian } from './endian.ts';
 import type { MemberInfo, MemberInfos } from './members.ts';
+import type { ArrayBufferType } from './native.ts';
 import type { Type, TypeConstructor } from './type.ts';
 import { assignType, parseIndex } from './util.ts';
 
 const members = new WeakMap<typeof Ptr, MemberInfos>();
-const pointers = new WeakMap<TypeConstructor, PtrConstructor<Ptr<Type>>>();
+// deno-lint-ignore no-explicit-any
+const pointers = new WeakMap<TypeConstructor<any>, PtrConstructor<Ptr<Type>>>();
 const pointerValues = new WeakMap<Ptr<Type>, MeekValueMap<number, Type>>();
 const memberBytes = new WeakMap<MemberInfos, number>();
 const ptrHandler: ProxyHandler<Ptr<unknown>> = {
@@ -91,8 +93,12 @@ function values<T extends Ptr<Type>>(p: T): MeekValueMap<number, T[number]> {
  * Pointer to a type.
  *
  * @template T Value type.
+ * @template TArrayBuffer Buffer type.
  */
-export class Ptr<T = never> extends Endian {
+export class Ptr<
+	T = never,
+	TArrayBuffer extends ArrayBufferType<T> = ArrayBufferType<T>,
+> extends Endian<TArrayBuffer> {
 	/**
 	 * Pointer elements.
 	 */
@@ -106,12 +112,15 @@ export class Ptr<T = never> extends Endian {
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	constructor(
-		buffer: ArrayBufferLike,
+		buffer: TArrayBuffer,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	) {
 		super(buffer, byteOffset, littleEndian);
-		return new Proxy(this, ptrHandler as ProxyHandler<Ptr<T>>);
+		return new Proxy(
+			this,
+			ptrHandler as ProxyHandler<Ptr<T, TArrayBuffer>>,
+		);
 	}
 
 	/**
@@ -173,17 +182,26 @@ export class Ptr<T = never> extends Endian {
  * Pointer constructor.
  *
  * @template T Pointer type.
+ * @template TArrayBuffer Buffer type.
  */
-export type PtrConstructor<T extends Ptr<unknown> = Ptr> = typeof Ptr<
-	T[number]
+export type PtrConstructor<
+	T extends Ptr<unknown> = Ptr,
+	TArrayBuffer extends ArrayBufferType<T> = ArrayBufferType<T>,
+> = typeof Ptr<
+	T[number],
+	TArrayBuffer
 >;
 
 /**
  * Pointer class.
  *
  * @template T Pointer type.
+ * @template TArrayBuffer Buffer type.
  */
-export type PtrClass<T extends Ptr<unknown> = Ptr> = Class<PtrConstructor<T>>;
+export type PtrClass<
+	T extends Ptr<unknown> = Ptr,
+	TArrayBuffer extends ArrayBufferType<T> = ArrayBufferType<T>,
+> = Class<PtrConstructor<T, TArrayBuffer>>;
 
 /**
  * Get pointer of type.

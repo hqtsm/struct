@@ -1,5 +1,5 @@
 import { getFloat16, setFloat16 } from '@hqtsm/dataview/float/16';
-import { assertEquals } from '@std/assert';
+import { assertEquals, assertInstanceOf } from '@std/assert';
 import { Struct } from '../struct.ts';
 import { dataView, getByteLength, getByteOffset } from '../util.ts';
 import {
@@ -10,6 +10,13 @@ import {
 	Float16LEPtr,
 	Float16Ptr,
 } from './16.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 function round(n: number): number {
 	const dataView = new DataView(new ArrayBuffer(2));
@@ -241,5 +248,8 @@ Deno.test('Float16Ptr', () => {
 				`[object ${name}]`,
 			);
 		}
+
+		assertArrayBuffer(new Ptr(new ArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new Ptr(new SharedArrayBuffer(0)).buffer);
 	}
 });

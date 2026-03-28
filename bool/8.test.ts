@@ -1,7 +1,14 @@
-import { assertEquals } from '@std/assert';
+import { assertEquals, assertInstanceOf } from '@std/assert';
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
 import { bool8, Bool8Ptr } from './8.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 Deno.test('bool8', () => {
 	class Test extends Struct {
@@ -68,4 +75,7 @@ Deno.test('Bool8Ptr', () => {
 		`${new Bool8Ptr(new ArrayBuffer(0))}`,
 		`[object ${Bool8Ptr.name}]`,
 	);
+
+	assertArrayBuffer(new Bool8Ptr(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new Bool8Ptr(new SharedArrayBuffer(0)).buffer);
 });

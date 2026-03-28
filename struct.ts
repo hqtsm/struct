@@ -13,8 +13,12 @@ const members = new WeakMap<typeof Struct, MemberInfos>();
 
 /**
  * Binary structure buffer view.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Struct extends Endian implements Type {
+export class Struct<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike>
+	extends Endian<TArrayBuffer>
+	implements Type {
 	public get byteLength(): number {
 		return (this.constructor as typeof Struct).BYTE_LENGTH;
 	}

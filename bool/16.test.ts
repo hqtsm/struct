@@ -1,4 +1,4 @@
-import { assertEquals } from '@std/assert';
+import { assertEquals, assertInstanceOf } from '@std/assert';
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
 import {
@@ -9,6 +9,13 @@ import {
 	Bool16LEPtr,
 	Bool16Ptr,
 } from './16.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 Deno.test('bool16', () => {
 	class Test extends Struct {
@@ -148,5 +155,8 @@ Deno.test('Bool16Ptr', () => {
 			`${new Ptr(new ArrayBuffer(0))}`,
 			`[object ${Ptr.name}]`,
 		);
+
+		assertArrayBuffer(new Ptr(new ArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new Ptr(new SharedArrayBuffer(0)).buffer);
 	}
 });

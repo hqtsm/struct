@@ -1,9 +1,21 @@
-import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
+import {
+	assertEquals,
+	assertInstanceOf,
+	assertStrictEquals,
+	assertThrows,
+} from '@std/assert';
 import { LITTLE_ENDIAN } from './endian.ts';
 import { int8 } from './int/8.ts';
 import { member, pad } from './member.ts';
 import { Struct } from './struct.ts';
 import { getByteOffset } from './util.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 Deno.test('Struct: buffer', () => {
 	const buffer = new ArrayBuffer(0);
@@ -255,4 +267,14 @@ Deno.test('Struct: abstract placeholder', () => {
 	const test = new TestImp(data.buffer, 0, true);
 	test.child.value = 123;
 	assertEquals(data, new Uint8Array([123]));
+});
+
+Deno.test('Struct: buffer', () => {
+	assertArrayBuffer(new Struct(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new Struct(new SharedArrayBuffer(0)).buffer);
+
+	class MyStruct<TArrayBuffer extends ArrayBufferLike = ArrayBuffer>
+		extends Struct<TArrayBuffer> {}
+	assertArrayBuffer(new MyStruct(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new MyStruct(new SharedArrayBuffer(0)).buffer);
 });

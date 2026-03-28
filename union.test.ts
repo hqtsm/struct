@@ -1,9 +1,21 @@
-import { assertEquals, assertStrictEquals, assertThrows } from '@std/assert';
+import {
+	assertEquals,
+	assertInstanceOf,
+	assertStrictEquals,
+	assertThrows,
+} from '@std/assert';
 import { bool32 } from './bool/32.ts';
 import { LITTLE_ENDIAN } from './endian.ts';
 import { int8 } from './int/8.ts';
 import { int32, uint32 } from './int/32.ts';
 import { Union } from './union.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 Deno.test('Union: buffer', () => {
 	const buffer = new ArrayBuffer(0);
@@ -211,4 +223,14 @@ Deno.test('Union: union', () => {
 	assertEquals(test.b, false);
 	test.b = false;
 	assertEquals(test.i, 0);
+});
+
+Deno.test('Union: buffer', () => {
+	assertArrayBuffer(new Union(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new Union(new SharedArrayBuffer(0)).buffer);
+
+	class MyUnion<TArrayBuffer extends ArrayBufferLike = ArrayBuffer>
+		extends Union<TArrayBuffer> {}
+	assertArrayBuffer(new MyUnion(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new MyUnion(new SharedArrayBuffer(0)).buffer);
 });

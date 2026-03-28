@@ -5,6 +5,7 @@
  */
 
 import type { Arr } from './arr.ts';
+import type { ArrayBufferType } from './native.ts';
 import type { Ptr } from './ptr.ts';
 
 /**
@@ -14,23 +15,23 @@ import type { Ptr } from './ptr.ts';
  */
 // deno-lint-ignore ban-types
 export type Const<T> = T extends Function | RegExp | Date ? T
-	: T extends Arr<infer V> ? ConstArr<V> & Const<Omit<T, keyof Arr>>
-	: T extends Ptr<infer V> ? ConstPtr<V> & Const<Omit<T, keyof Ptr>>
+	: T extends Arr<unknown> ? ConstArr<T> & Const<Omit<T, keyof Arr>>
+	: T extends Ptr<unknown> ? ConstPtr<T> & Const<Omit<T, keyof Ptr>>
 	: T extends object ? { readonly [K in keyof T]: Const<T[K]> }
 	: T;
 
 /**
  * Constant pointer.
  *
- * @template T Type.
+ * @template T Pointer type.
  */
-export interface ConstPtr<T = never>
-	extends Const<Omit<Ptr<Const<T>>, 'set'>> {}
+interface ConstPtr<T extends Ptr<unknown>>
+	extends Const<Omit<Ptr<Const<T[number]>, ArrayBufferType<T>>, 'set'>> {}
 
 /**
  * Constant array.
  *
- * @template T Type.
+ * @template T Array type.
  */
-export interface ConstArr<T = never>
-	extends Const<Omit<Arr<Const<T>>, 'set'>> {}
+interface ConstArr<T extends Arr<unknown>>
+	extends Const<Omit<Arr<Const<T[number]>, ArrayBufferType<T>>, 'set'>> {}

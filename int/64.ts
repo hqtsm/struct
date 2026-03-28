@@ -158,8 +158,12 @@ export function uint64LE<T extends MemberableClass>(
 
 /**
  * Pointer: int64.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Int64Ptr extends Ptr<bigint> {
+export class Int64Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<bigint, TArrayBuffer> {
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigInt64(
@@ -187,8 +191,12 @@ export class Int64Ptr extends Ptr<bigint> {
 
 /**
  * Pointer: int64, big endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Int64BEPtr extends Ptr<bigint> {
+export class Int64BEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<bigint, TArrayBuffer> {
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigInt64(
@@ -214,8 +222,12 @@ export class Int64BEPtr extends Ptr<bigint> {
 
 /**
  * Pointer: int64, little endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Int64LEPtr extends Ptr<bigint> {
+export class Int64LEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<bigint, TArrayBuffer> {
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigInt64(
@@ -243,8 +255,12 @@ export class Int64LEPtr extends Ptr<bigint> {
 
 /**
  * Pointer: uint64.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Uint64Ptr extends Ptr<bigint> {
+export class Uint64Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<bigint, TArrayBuffer> {
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigUint64(
@@ -272,8 +288,12 @@ export class Uint64Ptr extends Ptr<bigint> {
 
 /**
  * Pointer: uint64.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Uint64BEPtr extends Ptr<bigint> {
+export class Uint64BEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<bigint, TArrayBuffer> {
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigUint64(
@@ -299,8 +319,12 @@ export class Uint64BEPtr extends Ptr<bigint> {
 
 /**
  * Pointer: uint64.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Uint64LEPtr extends Ptr<bigint> {
+export class Uint64LEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<bigint, TArrayBuffer> {
 	public override get(index: number): bigint {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getBigUint64(

@@ -1,5 +1,6 @@
 import {
 	assertEquals,
+	assertInstanceOf,
 	assertMatch,
 	assertNotEquals,
 	assertStrictEquals,
@@ -13,6 +14,13 @@ import {
 	littleEndian,
 } from './endian.ts';
 import { Struct } from './struct.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 abstract class AbstractChild extends Endian {}
 const defaultClassProperties = new Set(Object.getOwnPropertyNames(class {}));
@@ -100,4 +108,14 @@ Deno.test('littleEndian', () => {
 
 	// @ts-expect-error: Class but not function.
 	littleEndian(Function);
+});
+
+Deno.test('Endian: buffer', () => {
+	assertArrayBuffer(new Endian(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new Endian(new SharedArrayBuffer(0)).buffer);
+
+	class MyEndian<TArrayBuffer extends ArrayBufferLike = ArrayBuffer>
+		extends Endian<TArrayBuffer> {}
+	assertArrayBuffer(new MyEndian(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new MyEndian(new SharedArrayBuffer(0)).buffer);
 });

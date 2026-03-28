@@ -168,8 +168,12 @@ export function uint24LE<T extends MemberableClass>(
 
 /**
  * Pointer: int24.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Int24Ptr extends Ptr<number> {
+export class Int24Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return getInt24(
@@ -199,8 +203,12 @@ export class Int24Ptr extends Ptr<number> {
 
 /**
  * Pointer: int24, big endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Int24BEPtr extends Ptr<number> {
+export class Int24BEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return getInt24(
@@ -228,8 +236,12 @@ export class Int24BEPtr extends Ptr<number> {
 
 /**
  * Pointer: int24, little endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Int24LEPtr extends Ptr<number> {
+export class Int24LEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return getInt24(
@@ -259,8 +271,12 @@ export class Int24LEPtr extends Ptr<number> {
 
 /**
  * Pointer: uint24.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Uint24Ptr extends Ptr<number> {
+export class Uint24Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return getUint24(
@@ -290,8 +306,12 @@ export class Uint24Ptr extends Ptr<number> {
 
 /**
  * Pointer: uint24, big endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Uint24BEPtr extends Ptr<number> {
+export class Uint24BEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return getUint24(
@@ -319,8 +339,12 @@ export class Uint24BEPtr extends Ptr<number> {
 
 /**
  * Pointer: uint24, little endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Uint24LEPtr extends Ptr<number> {
+export class Uint24LEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return getUint24(

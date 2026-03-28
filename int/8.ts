@@ -72,8 +72,12 @@ export function uint8<T extends MemberableClass>(
 
 /**
  * Pointer: int8.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Int8Ptr extends Ptr<number> {
+export class Int8Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getInt8(this.byteOffset + index);
@@ -94,8 +98,12 @@ export class Int8Ptr extends Ptr<number> {
 
 /**
  * Pointer: uint8.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Uint8Ptr extends Ptr<number> {
+export class Uint8Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getUint8(this.byteOffset + index);

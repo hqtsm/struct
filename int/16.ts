@@ -158,8 +158,12 @@ export function uint16LE<T extends MemberableClass>(
 
 /**
  * Pointer: int16.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Int16Ptr extends Ptr<number> {
+export class Int16Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getInt16(
@@ -187,8 +191,12 @@ export class Int16Ptr extends Ptr<number> {
 
 /**
  * Pointer: int16, big endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Int16BEPtr extends Ptr<number> {
+export class Int16BEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getInt16(
@@ -214,8 +222,12 @@ export class Int16BEPtr extends Ptr<number> {
 
 /**
  * Pointer: int16, little endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Int16LEPtr extends Ptr<number> {
+export class Int16LEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getInt16(
@@ -243,8 +255,12 @@ export class Int16LEPtr extends Ptr<number> {
 
 /**
  * Pointer: uint16.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Uint16Ptr extends Ptr<number> {
+export class Uint16Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getUint16(
@@ -272,8 +288,12 @@ export class Uint16Ptr extends Ptr<number> {
 
 /**
  * Pointer: uint16, big endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Uint16BEPtr extends Ptr<number> {
+export class Uint16BEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getUint16(
@@ -299,8 +319,12 @@ export class Uint16BEPtr extends Ptr<number> {
 
 /**
  * Pointer: uint16, little endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Uint16LEPtr extends Ptr<number> {
+export class Uint16LEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		return dataView(this.buffer).getUint16(

@@ -7,11 +7,15 @@
 import type { Class } from '@hqtsm/class';
 import type { Endian, EndianConstructor } from './endian.ts';
 import type { MembersClass } from './members.ts';
+import type { ArrayBufferType } from './native.ts';
 
 /**
  * Type.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export interface Type extends Endian, ArrayBufferView {}
+export interface Type<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike>
+	extends Endian<TArrayBuffer>, ArrayBufferView<TArrayBuffer> {}
 
 /**
  * Type constructor.
@@ -19,7 +23,9 @@ export interface Type extends Endian, ArrayBufferView {}
  * @template T Type.
  */
 export interface TypeConstructor<T extends Type = Type>
-	extends Omit<EndianConstructor, never>, Omit<MembersClass, never> {
+	extends
+		Omit<EndianConstructor<ArrayBufferType<T>>, never>,
+		Omit<MembersClass, never> {
 	/**
 	 * Create instance for buffer.
 	 *
@@ -28,7 +34,7 @@ export interface TypeConstructor<T extends Type = Type>
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	new (
-		buffer: ArrayBufferLike,
+		buffer: ArrayBufferType<T>,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;

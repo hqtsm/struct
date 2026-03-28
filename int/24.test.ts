@@ -4,7 +4,7 @@ import {
 	setInt24,
 	setUint24,
 } from '@hqtsm/dataview/int/24';
-import { assertEquals } from '@std/assert';
+import { assertEquals, assertInstanceOf } from '@std/assert';
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
 import {
@@ -21,6 +21,13 @@ import {
 	Uint24LEPtr,
 	Uint24Ptr,
 } from './24.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 Deno.test('int24', () => {
 	class Test extends Struct {
@@ -189,6 +196,9 @@ Deno.test('Int24Ptr', () => {
 			`${new Ptr(new ArrayBuffer(0))}`,
 			`[object ${Ptr.name}]`,
 		);
+
+		assertArrayBuffer(new Ptr(new ArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new Ptr(new SharedArrayBuffer(0)).buffer);
 	}
 });
 
@@ -224,5 +234,8 @@ Deno.test('Uint24Ptr', () => {
 			`${new Ptr(new ArrayBuffer(0))}`,
 			`[object ${Ptr.name}]`,
 		);
+
+		assertArrayBuffer(new Ptr(new ArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new Ptr(new SharedArrayBuffer(0)).buffer);
 	}
 });

@@ -1,7 +1,14 @@
-import { assertEquals } from '@std/assert';
+import { assertEquals, assertInstanceOf } from '@std/assert';
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
 import { int8, Int8Ptr, uint8, Uint8Ptr } from './8.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 Deno.test('int8', () => {
 	class Test extends Struct {
@@ -91,6 +98,9 @@ Deno.test('Int8Ptr', () => {
 		`${new Int8Ptr(new ArrayBuffer(0))}`,
 		`[object ${Int8Ptr.name}]`,
 	);
+
+	assertArrayBuffer(new Uint8Ptr(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new Uint8Ptr(new SharedArrayBuffer(0)).buffer);
 });
 
 Deno.test('Uint8Ptr', () => {
@@ -115,4 +125,7 @@ Deno.test('Uint8Ptr', () => {
 		`${new Uint8Ptr(new ArrayBuffer(0))}`,
 		`[object ${Uint8Ptr.name}]`,
 	);
+
+	assertArrayBuffer(new Uint8Ptr(new ArrayBuffer(0)).buffer);
+	assertSharedArrayBuffer(new Uint8Ptr(new SharedArrayBuffer(0)).buffer);
 });

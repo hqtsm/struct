@@ -85,8 +85,12 @@ export function bool32LE<T extends MemberableClass>(
 
 /**
  * Pointer: bool32.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Bool32Ptr extends Ptr<boolean> {
+export class Bool32Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<boolean, TArrayBuffer> {
 	public override get(index: number): boolean {
 		index = (+index || 0) - (index % 1 || 0);
 		return !!dataView(this.buffer).getInt32(
@@ -114,8 +118,12 @@ export class Bool32Ptr extends Ptr<boolean> {
 
 /**
  * Pointer: bool32, big endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Bool32BEPtr extends Ptr<boolean> {
+export class Bool32BEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<boolean, TArrayBuffer> {
 	public override get(index: number): boolean {
 		index = (+index || 0) - (index % 1 || 0);
 		return !!dataView(this.buffer).getInt32(
@@ -141,8 +149,12 @@ export class Bool32BEPtr extends Ptr<boolean> {
 
 /**
  * Pointer: bool32, little endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Bool32LEPtr extends Ptr<boolean> {
+export class Bool32LEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<boolean, TArrayBuffer> {
 	public override get(index: number): boolean {
 		index = (+index || 0) - (index % 1 || 0);
 		return !!dataView(this.buffer).getInt32(

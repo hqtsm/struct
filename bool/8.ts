@@ -47,8 +47,12 @@ export function bool8<T extends MemberableClass>(
 
 /**
  * Pointer: bool8.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Bool8Ptr extends Ptr<boolean> {
+export class Bool8Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<boolean, TArrayBuffer> {
 	public override get(index: number): boolean {
 		index = (+index || 0) - (index % 1 || 0);
 		return !!dataView(this.buffer).getInt8(this.byteOffset + index);

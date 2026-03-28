@@ -7,6 +7,7 @@
 import { MeekValueMap } from '@hqtsm/meek/valuemap';
 import { type Class, constant, toStringTag } from '@hqtsm/class';
 import type { MemberInfos } from './members.ts';
+import type { ArrayBufferType } from './native.ts';
 import { pointer, type Ptr, type PtrConstructor } from './ptr.ts';
 import type { Type, TypeConstructor } from './type.ts';
 
@@ -14,8 +15,12 @@ import type { Type, TypeConstructor } from './type.ts';
  * Array.
  *
  * @template T Value type.
+ * @template TArrayBuffer Buffer type.
  */
-export interface Arr<T = never> extends Ptr<T>, Type {
+export interface Arr<
+	T = never,
+	TArrayBuffer extends ArrayBufferType<T> = ArrayBufferType<T>,
+> extends Ptr<T, TArrayBuffer>, Type<TArrayBuffer> {
 	/**
 	 * Array length.
 	 */
@@ -73,7 +78,7 @@ export interface ArrConstructor<T extends Arr<unknown> = Arr>
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	new (
-		buffer: ArrayBufferLike,
+		buffer: ArrayBufferType<T>,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;

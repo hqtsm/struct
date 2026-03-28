@@ -39,8 +39,11 @@ export interface EndianAware {
 
 /**
  * Endian aware buffer pointer.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Endian implements ArrayBufferPointer, EndianAware {
+export class Endian<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike>
+	implements ArrayBufferPointer<TArrayBuffer>, EndianAware {
 	/**
 	 * Type tag.
 	 */
@@ -54,7 +57,7 @@ export class Endian implements ArrayBufferPointer, EndianAware {
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	constructor(
-		buffer: ArrayBufferLike,
+		buffer: TArrayBuffer,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	) {
@@ -68,8 +71,8 @@ export class Endian implements ArrayBufferPointer, EndianAware {
 		littleEndians.set(this, !!(littleEndian ?? LITTLE_ENDIAN));
 	}
 
-	public get buffer(): ArrayBufferLike {
-		return buffers.get(this)!;
+	public get buffer(): TArrayBuffer {
+		return buffers.get(this) as TArrayBuffer;
 	}
 
 	public get byteOffset(): number {
@@ -94,13 +97,23 @@ export class Endian implements ArrayBufferPointer, EndianAware {
 
 /**
  * Endian constructor.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export type EndianConstructor = typeof Endian;
+export type EndianConstructor<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> = typeof Endian<TArrayBuffer>;
 
 /**
  * Endian class.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export type EndianClass = Class<EndianConstructor>;
+export type EndianClass<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> = Class<
+	EndianConstructor<TArrayBuffer>
+>;
 
 /**
  * Extend endian class as default endian.

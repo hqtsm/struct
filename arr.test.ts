@@ -1,5 +1,6 @@
 import {
 	assertEquals,
+	assertInstanceOf,
 	assertMatch,
 	assertNotStrictEquals,
 	assertStrictEquals,
@@ -12,6 +13,13 @@ import { pointer, Ptr } from './ptr.ts';
 import { Struct } from './struct.ts';
 import { getByteLength, getByteOffset } from './util.ts';
 import { Uint8Ptr } from './mod.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 class Foo extends Struct {
 	declare public bar: number;
@@ -235,5 +243,37 @@ Deno.test('Arr: 2d struct', () => {
 	assertEquals(
 		data,
 		new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]),
+	);
+});
+
+Deno.test('Arr: buffer', () => {
+	class AB extends Struct<ArrayBuffer> {
+		declare public a: number;
+
+		static {
+			int8(this, 'a');
+		}
+	}
+	const ABPtr = pointer(AB);
+	assertArrayBuffer(
+		new (array(AB, 0))(new ArrayBuffer(0)).buffer,
+	);
+	assertArrayBuffer(
+		new (array(ABPtr, 0))(new ArrayBuffer(0)).buffer,
+	);
+
+	class SAB extends Struct<SharedArrayBuffer> {
+		declare public a: number;
+
+		static {
+			int8(this, 'a');
+		}
+	}
+	const SABPtr = pointer(SAB);
+	assertSharedArrayBuffer(
+		new (array(SAB, 0))(new SharedArrayBuffer(0)).buffer,
+	);
+	assertSharedArrayBuffer(
+		new (array(SABPtr, 0))(new SharedArrayBuffer(0)).buffer,
 	);
 });

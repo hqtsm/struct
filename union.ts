@@ -13,8 +13,12 @@ const members = new WeakMap<typeof Union, MemberInfos>();
 
 /**
  * Binary union buffer view.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Union extends Endian implements Type {
+export class Union<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike>
+	extends Endian<TArrayBuffer>
+	implements Type<TArrayBuffer> {
 	public get byteLength(): number {
 		return (this.constructor as typeof Union).BYTE_LENGTH;
 	}

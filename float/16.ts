@@ -108,8 +108,12 @@ export function float16LE<T extends MemberableClass>(
 
 /**
  * Pointer: float16.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Float16Ptr extends Ptr<number> {
+export class Float16Ptr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
@@ -154,8 +158,12 @@ export class Float16Ptr extends Ptr<number> {
 
 /**
  * Pointer: float16, big endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Float16BEPtr extends Ptr<number> {
+export class Float16BEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;
@@ -196,8 +204,12 @@ export class Float16BEPtr extends Ptr<number> {
 
 /**
  * Pointer: float16, little endian.
+ *
+ * @template TArrayBuffer Buffer type.
  */
-export class Float16LEPtr extends Ptr<number> {
+export class Float16LEPtr<
+	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+> extends Ptr<number, TArrayBuffer> {
 	public override get(index: number): number {
 		index = (+index || 0) - (index % 1 || 0);
 		const d = dataView(this.buffer) as MaybeNativeFloat16;

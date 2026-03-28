@@ -1,4 +1,4 @@
-import { assertEquals } from '@std/assert';
+import { assertEquals, assertInstanceOf } from '@std/assert';
 import { Struct } from '../struct.ts';
 import { getByteLength, getByteOffset } from '../util.ts';
 import {
@@ -15,6 +15,13 @@ import {
 	Uint32LEPtr,
 	Uint32Ptr,
 } from './32.ts';
+
+const assertArrayBuffer = (value: ArrayBuffer) => {
+	assertInstanceOf(value, ArrayBuffer);
+};
+const assertSharedArrayBuffer = (value: SharedArrayBuffer) => {
+	assertInstanceOf(value, SharedArrayBuffer);
+};
 
 Deno.test('int32', () => {
 	class Test extends Struct {
@@ -183,6 +190,9 @@ Deno.test('Int32Ptr', () => {
 			`${new Ptr(new ArrayBuffer(0))}`,
 			`[object ${Ptr.name}]`,
 		);
+
+		assertArrayBuffer(new Ptr(new ArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new Ptr(new SharedArrayBuffer(0)).buffer);
 	}
 });
 
@@ -218,5 +228,8 @@ Deno.test('Uint32Ptr', () => {
 			`${new Ptr(new ArrayBuffer(0))}`,
 			`[object ${Ptr.name}]`,
 		);
+
+		assertArrayBuffer(new Ptr(new ArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new Ptr(new SharedArrayBuffer(0)).buffer);
 	}
 });
