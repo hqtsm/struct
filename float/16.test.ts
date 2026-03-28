@@ -244,9 +244,9 @@ Deno.test('Float16Ptr', () => {
 				`${new Ptr(new ArrayBuffer(0))}`,
 				`[object ${name}]`,
 			);
-		}
 
-		assertArrayBuffer(new Ptr(new ArrayBuffer(0)).buffer);
-		assertSharedArrayBuffer(new Ptr(new SharedArrayBuffer(0)).buffer);
+			assertArrayBuffer(new Ptr(new ArrayBuffer(0)).buffer);
+			assertSharedArrayBuffer(new Ptr(new SharedArrayBuffer(0)).buffer);
+		}
 	}
 });
