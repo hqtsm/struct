@@ -195,6 +195,15 @@ Deno.test('Float16Ptr', () => {
 			return r;
 		},
 	});
+	const handlerM = handler(
+		function (this, offset, littleEndian): number {
+			return getFloat16(this, offset, littleEndian);
+		},
+		function (this, offset, value, littleEndian): void {
+			setFloat16(this, offset, value, littleEndian);
+		},
+	);
+	const handlerF = handler();
 
 	for (
 		const [Ptr, le] of [
@@ -204,20 +213,8 @@ Deno.test('Float16Ptr', () => {
 		] as const
 	) {
 		const { name } = Ptr;
-
-		const PtrM = new Proxy(
-			Ptr,
-			handler(
-				function (this, offset, littleEndian): number {
-					return getFloat16(this, offset, littleEndian);
-				},
-				function (this, offset, value, littleEndian): void {
-					setFloat16(this, offset, value, littleEndian);
-				},
-			),
-		);
-
-		const PtrF = new Proxy(Ptr, handler());
+		const PtrM = new Proxy(Ptr, handlerM);
+		const PtrF = new Proxy(Ptr, handlerF);
 
 		const bpe = Ptr.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 2);
