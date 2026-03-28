@@ -158,6 +158,37 @@ Deno.test('float16', () => {
 });
 
 Deno.test('Float16Ptr', () => {
+	const handler = (
+		get?: (
+			this: DataView,
+			offset: number,
+			littleEndian?: boolean,
+		) => number,
+		set?: (
+			this: DataView,
+			offset: number,
+			value: number,
+			littleEndian?: boolean,
+		) => void,
+	) => ({
+		construct(target: typeof Float16Ptr, args: unknown[]): Float16Ptr {
+			const r = Reflect.construct(target, args) as Float16Ptr;
+			Object.defineProperty(dataView(r.buffer), 'getFloat16', {
+				value: get,
+				configurable: true,
+				enumerable: false,
+				writable: true,
+			});
+			Object.defineProperty(dataView(r.buffer), 'setFloat16', {
+				value: set,
+				configurable: true,
+				enumerable: false,
+				writable: true,
+			});
+			return r;
+		},
+	});
+
 	for (
 		const [Ptr, le] of [
 			[Float16Ptr, null],
@@ -166,62 +197,20 @@ Deno.test('Float16Ptr', () => {
 		] as const
 	) {
 		const { name } = Ptr;
-		class PtrM extends (Ptr as typeof Float16Ptr) {
-			constructor(
-				buffer: ArrayBufferLike,
-				byteOffset = 0,
-				littleEndian: boolean | null = null,
-			) {
-				super(buffer, byteOffset, littleEndian);
-				Object.defineProperty(dataView(this.buffer), 'getFloat16', {
-					value: function (
-						this: DataView,
-						offset: number,
-						littleEndian?: boolean,
-					): number {
-						return getFloat16(this, offset, littleEndian);
-					},
-					configurable: true,
-					enumerable: false,
-					writable: true,
-				});
-				Object.defineProperty(dataView(this.buffer), 'setFloat16', {
-					value: function (
-						this: DataView,
-						offset: number,
-						value: number,
-						littleEndian?: boolean,
-					): void {
-						setFloat16(this, offset, value, littleEndian);
-					},
-					configurable: true,
-					enumerable: false,
-					writable: true,
-				});
-			}
-		}
 
-		class PtrF extends (Ptr as typeof Float16Ptr) {
-			constructor(
-				buffer: ArrayBufferLike,
-				byteOffset = 0,
-				littleEndian: boolean | null = null,
-			) {
-				super(buffer, byteOffset, littleEndian);
-				Object.defineProperty(dataView(this.buffer), 'getFloat16', {
-					value: null,
-					configurable: true,
-					enumerable: false,
-					writable: true,
-				});
-				Object.defineProperty(dataView(this.buffer), 'setFloat16', {
-					value: null,
-					configurable: true,
-					enumerable: false,
-					writable: true,
-				});
-			}
-		}
+		const PtrM = new Proxy(
+			Ptr,
+			handler(
+				function (this, offset, littleEndian): number {
+					return getFloat16(this, offset, littleEndian);
+				},
+				function (this, offset, value, littleEndian): void {
+					setFloat16(this, offset, value, littleEndian);
+				},
+			),
+		);
+
+		const PtrF = new Proxy(Ptr, handler());
 
 		const bpe = Ptr.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 2);
