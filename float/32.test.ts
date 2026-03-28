@@ -104,7 +104,7 @@ Deno.test('Float32Ptr', () => {
 			[Float32Ptr, null],
 			[Float32BEPtr, false],
 			[Float32LEPtr, true],
-		] as [typeof Float32Ptr, boolean | null][]
+		] as const
 	) {
 		const bpe = Ptr.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 4);

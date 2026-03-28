@@ -163,10 +163,10 @@ Deno.test('Float16Ptr', () => {
 			[Float16Ptr, null],
 			[Float16BEPtr, false],
 			[Float16LEPtr, true],
-		] as [typeof Float16Ptr, boolean | null][]
+		] as const
 	) {
 		const { name } = Ptr;
-		class PtrM extends Ptr {
+		class PtrM extends (Ptr as typeof Float16Ptr) {
 			constructor(
 				buffer: ArrayBufferLike,
 				byteOffset = 0,
@@ -201,7 +201,7 @@ Deno.test('Float16Ptr', () => {
 			}
 		}
 
-		class PtrF extends Ptr {
+		class PtrF extends (Ptr as typeof Float16Ptr) {
 			constructor(
 				buffer: ArrayBufferLike,
 				byteOffset = 0,

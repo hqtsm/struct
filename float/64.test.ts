@@ -95,7 +95,7 @@ Deno.test('Float64Ptr', () => {
 			[Float64Ptr, null],
 			[Float64BEPtr, false],
 			[Float64LEPtr, true],
-		] as [typeof Float64Ptr, boolean | null][]
+		] as const
 	) {
 		const bpe = Ptr.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 8);

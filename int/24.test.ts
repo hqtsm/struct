@@ -166,7 +166,7 @@ Deno.test('Int24Ptr', () => {
 			[Int24Ptr, null],
 			[Int24BEPtr, false],
 			[Int24LEPtr, true],
-		] as [typeof Int24Ptr, boolean | null][]
+		] as const
 	) {
 		const bpe = Ptr.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 3);
@@ -198,7 +198,7 @@ Deno.test('Uint24Ptr', () => {
 			[Uint24Ptr, null],
 			[Uint24BEPtr, false],
 			[Uint24LEPtr, true],
-		] as [typeof Uint24Ptr, boolean | null][]
+		] as const
 	) {
 		const bpe = Ptr.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 3);

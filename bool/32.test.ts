@@ -123,7 +123,7 @@ Deno.test('Bool32Ptr', () => {
 			[Bool32Ptr, null],
 			[Bool32LEPtr, true],
 			[Bool32BEPtr, false],
-		] as [typeof Bool32Ptr, boolean | null][]
+		] as const
 	) {
 		const bpe = Ptr.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 4);

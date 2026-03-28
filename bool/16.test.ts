@@ -123,7 +123,7 @@ Deno.test('Bool16Ptr', () => {
 			[Bool16Ptr, null],
 			[Bool16LEPtr, true],
 			[Bool16BEPtr, false],
-		] as [typeof Bool16Ptr, boolean | null][]
+		] as const
 	) {
 		const bpe = Ptr.BYTES_PER_ELEMENT;
 		assertEquals(bpe, 2);
