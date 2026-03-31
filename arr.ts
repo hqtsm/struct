@@ -68,8 +68,24 @@ export interface Arr<
  *
  * @template T Array type.
  */
-export interface ArrConstructor<T extends Arr<unknown> = Arr>
-	extends Omit<PtrConstructor<T>, never>, Omit<TypeConstructor<T>, never> {
+export interface ArrConstructor<
+	T extends Arr<unknown> = Arr,
+	TArrayBuffer extends ArrayBufferType<T> = ArrayBufferType<T>,
+> extends Omit<PtrConstructor<T>, never>, Omit<TypeConstructor<T>, never> {
+	/**
+	 * Create instance for buffer.
+	 *
+	 * @template _TArrayBuffer Buffer type.
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset into buffer.
+	 * @param littleEndian Host endian, little endian, big endian.
+	 */
+	new <_TArrayBuffer extends TArrayBuffer>(
+		buffer: _TArrayBuffer,
+		byteOffset?: number,
+		littleEndian?: boolean | null,
+	): T & Arr<T[number], _TArrayBuffer>;
+
 	/**
 	 * Create instance for buffer.
 	 *
@@ -78,7 +94,7 @@ export interface ArrConstructor<T extends Arr<unknown> = Arr>
 	 * @param littleEndian Host endian, little endian, big endian.
 	 */
 	new (
-		buffer: ArrayBufferType<T>,
+		buffer: TArrayBuffer,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;

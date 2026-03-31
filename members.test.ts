@@ -68,10 +68,8 @@ Deno.test('ClassMemberable: extends member', () => {
 });
 
 Deno.test('ClassMemberable: array properties', () => {
-	const B4 = array(Uint8Ptr, 4);
-
 	// Weird but not invalid.
-	class B4Extra extends B4 {
+	class Weird extends array(Uint8Ptr, 4) {
 		declare public extra: number;
 
 		static {
@@ -97,5 +95,5 @@ Deno.test('ClassMemberable: array properties', () => {
 		}
 	}
 
-	assertEquals(B4Extra.BYTE_LENGTH, 32);
+	assertEquals(Weird.BYTE_LENGTH, 32);
 });

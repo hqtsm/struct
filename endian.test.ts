@@ -10,6 +10,7 @@ import {
 	bigEndian,
 	dynamicEndian,
 	Endian,
+	type EndianConstructor,
 	LITTLE_ENDIAN,
 	littleEndian,
 } from './endian.ts';
@@ -114,8 +115,41 @@ Deno.test('Endian: buffer', () => {
 	assertArrayBuffer(new Endian(new ArrayBuffer(0)).buffer);
 	assertSharedArrayBuffer(new Endian(new SharedArrayBuffer(0)).buffer);
 
-	class MyEndian<TArrayBuffer extends ArrayBufferLike = ArrayBuffer>
-		extends Endian<TArrayBuffer> {}
-	assertArrayBuffer(new MyEndian(new ArrayBuffer(0)).buffer);
-	assertSharedArrayBuffer(new MyEndian(new SharedArrayBuffer(0)).buffer);
+	{
+		class E<
+			TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+		> extends Endian<TArrayBuffer> {}
+		assertArrayBuffer(new E(new ArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new E(new SharedArrayBuffer(0)).buffer);
+	}
+	{
+		class E extends Endian<ArrayBuffer> {}
+		assertArrayBuffer(new E(new ArrayBuffer(0)).buffer);
+		// @ts-expect-error: Type.
+		new E(new SharedArrayBuffer(0));
+	}
+	{
+		class E extends Endian<SharedArrayBuffer> {}
+		// @ts-expect-error: Type.
+		new E(new ArrayBuffer(0));
+		assertSharedArrayBuffer(new E(new SharedArrayBuffer(0)).buffer);
+	}
+
+	{
+		const E: EndianConstructor<ArrayBufferLike> = Endian;
+		assertArrayBuffer(new E(new ArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new E(new SharedArrayBuffer(0)).buffer);
+	}
+	{
+		const E: EndianConstructor<ArrayBuffer> = Endian;
+		assertArrayBuffer(new E(new ArrayBuffer(0)).buffer);
+		// @ts-expect-error: Type.
+		new E(new SharedArrayBuffer(0));
+	}
+	{
+		const E: EndianConstructor<SharedArrayBuffer> = Endian;
+		// @ts-expect-error: Type.
+		new E(new ArrayBuffer(0));
+		assertSharedArrayBuffer(new E(new SharedArrayBuffer(0)).buffer);
+	}
 });

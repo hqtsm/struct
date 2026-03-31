@@ -13,8 +13,7 @@ import type { Type, TypeConstructor } from './type.ts';
 import { assignType, parseIndex } from './util.ts';
 
 const members = new WeakMap<typeof Ptr, MemberInfos>();
-// deno-lint-ignore no-explicit-any
-const pointers = new WeakMap<TypeConstructor<any>, PtrConstructor<Ptr<Type>>>();
+const pointers = new WeakMap<TypeConstructor, PtrConstructor<Ptr<Type>>>();
 const pointerValues = new WeakMap<Ptr<Type>, MeekValueMap<number, Type>>();
 const memberBytes = new WeakMap<MemberInfos, number>();
 const ptrHandler: ProxyHandler<Ptr<unknown>> = {
@@ -184,13 +183,37 @@ export class Ptr<
  * @template T Pointer type.
  * @template TArrayBuffer Buffer type.
  */
-export type PtrConstructor<
+export interface PtrConstructor<
 	T extends Ptr<unknown> = Ptr,
 	TArrayBuffer extends ArrayBufferType<T> = ArrayBufferType<T>,
-> = typeof Ptr<
-	T[number],
-	TArrayBuffer
->;
+> extends Omit<typeof Ptr<T[number], TArrayBuffer>, never> {
+	/**
+	 * Create instance for buffer.
+	 *
+	 * @template _TArrayBuffer Buffer type.
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset into buffer.
+	 * @param littleEndian Host endian, little endian, big endian.
+	 */
+	new <_TArrayBuffer extends TArrayBuffer>(
+		buffer: _TArrayBuffer,
+		byteOffset?: number,
+		littleEndian?: boolean | null,
+	): T & Ptr<T[number], _TArrayBuffer>;
+
+	/**
+	 * Create instance for buffer.
+	 *
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset into buffer.
+	 * @param littleEndian Host endian, little endian, big endian.
+	 */
+	new (
+		buffer: TArrayBuffer,
+		byteOffset?: number,
+		littleEndian?: boolean | null,
+	): T;
+}
 
 /**
  * Pointer class.

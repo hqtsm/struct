@@ -103,25 +103,51 @@ Deno.test('Const<Arr<number>>', () => {
 });
 
 Deno.test('Const<Arr<number>> Extended', () => {
-	class A2 extends array(Uint8Ptr, 2) {
-		public extra = 123;
+	// Weird but not invalid.
+	{
+		class Weird<
+			TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+		> extends array(Uint8Ptr, 2)<TArrayBuffer> {
+			public extra = 123;
+		}
+
+		const data = new Uint8Array(Weird.BYTE_LENGTH);
+		const ptr: Const<Weird> = new Weird(data.buffer);
+
+		// @ts-expect-error: Readonly.
+		ptr[0] = 1;
+
+		// @ts-expect-error: Readonly.
+		ptr.set(1, 2);
+
+		// @ts-expect-error: Readonly.
+		ptr.extra = 456;
+
+		assertEquals(ptr.get(0), 1);
+		assertEquals(ptr[1], 2);
+		assertEquals(ptr.extra, 456);
 	}
+	{
+		class Weird extends array(Uint8Ptr, 2) {
+			public extra = 123;
+		}
 
-	const data = new Uint8Array(A2.BYTE_LENGTH);
-	const ptr: Const<A2> = new A2(data.buffer);
+		const data = new Uint8Array(Weird.BYTE_LENGTH);
+		const ptr: Const<Weird> = new Weird(data.buffer);
 
-	// @ts-expect-error: Readonly.
-	ptr[0] = 1;
+		// @ts-expect-error: Readonly.
+		ptr[0] = 1;
 
-	// @ts-expect-error: Readonly.
-	ptr.set(1, 2);
+		// @ts-expect-error: Readonly.
+		ptr.set(1, 2);
 
-	// @ts-expect-error: Readonly.
-	ptr.extra = 456;
+		// @ts-expect-error: Readonly.
+		ptr.extra = 456;
 
-	assertEquals(ptr.get(0), 1);
-	assertEquals(ptr[1], 2);
-	assertEquals(ptr.extra, 456);
+		assertEquals(ptr.get(0), 1);
+		assertEquals(ptr[1], 2);
+		assertEquals(ptr.extra, 456);
+	}
 });
 
 Deno.test('Const<Struct> Extras', () => {

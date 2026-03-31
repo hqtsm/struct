@@ -190,15 +190,30 @@ Deno.test('Arr: at', () => {
 
 Deno.test('Arr: extend', () => {
 	// Weird but not invalid.
-	class FooExtra extends Foo4 {
-		declare public extra: number;
+	{
+		class Weird<
+			TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+		> extends Foo4<TArrayBuffer> {
+			declare public extra: number;
 
-		static {
-			int8(this, 'extra');
+			static {
+				int8(this, 'extra');
+			}
 		}
-	}
 
-	assertEquals(FooExtra.BYTE_LENGTH, Foo4.BYTE_LENGTH + 1);
+		assertEquals(Weird.BYTE_LENGTH, Foo4.BYTE_LENGTH + 1);
+	}
+	{
+		class Weird extends Foo4 {
+			declare public extra: number;
+
+			static {
+				int8(this, 'extra');
+			}
+		}
+
+		assertEquals(Weird.BYTE_LENGTH, Foo4.BYTE_LENGTH + 1);
+	}
 });
 
 Deno.test('Arr: 2d int', () => {
@@ -247,33 +262,70 @@ Deno.test('Arr: 2d struct', () => {
 });
 
 Deno.test('Arr: buffer', () => {
-	class AB extends Struct<ArrayBuffer> {
+	class ABL<
+		TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+	> extends Struct<TArrayBuffer> {
 		declare public a: number;
 
 		static {
 			int8(this, 'a');
 		}
 	}
-	const ABPtr = pointer(AB);
-	assertArrayBuffer(
-		new (array(AB, 0))(new ArrayBuffer(0)).buffer,
-	);
-	assertArrayBuffer(
-		new (array(ABPtr, 0))(new ArrayBuffer(0)).buffer,
-	);
 
-	class SAB extends Struct<SharedArrayBuffer> {
-		declare public a: number;
-
-		static {
-			int8(this, 'a');
-		}
+	{
+		const P = pointer(ABL);
+		const A1 = array(ABL, 0);
+		const A2 = array(P, 0);
+		assertArrayBuffer(new A1(new ArrayBuffer(0)).buffer);
+		assertArrayBuffer(new A2(new ArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new A1(new SharedArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new A2(new SharedArrayBuffer(0)).buffer);
 	}
-	const SABPtr = pointer(SAB);
-	assertSharedArrayBuffer(
-		new (array(SAB, 0))(new SharedArrayBuffer(0)).buffer,
-	);
-	assertSharedArrayBuffer(
-		new (array(SABPtr, 0))(new SharedArrayBuffer(0)).buffer,
-	);
+	{
+		const P = pointer<ABL<ArrayBuffer>>(ABL);
+		const A1 = array<ABL<ArrayBuffer>>(ABL, 0);
+		const A2 = array(P, 0);
+		assertArrayBuffer(new A1(new ArrayBuffer(0)).buffer);
+		assertArrayBuffer(new A2(new ArrayBuffer(0)).buffer);
+		// @ts-expect-error: Type.
+		new A1(new SharedArrayBuffer(0)).buffer;
+		// @ts-expect-error: Type.
+		new A2(new SharedArrayBuffer(0)).buffer;
+	}
+	{
+		const P = pointer<ABL<SharedArrayBuffer>>(ABL);
+		const A1 = array<ABL<SharedArrayBuffer>>(ABL, 0);
+		const A2 = array(P, 0);
+		// @ts-expect-error: Type.
+		new A1(new ArrayBuffer(0));
+		// @ts-expect-error: Type.
+		new A2(new ArrayBuffer(0));
+		assertSharedArrayBuffer(new A1(new SharedArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new A2(new SharedArrayBuffer(0)).buffer);
+	}
+
+	{
+		class AB extends ABL<ArrayBuffer> {}
+		const P = pointer(AB);
+		const A1 = array(AB, 0);
+		const A2 = array(P, 0);
+		assertArrayBuffer(new A1(new ArrayBuffer(0)).buffer);
+		assertArrayBuffer(new A2(new ArrayBuffer(0)).buffer);
+		// @ts-expect-error: Type.
+		new A1(new SharedArrayBuffer(0));
+		// @ts-expect-error: Type.
+		new A2(new SharedArrayBuffer(0));
+	}
+	{
+		class SAB extends ABL<SharedArrayBuffer> {}
+		const P = pointer(SAB);
+		const A1 = array(SAB, 0);
+		const A2 = array(P, 0);
+		// @ts-expect-error: Type.
+		new A1(new ArrayBuffer(0));
+		// @ts-expect-error: Type.
+		new A2(new ArrayBuffer(0));
+		assertSharedArrayBuffer(new A1(new SharedArrayBuffer(0)).buffer);
+		assertSharedArrayBuffer(new A2(new SharedArrayBuffer(0)).buffer);
+	}
 });

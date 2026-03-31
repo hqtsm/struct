@@ -100,9 +100,36 @@ export class Endian<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike>
  *
  * @template TArrayBuffer Buffer type.
  */
-export type EndianConstructor<
+export interface EndianConstructor<
 	TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
-> = typeof Endian<TArrayBuffer>;
+> extends Omit<typeof Endian<TArrayBuffer>, never> {
+	/**
+	 * Create instance for buffer.
+	 *
+	 * @template _TArrayBuffer Buffer type.
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset into buffer.
+	 * @param littleEndian Host endian, little endian, big endian.
+	 */
+	new <_TArrayBuffer extends TArrayBuffer>(
+		buffer: _TArrayBuffer,
+		byteOffset?: number,
+		littleEndian?: boolean | null,
+	): Endian<_TArrayBuffer>;
+
+	/**
+	 * Create instance for buffer.
+	 *
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset into buffer.
+	 * @param littleEndian Host endian, little endian, big endian.
+	 */
+	new (
+		buffer: TArrayBuffer,
+		byteOffset?: number,
+		littleEndian?: boolean | null,
+	): Endian<TArrayBuffer>;
+}
 
 /**
  * Endian class.

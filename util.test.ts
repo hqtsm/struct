@@ -202,6 +202,7 @@ Deno.test('getMembers: array', () => {
 
 	const sym = Symbol('a');
 
+	// Weird but not invalid.
 	class Weird extends array(Struct, 3) {
 		declare public alpha: number;
 
