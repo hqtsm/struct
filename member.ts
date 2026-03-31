@@ -4,6 +4,7 @@
  * Types and functions for defining a member.
  */
 
+import type { ArrayBufferType } from './native.ts';
 import type {
 	MemberableClass,
 	MemberableClassKeys,
@@ -85,10 +86,26 @@ export function defineMember<T extends MemberableClass, M>(
  * Member constructor.
  *
  * @template T Member type.
+ * @template TArrayBuffer Buffer type.
  */
 export interface MemberConstructor<
 	T extends ArrayBufferView = ArrayBufferView,
+	TArrayBuffer extends ArrayBufferType<T> = ArrayBufferType<T>,
 > {
+	/**
+	 * Member constructor.
+	 *
+	 * @template _TArrayBuffer Buffer type.
+	 * @param buffer Buffer data.
+	 * @param byteOffset Byte offset.
+	 * @param littleEndian Little endian, big endian, or inherit.
+	 */
+	new <_TArrayBuffer extends TArrayBuffer>(
+		buffer: _TArrayBuffer,
+		byteOffset?: number,
+		littleEndian?: boolean | null,
+	): T & ArrayBufferView<_TArrayBuffer>;
+
 	/**
 	 * Member constructor.
 	 *
@@ -97,7 +114,7 @@ export interface MemberConstructor<
 	 * @param littleEndian Little endian, big endian, or inherit.
 	 */
 	new (
-		buffer: ArrayBufferLike,
+		buffer: TArrayBuffer,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;
@@ -105,7 +122,7 @@ export interface MemberConstructor<
 	/**
 	 * Member prototype.
 	 */
-	readonly prototype: T;
+	readonly prototype: T & ArrayBufferView<TArrayBuffer>;
 
 	/**
 	 * Byte length.
