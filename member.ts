@@ -143,7 +143,7 @@ export interface MemberConstructor<
  * @returns Updated type byte length.
  */
 export function member<T extends MemberableClass, M extends ArrayBufferView>(
-	Member: MemberConstructor<M>,
+	Member: MemberConstructor<M, ArrayBufferType<InstanceType<T>>>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
 	byteOffset: number | null = null,
@@ -189,7 +189,7 @@ export function member<T extends MemberableClass, M extends ArrayBufferView>(
  * @returns Updated type byte length.
  */
 export function memberBE<T extends MemberableClass, M extends ArrayBufferView>(
-	Member: MemberConstructor<M>,
+	Member: MemberConstructor<M, ArrayBufferType<InstanceType<T>>>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
 	byteOffset: number | null = null,
@@ -209,7 +209,7 @@ export function memberBE<T extends MemberableClass, M extends ArrayBufferView>(
  * @returns Updated type byte length.
  */
 export function memberLE<T extends MemberableClass, M extends ArrayBufferView>(
-	Member: MemberConstructor<M>,
+	Member: MemberConstructor<M, ArrayBufferType<InstanceType<T>>>,
 	Type: T,
 	name: MemberableClassKeys<T, M>,
 	byteOffset: number | null = null,
