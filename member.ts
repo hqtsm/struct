@@ -4,12 +4,12 @@
  * Types and functions for defining a member.
  */
 
-import type { ArrayBufferType } from './native.ts';
 import type {
 	MemberableClass,
 	MemberableClassKeys,
 	MemberInfo,
 } from './members.ts';
+import type { ArrayBufferType } from './native.ts';
 import type { Type } from './type.ts';
 import { assignView } from './util.ts';
 
