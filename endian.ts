@@ -129,6 +129,11 @@ export interface EndianConstructor<
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): Endian<TArrayBuffer>;
+
+	/**
+	 * Type prototype.
+	 */
+	readonly prototype: Endian<TArrayBuffer>;
 }
 
 /**

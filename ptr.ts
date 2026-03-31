@@ -213,6 +213,11 @@ export interface PtrConstructor<
 		byteOffset?: number,
 		littleEndian?: boolean | null,
 	): T;
+
+	/**
+	 * Type prototype.
+	 */
+	readonly prototype: T & Ptr<T[number], TArrayBuffer>;
 }
 
 /**

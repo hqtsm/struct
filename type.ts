@@ -59,7 +59,7 @@ export interface TypeConstructor<
 	/**
 	 * Type prototype.
 	 */
-	readonly prototype: T;
+	readonly prototype: T & Type<TArrayBuffer>;
 
 	/**
 	 * Instance size in bytes.

@@ -102,7 +102,7 @@ export interface ArrConstructor<
 	/**
 	 * Array prototype.
 	 */
-	readonly prototype: T;
+	readonly prototype: T & Arr<T[number], TArrayBuffer>;
 
 	/**
 	 * Array length.
