@@ -61,8 +61,8 @@ export function defineMember<T extends MemberableClass, M>(
 	name: MemberableClassKeys<T, M>,
 	byteLength: number,
 	byteOffset: number | null,
-	get: (this: T['prototype'] & Record<typeof name, M>) => M,
-	set: (this: T['prototype'] & Record<typeof name, M>, value: M) => void,
+	get: (this: InstanceType<T> & Record<typeof name, M>) => M,
+	set: (this: InstanceType<T> & Record<typeof name, M>, value: M) => void,
 ): number {
 	byteLength = (+byteLength || 0) - (byteLength % 1 || 0);
 	byteOffset ??= nextByteOffset(Type);

@@ -95,7 +95,7 @@ export type MemberKeys<T extends Membered> = Exclude<
  * @template T Membered class type.
  */
 export type MemberClassKeys<T extends MemberedClass> = MemberKeys<
-	T['prototype']
+	InstanceType<T>
 >;
 
 /**
@@ -134,4 +134,4 @@ export type MemberableClassKeys<
 	T extends MemberableClass,
 	// deno-lint-ignore no-explicit-any
 	M = any,
-> = MemberableKeys<T['prototype'], M>;
+> = MemberableKeys<InstanceType<T>, M>;

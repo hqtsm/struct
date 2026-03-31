@@ -76,7 +76,7 @@ export function getByteLength<T extends MemberedClass>(
  */
 export function getMembers<T extends MemberedClass>(
 	Type: T,
-): (keyof T['prototype'])[] {
+): (keyof InstanceType<T>)[] {
 	const props: Set<PropertyKey> | PropertyKey[] = new Set();
 	for (let m = Type.MEMBERS; m; m = Object.getPrototypeOf(m)) {
 		const keys = Reflect.ownKeys(m);
@@ -92,7 +92,7 @@ export function getMembers<T extends MemberedClass>(
 			props.add(i);
 		}
 	}
-	return [...props].reverse() as (keyof T['prototype'])[];
+	return [...props].reverse() as (keyof InstanceType<T>)[];
 }
 
 /**
