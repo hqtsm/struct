@@ -5,7 +5,7 @@
     "jsr:@deno/dnt@~0.42.3": "0.42.3",
     "jsr:@hqtsm/class@^1.3.3": "1.3.3",
     "jsr:@hqtsm/dataview@2": "2.0.0",
-    "jsr:@hqtsm/meek@^2.1.2": "2.1.2",
+    "jsr:@hqtsm/meek@^2.1.3": "2.1.3",
     "jsr:@std/assert@^1.0.19": "1.0.19",
     "jsr:@std/fmt@1": "1.0.9",
     "jsr:@std/fs@1": "1.0.23",
@@ -35,8 +35,8 @@
     "@hqtsm/dataview@2.0.0": {
       "integrity": "654a84e5553a73b0e9696e44a4d593439bceddf4bb9f5104a5a71ca888b501f6"
     },
-    "@hqtsm/meek@2.1.2": {
-      "integrity": "2df1a56489f060aaadd13087107c59d5b5e80ccbd4a9a747022508c8a8410b4a"
+    "@hqtsm/meek@2.1.3": {
+      "integrity": "a17ed4b690dd00b08972efcaceb950419744f8bd57a8a5fd8316c7a82f5878a9"
     },
     "@std/assert@1.0.19": {
       "integrity": "eaada96ee120cb980bc47e040f82814d786fe8162ecc53c91d8df60b8755991e",
@@ -82,7 +82,7 @@
       "jsr:@deno/dnt@~0.42.3",
       "jsr:@hqtsm/class@^1.3.3",
       "jsr:@hqtsm/dataview@2",
-      "jsr:@hqtsm/meek@^2.1.2",
+      "jsr:@hqtsm/meek@^2.1.3",
       "jsr:@std/assert@^1.0.19"
     ]
   }
