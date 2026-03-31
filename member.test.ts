@@ -314,6 +314,66 @@ Deno.test('member: buffer stricter parent', () => {
 		new Parent(new ArrayBuffer(0));
 		assertSharedArrayBuffer(new Parent(new SharedArrayBuffer(0)).a.buffer);
 	}
+	{
+		class Child<
+			TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+		> extends Struct<TArrayBuffer> {
+			declare public value: number;
+
+			static {
+				uint32(this, 'value');
+			}
+		}
+		class Parent extends Struct<ArrayBuffer> {
+			declare public a: Child;
+			declare public b: Child;
+			declare public c: Child;
+
+			static {
+				member(Child, this, 'a');
+				memberBE(Child, this, 'b');
+				memberLE(Child, this, 'c');
+			}
+		}
+		assertArrayBuffer(new Parent(new ArrayBuffer(0)).buffer);
+		// @ts-expect-error Type.
+		new Parent(new SharedArrayBuffer(0));
+
+		assertInstanceOf(
+			new Parent(new ArrayBuffer(0)).a.buffer,
+			ArrayBuffer,
+		);
+	}
+	{
+		class Child<
+			TArrayBuffer extends ArrayBufferLike = ArrayBufferLike,
+		> extends Struct<TArrayBuffer> {
+			declare public value: number;
+
+			static {
+				uint32(this, 'value');
+			}
+		}
+		class Parent extends Struct<SharedArrayBuffer> {
+			declare public a: Child;
+			declare public b: Child;
+			declare public c: Child;
+
+			static {
+				member(Child, this, 'a');
+				memberBE(Child, this, 'b');
+				memberLE(Child, this, 'c');
+			}
+		}
+		// @ts-expect-error Type.
+		new Parent(new ArrayBuffer(0));
+		assertSharedArrayBuffer(new Parent(new SharedArrayBuffer(0)).buffer);
+
+		assertInstanceOf(
+			new Parent(new SharedArrayBuffer(0)).a.buffer,
+			SharedArrayBuffer,
+		);
+	}
 });
 
 Deno.test('member: buffer stricter child', () => {
