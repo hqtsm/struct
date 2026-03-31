@@ -67,6 +67,7 @@ export interface Arr<
  * Array constructor.
  *
  * @template T Array type.
+ * @template TArrayBuffer Buffer type.
  */
 export interface ArrConstructor<
 	T extends Arr<unknown> = Arr,
