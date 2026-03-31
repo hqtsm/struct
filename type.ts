@@ -54,7 +54,7 @@ export interface TypeConstructor<
 		buffer: TArrayBuffer,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
-	): T;
+	): T & Type<TArrayBuffer>;
 
 	/**
 	 * Type prototype.

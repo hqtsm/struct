@@ -98,7 +98,7 @@ export interface ArrConstructor<
 		buffer: TArrayBuffer,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
-	): T;
+	): T & Arr<T[number], TArrayBuffer>;
 
 	/**
 	 * Array prototype.

@@ -117,7 +117,7 @@ export interface MemberConstructor<
 		buffer: TArrayBuffer,
 		byteOffset?: number,
 		littleEndian?: boolean | null,
-	): T;
+	): T & ArrayBufferView<TArrayBuffer>;
 
 	/**
 	 * Member prototype.
