@@ -25,7 +25,7 @@ export type Const<T> = T extends Function | RegExp | Date ? T
  *
  * @template T Pointer type.
  */
-interface ConstPtr<T extends Ptr<unknown>>
+export interface ConstPtr<T extends Ptr<unknown>>
 	extends Const<Omit<Ptr<Const<T[number]>, ArrayBufferType<T>>, 'set'>> {}
 
 /**
@@ -33,5 +33,5 @@ interface ConstPtr<T extends Ptr<unknown>>
  *
  * @template T Array type.
  */
-interface ConstArr<T extends Arr<unknown>>
+export interface ConstArr<T extends Arr<unknown>>
 	extends Const<Omit<Arr<Const<T[number]>, ArrayBufferType<T>>, 'set'>> {}
