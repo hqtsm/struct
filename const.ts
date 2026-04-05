@@ -5,7 +5,7 @@
  */
 
 import type { Arr } from './arr.ts';
-import type { ArrayBufferType } from './native.ts';
+import type { ArrayBufferPointer, ArrayBufferType } from './native.ts';
 import type { Ptr } from './ptr.ts';
 
 /**
@@ -17,6 +17,11 @@ import type { Ptr } from './ptr.ts';
 export type Const<T> = T extends Function | RegExp | Date ? T
 	: T extends Arr<unknown> ? ConstArr<T> & Const<Omit<T, keyof Arr>>
 	: T extends Ptr<unknown> ? ConstPtr<T> & Const<Omit<T, keyof Ptr>>
+	: T extends ArrayBufferPointer ? {
+			readonly [K in keyof T]: (
+				K extends keyof ArrayBufferPointer ? T[K] : Const<T[K]>
+			);
+		}
 	: T extends object ? { readonly [K in keyof T]: Const<T[K]> }
 	: T;
 
