@@ -19,7 +19,7 @@ export type Const<T> = T extends Function | RegExp | Date ? T
 	: T extends Ptr<unknown> ? ConstPtr<T> & Const<Omit<T, keyof Ptr>>
 	: T extends ArrayBufferPointer ? {
 			readonly [K in keyof T]: (
-				K extends keyof ArrayBufferPointer ? T[K] : Const<T[K]>
+				K extends 'buffer' ? T[K] : Const<T[K]>
 			);
 		}
 	: T extends object ? { readonly [K in keyof T]: Const<T[K]> }
